@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
 
 import Home from './screens/Home'
@@ -11,14 +11,36 @@ const App = () => {
     return (
         <BrowserRouter>
         <div>
-            <nav>
-                <ul className="list-group list-group-horizontal">
-                    <li className="list-group-item"><Link to="/sign-in">Sign-in</Link> </li>
-                    <li className="list-group-item"><Link to="/sign-up">Sign-up</Link> </li>
-                    <li className="list-group-item"><Link to="/account/characters">Characters</Link> </li>
-                    <li className="list-group-item"><Link to="/account/characters/create">Create Character</Link> </li>
-                </ul>
-            </nav>
+
+      <nav className="navbar navbar-expand-lg bg-dark">
+      <div className="container">
+    
+        <div className="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul className="navbar-nav">
+            <li className="nav-item active">
+            <li className="nav-link"><Link to="/">Home</Link> </li>
+            </li>
+            <li className="nav-item">
+              <li className="nav-link"><Link to="/sign-in">Sign-in</Link> </li>
+            </li>
+            <li className="nav-item">
+            <li className="nav-link"><Link to="/sign-up">Sign-up</Link> </li>
+            </li>
+            <li className="nav-item dropdown">
+              <li className="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <font color="white"> Teste Dropdown </font>
+              </li>
+              
+              <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li className="dropdown-item"><Link to="/account/characters"><font color="black">Characters</font></Link> </li>
+              <li className="dropdown-item"><Link to="/account/characters/create"><font color="black">Create Characters</font></Link> </li>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
             <Switch>
                 <Route path="/sign-in">
                     <SignIn />
