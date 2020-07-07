@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { Link } from 'react-router-dom'
 
 const SignUp = () => {
@@ -8,7 +8,7 @@ const SignUp = () => {
             <div className="d-flex flex-column h-100">
                 <form>
                     <div className="form-group">
-                        <label>E-mail</label>
+                        <label>Email</label>
                         <input type="text" className="form-control" />
                     </div>
                     <div className="form-group">
@@ -20,16 +20,17 @@ const SignUp = () => {
                         <input type="password" className="form-control" />
                     </div>
                     <div>
-                        <button className="btn btn-primary btn-round">Submit</button>
+                        <button className="btn btn-dark btn-round">Submit</button>
                     </div>
                 </form>
                 <div className="container text-center fixed-bottom pb-5">
-                    <div className="text-muted">Already have an account?</div>
-                    <Link to='/sign-in'>Sign In</Link>
+                    <div className="text-muted">Already have an Account?</div>
+                    <Link to="/sign-in">Sign in</Link>
                 </div>
             </div>
         </div>
     )
 }
+
 
 export default SignUp
