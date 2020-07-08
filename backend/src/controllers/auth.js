@@ -2,7 +2,6 @@ const express = require('express')
 const crypto = require('crypto')
 const { Account } = require('../models')
 const router = express.Router()
-const saltRounds = 10
 
 router.get('/sign-in', (req, res) => {
     return res.json('Sign in')
@@ -10,15 +9,18 @@ router.get('/sign-in', (req, res) => {
 
 router.get('/sign-up', async (req, res) => {
 
-    const name = '12345'
-    const password = '123456'
+    const { name, password } = req.body
+
 
     const hash = crypto.createHash('sha1')
         .update(name)
         .digest('hex')
 
+    const account = await Account.findOne({ where: { name } })  
+        if (account) return res.json('Account already exists.')      
 
-    const result = await Account.create({
+
+    const newAccount = await Account.create({
         name,
         password: hash,
         secret: '0',
@@ -31,9 +33,7 @@ router.get('/sign-up', async (req, res) => {
     })
     
 
-    console.log('***** Result', result)
-
-    return res.json(result)
+    return res.json(newAccount)
 })
 
 
