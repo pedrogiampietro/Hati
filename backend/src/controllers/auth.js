@@ -10,7 +10,7 @@ router.get('/sign-in', (req, res) => {
 
 router.get('/sign-up', async (req, res) => {
 
-    const name = '1234'
+    const name = '12345'
     const password = '123456'
 
     const hash = crypto.createHash('sha1')
