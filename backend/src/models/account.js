@@ -44,6 +44,7 @@ module.exports = (sequelize, DataTypes) => {
         },
     })
 
+
     return Account
 
 }
