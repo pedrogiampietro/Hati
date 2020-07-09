@@ -18,7 +18,7 @@ const accountSignUp = (req, res, next) => {
         password_confirmation: rules.password_confirmation,
     })
 
-    const { error } = schema.validate({ name, password }, options)
+    const { error } = schema.validate({ name, password, password_confirmation }, options)
 
     if (error) {
 

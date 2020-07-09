@@ -12,7 +12,7 @@ router.get('/sign-in', (req, res) => {
 
 router.get('/sign-up', accountSignUp, async (req, res) => {
 
-    const { name, password } = req.body
+    const { name, password, } = req.body
 
     const hash = crypto.createHash('sha1')
         .update(name)
@@ -25,13 +25,13 @@ router.get('/sign-up', accountSignUp, async (req, res) => {
     const newAccount = await Account.create({
         name,
         password: hash,
-        secret,
-        type,
-        premdays,
-        coins,
-        lastday,
-        email,
-        key,
+        secret: '0',
+        type: '1',
+        premdays: '0',
+        coins: '0',
+        lastday: '0',
+        email: 'pedro@msn.com',
+        key: '0',
     })
     
 

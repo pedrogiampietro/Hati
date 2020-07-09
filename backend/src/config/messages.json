@@ -22,6 +22,7 @@
     "account.signup.password_confirmation.string.empty": "Campo de confirmação de senha é obrigatório.",
     "account.signup.password_confirmation.any.only": "Confirmação de senha deve ser igual à senha escolhida.",
     "account.signup.password.string.empty": "Campo senha é obrigatório.",
-    "account.signup.password.string.pattern.base": "Senha deve ter de 3 à 30 caracteres."
+    "account.signup.password.string.pattern.base": "Senha deve ter de 3 à 30 caracteres.",
+    "account.signup.name.string.min": "Senha deve ter de 3 à 30 caracteres."
   
   }
