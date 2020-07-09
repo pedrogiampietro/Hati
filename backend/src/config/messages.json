@@ -1,0 +1,27 @@
+{
+    "response.json_ok": "Requisição bem sucedida.",
+    "response.json_bad_request": "Requisição inválida.",
+    "response.json_unauthorized": "Requisição não autorizada.",
+    "response.json_not_found": "Não encontrado.",
+    "response.json_server_error": "Erro no servidor.",
+    
+    "account.signin.success": "Login efetuado com sucesso.",
+    "account.signin.failed": "Credenciais inválidas.",
+    "account.signin.name.string.empty": "Campo de Name é obrigatório.",
+    "account.signin.name.string.name": "Campo de Name deve ser válido",
+    "account.signin.password.string.empty": "Campo senha é obrigatório.",
+    "account.signin.password.string.pattern.base": "Senha deve ter de 3 à 30 caracteres.",
+    "account.signin.name.any.required": "Name obrigatório.",
+
+    "account.signup.success": "Cadastro efetuado com sucesso.",
+    "account.signup.name_exists": "Name já cadastrado.",
+    "account.signup.name.string.empty": "Campo de Name é obrigatório.",
+    "account.signup.name.string.name": "Campo Name é obrigatório",
+    "account.signup.name.any.required": "Campo confirmaçasdão de senha é obrigatório.",
+    "account.signup.password_confirmation.any.required": "Campo confirmação de senha é obrigatório.",
+    "account.signup.password_confirmation.string.empty": "Campo de confirmação de senha é obrigatório.",
+    "account.signup.password_confirmation.any.only": "Confirmação de senha deve ser igual à senha escolhida.",
+    "account.signup.password.string.empty": "Campo senha é obrigatório.",
+    "account.signup.password.string.pattern.base": "Senha deve ter de 3 à 30 caracteres."
+  
+  }
