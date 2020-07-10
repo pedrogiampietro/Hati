@@ -10,6 +10,25 @@ const rules = {
 const options = { abortEarly: false }
 
 
+const accountSignIn = (req, res, next) => {
+    const { name, password } = req.body
+    const schema = Joi.object({
+        name: rules.name,
+        password: rules.password
+    })
+
+    const { error } = schema.validate({ name, password }, options)
+
+    if (error) {
+
+        const messages = getValidatorError(error, 'account.signin')
+        return res.jsonBadRequest(null, null, { error: messages })
+    }
+
+    next()
+
+}
+
 const accountSignUp = (req, res, next) => {
     const { name, password, password_confirmation } = req.body
     const schema = Joi.object({
@@ -30,4 +49,4 @@ const accountSignUp = (req, res, next) => {
 
 }
 
-module.exports = { accountSignUp }
+module.exports = { accountSignUp, accountSignIn }

@@ -1,16 +1,28 @@
 const express = require('express')
 const crypto = require('crypto')
 const { Account } = require('../models')
-const { accountSignUp } = require('../validators/account')
+const { accountSignUp, accountSignIn } = require('../validators/account')
 const { getMessage } = require('../helpers/messages');
+const { generateJwt, generateRefreshJwt } = require('../helpers/jwt')
 
 const router = express.Router()
 
-router.get('/sign-in', (req, res) => {
-    return res.json('Sign in')
+router.post('/sign-in', async (req, res) => {
+
+    const { name, password, } = req.body
+    const account = await Account.findOne({ where: { name } })  
+
+    // validar o password     
+    const match = account ? crypto.createVerify('sha1', account.password) : null
+        if (!match) return res.jsonBadRequest(null, getMessage('account.signin.failed'))   
+
+    const token = generateJwt({ id: account.id })
+    const refreshToken = generateRefreshJwt({ id: account.id })
+
+    return res.jsonOK(account, null, getMessage('account.signin.success'), { token, refreshToken })
 })
 
-router.get('/sign-up', accountSignUp, async (req, res) => {
+router.post('/sign-up', accountSignUp, async (req, res) => {
 
     const { name, password, } = req.body
 
@@ -33,9 +45,12 @@ router.get('/sign-up', accountSignUp, async (req, res) => {
         email: 'pedro@msn.com',
         key: '0',
     })
+
+    const token = generateJwt({ id: newAccount.id })
+    const refreshToken = generateRefreshJwt({ id: newAccount.id })
     
 
-    return res.jsonOK(newAccount, getMessage('account.signup.sucess'))
+    return res.jsonOK(newAccount, getMessage('account.signup.sucess'), { token, refreshToken })
 })
 
 
