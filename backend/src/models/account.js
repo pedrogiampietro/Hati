@@ -44,6 +44,10 @@ module.exports = (sequelize, DataTypes) => {
         },
     })
 
+    Account.associate = (models) => {
+        Account.hasMany(models.Player, { foreignKey: 'account_id' })
+    }
+
     Account.prototype.toJSON = function() {
         const values = { ...this.get() }
         delete values.password

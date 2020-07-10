@@ -13,7 +13,7 @@ router.post('/sign-in', async (req, res) => {
     const account = await Account.findOne({ where: { name } })  
 
     // validar o password     
-    const match = account ? crypto.createVerify('sha1', account.password) : null
+    const match = account ? crypto.createVerify('sha1', password, account.password) : null
         if (!match) return res.jsonBadRequest(null, getMessage('account.signin.failed'))   
 
     const token = generateJwt({ id: account.id })
