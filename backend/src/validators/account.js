@@ -2,9 +2,15 @@ const Joi = require('@hapi/joi')
 const { getValidatorError } = require('../helpers/validator')
 
 const rules = {
-    name: Joi.string().alphanum().min(6).max(30).required(),
+    name: Joi.string()
+    .alphanum()
+    .min(6)
+    .max(30)
+    .required(),
+    
     password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
     password_confirmation: Joi.string().valid(Joi.ref('password')).required(),
+    email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } })
 }
 
 const options = { abortEarly: false }
