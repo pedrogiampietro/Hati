@@ -3,10 +3,24 @@ const { Player } = require('../models')
 
 const router = express.Router()
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
 
-    return res.jsonOK('Players')
+    const account_id = 293
+    const players = await Player.findAll({ where: {account_id: account_id} })
 
+
+    return res.jsonOK(players)
+
+})
+
+router.get('/:id', async (req, res) => {
+
+    const account_id = 293
+    const { id } = req.params
+    const player = await Player.findOne({ where: { id: id, account_id: account_id}})
+    if (!player) return res.jsonNotFound(null)
+
+    return res.jsonOK(player)
 })
 
 router.post('/', async (req, res) => {
@@ -33,14 +47,14 @@ router.put('/:id', async (req, res) => {
 
     const account_id = 293
     const { id } = req.params
-    const { body } = req.body
+    const { body } = req
 
     const fields = ['name'] //['name', 'comments', 'outfits', 'items']
 
     const player = await Player.findOne({ where: { id: id, account_id: account_id}})
         if (!player) return res.jsonNotFound(null)
 
-    fields.map(fieldName => {
+    fields.map((fieldName) => {
         const newValue = body[fieldName]
             if (newValue) player[fieldName] = newValue
     })    
