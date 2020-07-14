@@ -64,5 +64,16 @@ router.put('/:id', async (req, res) => {
 
 })
 
+router.delete('/:id', async (req, res) => {
+
+    const account_id = 293
+    const { id } = req.params
+    const player = await Player.findOne({ where: { id: id, account_id: account_id}})
+        if (!player) return res.jsonNotFound(null)
+
+    await player.destroy()
+        return res.jsonOK()
+})
+
 
 module.exports = router
