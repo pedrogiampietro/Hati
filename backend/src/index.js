@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const db = require('./models')
 const response = require('./middlewares/response')
 const checkJwt = require('./middlewares/jwt')
@@ -7,6 +8,7 @@ const playerController = require('./controllers/player')
 
 const app = express()
 
+app.use(cors())
 app.use(response)
 app.use(checkJwt)
 app.use(express.json())
