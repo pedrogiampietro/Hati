@@ -17,7 +17,7 @@
     "account.signup.name_exists": "Name já cadastrado.",
     "account.signup.name.string.empty": "Campo de Name é obrigatório.",
     "account.signup.name.string.name": "Campo Name é obrigatório",
-    "account.signup.name.any.required": "Campo confirmaçasdão de senha é obrigatório.",
+    "account.signup.name.any.required": "Campo Name é obrigatório.",
     "account.signup.password_confirmation.any.required": "Campo confirmação de senha é obrigatório.",
     "account.signup.password_confirmation.string.empty": "Campo de confirmação de senha é obrigatório.",
     "account.signup.password_confirmation.any.only": "Confirmação de senha deve ser igual à senha escolhida.",

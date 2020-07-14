@@ -3,7 +3,7 @@ const crypto = require('crypto')
 const { Account } = require('../models')
 const { accountSignUp, accountSignIn } = require('../validators/account')
 const { getMessage } = require('../helpers/messages');
-const { generateJwt, generateRefreshJwt } = require('../helpers/jwt')
+const { generateJwt, generateRefreshJwt, verifyRefreshJwt, getTokenFromHeaders } = require('../helpers/jwt')
 
 const router = express.Router()
 
@@ -19,7 +19,9 @@ router.post('/sign-in', async (req, res) => {
     const token = generateJwt({ id: account.id })
     const refreshToken = generateRefreshJwt({ id: account.id })
 
-    return res.jsonOK(account, null, getMessage('account.signin.success'), { token, refreshToken })
+    console.log('TOKEN, refreshToken', token)
+
+    return res.jsonOK(account, getMessage('account.signin.success'), {token, refreshToken})
 })
 
 router.post('/sign-up', accountSignUp, async (req, res) => {
