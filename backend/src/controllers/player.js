@@ -5,9 +5,8 @@ const router = express.Router()
 
 router.get('/', async (req, res) => {
 
-    const account_id = 293
+    const { account_id } = req
     const players = await Player.findAll({ where: {account_id: account_id} })
-
 
     return res.jsonOK(players)
 
@@ -15,7 +14,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
 
-    const account_id = 293
+    const { account_id } = req
     const { id } = req.params
     const player = await Player.findOne({ where: { id: id, account_id: account_id}})
     if (!player) return res.jsonNotFound(null)
@@ -25,8 +24,8 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
 
-    const account_id = 293
-    const { name, level, vocation } = req.body
+    const { account_id, body } = req
+    const { name, level, vocation } = body
 
     const looktype = 'https://www.tibiawiki.com.br/images/e/e4/Outfit_Citizen_Male.gif'
 
@@ -45,9 +44,8 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
 
-    const account_id = 293
+    const { account_id, body } = req
     const { id } = req.params
-    const { body } = req
 
     const fields = ['name'] //['name', 'comments', 'outfits', 'items']
 
@@ -66,7 +64,7 @@ router.put('/:id', async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
 
-    const account_id = 293
+    const { account_id } = req
     const { id } = req.params
     const player = await Player.findOne({ where: { id: id, account_id: account_id}})
         if (!player) return res.jsonNotFound(null)
