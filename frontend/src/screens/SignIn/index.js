@@ -16,28 +16,42 @@ const SignIn = (props) => {
     console.log('***** signIn.account', account)
 
     return (
-        <div className="container h-100 pt-5">
-            <h1>Sign in</h1>
-            <div className="d-flex flex-column h-100">
-                <form onSubmit={submitHandler}>
-                    <div className="form-group">
-                        <label>Email</label>
-                        <input type="text" className="form-control" />
-                    </div>
-                    <div className="form-group">
-                        <label>Password</label>
-                        <input type="password" className="form-control" />
-                    </div>
-                    <div>
-                        <button className="btn btn-dark btn-round">Submit</button>
-                    </div>
-                </form>
-                <div className="container text-center fixed-bottom pb-5">
-                    <div className="text-muted">Don't have an Account?</div>
-                    <Link to="/sign-up">Sign up</Link>
-                </div>
-            </div>
+
+        <div className="blankpage-form-field">
+        <div className="page-logo m-0 w-100 align-items-center justify-content-center rounded border-bottom-left-radius-0 border-bottom-right-radius-0 px-4">
+            <a href="form_input_groups.html" className="page-logo-link press-scale-down d-flex align-items-center">
+                <img src="https://i.imgur.com/HoKkhv2.png" alt="Hati AAC" aria-roledescription="logo" />
+                <span className="page-logo-text mr-1">Hati AAC</span>
+                <i className="fal fa-angle-down d-inline-block ml-1 fs-lg color-primary-300"></i>
+            </a>
         </div>
+        <div className="card p-4 border-top-left-radius-0 border-top-right-radius-0">
+         <form onSubmit={submitHandler}>
+                <div className="form-group">
+                    <label className="form-label" htmlFor="username">Account Name</label>
+                    <input type="text" className="form-control" placeholder="Your account name" name="name" />
+                </div>
+
+                <div className="form-group">
+                    <label className="form-label" for="password">Password</label>
+                    <input type="password" name="password" className="form-control" placeholder="*********" />
+                </div>
+
+                <div className="form-group text-left">
+                    <div className="custom-control custom-checkbox">
+                        <input type="checkbox" className="custom-control-input" id="rememberme" />
+                        <label className="custom-control-label" for="rememberme"> Remember me for the next 30 days</label>
+                    </div>
+                </div>
+                <button type="submit" className="btn btn-default float-right">Login</button>
+            </form>
+        </div>
+        <div className="blankpage-footer text-center">
+             <Link to="/recovery"><strong>Recover Password</strong></Link>
+             <Link to="/sign-up"><strong>Register Account</strong></Link>
+        </div>
+    </div>
+    
     )
 }
 
