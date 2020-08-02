@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { signUp } from './SignUpActions'
+import { signUp } from '../../actions/AccountActions'
 
 
 const SignUp = (props) => {
@@ -20,7 +20,7 @@ const SignUp = (props) => {
     }
 
     if (account) {
-        return <Redirect to='/account' />
+        return <Redirect to='/account/characters' />
     }
 
     return (
@@ -46,7 +46,7 @@ const SignUp = (props) => {
                 </form>
                 <div className="container text-center fixed-bottom pb-5">
                     <div className="text-muted">Already have an Account?</div>
-                    <Link to="/sign-in">Sign in</Link>
+                    <Link to='/sign-in'>Sign in</Link>
                 </div>
             </div>
         </div>
@@ -56,7 +56,7 @@ const SignUp = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        account: state.signUp.account
+        account: state.account.account
     }
 }
 

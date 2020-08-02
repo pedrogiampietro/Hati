@@ -1,10 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { signOut } from '../../../actions/AccountActions'
 import Menu from '../../Layouts/Menu'
 import Header from '../../Layouts/Header'
 import Footer from '../../Layouts/Footer'
 
-const Characters = () => {
+const Characters = ({ signOut, account }) => {
+
+    if (!account) {
+        return <Redirect to='/' />
+    }
+
+    const signOutHandler = (e) => {
+        e.preventDefault()
+
+        signOut()
+    }
+
     return (
         <>
         <div className="page-wrapper">
@@ -18,7 +31,7 @@ const Characters = () => {
 
                     <main id="js-page-content" role="main" className="page-content">
                         <ol className="breadcrumb page-breadcrumb">
-                        <Link to="/"><li className="breadcrumb-item">HatiAAC/ </li></Link>
+                        <Link to='/'><li className="breadcrumb-item">HatiAAC/ </li></Link>
                             <li className="breadcrumb-item active">Account</li>
                             <li className="position-absolute pos-top pos-right d-none d-sm-block"><span className="js-get-date"></span></li>
                         </ol>
@@ -29,6 +42,15 @@ const Characters = () => {
                                     Account Page
                                 </small>
                             </h1>
+
+                            <div class="d-flex mr-0">
+                                <div class="mr-2">
+                                    <span class="peity-donut" />
+                                </div>
+                                <div>
+                                    <button className="btn btn-primary" onClick={signOutHandler}>Logout</button>
+                                </div>
+                            </div>
                         </div>
                         <div className="row">
                             <div className="col-lg-6 col-xl-3 order-lg-1 order-xl-1">
@@ -63,9 +85,9 @@ const Characters = () => {
                                         </div>
                                         <div className="col-12">
                                             <div className="p-3 text-center">
-                                            <Link to="/account/changepassword" className="btn-link font-weight-bold">Change Password</Link> <span className="text-primary d-inline-block mx-3"></span>
+                                            <Link to='/account/changepassword' className="btn-link font-weight-bold">Change Password</Link> <span className="text-primary d-inline-block mx-3"></span>
                                                 <br />
-                                            <Link to="/account/changeemail" className="btn-link font-weight-bold">Change E-Mail</Link> <span className="text-primary d-inline-block mx-3"></span>
+                                            <Link to='/account/changeemail' className="btn-link font-weight-bold">Change E-Mail</Link> <span className="text-primary d-inline-block mx-3"></span>
                                             </div>
                                         </div>
                                     </div>
@@ -82,7 +104,7 @@ const Characters = () => {
                                             </div>
                                         </div>
                                         <div className="col-4">
-                                        <Link to="/account/characters/view/:id">
+                                        <Link to='/account/characters/view/:id'>
                                                 <span className="profile-image rounded-circle d-block m-auto" style={{  
                                                 backgroundImage: `url("https://www.tibiawiki.com.br/images/e/e4/Outfit_Citizen_Male.gif")`,
                                                 backgroundSize: 'cover',
@@ -91,7 +113,7 @@ const Characters = () => {
                                             </Link>
                                         </div>
                                         <div className="col-4">
-                                        <Link to="/account/characters/view/:id">
+                                        <Link to='/account/characters/view/:id'>
                                                 <span className="profile-image rounded-circle d-block m-auto" style={{  
                                                 backgroundImage: `url("https://www.tibiawiki.com.br/images/e/e4/Outfit_Citizen_Male.gif")`,
                                                 backgroundSize: 'cover',
@@ -100,7 +122,7 @@ const Characters = () => {
                                             </Link>
                                         </div>
                                         <div className="col-4">
-                                            <Link to="/account/characters/view/:id">
+                                            <Link to='/account/characters/view/:id'>
                                                 <span className="profile-image rounded-circle d-block m-auto" style={{  
                                                 backgroundImage: `url("https://www.tibiawiki.com.br/images/e/e4/Outfit_Citizen_Male.gif")`,
                                                 backgroundPosition: 'center',
@@ -138,7 +160,7 @@ const Characters = () => {
                               
                                 <div className="card mb-2">
                                     <div className="card-body">
-                                        <Link to="/account/characters/create">
+                                        <Link to='/account/characters/create'>
                                             <div className='icon-stack display-3 flex-shrink-0'>
                                                 <i className="fal fa-circle icon-stack-3x opacity-100 color-primary-400"></i>
                                                 <i className="fas fa-graduation-cap icon-stack-1x opacity-100 color-primary-500"></i>
@@ -155,7 +177,7 @@ const Characters = () => {
                                 </div>
                                 <div className="card mb-g">
                                     <div className="card-body">
-                                        <Link to="/shop">
+                                        <Link to='/shop'>
                                             <div className='icon-stack display-3 flex-shrink-0'>
                                                 <i className="fal fa-circle icon-stack-3x opacity-100 color-warning-400"></i>
                                                 <i className="fas fa-handshake icon-stack-1x opacity-100 color-warning-500"></i>
@@ -232,7 +254,7 @@ const Characters = () => {
                                         </div>
                                         <div className="col-12">
                                             <div className="p-3 text-center">
-                                                <Link to="/">View all</Link>
+                                                <Link to='/'>View all</Link>
                                             </div>
                                         </div>
                                     </div>
@@ -299,5 +321,12 @@ const Characters = () => {
     )
 }
 
+const mapStateToProps = (state) => {
+    return {
+        account: state.account.account
+    }
+}
 
-export default Characters
+
+
+export default connect(mapStateToProps, { signOut })(Characters)

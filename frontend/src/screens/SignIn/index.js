@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { signIn } from './SignInActions'
+import { signIn } from '../../actions/AccountActions'
 
 const SignIn = (props) => {
     const { signIn, account} = props
 
     if (account) {
-        return <Redirect to='/account' />
+        return <Redirect to='/account/characters' />
     }
 
     const submitHandler = (e) => {
@@ -40,7 +40,7 @@ const SignIn = (props) => {
 
                 <div className="form-group">
                     <label className="form-label" htmlFor="password">Password</label>
-                    <input type="password" name="password" className="form-control" placeholder="*********" />
+                    <input type="password" name="password" className="form-control" />
                 </div>
 
                 <div className="form-group text-left">
@@ -63,7 +63,7 @@ const SignIn = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        account: state.signIn.account
+        account: state.account.account
     }
 }
 
