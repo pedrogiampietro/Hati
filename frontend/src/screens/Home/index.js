@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom'
 import SignIn from '../SignIn'
 
 const Home = () => {
@@ -10,7 +9,7 @@ const Home = () => {
       <body className="mod-bg-1">
       <div className="page-wrapper">
           <div className="page-inner">
-              <aside className="page-sidebar">
+              <aside className="page-sidebar" id="mySidenav">
                   <nav id="js-primary-nav" className="primary-nav" role="navigation">
                       <div className="info-card">
                           <img src="https://i.imgur.com/HoKkhv2.png" className="profile-image rounded-circle" alt="Logo" />
@@ -38,21 +37,9 @@ const Home = () => {
                                   Login
                               </a>
   
-                              <div className="modal fade bannerformmodal" tabindex="-1" role="dialog" aria-labelledby="bannerformmodal" aria-hidden="true" id="bannerformmodal">
-                                  <div className="modal-dialog modal-dialog-centered">
-                                      <div className="modal-content">
-                                          <div className="modal-content">
-                                              <div className="modal-header">
-                                                  <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                              </div>
-                                              <div className="modal-body">
-                                                  <SignIn />
-                                              </div>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
+                 
                           </li>
+                          
                           <li>
                               <a href="intel_analytics_dashboard.html" title="News Dashboard" data-filter-tags="application intel analytics dashboard">
                                   <i className="fal fa-cloud-download" aria-hidden="true"></i>
@@ -145,45 +132,22 @@ const Home = () => {
                               <i className="fal fa-angle-down d-inline-block ml-1 fs-lg color-primary-300"></i>
                           </span>
                       </div>
-  
-                      <div className="hidden-md-down dropdown-icon-menu position-relative">
-                          <span className="header-btn btn js-waves-off" data-action="toggle" data-class="nav-function-hidden" title="Hide Navigation">
-                              <i className="ni ni-menu"></i>
-                          </span>
-                          <ul>
-                              <li>
-                                  <span className="btn js-waves-off" data-action="toggle" data-class="nav-function-minify" title="Minify Navigation">
-                                      <i className="ni ni-minify-nav"></i>
-                                  </span>
-                              </li>
-                              <li>
-                                  <span className="btn js-waves-off" data-action="toggle" data-class="nav-function-fixed" title="Lock Navigation">
-                                      <i className="ni ni-lock-nav"></i>
-                                  </span>
-                              </li>
-                          </ul>
-                      </div>
-  
-                      <div className="hidden-lg-up">
-                          <span className="header-btn btn press-scale-down" data-action="toggle" data-class="mobile-nav-on">
-                              <i className="ni ni-menu"></i>
-                          </span>
-                      </div>
-                      <div className="search">
-                          <form className="app-forms hidden-xs-down" role="search" action="page_search.html" autocomplete="off">
-                              <input type="text" id="search-field" placeholder="Search for anything" className="form-control" tabindex="1" />
-                              <span className="btn-danger btn-search-close js-waves-off d-none" data-action="toggle" data-class="mobile-search-on">
-                                  <i className="fal fa-times"></i>
-                              </span>
-                          </form>
-                      </div>
-                      <div className="ml-auto d-flex">
-                          <div className="hidden-sm-up">
-                              <span className="header-icon" data-action="toggle" data-class="mobile-search-on" data-focus="search-field" title="Search">
-                                  <i className="fal fa-search"></i>
-                              </span>
-                          </div>
-                      </div>
+
+                      <div class="search">
+                    
+                            <form class="app-forms hidden-xs-down" role="search" action="page_search.html" autocomplete="off">
+                                <input type="text" id="search-field" placeholder="Search of Character" class="form-control" tabindex="1" />
+                             
+                        
+                            <div class="input-group input-group-lg mb-3">
+                            <input type="text" class="form-control shadow-inset-2" id="filter-icon" aria-label="type 2 or more letters" />
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fal fa-search"></i></span>
+                            </div>
+                        </div>
+                        </form>
+                        </div>
+                    
                   </header>
   
                   <main id="js-page-content" role="main" className="page-content">
@@ -199,7 +163,22 @@ const Home = () => {
                               </small>
                           </h1>
                       </div>
-  
+
+                      <div className="modal fade" tabindex="-1" role="dialog" aria-labelledby="bannerformmodal" aria-hidden="true" id="bannerformmodal">
+                                  <div className="modal-dialog modal-dialog-centered">
+                                      <div className="modal-content">
+                                          <div className="modal-content">
+                                              <div className="modal-header">
+                                                  <button type="button" className="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                              </div>
+                                              <div className="modal-body">
+                                                  <SignIn />
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              
                       <div className="fs-lg fw-300 p-5 bg-white border-faded rounded mb-g">
                           <h3 className="mb-g">
                               Hi Everyone,

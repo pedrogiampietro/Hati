@@ -47,7 +47,7 @@ const SignIn = (props) => {
             </form>
         </div>
         <div className="blankpage-footer text-center">
-             <Link to="/recovery"><strong>Recover Password</strong></Link>
+             <Link to="/recovery"><strong>Recover Password</strong></Link> <br/>
              <Link to="/sign-up"><strong>Register Account</strong></Link>
         </div>
     </div>
