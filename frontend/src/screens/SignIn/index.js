@@ -1,16 +1,22 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { signIn } from './SignInActions'
 
 const SignIn = (props) => {
+    const { signIn, account} = props
 
-    const { account, signIn} = props
+    if (account) {
+        return <Redirect to='/account' />
+    }
 
     const submitHandler = (e) => {
         e.preventDefault()
 
-        signIn({ name: '1234563', password: '123456' })
+        const formData = new FormData(e.target)
+        const data = Object.fromEntries(formData)
+
+        signIn(data)
     }
 
     console.log('***** signIn.account', account)
@@ -28,19 +34,19 @@ const SignIn = (props) => {
         <div className="card p-4 border-top-left-radius-0 border-top-right-radius-0">
          <form onSubmit={submitHandler}>
                 <div className="form-group">
-                    <label className="form-label" htmlFor="username">Account Name</label>
+                    <label className="form-label" htmlFor="accountname">Account Name</label>
                     <input type="text" className="form-control" placeholder="Your account name" name="name" />
                 </div>
 
                 <div className="form-group">
-                    <label className="form-label" for="password">Password</label>
+                    <label className="form-label" htmlFor="password">Password</label>
                     <input type="password" name="password" className="form-control" placeholder="*********" />
                 </div>
 
                 <div className="form-group text-left">
                     <div className="custom-control custom-checkbox">
                         <input type="checkbox" className="custom-control-input" id="rememberme" />
-                        <label className="custom-control-label" for="rememberme"> Remember me for the next 30 days</label>
+                        <label className="custom-control-label" htmlFor="rememberme"> Remember me for the next 30 days</label>
                     </div>
                 </div>
                 <button type="submit" className="btn btn-default float-right">Login</button>
