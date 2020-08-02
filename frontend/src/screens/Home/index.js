@@ -1,5 +1,8 @@
 import React from 'react';
 import SignIn from '../SignIn'
+import Menu from '../Layouts/Menu'
+import Header from '../Layouts/Header'
+import Footer from '../Layouts/Footer'
 
 const Home = () => {
 
@@ -9,146 +12,10 @@ const Home = () => {
       <body className="mod-bg-1">
       <div className="page-wrapper">
           <div className="page-inner">
-              <aside className="page-sidebar" id="mySidenav">
-                  <nav id="js-primary-nav" className="primary-nav" role="navigation">
-                      <div className="info-card">
-                          <img src="https://i.imgur.com/HoKkhv2.png" className="profile-image rounded-circle" alt="Logo" />
-                          <div className="info-card-text">
-                              <span className="d-flex align-items-center text-white">
-                                  <span className="text-truncate text-truncate-sm d-inline-block">
-                                      <h1>Hati</h1>
-                                  </span>
-                              </span>
-                              <span className="d-inline-block text-truncate text-truncate-sm">AAC</span>
-                          </div>
-                          <img src={require('../../assets/img/card-backgrounds/cover-2-lg.png')} className="cover" alt="cover" />
-                      </div>
-                      <ul id="js-nav-menu" className="nav-menu">
-                          <li>
-                              <a href="intel_analytics_dashboard.html" title="News Dashboard" data-filter-tags="application intel analytics dashboard">
-                                  <i className="fal fa-globe"></i>
-                                  <span className="nav-link-text" data-i18n="nav.application_intel_analytics_dashboard">News</span>
-                              </a>
-                          </li>
-  
-                          <li>
-                              <a href="intel_analytics_dashboard.html" data-toggle="modal" data-target="#bannerformmodal">
-                                  <i className="fal fa-sign-in" aria-hidden="true"></i>
-                                  Login
-                              </a>
-  
-                 
-                          </li>
-                          
-                          <li>
-                              <a href="intel_analytics_dashboard.html" title="News Dashboard" data-filter-tags="application intel analytics dashboard">
-                                  <i className="fal fa-cloud-download" aria-hidden="true"></i>
-                                  <span className="nav-link-text" data-i18n="nav.application_intel_analytics_dashboard">Download</span>
-                              </a>
-                          </li>
-                          <li className="nav-title">Community</li>
-                          <li>
-                              <a href="intel_analytics_dashboard.html" title="News Dashboard" data-filter-tags="application intel analytics dashboard">
-                                  <i className="fal fa-chart-pie"></i>
-                                  <span className="nav-link-text" data-i18n="nav.application_intel_analytics_dashboard">Online List</span>
-                              </a>
-                          </li>
-                          <li>
-                              <a href="intel_analytics_dashboard.html" title="News Dashboard" data-filter-tags="application intel analytics dashboard">
-                                  <i className="fal fa-bolt" aria-hidden="true"></i>
-                                  <span className="nav-link-text" data-i18n="nav.application_intel_analytics_dashboard">Activity</span>
-                              </a>
-                          </li>
-                          <li>
-                              <a href="intel_analytics_dashboard.html" title="Form Stuff" data-filter-tags="form stuff">
-                                  <i className="fal fa-trophy" aria-hidden="true"></i>
-                                  <span className="nav-link-text" data-i18n="nav.form_stuff">Highscores</span>
-                              </a>
-                              <ul>
-                                  <li>
-                                      <a href="form_basic_inputs.html" title="Basic Inputs" data-filter-tags="form stuff basic inputs">
-                                          <span className="nav-link-text" data-i18n="nav.form_stuff_basic_inputs">Basic Inputs</span>
-                                      </a>
-                                  </li>
-                                  <li>
-                                      <a href="form_checkbox_radio.html" title="Checkbox & Radio" data-filter-tags="form stuff checkbox & radio">
-                                          <span className="nav-link-text" data-i18n="nav.form_stuff_checkbox_&_radio">Checkbox & Radio</span>
-                                      </a>
-                                  </li>
-                                  <li>
-                                      <a href="form_input_groups.html" title="Input Groups" data-filter-tags="form stuff input groups">
-                                          <span className="nav-link-text" data-i18n="nav.form_stuff_input_groups">Input Groups</span>
-                                      </a>
-                                  </li>
-                                  <li>
-                                      <a href="form_validation.html" title="Validation" data-filter-tags="form stuff validation">
-                                          <span className="nav-link-text" data-i18n="nav.form_stuff_validation">Validation</span>
-                                      </a>
-                                  </li>
-                              </ul>
-                          </li>
-                          <li>
-                              <a href="intel_analytics_dashboard.html" title="News Dashboard" data-filter-tags="application intel analytics dashboard">
-                                  <i className="fal fa-comments" aria-hidden="true"></i>
-                                  <span className="nav-link-text" data-i18n="nav.application_intel_analytics_dashboard">Forum</span>
-                              </a>
-                          </li>
-                          <li className="nav-title">Guilds</li>
-                          <li>
-                              <a href="intel_analytics_dashboard.html" title="News Dashboard" data-filter-tags="application intel analytics dashboard">
-                                  <i className="fal fa-shield-alt"></i>
-                                  <span className="nav-link-text" data-i18n="nav.application_intel_analytics_dashboard">Guild List</span>
-                              </a>
-                          </li>
-                          <li>
-                              <a href="intel_analytics_dashboard.html" title="News Dashboard" data-filter-tags="application intel analytics dashboard">
-                                  <i className="fal fa-fire" aria-hidden="true"></i>
-                                  <span className="nav-link-text" data-i18n="nav.application_intel_analytics_dashboard">Guild War</span>
-                              </a>
-                          </li>
-                          <li className="nav-title">Market</li>
-                          <li>
-                              <a href="intel_analytics_dashboard.html" title="News Dashboard" data-filter-tags="application intel analytics dashboard">
-                                  <i className="fal fa-shopping-cart" aria-hidden="true"></i>
-                                  <span className="nav-link-text" data-i18n="nav.application_intel_analytics_dashboard">Shop</span>
-                              </a>
-                          </li>
-                      </ul>
-                      <div className="filter-message js-filter-message bg-success-600"></div>
-                  </nav>
-  
-                  <div className="nav-footer shadow-top">
-                      <span data-action="toggle" data-class="nav-function-minify" className="hidden-md-down"> </span>
-                  </div>
-              </aside>
+              <Menu />
   
               <div className="page-content-wrapper">
-                  <header className="page-header" role="banner">
-                      <div className="page-logo">
-                          <span className="page-logo-link press-scale-down d-flex align-items-center position-relative" data-toggle="modal" data-target="#modal-shortcut">
-                              <img src="img/logo.png" alt="Hati AAC" aria-roledescription="logo" />
-                              <span className="page-logo-text mr-1">Hati AAC</span>
-                              <span className="position-absolute text-white opacity-50 small pos-top pos-right mr-2 mt-n2"></span>
-                              <i className="fal fa-angle-down d-inline-block ml-1 fs-lg color-primary-300"></i>
-                          </span>
-                      </div>
-
-                      <div class="search">
-                    
-                            <form class="app-forms hidden-xs-down" role="search" action="page_search.html" autocomplete="off">
-                                <input type="text" id="search-field" placeholder="Search of Character" class="form-control" tabindex="1" />
-                             
-                        
-                            <div class="input-group input-group-lg mb-3">
-                            <input type="text" class="form-control shadow-inset-2" id="filter-icon" aria-label="type 2 or more letters" />
-                            <div class="input-group-append">
-                                <span class="input-group-text"><i class="fal fa-search"></i></span>
-                            </div>
-                        </div>
-                        </form>
-                        </div>
-                    
-                  </header>
+                  <Header />
   
                   <main id="js-page-content" role="main" className="page-content">
                       <ol className="breadcrumb page-breadcrumb">
@@ -242,18 +109,7 @@ const Home = () => {
   
                   <div className="page-content-overlay" data-action="toggle" data-class="mobile-nav-on"></div>
   
-                  <footer className="page-footer" role="contentinfo">
-                      <div className="d-flex align-items-center flex-1 text-muted">
-                          <span className="hidden-md-down fw-700">2020 © Hati by&nbsp;<span className="text-primary fw-500" title="hati.com" target="_blank">Hati.com</span></span>
-                      </div>
-                      <div>
-                          <ul className="list-table m-0">
-                              <li><a href="intel_introduction.html" className="text-secondary fw-700">About</a></li>
-                              <li className="pl-3"><a href="info_app_licensing.html" className="text-secondary fw-700">License</a></li>
-                              <li className="pl-3"><a href="info_app_docs.html" className="text-secondary fw-700">Documentation</a></li>
-                          </ul>
-                      </div>
-                  </footer>
+                 <Footer />
   
                   <div className="modal fade modal-backdrop-transparent" id="modal-shortcut" tabindex="-1" role="dialog" aria-labelledby="modal-shortcut" aria-hidden="true">
                       <div className="modal-dialog modal-dialog-top modal-transparent" role="document">

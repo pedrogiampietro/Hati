@@ -1,9 +1,9 @@
 import React from 'react';
-import Layout from '../../../Layouts/Account'
+import Menu from '../../../Layouts/Menu'
 
 const CreateCharacter = () => {
     return (
-        <Layout>
+        <Menu>
             <h1>Create Character</h1>
         <div>
                 <form>
@@ -35,7 +35,7 @@ const CreateCharacter = () => {
                     </div>
                 </form>
             </div>
-        </Layout>
+        </Menu>
     )
 }
 
