@@ -11,6 +11,9 @@
 O <strong>Hati</strong> é um projeto a fins de estudos em Javascript.
 
 - Express
+- React
+- Redux
+- Cookie
 - MySQL
 - Axios
 - Sequelize
