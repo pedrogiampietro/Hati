@@ -10,16 +10,16 @@ import Footer from '../../Layouts/Footer'
 const Characters = ({ players, playerList, signOut, account }) => {
 
     useEffect(() => {
+        playerList()
+    }, [playerList])
 
-    }, [])
-
+    
     if (!account) {
         return <Redirect to='/' />
     }
 
     const signOutHandler = (e) => {
         e.preventDefault()
-        
         signOut()
     }
 
@@ -110,7 +110,7 @@ const Characters = ({ players, playerList, signOut, account }) => {
                                         </div>
                                         {players && players.length ? players.map((player) => {
                                         return (
-                                        <div className="col-4">
+                                        <div key={player.id} className="col-4">
                                         <Link to='/account/characters/view/:id'>
                                                 <span className="profile-image rounded-circle d-block m-auto" style={{  
                                                 backgroundImage: `url("https://www.tibiawiki.com.br/images/e/e4/Outfit_Citizen_Male.gif")`,
@@ -312,7 +312,7 @@ const Characters = ({ players, playerList, signOut, account }) => {
 const mapStateToProps = (state) => {
     return {
         account: state.account.account,
-        players: state.player.players
+        players: state.player.player
     }
 }
 

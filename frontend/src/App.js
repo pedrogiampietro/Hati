@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 // import Routes from './routes'
+import { connect } from 'react-redux'
 import {BrowserRouter, Route, Switch} from 'react-router-dom'
-
+import { initAccount } from './actions/AccountActions' 
 import Home from './screens/Home'
 import SignIn from './screens/SignIn'
 import SignUp from './screens/SignUp'
@@ -13,7 +14,12 @@ import './assets/css/vendors.bundle.css';
 import '../node_modules/bootstrap/js/src/modal'
 
 
-const App = () => {
+const App = ({ initAccount }) => {
+
+    useEffect(() => {
+        initAccount()
+    }, [initAccount])
+
     return (
 
     <BrowserRouter>
@@ -39,4 +45,10 @@ const App = () => {
     )
 } 
 
-export default App
+const mapStateToProps = (state) => {
+    return {
+        account: state.account.account
+    }
+}
+
+export default connect(mapStateToProps, { initAccount })(App)

@@ -42,6 +42,14 @@ export default function(state = initialState, action){
 
       return{ ...state, account: null }
 
+      case INIT_ACCOUNT: {
+
+        const account = getAccount()
+        return { ...state, account}
+
+      }
+
+
     default:
       return state;
   }

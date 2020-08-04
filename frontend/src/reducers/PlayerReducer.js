@@ -36,7 +36,7 @@ export default function(state = initialState, action) {
       
             case PLAYER_LIST: {
             const response = payload ? payload.data : null
-            const players = response ? response.data : null
+            const players = response ? response.players : null
             return { ...state, players }
             }
       

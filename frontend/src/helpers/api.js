@@ -44,12 +44,12 @@ export const apiDelete = (path, data = {}) => {
     return axios.delete(url, options)
 }
 
-export const apiGet = (path, params = {}) => {
+export const apiGet = async (path, params = {}) => {
 
     const url = getApiUrl(path)
     const options = {
         headers: getHeaders()
     }
 
-    return axios.get(url, options)
+    return await axios.get(url, options)
 }
