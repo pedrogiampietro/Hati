@@ -19,7 +19,6 @@ const CreateCharacter = ({ player, playerCreate }) => {
         return <Redirect to='/account/characters' />
     }
 
-        console.log('****** Create.player', player)
 
     return (
         <div>

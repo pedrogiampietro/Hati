@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { signOut } from '../../../actions/AccountActions'
+import { playerList } from '../../../actions/PlayerActions'
 import Menu from '../../Layouts/Menu'
 import Header from '../../Layouts/Header'
 import Footer from '../../Layouts/Footer'
 
-const Characters = ({ signOut, account }) => {
+const Characters = ({ players, playerList, signOut, account }) => {
+
+    useEffect(() => {
+
+    }, [])
 
     if (!account) {
         return <Redirect to='/' />
@@ -14,7 +19,7 @@ const Characters = ({ signOut, account }) => {
 
     const signOutHandler = (e) => {
         e.preventDefault()
-
+        
         signOut()
     }
 
@@ -43,9 +48,9 @@ const Characters = ({ signOut, account }) => {
                                 </small>
                             </h1>
 
-                            <div class="d-flex mr-0">
-                                <div class="mr-2">
-                                    <span class="peity-donut" />
+                            <div className="d-flex mr-0">
+                                <div className="mr-2">
+                                    <span className="peity-donut" />
                                 </div>
                                 <div>
                                     <button className="btn btn-primary" onClick={signOutHandler}>Logout</button>
@@ -103,38 +108,21 @@ const Characters = ({ signOut, account }) => {
                                                 </h2>
                                             </div>
                                         </div>
+                                        {players && players.length ? players.map((player) => {
+                                        return (
                                         <div className="col-4">
                                         <Link to='/account/characters/view/:id'>
                                                 <span className="profile-image rounded-circle d-block m-auto" style={{  
                                                 backgroundImage: `url("https://www.tibiawiki.com.br/images/e/e4/Outfit_Citizen_Male.gif")`,
                                                 backgroundSize: 'cover',
                                                 }}></span>
-                                                <span className="d-block text-truncate text-muted fs-xs mt-1">Oliver Kopyov</span>
+                                                <span className="d-block text-truncate text-muted fs-xs mt-1">{player.name}</span>
                                             </Link>
-                                        </div>
-                                        <div className="col-4">
-                                        <Link to='/account/characters/view/:id'>
-                                                <span className="profile-image rounded-circle d-block m-auto" style={{  
-                                                backgroundImage: `url("https://www.tibiawiki.com.br/images/e/e4/Outfit_Citizen_Male.gif")`,
-                                                backgroundSize: 'cover',
-                                                }}></span>
-                                                <span className="d-block text-truncate text-muted fs-xs mt-1">Oliver Kopyov</span>
-                                            </Link>
-                                        </div>
-                                        <div className="col-4">
-                                            <Link to='/account/characters/view/:id'>
-                                                <span className="profile-image rounded-circle d-block m-auto" style={{  
-                                                backgroundImage: `url("https://www.tibiawiki.com.br/images/e/e4/Outfit_Citizen_Male.gif")`,
-                                                backgroundPosition: 'center',
-                                                backgroundSize: 'cover',
-                                                backgroundRepeat: 'no-repeat'
-                                                }}></span>
-                                                <span className="d-block text-truncate text-muted fs-xs mt-1">Oliver Kopyov</span>
-                                            </Link>
-                                        </div>
-                        
-                                     
-                                       
+                                        </div> 
+                                        )
+                                    }) 
+                                    : null }
+
                                         <div className="col-12">
                                            
                                         </div>
@@ -323,10 +311,11 @@ const Characters = ({ signOut, account }) => {
 
 const mapStateToProps = (state) => {
     return {
-        account: state.account.account
+        account: state.account.account,
+        players: state.player.players
     }
 }
 
 
 
-export default connect(mapStateToProps, { signOut })(Characters)
+export default connect(mapStateToProps, { playerList, signOut })(Characters)
