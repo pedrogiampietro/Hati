@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import SignIn from '../SignIn'
 import Menu from '../Layouts/Menu'
 import Header from '../Layouts/Header'
@@ -8,8 +8,7 @@ const Home = () => {
 
     return (
         
-      
-      <body className="mod-bg-1">
+     <div className="mod-bg-1">
       <div className="page-wrapper">
           <div className="page-inner">
               <Menu />
@@ -31,7 +30,7 @@ const Home = () => {
                           </h1>
                       </div>
 
-                      <div className="modal fade" tabindex="-1" role="dialog" aria-labelledby="bannerformmodal" aria-hidden="true" id="bannerformmodal">
+                      <div className="modal fade" tabIndex="-1" role="dialog" aria-labelledby="bannerformmodal" aria-hidden="true" id="bannerformmodal">
                                   <div className="modal-dialog modal-dialog-centered">
                                       <div className="modal-content">
                                           <div className="modal-content">
@@ -111,7 +110,7 @@ const Home = () => {
   
                  <Footer />
   
-                  <div className="modal fade modal-backdrop-transparent" id="modal-shortcut" tabindex="-1" role="dialog" aria-labelledby="modal-shortcut" aria-hidden="true">
+                  <div className="modal fade modal-backdrop-transparent" id="modal-shortcut" tabIndex="-1" role="dialog" aria-labelledby="modal-shortcut" aria-hidden="true">
                       <div className="modal-dialog modal-dialog-top modal-transparent" role="document">
                           <div className="modal-content">
                               <div className="modal-body">
@@ -176,7 +175,7 @@ const Home = () => {
           </span>
       </nav>
   
-      <div className="modal fade js-modal-messenger modal-backdrop-transparent" tabindex="-1" role="dialog" aria-hidden="true">
+      <div className="modal fade js-modal-messenger modal-backdrop-transparent" tabIndex="-1" role="dialog" aria-hidden="true">
           <div className="modal-dialog modal-dialog-right">
               <div className="modal-content h-100">
                   <div className="dropdown-header bg-trans-gradient d-flex align-items-center w-100">
@@ -443,8 +442,8 @@ const Home = () => {
   
                           <div className="d-flex flex-column">
                               <div className="border-faded border-right-0 border-bottom-0 border-left-0 flex-1 mr-3 ml-3 position-relative shadow-top">
-                                  <div className="pt-3 pb-1 pr-0 pl-0 rounded-0" tabindex="-1">
-                                      <div id="msgr_input" contenteditable="true" data-placeholder="Type your message here..." className="height-10 form-content-editable"></div>
+                                  <div className="pt-3 pb-1 pr-0 pl-0 rounded-0" tabIndex="-1">
+                                      <div id="msgr_input" contentEditable="true" data-placeholder="Type your message here..." className="height-10 form-content-editable"></div>
                                   </div>
                               </div>
                               <div className="height-8 px-3 d-flex flex-row align-items-center flex-wrap flex-shrink-0">
@@ -468,7 +467,7 @@ const Home = () => {
           </div>
       </div>
   
-      <div className="modal fade js-modal-settings modal-backdrop-transparent" tabindex="-1" role="dialog" aria-hidden="true">
+      <div className="modal fade js-modal-settings modal-backdrop-transparent" tabIndex="-1" role="dialog" aria-hidden="true">
           <div className="modal-dialog modal-dialog-right modal-md">
               <div className="modal-content">
                   <div className="dropdown-header bg-trans-gradient d-flex justify-content-center align-items-center w-100">
@@ -589,10 +588,10 @@ const Home = () => {
               </div>
           </div>
       </div>
-  </body>
+  </div>
 
     )
 
 }
 
-export default Home
+export default Home;

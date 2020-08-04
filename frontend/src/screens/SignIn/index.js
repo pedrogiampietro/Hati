@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { signIn } from '../../actions/AccountActions'
+import { getFormData } from '../../helpers/form';
 
 const SignIn = (props) => {
     const { signIn, account} = props
@@ -12,22 +13,17 @@ const SignIn = (props) => {
 
     const submitHandler = (e) => {
         e.preventDefault()
-
-        const formData = new FormData(e.target)
-        const data = Object.fromEntries(formData)
-
+        const data = getFormData(e)
         signIn(data)
     }
-
-    console.log('***** signIn.account', account)
 
     return (
 
         <div className="blankpage-form-field">
         <div className="page-logo m-0 w-100 align-items-center justify-content-center rounded border-bottom-left-radius-0 border-bottom-right-radius-0 px-4">
             <a href="form_input_groups.html" className="page-logo-link press-scale-down d-flex align-items-center">
-                <img src="https://i.imgur.com/HoKkhv2.png" alt="Hati AAC" aria-roledescription="logo" />
-                <span className="page-logo-text mr-1">Hati AAC</span>
+                <img src="https://i.imgur.com/ACIERD9.png" alt="Hati AAC" aria-roledescription="logo" />
+                <span className="page-logo-text mr-1"></span>
                 <i className="fal fa-angle-down d-inline-block ml-1 fs-lg color-primary-300"></i>
             </a>
         </div>

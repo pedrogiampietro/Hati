@@ -1,30 +1,49 @@
 import React from 'react';
-import Menu from '../../../Layouts/Menu'
+import { Redirect } from 'react-router-dom';
+import { connect } from 'react-redux'
+import { getFormData } from '../../../../helpers/form'
+import { playerCreate } from '../../../../actions/PlayerActions'
 
-const CreateCharacter = () => {
+
+// import Menu from '../../../Layouts/Menu'
+
+const CreateCharacter = ({ player, playerCreate }) => {
+
+    const submitHandler = (e) => {
+        e.preventDefault()
+        const data = getFormData(e)
+        playerCreate(data)
+    }
+
+    if (player) {
+        return <Redirect to='/account/characters' />
+    }
+
+        console.log('****** Create.player', player)
+
     return (
-        <Menu>
+        <div>
             <h1>Create Character</h1>
         <div>
-                <form>
+                <form onSubmit={submitHandler}>
                     <div className="form-group">
                         <label>Name</label>
-                        <input type="text" className="form-control" />
+                        <input type="text" className="form-control" name="name" required />
                     </div>
           
-                    <div class="form-check form-check-radio">
-                        <p class="category">Sex</p>
-                        <div class="form-check form-check-radio">
-                            <label class="form-check-label">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" />
-                            <span class="form-check-sign"></span>
+                    <div className="form-check form-check-radio">
+                        <p className="category">Sex</p>
+                        <div className="form-check form-check-radio">
+                            <label className="form-check-label">
+                            <input className="form-check-input" type="radio" name="sex" id="sex" value="male" defaultChecked />
+                            <span className="form-check-sign"></span>
                             Male
                             </label>
                         </div>
-                        <div class="form-check form-check-radio">
-                            <label class="form-check-label">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option2" checked />
-                            <span class="form-check-sign"></span>
+                        <div className="form-check form-check-radio">
+                            <label className="form-check-label">
+                            <input className="form-check-input" type="radio" name="sex" id="sex" value="female" />
+                            <span className="form-check-sign"></span>
                             Female
                             </label>
                         </div>
@@ -35,9 +54,15 @@ const CreateCharacter = () => {
                     </div>
                 </form>
             </div>
-        </Menu>
+      </div>
     )
 }
 
+const mapStateToProps = (state) => {
+    return {
+        player: state.player.player
+    }
+}
 
-export default CreateCharacter
+
+export default connect(mapStateToProps, { playerCreate })(CreateCharacter)
