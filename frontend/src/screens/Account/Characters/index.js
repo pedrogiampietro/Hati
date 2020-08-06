@@ -13,7 +13,6 @@ const Characters = ({ players, playerList, signOut, account }) => {
         playerList()
     }, [playerList])
 
-    
     if (!account) {
         return <Redirect to='/' />
     }
@@ -138,7 +137,12 @@ const Characters = ({ players, playerList, signOut, account }) => {
                                     
                                     <div className="card-body py-0 px-4 border-faded border-right-0 border-bottom-0 border-left-0">
                                         <div className="d-flex flex-column align-items-center">
-                                                ainda vou pensar em algo aqui
+                                                
+                                                ID: {account.id} <br />
+                                                Name: {account.name} <br />
+                                                Password: {account.password} <br />
+                                                Email: {account.email} <br />
+
                                         </div>
                                     </div>
                                 </div>
@@ -252,56 +256,9 @@ const Characters = ({ players, playerList, signOut, account }) => {
                             </div>
                         </div>
                     </main>
-           
-                    <div className="page-content-overlay" data-action="toggle" data-classname="mobile-nav-on"></div> 
                   
                     <Footer />
         
-                    <div className="modal fade modal-backdrop-transparent" id="modal-shortcut" tabIndex="-1" role="dialog" aria-labelledby="modal-shortcut" aria-hidden="true">
-                        <div className="modal-dialog modal-dialog-top modal-transparent" role="document">
-                            <div className="modal-content">
-                                <div className="modal-body">
-                                    <ul className="app-list w-auto h-auto p-0 text-left">
-                                        <li>
-                                            <a href="intel_introduction.html" className="app-list-item text-white border-0 m-0">
-                                                <div className="icon-stack">
-                                                    <i className="base base-7 icon-stack-3x opacity-100 color-primary-500 "></i>
-                                                    <i className="base base-7 icon-stack-2x opacity-100 color-primary-300 "></i>
-                                                    <i className="fal fa-home icon-stack-1x opacity-100 color-white"></i>
-                                                </div>
-                                                <span className="app-list-name">
-                                                    Home
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="page_inbox_general.html" className="app-list-item text-white border-0 m-0">
-                                                <div className="icon-stack">
-                                                    <i className="base base-7 icon-stack-3x opacity-100 color-success-500 "></i>
-                                                    <i className="base base-7 icon-stack-2x opacity-100 color-success-300 "></i>
-                                                    <i className="ni ni-envelope icon-stack-1x text-white"></i>
-                                                </div>
-                                                <span className="app-list-name">
-                                                    Inbox
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="intel_introduction.html" className="app-list-item text-white border-0 m-0">
-                                                <div className="icon-stack">
-                                                    <i className="base base-7 icon-stack-2x opacity-100 color-primary-300 "></i>
-                                                    <i className="fal fa-plus icon-stack-1x opacity-100 color-white"></i>
-                                                </div>
-                                                <span className="app-list-name">
-                                                    Add More
-                                                </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div> 
                 </div>
             </div>
         </div>

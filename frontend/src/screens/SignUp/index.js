@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { signUp } from '../../actions/AccountActions'
 import { getFormData } from '../../helpers/form';
 
-
 const SignUp = (props) => {
     const { signUp, account } = props
 
@@ -14,7 +13,7 @@ const SignUp = (props) => {
         signUp(data)
         
     }
-
+    
     if (account) {
         return <Redirect to='/account/characters' />
     }

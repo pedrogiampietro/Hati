@@ -1,24 +1,16 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { getFormData } from '../../../../helpers/form'
 import { playerCreate } from '../../../../actions/PlayerActions'
 
-
-// import Menu from '../../../Layouts/Menu'
-
-const CreateCharacter = ({ player, playerCreate }) => {
+const CreateCharacter = ({ account, playerCreate }) => {
 
     const submitHandler = (e) => {
         e.preventDefault()
         const data = getFormData(e)
         playerCreate(data)
     }
-
-    if (player) {
-        return <Redirect to='/account/characters' />
-    }
-
 
     return (
         <div>

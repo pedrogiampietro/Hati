@@ -26,16 +26,14 @@ const Menu = () => {
                                   <span className="nav-link-text" data-i18n="nav.application_intel_analytics_dashboard">News</span>
                             </Link>
                           </li>
-  
+
                           <li>
-                              <a href="intel_analytics_dashboard.html" data-toggle="modal" data-target="#bannerformmodal">
-                                  <i className="fal fa-sign-in" aria-hidden="true"></i>
-                                  Login
-                              </a>
-  
-                 
+                            <Link to='/sign-in'>
+                            <i className="fal fa-sign-in" aria-hidden="true"></i>
+                                  <span className="nav-link-text" data-i18n="nav.application_intel_analytics_dashboard">Login</span>
+                            </Link>
                           </li>
-                          
+                        
                           <li>
                              <Link to='/download'>
                                   <i className="fal fa-cloud-download" aria-hidden="true"></i>
