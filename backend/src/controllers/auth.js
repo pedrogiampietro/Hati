@@ -12,8 +12,8 @@ router.post('/sign-in', accountSignIn, async (req, res) => {
     const { name, password, } = req.body
     const account = await Account.findOne({ where: { name } })  
 
-    // validar o password     
-    const match = account ? crypto.createVerify('sha1', password, account.password) : null
+    // validar o password     (password, account.password)
+    const match = account ? crypto.pbkdf2Sync(password, 'salt', 1000, 64,'sha1').toString('hex') : null
         if (!match) return res.jsonBadRequest(null, getMessage('account.signin.failed'))   
 
     const token = generateJwt({ id: account.id })
