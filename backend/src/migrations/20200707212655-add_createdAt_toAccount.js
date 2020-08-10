@@ -3,10 +3,10 @@
 module.exports = {
 
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.addColumn('Accounts', 'createdAt', {
+    return queryInterface.addColumn('accounts', 'createdAt', {
       type: Sequelize.INTEGER,
       allowNull: false,
-      after: 'tokens',
+      after: 'creation',
       defaultValue: 0,
     })
 
@@ -14,7 +14,7 @@ module.exports = {
 
   down: async (queryInterface, Sequelize) => {
 
-    return queryInterface.removeColumn('Accounts', 'createdAt')
+    return queryInterface.removeColumn('accounts', 'createdAt')
 
   }
 };

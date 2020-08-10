@@ -2,15 +2,15 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.addColumn('Accounts', 'jwtVersion', {
+    return queryInterface.addColumn('accounts', 'jwtVersion', {
       type: Sequelize.INTEGER,
       allowNull: false,
-      after: 'tokens',
+      after: 'creation',
       defaultValue: 0,
     });
   },
 
   down: async (queryInterface, Sequelize) => {
-    return queryInterface.removeColumn('Accounts', 'jwtVersion');
+    return queryInterface.removeColumn('accounts', 'jwtVersion');
   }
 };
