@@ -1,12 +1,12 @@
 const express = require('express')
-const { Player } = require('../models')
+const { player } = require('../models')
 
 const router = express.Router()
 
 router.get('/', async (req, res) => {
 
     const { account_id } = req
-    const players = await Player.findAll({ where: {account_id: account_id} })
+    const players = await player.findAll({ where: {account_id: account_id} })
 
     return res.jsonOK(players)
 
@@ -16,10 +16,10 @@ router.get('/:id', async (req, res) => {
 
     const { account_id } = req
     const { id } = req.params
-    const player = await Player.findOne({ where: { id: id, account_id: account_id}})
-    if (!player) return res.jsonNotFound(null)
+    const players = await player.findOne({ where: { id: id, account_id: account_id}})
+    if (!players) return res.jsonNotFound(null)
 
-    return res.jsonOK(player)
+    return res.jsonOK(players)
 })
 
 router.post('/', async (req, res) => {
@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
     const looktype = 'https://www.tibiawiki.com.br/images/e/e4/Outfit_Citizen_Male.gif'
 
 
-    const player = await Player.create({ 
+    const players = await player.create({ 
         name, 
         account_id,
         level,
@@ -38,7 +38,7 @@ router.post('/', async (req, res) => {
         looktype
     })
 
-    return res.jsonOK(player)
+    return res.jsonOK(players)
 
 })
 
@@ -49,16 +49,16 @@ router.put('/:id', async (req, res) => {
 
     const fields = ['name'] //['name', 'comments', 'outfits', 'items']
 
-    const player = await Player.findOne({ where: { id: id, account_id: account_id}})
-        if (!player) return res.jsonNotFound(null)
+    const players = await player.findOne({ where: { id: id, account_id: account_id}})
+        if (!players) return res.jsonNotFound(null)
 
     fields.map((fieldName) => {
         const newValue = body[fieldName]
-            if (newValue) player[fieldName] = newValue
+            if (newValue) players[fieldName] = newValue
     })    
 
-    await player.save()
-        return res.jsonOK(player)
+    await players.save()
+        return res.jsonOK(players)
 
 })
 
@@ -66,10 +66,10 @@ router.delete('/:id', async (req, res) => {
 
     const { account_id } = req
     const { id } = req.params
-    const player = await Player.findOne({ where: { id: id, account_id: account_id}})
-        if (!player) return res.jsonNotFound(null)
+    const players = await player.findOne({ where: { id: id, account_id: account_id}})
+        if (!players) return res.jsonNotFound(null)
 
-    await player.destroy()
+    await players.destroy()
         return res.jsonOK()
 })
 

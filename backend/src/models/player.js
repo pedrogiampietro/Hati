@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 
-    const Player = sequelize.define('Player', {
+    const player = sequelize.define('player', {
         name: { 
             type: DataTypes.STRING,
             allowNull: false,
@@ -22,10 +22,10 @@ module.exports = (sequelize, DataTypes) => {
         },
     })
 
-    Player.associate = (models) => {
-        Player.belongsTo(models.Account, { foreignKey: 'account_id' })
+    player.associate = (models) => {
+        player.belongsTo(models.account, { foreignKey: 'account_id' })
     }
 
-    return Player
+    return player
 
 }

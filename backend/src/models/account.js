@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 
-    const Account = sequelize.define('Account', {
+    const account = sequelize.define('account', {
         name: { 
             type: DataTypes.STRING,
             allowNull: false,
@@ -49,8 +49,8 @@ module.exports = (sequelize, DataTypes) => {
           }
     })
 
-    Account.associate = (models) => {
-        Account.hasMany(models.Player, { foreignKey: 'account_id' })
+    account.associate = (models) => {
+        account.hasMany(models.player, { foreignKey: 'account_id' })
     }
 
     // Account.prototype.toJSON = function() {
@@ -59,6 +59,6 @@ module.exports = (sequelize, DataTypes) => {
     //     return values
     // }
 
-    return Account
+    return account
 
 }

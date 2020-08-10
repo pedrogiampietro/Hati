@@ -1,6 +1,6 @@
 const express = require('express')
 const crypto = require('crypto')
-const { Account } = require('../models')
+const { account } = require('../models')
 const { accountSignUp, accountSignIn } = require('../validators/account')
 const { getMessage } = require('../helpers/messages');
 const { generateJwt, generateRefreshJwt, verifyRefreshJwt, getTokenFromHeaders } = require('../helpers/jwt')
@@ -10,18 +10,18 @@ const router = express.Router()
 router.post('/sign-in', accountSignIn, async (req, res) => {
 
     const { name, password, } = req.body
-    const account = await Account.findOne({ where: { name } })  
+    const accounts = await account.findOne({ where: { name } })  
 
     // validar o password     (password, account.password)
-    const match = account ? crypto.pbkdf2Sync(password, 'salt', 1000, 64,'sha1').toString('hex') : null
+    const match = accounts ? crypto.pbkdf2Sync(password, 'salt', 1000, 64,'sha1').toString('hex') : null
         if (!match) return res.jsonBadRequest(null, getMessage('account.signin.failed'))   
 
-    const token = generateJwt({ id: account.id })
-    const refreshToken = generateRefreshJwt({ id: account.id, version: account.jwtVersion  })
+    const token = generateJwt({ id: accounts.id })
+    const refreshToken = generateRefreshJwt({ id: accounts.id, version: accounts.jwtVersion  })
 
     console.log('TOKEN, refreshToken', token)
 
-    return res.jsonOK(account, getMessage('account.signin.success'), {token, refreshToken})
+    return res.jsonOK(accounts, getMessage('account.signin.success'), {token, refreshToken})
 })
 
 router.post('/sign-up', accountSignUp, async (req, res) => {
@@ -32,11 +32,11 @@ router.post('/sign-up', accountSignUp, async (req, res) => {
         .update(name)
         .digest('hex')
 
-    const account = await Account.findOne({ where: { name } })  
-        if (account) return res.jsonBadRequest(null, getMessage('account.signup.name_exists'))   
+    const accounts = await account.findOne({ where: { name } })  
+        if (accounts) return res.jsonBadRequest(null, getMessage('account.signup.name_exists'))   
 
 
-    const newAccount = await Account.create({
+    const newAccount = await account.create({
         name,
         password: hash,
         secret: '0',
@@ -64,13 +64,13 @@ router.post('/refresh', async (req, res) => {
   
     try {
       const decoded = verifyRefreshJwt(token);
-      const account = await Account.findByPk(decoded.id);
-      if(!account) return res.jsonUnauthorized(null, 'Invalid token.');
+      const accounts = await account.findByPk(decoded.id);
+      if(!accounts) return res.jsonUnauthorized(null, 'Invalid token.');
   
-      if(decoded.version !== account.jwtVersion) return res.jsonUnauthorized(null, 'Invalid token.');
+      if(decoded.version !== accounts.jwtVersion) return res.jsonUnauthorized(null, 'Invalid token.');
   
       const meta = {
-        token: generateJwt({ id: account.id }),
+        token: generateJwt({ id: accounts.id }),
       }
   
       return res.jsonOK(null, null, meta);
