@@ -1,4 +1,4 @@
-import { apiPost, apiGet, apiPut, apiDelete } from '../helpers/api'
+import { apiPost, apiGet, apiPut, apiDelete, apiGetHighscores } from '../helpers/api'
 
 export const PLAYER_CREATE = 'PLAYER_CREATE'
 export const PLAYER_LIST = 'PLAYER_LIST'
@@ -7,15 +7,21 @@ export const PLAYER_UPDATE = 'PLAYER_UPDATE'
 export const PLAYER_TO_REMOVE = 'PLAYER_TO_REMOVE'
 export const PLAYER_REMOVE = 'PLAYER_REMOVE'
 
-export const playerCreate = (data) => {
+export const HIGHSCORES_LIST = 'HIGHSCORES_LIST'
 
+
+export const highscoresList = (data) => {
+  const payload = apiGetHighscores('/player/highscores', data)
+  return { type: HIGHSCORES_LIST, payload}
+}
+
+export const playerCreate = (data) => {
     const payload = apiPost('/player', data)
     return { type: PLAYER_CREATE, payload}
 }
 
 export const playerList = (data) => {
-
-    const payload = apiGet('/player')
+    const payload = apiGet('/player/characters')
     return { type: PLAYER_CREATE, payload}
 }
 

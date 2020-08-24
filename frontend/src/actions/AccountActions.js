@@ -10,7 +10,6 @@ export const signUp = (data) => {
     return { type: SIGN_UP, payload }
 }
 
-
 export const signIn = (data) => {
     const payload = apiPost('/account/sign-in', data)
     return { type: SIGN_IN, payload }

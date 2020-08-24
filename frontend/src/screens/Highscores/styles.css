@@ -1,0 +1,40 @@
+.table-highscores {
+
+    width: 100%;
+    max-width: 900px;
+    padding: 8px 16px;
+    border-collapse: separate; 
+    border-spacing: 0 1em;
+    border: 1px solid #ccc;
+    align-self: flex-end;
+}
+
+.table-highscores tr td {
+
+    padding: 8px 16px;
+
+}
+
+.table-highscores th {
+
+    font-size: 16px;
+
+}
+
+.table-highscores tr:nth-child(even) {
+
+    background-color: #efefef;
+
+}
+
+.table-highscores tr {
+
+    transition: all 200ms;
+
+}
+
+.table-highscores tr:hover {
+
+    background-color: pink;
+
+}

@@ -5,6 +5,7 @@ import {
     PLAYER_UPDATE,
     PLAYER_TO_REMOVE,
     PLAYER_REMOVE, 
+    HIGHSCORES_LIST,
 } from '../actions/PlayerActions'
 
 const initialState = {
@@ -48,6 +49,12 @@ export default function(state = initialState, action) {
               const players = state.players.filter((player )=> player.id !== state.playerToRemove.id)
               return {...state, playerToRemove: null, players }
             }
+
+            case HIGHSCORES_LIST: {
+              const response = payload ? payload.data : null
+              const players = response ? response.players : null
+              return { ...state, players }
+              }
       
           default:
             return state
