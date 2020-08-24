@@ -20,9 +20,14 @@ const Highscores = ({ highscoresList }) => {
   ]
 
   const [ playerList, setPlayerList ] = useState([])
+  const [ filterVocation, setFilterVocation] = useState('all')
+  const [ filterSkill, setFilterSkill ] = useState()
+
 
   useEffect(() => {
-    highscoresList()
+    highscoresList({
+      vocation: filterVocation
+    })
     .then(({ payload }) => {
 
       const newData = payload.data.data
@@ -33,7 +38,14 @@ const Highscores = ({ highscoresList }) => {
       console.log(err)
     })
     
-}, [highscoresList])
+}, [highscoresList, filterVocation])
+
+ 
+  function onValueChange(e) {
+    const options = e.target.value
+     setFilterVocation(options)
+        console.log(options)
+  }
 
 return (
     <div className="mod-bg-1">
@@ -46,9 +58,117 @@ return (
 
                 <main id="js-page-content" role="main" className="page-content">
 
-                       
+          <div className="filter-highscores">
+
+           <form>
+                <select className="filter-select" onChange={onValueChange}>
+                  <option value="all">All vocations</option>
+                  <option value="0">Rooker</option>
+                  <option value="1">Sorcerer</option>
+                  <option value="2">Druid</option>
+                  <option value="3">Paladin</option>
+                  <option value="4">Knight</option>
+                </select>
+            
+              <div className="filter-radios">
+
+                <div className="exp">
+                  <input 
+                  name="type" 
+                  type="radio" 
+                  value="Exp" 
+                  onChange={onValueChange}
+                  />
+                  <label forname="exp">Experience</label>
+                </div>
+
+                <div className="distance">
+                  <input 
+                  name="type" 
+                  type="radio" 
+                  value="Distance"
+                  onChange={onValueChange}
+                  />
+                  <label forname="distance">Distance</label>
+                </div>
+
+                <div className="magiclevel">
+                  <input 
+                  name="type" 
+                  type="radio" 
+                  value="MagicLevel" 
+                  onChange={onValueChange}
+                  />
+                  <label forname="magiclevel">Magic Level</label>
+                </div>
+
+                <div className="sword">
+                  <input 
+                  name="type" 
+                  type="radio" 
+                  value="Sword"
+                  onChange={onValueChange}
+                  />
+                  <label forname="sword">Sword Fighting</label>
+                </div>
+
+                <div className="axe">
+                  <input 
+                  name="type" 
+                  type="radio" 
+                  value="Axe" 
+                  onChange={onValueChange}
+                  />
+                  <label forname="axe">Axe Fighting</label>
+                </div>
+
+                <div className="club">
+                  <input 
+                  name="type" 
+                  type="radio" 
+                  value="Club" 
+                  onChange={onValueChange}
+                  />
+                  <label forname="club">Club Fighting</label>
+                </div>
+
+                <div className="shield">
+                  <input 
+                  name="type" 
+                  type="radio" 
+                  value="Shield" 
+                  onChange={onValueChange}
+                  />
+                  <label forname="shield">Shielding</label>
+                </div>
+
+                <div className="first">
+                  <input 
+                  name="type" 
+                  type="radio" 
+                  value="First"
+                  onChange={onValueChange}
+                  />
+                  <label forname="first">First Fighting</label>
+                </div>
+
+                <div className="fishing">
+                  <input 
+                  name="type" 
+                  type="radio" 
+                  value="Fishing" 
+                  onChange={onValueChange}
+                  />
+                  <label forname="fishing">Fishing</label>
+                </div>
+
+              </div>
+
+              </form>   
+         </div> 
 
               <table className="table-highscores">
+                <thead>
                   <tr>
                       <th width="3%">
                           Rank
@@ -67,20 +187,18 @@ return (
                 
                   { playerList.map(({ id, name, level, vocation }, index) => 
                   (
-                   <tr>
-                      <td key={id}>{index +1}</td>
-                      <td key={id}><img src={outfit} alt="Outfit"/></td>
-                      <td key={id}>{name}</td>
-                      <td key={id}>{level}</td>
-                      <td key={id}>{listVocations[vocation]}</td>
+                   <tr key={id}>
+                      <td>{index +1}</td>
+                      <td><img src={outfit} alt="Outfit"/></td>
+                      <td>{name}</td>
+                      <td>{level}</td>
+                      <td>{listVocations[vocation]}</td>
                    </tr>
                   )
                   )}    
-                
+                </thead>
               </table>
-
-          
-                 </main>
+            </main>
                  <Footer />
               </div>
           </div>
