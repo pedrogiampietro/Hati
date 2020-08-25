@@ -53,11 +53,11 @@ module.exports = (sequelize, DataTypes) => {
         account.hasMany(models.player, { foreignKey: 'account_id' })
     }
 
-    // Account.prototype.toJSON = function() {
-    //     const values = { ...this.get() }
-    //     delete values.password
-    //     return values
-    // }
+    account.prototype.toJSON = function() {
+        const values = { ...this.get() }
+        delete values.password
+        return values
+    }
 
     return account
 

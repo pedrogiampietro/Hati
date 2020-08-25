@@ -4,7 +4,15 @@ const checkJwt = (req, res, next) => {
 
   const { url:path } = req
 
-  const excludedPaths = ['/account/sign-in', '/account/sign-up', '/refresh']
+  const { vocation } = req.query
+   
+  const excludedPaths = [
+    '/player/highscores', 
+    `/player/highscores?vocation=${vocation}`,
+    '/account/sign-in', 
+    '/account/sign-up', 
+    '/account/refresh'
+  ]
 
   const isExcluded = !!excludedPaths.find(p => p.startsWith(path));
   if(isExcluded) return next();
