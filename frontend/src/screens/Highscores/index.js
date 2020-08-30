@@ -19,17 +19,33 @@ const Highscores = ({ highscoresList }) => {
     'Knight'
   ]
 
+  const listSkills = [
+    
+    {type: 'level', name: 'Level'},
+    {type: 'maglevel', name: 'Magic Level'},
+    {type: 'skill_fist', name: 'First Fighting'},
+    {type: 'skill_axe', name: 'Axe Fighting'},
+    {type: 'skill_club', name: 'Club Fighting'},
+    {type: 'skill_sword', name: 'Sword Fighting'},
+    {type: 'skill_dist', name: 'Distance Fighting'},
+    {type: 'skill_shielding', name: 'Shield Fighting'},
+    {type: 'skill_fishing', name: 'Fishing'}
+
+]
+
+
   const [ playerList, setPlayerList ] = useState([])
   const [ filterVocation, setFilterVocation] = useState('all')
-  const [ filterSkill, setFilterSkill ] = useState()
-
+  const [ filterSkill, setFilterSkill ] = useState('level')
+  const [ skillsName, setSkillsName ] = useState('Level')
 
   useEffect(() => {
     highscoresList({
-      vocation: filterVocation
+      vocation: filterVocation,
+      skill: filterSkill
+
     })
     .then(({ payload }) => {
-
       const newData = payload.data.data
       setPlayerList(newData)
 
@@ -37,14 +53,27 @@ const Highscores = ({ highscoresList }) => {
       alert('os players não foram carregados.')
       console.log(err)
     })
-    
-}, [highscoresList, filterVocation])
+
+}, [highscoresList, filterVocation, filterSkill])
 
  
-  function onValueChange(e) {
+  function onValueChangeVocation(e) {
     const options = e.target.value
      setFilterVocation(options)
-        console.log(options)
+  }
+
+   
+  function onValueChangeSkill(e) {
+
+    const options = e.target.value
+
+      listSkills.filter(({type, name}) => {
+      if (type === options) {
+        setSkillsName(name)
+      }
+    })
+
+    setFilterSkill(options)
   }
 
 return (
@@ -61,7 +90,7 @@ return (
           <div className="filter-highscores">
 
            <form>
-                <select className="filter-select" onChange={onValueChange}>
+                <select className="filter-select" onChange={onValueChangeVocation}>
                   <option value="all">All vocations</option>
                   <option value="0">Rooker</option>
                   <option value="1">Sorcerer</option>
@@ -76,8 +105,9 @@ return (
                   <input 
                   name="type" 
                   type="radio" 
-                  value="Exp" 
-                  onChange={onValueChange}
+                  value="level" 
+                  checked={filterSkill === 'level'}
+                  onChange={onValueChangeSkill}
                   />
                   <label forname="exp">Experience</label>
                 </div>
@@ -86,8 +116,8 @@ return (
                   <input 
                   name="type" 
                   type="radio" 
-                  value="Distance"
-                  onChange={onValueChange}
+                  value="skill_dist"
+                  onChange={onValueChangeSkill}
                   />
                   <label forname="distance">Distance</label>
                 </div>
@@ -96,8 +126,8 @@ return (
                   <input 
                   name="type" 
                   type="radio" 
-                  value="MagicLevel" 
-                  onChange={onValueChange}
+                  value="maglevel" 
+                  onChange={onValueChangeSkill}
                   />
                   <label forname="magiclevel">Magic Level</label>
                 </div>
@@ -106,8 +136,8 @@ return (
                   <input 
                   name="type" 
                   type="radio" 
-                  value="Sword"
-                  onChange={onValueChange}
+                  value="skill_sword"
+                  onChange={onValueChangeSkill}
                   />
                   <label forname="sword">Sword Fighting</label>
                 </div>
@@ -116,8 +146,8 @@ return (
                   <input 
                   name="type" 
                   type="radio" 
-                  value="Axe" 
-                  onChange={onValueChange}
+                  value="skill_axe"
+                  onChange={onValueChangeSkill}
                   />
                   <label forname="axe">Axe Fighting</label>
                 </div>
@@ -126,8 +156,8 @@ return (
                   <input 
                   name="type" 
                   type="radio" 
-                  value="Club" 
-                  onChange={onValueChange}
+                  value="skill_club"
+                  onChange={onValueChangeSkill}
                   />
                   <label forname="club">Club Fighting</label>
                 </div>
@@ -136,8 +166,8 @@ return (
                   <input 
                   name="type" 
                   type="radio" 
-                  value="Shield" 
-                  onChange={onValueChange}
+                  value="skill_shielding" 
+                  onChange={onValueChangeSkill}
                   />
                   <label forname="shield">Shielding</label>
                 </div>
@@ -146,8 +176,8 @@ return (
                   <input 
                   name="type" 
                   type="radio" 
-                  value="First"
-                  onChange={onValueChange}
+                  value="skill_fist"
+                  onChange={onValueChangeSkill}
                   />
                   <label forname="first">First Fighting</label>
                 </div>
@@ -156,8 +186,8 @@ return (
                   <input 
                   name="type" 
                   type="radio" 
-                  value="Fishing" 
-                  onChange={onValueChange}
+                  value="skill_fishing" 
+                  onChange={onValueChangeSkill}
                   />
                   <label forname="fishing">Fishing</label>
                 </div>
@@ -178,24 +208,28 @@ return (
                           Name
                       </th>
                       <th width="8%">
-                          Level
+                          {
+                             skillsName
+                          }
                       </th>
                       <th width="8%">
                           Vocation
                       </th>
                   </tr>
                 
-                  { playerList.map(({ id, name, level, vocation }, index) => 
-                  (
-                   <tr key={id}>
+                  { playerList.map((props, index) =>
+                  { 
+                    const verify = filterSkill === 'level' ? props.level : props[filterSkill]
+                  return (
+                   <tr key={props.id}>
                       <td>{index +1}</td>
                       <td><img src={outfit} alt="Outfit"/></td>
-                      <td>{name}</td>
-                      <td>{level}</td>
-                      <td>{listVocations[vocation]}</td>
+                      <td>{props.name}</td>
+                      <td>{ verify }</td>
+                      <td>{listVocations[props.vocation]}</td>
                    </tr>
                   )
-                  )}    
+                  })}    
                 </thead>
               </table>
             </main>
