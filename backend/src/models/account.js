@@ -18,12 +18,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             defaultValue: 1,
         },
-        premdays: { 
-            type: DataTypes.INTEGER,
+        email: { 
+            type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: 0,
         },
-        coins: { 
+        premdays: { 
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 0,
@@ -33,12 +32,8 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             defaultValue: 0,
         },
-        email: { 
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        key: { 
-            type: DataTypes.STRING,
+        creation: { 
+            type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 0,
         },

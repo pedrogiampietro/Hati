@@ -4,11 +4,12 @@ const checkJwt = (req, res, next) => {
 
   const { url:path } = req
 
-  const { vocation } = req.query
+  const { vocation, skill } = req.query
    
   const excludedPaths = [
     '/player/highscores', 
     `/player/highscores?vocation=${vocation}`,
+    `/player/highscores?vocation=${vocation}&skill=${skill}`,
     '/account/sign-in', 
     '/account/sign-up', 
     '/account/refresh'
