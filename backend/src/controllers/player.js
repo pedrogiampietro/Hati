@@ -12,18 +12,39 @@ router.get('/characters', async (req, res) => {
 
 })
 
+router.get('/character/:id', async (req, res) => {
+
+    const { account_id } = req
+
+    const { name } = req.params
+    const players = await player.findOne({ where: { name: name }})
+    if (!players) return res.jsonNotFound(null)
+
+    return res.jsonOK(players)
+})
+
 router.get('/highscores', async (req, res) => {
 
-    const { vocation } = req.query
+    const { vocation, page } = req.query
+    
     let filterVocation = Number(vocation)
     let players
+    const pageSize = page
+    const limit = 10
+    const offset = Number(pageSize) * limit
 
     if (vocation === 'all') {
         players = await player.findAll({
+            limit,
+            offset: offset,
+           
             order: [
                 ['level', 'DESC'],
                 ['name', 'ASC']
-            ]
+            ],
+            // attributes: [
+            //     [Sequelize.literal('ROW_NUMBER() OVER (ORDER BY LEVEL) as row')],
+            // ]
         })
     } else {
 
@@ -32,7 +53,9 @@ router.get('/highscores', async (req, res) => {
                 where: {
                     vocation: filterVocation,
                 },
-    
+
+                limit,
+                offset: offset,
                 order: [
                     ['level', 'DESC'],
                     ['name', 'ASC']
@@ -41,8 +64,10 @@ router.get('/highscores', async (req, res) => {
         )
 
     }
-    
+
+
     return res.jsonOK(players)
+
 })
 
 router.get('/:id', async (req, res) => {
@@ -60,15 +85,12 @@ router.post('/', async (req, res) => {
     const { account_id, body } = req
     const { name, level, vocation } = body
 
-    const looktype = 'https://www.tibiawiki.com.br/images/e/e4/Outfit_Citizen_Male.gif'
-
-
     const players = await player.create({ 
         name, 
         account_id,
         level,
         vocation,
-        looktype
+        looktype: 128,
     })
 
     return res.jsonOK(players)
