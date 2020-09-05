@@ -1,20 +1,24 @@
-const { verifyJwt, getTokenFromHeaders } = require('../helpers/jwt');
+const { verifyJwt, getTokenFromHeaders } = require('../helpers/jwt')
 
 const checkJwt = (req, res, next) => {
 
   const { url:path } = req
 
   const { vocation, skill, page } = req.query
-  
+
+
+    const name = req.url
+    const newName = name.replace('/player/character/', '')
 
   const excludedPaths = [
-    '/player/highscores', 
+    `/player/highscores`, 
     `/player/highscores?vocation=${vocation}`,
     `/player/highscores?vocation=${vocation}&skill=${skill}`,
     `/player/highscores?vocation=${vocation}&skill=${skill}&page=${page}`,
-    '/account/sign-in', 
-    '/account/sign-up', 
-    '/account/refresh'
+    `/player/character/${newName}`,
+    `/account/sign-in`, 
+    `/account/sign-up`, 
+    `/account/refresh`
   ]
 
   const isExcluded = !!excludedPaths.find(p => p.startsWith(path));

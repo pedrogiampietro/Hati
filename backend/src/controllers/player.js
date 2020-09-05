@@ -1,5 +1,5 @@
 const express = require('express')
-const { player } = require('../models')
+const { player, sequelize } = require('../models')
 
 const router = express.Router()
 
@@ -12,11 +12,10 @@ router.get('/characters', async (req, res) => {
 
 })
 
-router.get('/character/:id', async (req, res) => {
-
-    const { account_id } = req
+router.get('/character/:name', async (req, res) => {
 
     const { name } = req.params
+
     const players = await player.findOne({ where: { name: name }})
     if (!players) return res.jsonNotFound(null)
 
@@ -26,7 +25,7 @@ router.get('/character/:id', async (req, res) => {
 router.get('/highscores', async (req, res) => {
 
     const { vocation, page } = req.query
-    
+ 
     let filterVocation = Number(vocation)
     let players
     const pageSize = page
@@ -34,7 +33,9 @@ router.get('/highscores', async (req, res) => {
     const offset = Number(pageSize) * limit
 
     if (vocation === 'all') {
-        players = await player.findAll({
+        players = await player.findAll(
+            {
+            
             limit,
             offset: offset,
            
@@ -42,10 +43,9 @@ router.get('/highscores', async (req, res) => {
                 ['level', 'DESC'],
                 ['name', 'ASC']
             ],
-            // attributes: [
-            //     [Sequelize.literal('ROW_NUMBER() OVER (ORDER BY LEVEL) as row')],
-            // ]
-        })
+            
+        },
+    )
     } else {
 
         players = await player.findAll(
