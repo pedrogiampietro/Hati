@@ -10,18 +10,12 @@ const checkJwt = (req, res, next) => {
     const name = req.url
     const newName = name.replace('/player/character/', '')
 
+    
   const excludedPaths = [
-    `/player/highscores`, 
-    `/player/highscores?vocation=${vocation}`,
-    `/player/highscores?vocation=${vocation}&skill=${skill}`,
-    `/player/highscores?vocation=${vocation}&skill=${skill}&page=${page}`,
-    `/player/character/${newName}`,
-    `/account/sign-in`, 
-    `/account/sign-up`, 
-    `/account/refresh`
+    `/player/characters`
   ]
 
-  const isExcluded = !!excludedPaths.find(p => p.startsWith(path));
+  const isExcluded = !excludedPaths.find(p => p.startsWith(path));
   if(isExcluded) return next();
 
   const token = getTokenFromHeaders(req.headers)

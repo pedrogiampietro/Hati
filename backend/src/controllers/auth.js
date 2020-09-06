@@ -1,9 +1,12 @@
 const express = require('express')
+const encrypt = require('js-sha1')
+const crypto = require('crypto')
+
 const { account } = require('../models')
 const { accountSignUp, accountSignIn } = require('../validators/account')
 const { getMessage } = require('../helpers/messages');
 const { generateJwt, generateRefreshJwt, verifyRefreshJwt, getTokenFromHeaders } = require('../helpers/jwt')
-const encrypt = require('js-sha1')
+
 
 const router = express.Router()
 
@@ -34,7 +37,9 @@ router.post('/sign-up', accountSignUp, async (req, res) => {
 
     const { name, password, } = req.body
 
-
+    const hash = crypto.createHash('sha1')
+    .update(name)
+    .digest('hex')
 
     const accounts = await account.findOne({ where: { name } })  
         if (accounts) return res.jsonBadRequest(null, getMessage('account.signup.name_exists'))   

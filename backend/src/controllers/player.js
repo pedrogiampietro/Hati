@@ -3,6 +3,15 @@ const { player, sequelize } = require('../models')
 
 const router = express.Router()
 
+// router.get('/', async (req, res) => {
+
+//     const { account_id } = req
+//     const players = await player.findAll({ where: { account_id: account_id} })
+
+//     return res.jsonOK(players)
+// })
+
+
 router.get('/characters', async (req, res) => {
 
     const { account_id } = req
