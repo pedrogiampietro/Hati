@@ -9,10 +9,10 @@ import SignUp from './screens/SignUp'
 import AccountCharacters from './screens/Account/Characters'
 import AccountCharactersCreate from './screens/Account/Characters/Create'
 import Highscores from './screens/Highscores'
+import Character from './screens/Character'
 
-import './assets/css/app.bundle.css'; 
-import './assets/css/vendors.bundle.css'; 
-import './assets/css/datagrid/datatables/datatables.bundle.css'
+import './assets/css/styles.css'
+import './assets/css/styles-bundle.css'
 import '../node_modules/bootstrap/js/src/modal'
 
 const App = ({ initAccount }) => {
@@ -44,6 +44,10 @@ const App = ({ initAccount }) => {
 
                 <Route path="/highscores">
                     <Highscores />
+                </Route>
+
+                <Route path="/character/:name">
+                    <Character />
                 </Route>
 
                 <Route path="/">

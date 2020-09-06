@@ -1,6 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 
 const Header = () => { 
+
+    const history = useHistory()
+    const [searchName, setSearchName] = useState()
+
+    const submitHandle = (e) => {
+        history.push(`/character/${searchName}`)
+    }
+
     return(
             
         <header className="page-header" role="banner">
@@ -14,10 +23,10 @@ const Header = () => {
         </div>
     
         <div className="search">
-            <form className="app-forms hidden-xs-down" role="search" action="page_search.html" autoComplete="off">
+            <form onSubmit={submitHandle} className="app-forms hidden-xs-down" role="search" autoComplete="off">
                 <br />
                 <div className="input-group input-group-lg mb-3">
-                    <input type="text" className="form-control shadow-inset-2" id="filter-icon" placeholder="Search of Character" aria-label="type 2 or more letters" />
+                    <input onChange={(e) => setSearchName(e.target.value)} type="text" className="form-control shadow-inset-2" id="filter-icon" placeholder="Search of Character" aria-label="type 2 or more letters" />
                     <div className="input-group-append">
                         <span className="input-group-text"><i className="fal fa-search"></i></span>
                     </div>

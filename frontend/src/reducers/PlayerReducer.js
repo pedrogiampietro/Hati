@@ -6,6 +6,7 @@ import {
     PLAYER_TO_REMOVE,
     PLAYER_REMOVE, 
     HIGHSCORES_LIST,
+    CHARACTER_GET,
 } from '../actions/PlayerActions'
 
 const initialState = {
@@ -51,6 +52,13 @@ export default function(state = initialState, action) {
             }
 
             case HIGHSCORES_LIST: {
+              const response = payload ? payload.data : null
+              const players = response ? response.players : null
+              return { ...state, players }
+              }
+
+
+            case CHARACTER_GET: {
               const response = payload ? payload.data : null
               const players = response ? response.players : null
               return { ...state, players }

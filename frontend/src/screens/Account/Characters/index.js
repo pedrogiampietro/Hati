@@ -110,7 +110,7 @@ const Characters = ({ players, playerList, signOut, account }) => {
                                         {players && players.length ? players.map((player) => {
                                         return (
                                         <div key={player.id} className="col-4">
-                                        <Link to='/account/characters/view/:id'>
+                                        <Link to={`/character/${player.name}`}>
                                                 <span className="profile-image rounded-circle d-block m-auto" style={{  
                                                 backgroundImage: `url("https://www.tibiawiki.com.br/images/e/e4/Outfit_Citizen_Male.gif")`,
                                                 backgroundSize: 'cover',
@@ -155,9 +155,10 @@ const Characters = ({ players, playerList, signOut, account }) => {
                                         <Link to='/account/characters/create'>
                                             <div className='icon-stack display-3 flex-shrink-0'>
                                                 <i className="fal fa-circle icon-stack-3x opacity-100 color-primary-400"></i>
-                                                <i className="fas fa-graduation-cap icon-stack-1x opacity-100 color-primary-500"></i>
+                                                <i className="fas fa-user-friends icon-stack-1x opacity-100 color-primary-500"></i>
                                             </div>
                                             <div className="ml-3">
+                                                <br />
                                                 <strong>
                                                     Create Character
                                                 </strong>
@@ -172,9 +173,10 @@ const Characters = ({ players, playerList, signOut, account }) => {
                                         <Link to='/shop'>
                                             <div className='icon-stack display-3 flex-shrink-0'>
                                                 <i className="fal fa-circle icon-stack-3x opacity-100 color-warning-400"></i>
-                                                <i className="fas fa-handshake icon-stack-1x opacity-100 color-warning-500"></i>
+                                                <i className="fas fa-shopping-cart icon-stack-1x opacity-100 color-warning-500"></i>
                                             </div>
                                             <div className="ml-3">
+                                            <br />
                                                 <strong>
                                                     Donate
                                                 </strong>

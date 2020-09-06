@@ -1,10 +1,9 @@
 import React from 'react';
-// import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux'
 import { getFormData } from '../../../../helpers/form'
 import { playerCreate } from '../../../../actions/PlayerActions'
 
-const CreateCharacter = ({ account, playerCreate }) => {
+const CreateCharacter = ({ playerCreate }) => {
 
     const submitHandler = (e) => {
         e.preventDefault()

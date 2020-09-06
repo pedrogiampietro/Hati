@@ -54,6 +54,17 @@ export const apiGet = async (path, params = {}) => {
     return await axios.get(url, options)
 }
 
+export const apiGetCharacter = async (path, params = {}) => {
+
+    const url = getApiUrl(path)
+    const options = {
+        headers: getHeaders(),
+        params: params
+    }
+
+    return await axios.get(url, options)
+}
+
 export const apiGetHighscores = async (path, params = {}) => {
 
     const url = getApiUrl(path)
@@ -61,7 +72,6 @@ export const apiGetHighscores = async (path, params = {}) => {
         headers: getHeaders(),
         params: params
     }
-    console.log(options)
-
+    
     return await axios.get(url, options)
 }
