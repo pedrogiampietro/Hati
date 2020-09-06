@@ -9,8 +9,6 @@ import Footer from '../Layouts/Footer'
 
 const Character = ({ playerGetCharacter }) => {
 
- const outfit = `https://www.tibiawiki.com.br/images/e/e4/Outfit_Citizen_Male.gif`
-
   const { name } = useParams()
   const [characterPage, setCharacterPage] = useState([])
   
@@ -186,23 +184,23 @@ const Character = ({ playerGetCharacter }) => {
                                                         <table class="table table-striped table-hover table-fixed">
                                                             <tbody>
                                                                 <tr>
-                                                                    <td align="center"><img class="item" data-player="3297" data-id="25423" data-pid="2" src="/static/img/items/25423.png" data-original-title="" title="" /></td>
-                                                                    <td align="center"><img class="item" data-player="3297" data-id="28834" data-pid="1" src="/static/img/items/28834.png" data-original-title="" title="" /></td>
-                                                                    <td align="center"><img class="item" data-player="3297" data-id="9774" data-pid="3" src="/static/img/items/9774.png" data-original-title="" title="" /></td>
+                                                                    <td align="center"></td>
+                                                                    <td align="center"></td>
+                                                                    <td align="center"></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td align="center"><img class="item" data-player="3297" data-id="25954" data-pid="6" src="/static/img/items/25954.png" data-original-title="" title="" /></td>
-                                                                    <td align="center"><img class="item" data-player="3297" data-id="27439" data-pid="4" src="/static/img/items/27439.png" data-original-title="" title="" /></td>
-                                                                    <td align="center"><img class="item" data-player="3297" data-id="22424" data-pid="5" src="/static/img/items/22424.png" data-original-title="" title="" /></td>
+                                                                    <td align="center"></td>
+                                                                    <td align="center"></td>
+                                                                    <td align="center"></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td align="center"><i class="fa fa-times"></i></td>
-                                                                    <td align="center"><img class="item" data-player="3297" data-id="27457" data-pid="7" src="/static/img/items/27457.png" data-original-title="" title="" /></td>
-                                                                    <td align="center"><img class="item" data-player="3297" data-id="2361" data-pid="10" src="/static/img/items/2361.png" data-original-title="" title="" /></td>
+                                                                    <td align="center"></td>
+                                                                    <td align="center"></td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td align="center">Soul: 300</td>
-                                                                    <td align="center"><img class="item" data-player="3297" data-id="24637" data-pid="8" src="/static/img/items/24637.png" data-original-title="" title="" /></td>
+                                                                    <td align="center"></td>
                                                                     <td align="center">Cap: 13265</td>
                                                                 </tr>
                                                             </tbody>
