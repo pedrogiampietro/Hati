@@ -2,15 +2,29 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { useParams, Link } from 'react-router-dom'
 import { playerGetCharacter } from '../../actions/PlayerActions'
+import { genders, characterVocations, towns } from '../../config'
+import { dataAtualFormatada } from '../../helpers/datetime'
 import Menu from '../Layouts/Menu'
 import Header from '../Layouts/Header'
 import Footer from '../Layouts/Footer'
+import './styles.css'
 
 
 const Character = ({ playerGetCharacter }) => {
 
   const { name } = useParams()
   const [characterPage, setCharacterPage] = useState([])
+
+  //items mocado.
+  const helmet = 'https://www.tibiawiki.com.br/images/c/cd/Steel_Helmet.gif'
+  const armor = 'https://www.tibiawiki.com.br/images/2/2e/Plate_Armor.gif'
+  const legs = 'https://www.tibiawiki.com.br/images/6/6f/Plate_Legs.gif'
+  const boots = 'https://www.tibiawiki.com.br/images/9/94/Leather_Boots.gif'
+  const shield = 'https://www.tibiawiki.com.br/images/5/58/Dwarven_Shield.gif'
+  const melee = 'https://www.tibiawiki.com.br/images/2/26/Mace.gif'
+  const amulet = 'https://www.tibiawiki.com.br/images/3/3e/Crystal_Necklace.gif'
+  const ring = 'https://www.tibiawiki.com.br/images/a/a0/Crystal_Ring.gif'
+  const backpack = 'https://www.tibiawiki.com.br/images/9/9a/Backpack.gif'
   
   useEffect(() => {
       playerGetCharacter(name)
@@ -42,72 +56,72 @@ const Character = ({ playerGetCharacter }) => {
                         <div className="row">
                             <div className="col-lg-6 col-xl-3 order-lg-1 order-xl-1">
 
-                            <div id="c_1" class="card border shadow-0 mb-g shadow-sm-hover" data-filter-tags="oliver kopyov">
-                                    <div class="card-body border-faded border-top-0 border-left-0 border-right-0 rounded-top">
-                                        <div class="d-flex flex-row align-items-center">
-                                            <span class="status status-success mr-3">
-                                                <span class="rounded-circle profile-image d-block " 
+                            <div id="c_1" className="card border shadow-0 mb-g shadow-sm-hover" data-filter-tags="oliver kopyov">
+                                    <div className="card-body border-faded border-top-0 border-left-0 border-right-0 rounded-top">
+                                        <div className="d-flex flex-row align-items-center">
+                                            <span className="status status-success mr-3">
+                                                <span className="rounded-circle profile-image d-block " 
                                                 style={{  
                                                 backgroundImage: `url("https://www.tibiawiki.com.br/images/e/e4/Outfit_Citizen_Male.gif")`,
                                                 backgroundSize: 'cover',
                                                 }}></span>
                                             </span>
-                                            <div class="info-card-text flex-1">
-                                                <span class="fs-xl text-truncate text-truncate-lg text-primary" aria-expanded="false">
+                                            <div className="info-card-text flex-1">
+                                                <span className="fs-xl text-truncate text-truncate-lg text-primary" aria-expanded="false">
                                                     {characterPage.name}
                                                 </span>
-                                                <span class="text-truncate text-truncate-xl">Mata Rindo</span>
+                                                <span className="text-truncate text-truncate-xl">Leader of Mata Rindo</span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-body p-0 collapse show">
+                                    <div className="card-body p-0 collapse show">
                                         
-                                    <table class="table table-striped table-condensed">
+                                    <table className="table table-striped table-condensed">
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                <span class="fs-xl text-truncate text-truncate-lg text-primary" aria-expanded="false">
+                                                <span className="fs-xl text-truncate text-truncate-lg text-primary" aria-expanded="false">
                                                     Sex:
                                                 </span>
                                                 </td>
                                                 <td>
-                                                    Male
+                                                    { genders[characterPage.sex] }
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <span class="fs-xl text-truncate text-truncate-lg text-primary" aria-expanded="false">
+                                                    <span className="fs-xl text-truncate text-truncate-lg text-primary" aria-expanded="false">
                                                         Level:
                                                     </span>
                                                 </td>
-                                                <td>1312</td>
+                                                <td className="d-inline-flex border border-primary text-primary width-2 height-2 rounded-circle fw-500 mr-2 align-items-center justify-content-center">{characterPage.level}</td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <span class="fs-xl text-truncate text-truncate-lg text-primary" aria-expanded="false">
-                                                        Level:
+                                                    <span className="fs-xl text-truncate text-truncate-lg text-primary" aria-expanded="false">
+                                                        Vocation:
                                                     </span>
                                                 </td>
-                                                <td>Royal Paladin</td>
+                                                <td>{ characterVocations[characterPage.vocation] }</td>
                                             </tr>
                                             <tr>
                                                 <td>
-                                                    <span class="fs-xl text-truncate text-truncate-lg text-primary" aria-expanded="false">
-                                                       Last Login:
+                                                    <span className="fs-xl text-truncate text-truncate-lg text-primary" aria-expanded="false">
+                                                       Created:
                                                     </span>
                                                 </td>
                                                 <td>
-                                                    05 Sep 2020, 21:31 → 05 Sep 2020, 21:57
+                                                    {dataAtualFormatada(characterPage.createdAt)}
                                                 </td>
                                             </tr>
 
                                             <tr>
                                                <td>
-                                                    <span class="fs-xl text-truncate text-truncate-lg text-primary" aria-expanded="false">
+                                                    <span className="fs-xl text-truncate text-truncate-lg text-primary" aria-expanded="false">
                                                         Resident:
                                                     </span>
                                                 </td>
-                                                <td>Roshamuul</td>
+                                                <td>{ towns[characterPage.town_id] }</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -144,95 +158,95 @@ const Character = ({ playerGetCharacter }) => {
                                         <div className="d-flex flex-column align-items-center">
                                                 
                                         
-                                        <div class="row">
+                                        <div className="row">
                                             <br />
-                                            <div class="col-md-4">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading">Statistics</div>
-                                                    <div class="panel-body panel-player-extra">
+                                            <div className="col-md-4">
+                                                <div className="panel panel-default">
+                                                    <div className="panel-heading">Statistics</div>
+                                                    <div className="panel-body panel-player-extra">
                                                         <div align="center">Health</div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="9396" aria-valuemin="0" aria-valuemax="8090" style={{width: '116%'}}>
-                                                                <span>9396 / 8090</span>
+                                                        <div className="progress">
+                                                            <div className="progress-bar progress-bar-striped bg-primary progress-bar-animated" role="progressbar" style={{width: characterPage.health / characterPage.healthmax * 200}}>
+                                                                <span>{characterPage.health} / {characterPage.healthmax}</span>
                                                             </div>
                                                         </div>
                                                         <div align="center">Mana</div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20090" aria-valuemin="0" aria-valuemax="47640" style={{width: '42%'}}>
-                                                                <span>20090 / 47640</span>
+                                                        <div className="progress">
+                                                            <div className="progress-bar progress-bar-striped bg-info progress-bar-animated" role="progressbar" style={{width: characterPage.mana / characterPage.manamax * 200}}>
+                                                                <span>{characterPage.mana} / {characterPage.manamax}</span>
                                                             </div>
                                                         </div>
                                                         <div align="center">Soul</div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar progress-bar-custom" role="progressbar" aria-valuenow="300" aria-valuemin="0" aria-valuemax="200" style={{width: '150%'}}>
-                                                                <span>300 / 200</span>
+                                                        <div className="progress">
+                                                            <div className="progress-bar progress-bar-striped bg-warning" role="progressbar" aria-valuenow="300" aria-valuemin="0" aria-valuemax="200" style={{width: characterPage.soul / 200 * 200}}>
+                                                                <span>{characterPage.soul} / 200</span>
                                                             </div>
                                                         </div>
                                                         <div align="center">Stamina</div>
-                                                        <div class="progress">
-                                                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="2520" aria-valuemin="0" aria-valuemax="2520" style={{width: '100%'}}>
-                                                                <span>42 hours, 00 minutes</span>
+                                                        <div className="progress">
+                                                            <div className="progress-bar progress-bar-success" role="progressbar" aria-valuenow="2520" aria-valuemin="0" aria-valuemax="2520" style={{width: '0%'}}>
+                                                                <span>{characterPage.stamina}</span>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading">Equipment</div>
-                                                    <div class="panel-body panel-player-extra">
-                                                        <table class="table table-striped table-hover table-fixed">
+                                            <div className="col-md-4">
+                                                <div className="panel panel-default">
+                                                    <div className="panel-heading">Equipment</div>
+                                                    <div className="panel-body panel-player-extra">
+                                                        <table className="table table-striped table-hover table-fixed">
                                                             <tbody>
                                                                 <tr>
-                                                                    <td align="center"></td>
-                                                                    <td align="center"></td>
-                                                                    <td align="center"></td>
+                                                                    <td align="center"><img src={amulet} alt="amulet"/></td>
+                                                                    <td align="center"><img src={helmet} alt="helmet"/></td>
+                                                                    <td align="center"><img src={backpack} alt="backpack"/></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td align="center"></td>
-                                                                    <td align="center"></td>
-                                                                    <td align="center"></td>
+                                                                    <td align="center"><img src={melee} alt="melee"/></td>
+                                                                    <td align="center"><img src={armor} alt="armor"/></td>
+                                                                    <td align="center"><img src={shield} alt="shield"/></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td align="center"><i class="fa fa-times"></i></td>
-                                                                    <td align="center"></td>
-                                                                    <td align="center"></td>
+                                                                    <td align="center"><img src={ring} alt="ring"/></td>
+                                                                    <td align="center"><img src={legs} alt="legs"/></td>
+                                                                    <td align="center"><i class="far fa-times-circle"></i></td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td align="center">Soul: 300</td>
-                                                                    <td align="center"></td>
-                                                                    <td align="center">Cap: 13265</td>
+                                                                    <td align="center">Soul: {characterPage.soul}</td>
+                                                                    <td align="center"><img src={boots} alt="boots"/></td>
+                                                                    <td align="center">Cap: {characterPage.cap}</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading">Skills</div>
-                                                    <div class="panel-body panel-player-extra">
-                                                        <table class="table table-striped table-hover table-fixed">
+                                            <div className="col-md-4">
+                                                <div className="panel panel-default">
+                                                    <div className="panel-heading">Skills</div>
+                                                    <div className="panel-body panel-player-extra">
+                                                        <table className="table table-striped table-hover table-fixed">
                                                             <tbody>
                                                                 <tr>
-                                                                    <td class="left">Magic Level</td>
-                                                                    <td class="right">151</td>
+                                                                    <td className="left">Magic Level</td>
+                                                                    <td className="right">{characterPage.maglevel}</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="left">Melee</td>
-                                                                    <td class="right">10</td>
+                                                                    <td className="left">Melee</td>
+                                                                    <td className="right">{characterPage.skill_fist}</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="left">Distance</td>
-                                                                    <td class="right">10</td>
+                                                                    <td className="left">Distance</td>
+                                                                    <td className="right">{characterPage.skill_dist}</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="left">Shielding</td>
-                                                                    <td class="right">23</td>
+                                                                    <td className="left">Shielding</td>
+                                                                    <td className="right">{characterPage.skill_shielding}</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="left">Fishing</td>
-                                                                    <td class="right">10</td>
+                                                                    <td className="left">Fishing</td>
+                                                                    <td className="right">{characterPage.skill_fishing}</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
@@ -241,13 +255,13 @@ const Character = ({ playerGetCharacter }) => {
                                             </div>
                                         </div>
 
-                                        <table class="table table-striped table-hover table-fixed">
+                                        <table className="table table-striped table-hover table-fixed">
 				
 				
                 <tbody><tr>
-                    <td class="col-md-3">13 Aug 20 04:36 PM</td>
-                    <td>Died at level <span class="notranslate">1674</span> to <a class="notranslate" href="/community/player/Huitzilopochtli">Huitzilopochtli</a> and <a class="notranslate" href="/community/player/Biskut Airlines">Biskut Airlines</a>.</td>
-                    <td class="col-md-3 right">
+                    <td className="col-md-3">13 Aug 20 04:36 PM</td>
+                    <td>Died at level <span className="notranslate">1674</span> to <a className="notranslate" href="/community/player/Huitzilopochtli">Huitzilopochtli</a> and <a className="notranslate" href="/community/player/Biskut Airlines">Biskut Airlines</a>.</td>
+                    <td className="col-md-3 right">
                         
                         
                             <strong style={{color: 'green'}}>BLESS</strong>
@@ -256,9 +270,9 @@ const Character = ({ playerGetCharacter }) => {
                 </tr>
             
                 <tr>
-                    <td class="col-md-3">12 Aug 20 04:36 PM</td>
-                    <td>Died at level <span class="notranslate">1673</span> to <span class="notranslate">The Shaper</span>.</td>
-                    <td class="col-md-3 right">
+                    <td className="col-md-3">12 Aug 20 04:36 PM</td>
+                    <td>Died at level <span className="notranslate">1673</span> to <span className="notranslate">The Shaper</span>.</td>
+                    <td className="col-md-3 right">
                         
                         
                             <strong style={{color: 'green'}}>BLESS</strong>
@@ -267,9 +281,9 @@ const Character = ({ playerGetCharacter }) => {
                 </tr>
             
                 <tr>
-                    <td class="col-md-3">11 Aug 20 08:22 PM</td>
-                    <td>Died at level <span class="notranslate">1665</span> to <a class="notranslate" href="/community/player/Elf">Elf</a> and <a class="notranslate" href="/community/player/Huitzilopochtli">Huitzilopochtli</a>.</td>
-                    <td class="col-md-3 right">
+                    <td className="col-md-3">11 Aug 20 08:22 PM</td>
+                    <td>Died at level <span className="notranslate">1665</span> to <a className="notranslate" href="/community/player/Elf">Elf</a> and <a className="notranslate" href="/community/player/Huitzilopochtli">Huitzilopochtli</a>.</td>
+                    <td className="col-md-3 right">
                         
                         
                             <strong style={{color: 'green'}}>BLESS</strong>
@@ -278,9 +292,9 @@ const Character = ({ playerGetCharacter }) => {
                 </tr>
             
                 <tr>
-                    <td class="col-md-3">11 Aug 20 04:18 PM</td>
-                    <td>Died at level <span class="notranslate">1665</span> to <span class="notranslate">the world ender</span>.</td>
-                    <td class="col-md-3 right">
+                    <td className="col-md-3">11 Aug 20 04:18 PM</td>
+                    <td>Died at level <span className="notranslate">1665</span> to <span className="notranslate">the world ender</span>.</td>
+                    <td className="col-md-3 right">
                         
                         
                             <strong style={{color: 'green'}}>BLESS</strong>
@@ -289,9 +303,9 @@ const Character = ({ playerGetCharacter }) => {
                 </tr>
             
                 <tr>
-                    <td class="col-md-3">11 Aug 20 03:07 PM</td>
-                    <td>Died at level <span class="notranslate">1667</span> to <a class="notranslate" href="/community/player/Biskut Airlines">Biskut Airlines</a> and <a class="notranslate" href="/community/player/Momoa">Momoa</a>.</td>
-                    <td class="col-md-3 right">
+                    <td className="col-md-3">11 Aug 20 03:07 PM</td>
+                    <td>Died at level <span className="notranslate">1667</span> to <a className="notranslate" href="/community/player/Biskut Airlines">Biskut Airlines</a> and <a className="notranslate" href="/community/player/Momoa">Momoa</a>.</td>
+                    <td className="col-md-3 right">
                         
                         
                             <strong style={{color: 'green'}}>BLESS</strong>
@@ -300,9 +314,9 @@ const Character = ({ playerGetCharacter }) => {
                 </tr>
             
                 <tr>
-                    <td class="col-md-3">05 Aug 20 09:04 PM</td>
-                    <td>Died at level <span class="notranslate">1662</span> to <span class="notranslate">an infernal hound</span> and <span class="notranslate">a siegebreaker</span>.</td>
-                    <td class="col-md-3 right">
+                    <td className="col-md-3">05 Aug 20 09:04 PM</td>
+                    <td>Died at level <span className="notranslate">1662</span> to <span className="notranslate">an infernal hound</span> and <span className="notranslate">a siegebreaker</span>.</td>
+                    <td className="col-md-3 right">
                         
                         
                             <strong style={{color: 'green'}}>BLESS</strong>
