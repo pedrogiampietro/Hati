@@ -19,7 +19,7 @@ const TokenRefresher = ({ getFreshToken }) => {
 	useEffect(() => {
 		const secondsToExpire = calculate() - treshHold
 		const readableTime = secondsToReadableTime(secondsToExpire)
-		console.log('****** TokenRefresher.readableTime', readableTime)
+		
 		const id = setTimeout(getFreshToken, secondsToExpire * 1000)
 		return () => clearTimeout(id)
 	}, [getFreshToken])
