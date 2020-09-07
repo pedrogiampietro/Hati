@@ -6,30 +6,29 @@ import { secondsToReadableTime } from '../../helpers/datetime'
 import { getFreshToken } from '../../actions/AccountActions'
 
 const TokenRefresher = ({ getFreshToken }) => {
+	const treshHold = 30
 
-    const treshHold = 30
+	const calculate = () => {
+		const token = getToken()
+		const expires = getTokenExpire(token)
+		const secondsToExpire = expires - Date.now() / 1000
 
-    const calculate = () => {
-    const token = getToken()
-    const expires = getTokenExpire(token)
-    const secondsToExpire = expires - Date.now() / 1000
+		return secondsToExpire
+	}
 
-    return secondsToExpire
+	useEffect(() => {
+		const secondsToExpire = calculate() - treshHold
+		const readableTime = secondsToReadableTime(secondsToExpire)
+		console.log('****** TokenRefresher.readableTime', readableTime)
+		const id = setTimeout(getFreshToken, secondsToExpire * 1000)
+		return () => clearTimeout(id)
+	}, [getFreshToken])
+
+	return null
 }
 
-    useEffect(() => {
-        const secondsToExpire = calculate() - treshHold
-        const readableTime = secondsToReadableTime(secondsToExpire)
-        console.log('****** TokenRefresher.readableTime', readableTime)
-        const id = setTimeout(getFreshToken, secondsToExpire * 1000)
-        return () => clearTimeout(id)
-    }, [getFreshToken])
-
-    return null
-}
-
-const mapStateToProps = (state) => {
-    return {}
+const mapStateToProps = state => {
+	return {}
 }
 
 export default connect(mapStateToProps, { getFreshToken })(TokenRefresher)
