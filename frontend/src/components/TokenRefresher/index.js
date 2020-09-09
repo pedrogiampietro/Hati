@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { getToken } from '../../helpers/account'
 import { getTokenExpire } from '../../helpers/jwt'
-import { secondsToReadableTime } from '../../helpers/datetime'
 import { getFreshToken } from '../../actions/AccountActions'
 
 const TokenRefresher = ({ getFreshToken }) => {
@@ -18,8 +17,6 @@ const TokenRefresher = ({ getFreshToken }) => {
 
 	useEffect(() => {
 		const secondsToExpire = calculate() - treshHold
-		const readableTime = secondsToReadableTime(secondsToExpire)
-		
 		const id = setTimeout(getFreshToken, secondsToExpire * 1000)
 		return () => clearTimeout(id)
 	}, [getFreshToken])
