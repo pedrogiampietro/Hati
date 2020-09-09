@@ -9,12 +9,14 @@ export const secondsToReadableTime = seconds => {
 }
 
 export const dataAtualFormatada = () => {
-	const data = new Date(),
-		dia = data.getDate().toString(),
-		diaF = dia.length === 1 ? '0' + dia : dia,
-		mes = (data.getMonth() + 1).toString(), // +1 pois no getMonth Janeiro começa com zero.
-		mesF = mes.length === 1 ? '0' + mes : mes,
-		anoF = data.getFullYear()
-
-	return diaF + '/' + mesF + '/' + anoF
+	let date = new Date()
+	let options = {
+		weekday: 'long',
+		year: 'numeric',
+		month: 'short',
+		day: 'numeric',
+		hour: '2-digit',
+		minute: '2-digit',
+	}
+	return date.toLocaleTimeString('pt-BR', options)
 }
