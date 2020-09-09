@@ -1,20 +1,16 @@
-'use strict';
+'use strict'
 
 module.exports = {
+	up: async (queryInterface, Sequelize) => {
+		return queryInterface.addColumn('players', 'updatedAt', {
+			type: Sequelize.DATE(3),
+			defaultValue: Sequelize.literal('CURRENT_TIMESTAMP(3)'),
+			allowNull: false,
+			after: 'soul',
+		})
+	},
 
-  up: async (queryInterface, Sequelize) => {
-    return queryInterface.addColumn('players', 'updatedAt', {
-      type: Sequelize.INTEGER,
-      allowNull: false,
-      after: 'soul',
-      defaultValue: 0,
-    })
-
-  },
-
-  down: async (queryInterface, Sequelize) => {
-
-    return queryInterface.removeColumn('players', 'updatedAt')
-
-  }
-};
+	down: async (queryInterface, Sequelize) => {
+		return queryInterface.removeColumn('players', 'updatedAt')
+	},
+}

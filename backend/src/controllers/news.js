@@ -11,9 +11,14 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/create', async (req, res) => {
-	const account_id = 1
+	const { account_id, body } = req
 
-	const createNews = await z_forum.create({})
+	const { post_topic, post_text } = body
+
+	const createNews = await z_forum.create({
+		post_topic: 'Testando a news',
+		post_text: 'Aqui vai ficar o texto da news.',
+	})
 
 	return res.jsonOK(createNews)
 })
