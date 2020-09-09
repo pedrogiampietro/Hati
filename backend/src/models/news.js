@@ -74,7 +74,7 @@ module.exports = (sequelize, DataTypes) => {
 	)
 
 	z_forum.associate = models => {
-		z_forum.belongsTo(models.player, { foreignKey: 'id' })
+		z_forum.belongsTo(models.player, { foreignKey: 'author_aid' })
 	}
 
 	return z_forum

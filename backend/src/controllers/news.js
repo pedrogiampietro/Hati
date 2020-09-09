@@ -1,11 +1,18 @@
 const express = require('express')
-const { z_forum } = require('../models')
+const { z_forum, player } = require('../models')
 const { getMessage } = require('../helpers/messages')
 
 const router = express.Router()
 
 router.get('/', async (req, res) => {
-	const dashboard = await z_forum.findAll({})
+	const dashboard = await z_forum.findAll({
+		include: [
+			{
+				model: player,
+				required: true,
+			},
+		],
+	})
 
 	return res.jsonOK(dashboard)
 })
