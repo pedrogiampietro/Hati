@@ -1,11 +1,12 @@
-import { apiPostNews } from '../helpers/api'
+import { apiPostNews, apiGetNews } from '../helpers/api'
 
 export const NEWS_CREATE = 'NEWS_CREATE'
+export const NEWS_LIST = 'NEWS_LIST'
 
-// export const highscoresList = data => {
-// 	const payload = apiGetHighscores('/player/highscores', data)
-// 	return { type: HIGHSCORES_LIST, payload }
-// }
+export const newsList = data => {
+	const payload = apiGetNews('/dashboard', data)
+	return { type: NEWS_LIST, payload }
+}
 
 export const newsCreate = data => {
 	const payload = apiPostNews('/dashboard/create', data)

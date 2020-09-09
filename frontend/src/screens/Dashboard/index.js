@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { playerList } from '../../actions/PlayerActions'
 import { getFormData } from '../../helpers/form'

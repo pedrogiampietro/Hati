@@ -81,6 +81,13 @@ export const apiGetHighscores = async (path, params = {}) => {
 	return await axios.get(url, options)
 }
 
+export const apiGetNews = async (path, params = {}) => {
+	const url = getApiUrl(path)
+	const options = {}
+
+	return await axios.get(url, options)
+}
+
 export const apiPostNews = (path, data = {}) => {
 	const url = getApiUrl(path)
 	const options = {}
