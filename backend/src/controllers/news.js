@@ -4,6 +4,14 @@ const { getMessage } = require('../helpers/messages')
 
 const router = express.Router()
 
+/*
+ **
+ *** Posts ***
+ **
+ */
+
+// buscando todas as news;
+
 router.get('/', async (req, res) => {
 	const dashboard = await z_forum.findAll({
 		include: [
@@ -16,6 +24,8 @@ router.get('/', async (req, res) => {
 
 	return res.jsonOK(dashboard)
 })
+
+// criando uma news nova;
 
 router.post('/create', async (req, res) => {
 	const { body } = req
@@ -30,6 +40,29 @@ router.post('/create', async (req, res) => {
 	})
 
 	return res.jsonOK(createNews)
+})
+
+/*
+ **
+ *** Comentários ***
+ **
+ */
+
+// criando um novo comentário em um tópico;
+router.post('/:postId/comment', async (req, res) => {
+	//buscando um post;
+	const post = await Post.findOne({ id: req.params.postId })
+
+	//criando um novo comentário;
+	const comment = new Comment()
+	comment.content = req.body
+	comment.post = post.id
+	await comment.save()
+
+	//associando um comentário a um post.
+	post.comments.push(comment.id)
+	await post.save()
+	res.send(comment)
 })
 
 module.exports = router
