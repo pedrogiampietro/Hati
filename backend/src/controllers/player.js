@@ -1,5 +1,5 @@
 const express = require('express')
-const { player } = require('../models')
+const { player, player_deaths } = require('../models')
 
 const router = express.Router()
 
@@ -13,7 +13,18 @@ router.get('/characters', async (req, res) => {
 router.get('/character/:name', async (req, res) => {
 	const { name } = req.params
 
-	const players = await player.findOne({ where: { name: name } })
+	const players = await player.findOne({
+		where: {
+			name: name,
+		},
+		include: [
+			{
+				model: player_deaths,
+				required: true,
+			},
+		],
+	})
+
 	if (!players) return res.jsonNotFound(null)
 
 	return res.jsonOK(players)

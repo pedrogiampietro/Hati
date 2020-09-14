@@ -61,7 +61,6 @@ const CreateCharacter = ({ playerCreate }) => {
 }
 
 const mapStateToProps = state => {
-	console.log(state)
 	return {
 		player: state.player.player,
 	}

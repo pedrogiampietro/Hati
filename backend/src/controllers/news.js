@@ -13,11 +13,17 @@ const router = express.Router()
 // buscando todas as news;
 
 router.get('/', async (req, res) => {
+	const group_id = 5
+
 	const dashboard = await z_forum.findAll({
 		include: [
 			{
 				model: player,
 				required: true,
+
+				where: {
+					group_id: group_id,
+				},
 			},
 		],
 	})
