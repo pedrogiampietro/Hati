@@ -75,97 +75,15 @@ const Home = ({ newsList }) => {
 														{props.post_text}
 													</div>
 													<div className="d-flex align-items-center demo-h-spacing py-3">
-														<button className="d-inline-flex align-items-center text-dark">
+														<span className="d-inline-flex align-items-center text-dark">
 															<i className="fas fa-heart fs-xs mr-1 text-danger"></i>{' '}
 															<span>2 Likes</span>
-														</button>
-														<button className="d-inline-flex align-items-center text-dark">
-															<i className="fal fa-comment fs-xs mr-1"></i>{' '}
-															<span>2 Comments</span>
-														</button>
+														</span>
 													</div>
 												</div>
 												<div className="card-body py-0 px-4 border-faded border-right-0 border-bottom-0 border-left-0">
 													<div className="d-flex flex-column align-items-center">
-														<div className="d-flex flex-row w-100 py-4">
-															<div className="d-inline-block align-middle status status-sm status-success mr-3">
-																<span
-																	className="profile-image profile-image-md rounded-circle d-block mt-1"
-																	style={{
-																		backgroundImage: `url("https://www.tibiawiki.com.br/images/e/e4/Outfit_Citizen_Male.gif")`,
-																		backgroundSize: 'cover',
-																	}}
-																></span>
-															</div>
-															<div className="mb-0 flex-1 text-dark">
-																<div className="d-flex">
-																	<Link to="/" className="text-dark fw-500">
-																		Test name
-																	</Link>
-																	<span className="text-muted fs-xs opacity-70 ml-auto">
-																		15 minutes
-																	</span>
-																</div>
-																<p className="mb-0">
-																	Excellent work, looking forward to it.
-																</p>
-															</div>
-														</div>
 														<hr className="m-0 w-100" />
-
-														<div className="d-flex flex-row w-100 py-4">
-															<div className="d-inline-block align-middle status status-sm status-success mr-3">
-																<span
-																	className="profile-image profile-image-md rounded-circle d-block mt-1"
-																	style={{
-																		backgroundImage: `url("https://www.tibiawiki.com.br/images/e/e4/Outfit_Citizen_Male.gif")`,
-																		backgroundSize: 'cover',
-																	}}
-																></span>
-															</div>
-															<div className="mb-0 flex-1 text-dark">
-																<div className="d-flex">
-																	<Link to="/" className="text-dark fw-500">
-																		Jobs
-																	</Link>
-																	<span className="text-muted fs-xs opacity-70 ml-auto">
-																		3 minutes
-																	</span>
-																</div>
-																<p className="mb-0">Congrats mate!</p>
-																<div className="pl-0 d-flex flex-row w-100 pb-0 pt-4">
-																	<div className="d-inline-block align-middle status status-sm status-success mr-3">
-																		<span
-																			className="profile-image profile-image-md rounded-circle d-block mt-1"
-																			style={{
-																				backgroundImage: `url("https://www.tibiawiki.com.br/images/e/e4/Outfit_Citizen_Male.gif")`,
-																				backgroundSize: 'cover',
-																			}}
-																		></span>
-																	</div>
-																	<div className="mb-0 flex-1 text-dark">
-																		<div className="d-flex">
-																			<Link to="/" className="text-dark fw-500">
-																				Yinzera
-																			</Link>
-																			<span className="text-muted fs-xs opacity-70 ml-auto">
-																				30 seconds
-																			</span>
-																		</div>
-																		<p className="mb-0">Thanks!</p>
-																	</div>
-																</div>
-															</div>
-														</div>
-														<hr className="m-0 w-100" />
-
-														<div className="py-3 w-100">
-															<textarea
-																className="form-control border-0 p-0"
-																rows="2"
-																placeholder="add a comment..."
-															></textarea>
-														</div>
 													</div>
 												</div>
 											</div>

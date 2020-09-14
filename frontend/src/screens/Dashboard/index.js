@@ -17,6 +17,7 @@ const Dashboard = ({ playerList, newsCreate, account, players }) => {
 		e.preventDefault()
 		const data = getFormData(e)
 
+		//converter string para inteiros.
 		for (e in data) {
 			data[e] = parseInt(data[e]) || data[e]
 		}
@@ -40,11 +41,11 @@ const Dashboard = ({ playerList, newsCreate, account, players }) => {
 							<select name="author_aid">
 								{players && players.length
 									? players.map(player => {
-											return (
+											return player.group_id >= 3 ? (
 												<option key={player.id} value={player.id}>
 													{player.name}
 												</option>
-											)
+											) : null
 									  })
 									: null}
 							</select>
