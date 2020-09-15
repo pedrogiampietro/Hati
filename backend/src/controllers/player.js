@@ -12,15 +12,18 @@ router.get('/characters', async (req, res) => {
 
 router.get('/character/:name', async (req, res) => {
 	const { name } = req.params
+	const limit = 5
 
-	const players = await player.findOne({
-		where: {
-			name: name,
-		},
+	const players = await player_deaths.findAll({
+		attributes: ['player_id', 'level', 'killed_by'],
+
 		include: [
 			{
-				model: player_deaths,
-				required: true,
+				model: player,
+				where: {
+					name,
+				},
+				attributes: ['id', 'name', 'level'],
 			},
 		],
 	})
@@ -29,6 +32,29 @@ router.get('/character/:name', async (req, res) => {
 
 	return res.jsonOK(players)
 })
+
+// router.get('/character/:name', async (req, res) => {
+// 	const { name } = req.params
+// 	const limit = 5
+
+// 	const players = await player.findAll({
+// 		attributes: ['id', 'name'],
+
+// 		where: {
+// 			name: name,
+// 		},
+
+// 		include: [
+// 			{
+// 				model: player_deaths,
+// 			},
+// 		],
+// 	})
+
+// 	if (!players) return res.jsonNotFound(null)
+
+// 	return res.jsonOK(players)
+// })
 
 router.get('/highscores', async (req, res) => {
 	const { vocation, page } = req.query

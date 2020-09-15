@@ -12,6 +12,7 @@ import './styles.css'
 const Character = ({ playerGetCharacter }) => {
 	const { name } = useParams()
 	const [characterPage, setCharacterPage] = useState([])
+	const [playerDeaths, setPlayerDeaths] = useState([])
 
 	//items mocado.
 	const helmet = 'https://www.tibiawiki.com.br/images/c/cd/Steel_Helmet.gif'
@@ -27,8 +28,13 @@ const Character = ({ playerGetCharacter }) => {
 	useEffect(() => {
 		playerGetCharacter(name)
 			.then(({ payload }) => {
-				const newData = payload.data.data
-				setCharacterPage(newData)
+				/* data players */
+				const dataPlayers = payload.data.data[0].player
+				setCharacterPage(dataPlayers)
+
+				/* data deaths */
+				const dataDeaths = payload.data.data
+				setPlayerDeaths(dataDeaths)
 			})
 			.catch(err => {
 				alert('o jogador não foi carregado.')
@@ -184,12 +190,12 @@ const Character = ({ playerGetCharacter }) => {
 																	<div
 																		className="progress-bar progress-bar-striped bg-primary progress-bar-animated"
 																		role="progressbar"
-																		style={{
-																			width:
-																				(characterPage.health /
-																					characterPage.healthmax) *
-																				200,
-																		}}
+																		// style={{
+																		// 	width:
+																		// 		(characterPage.health /
+																		// 			characterPage.healthmax) *
+																		// 		200,
+																		// }}
 																	>
 																		<span>
 																			{characterPage.health} /{' '}
@@ -202,12 +208,12 @@ const Character = ({ playerGetCharacter }) => {
 																	<div
 																		className="progress-bar progress-bar-striped bg-info progress-bar-animated"
 																		role="progressbar"
-																		style={{
-																			width:
-																				(characterPage.mana /
-																					characterPage.manamax) *
-																				200,
-																		}}
+																		// style={{
+																		// 	width:
+																		// 		(characterPage.mana /
+																		// 			characterPage.manamax) *
+																		// 		200,
+																		// }}
 																	>
 																		<span>
 																			{characterPage.mana} /{' '}
@@ -223,9 +229,9 @@ const Character = ({ playerGetCharacter }) => {
 																		aria-valuenow="300"
 																		aria-valuemin="0"
 																		aria-valuemax="200"
-																		style={{
-																			width: (characterPage.soul / 200) * 200,
-																		}}
+																		// style={{
+																		// 	width: (characterPage.soul / 200) * 200,
+																		// }}
 																	>
 																		<span>{characterPage.soul} / 200</span>
 																	</div>
@@ -282,7 +288,7 @@ const Character = ({ playerGetCharacter }) => {
 																				<img src={legs} alt="legs" />
 																			</td>
 																			<td align="center">
-																				<i class="far fa-times-circle"></i>
+																				<i className="far fa-times-circle"></i>
 																			</td>
 																		</tr>
 																		<tr>
@@ -346,32 +352,37 @@ const Character = ({ playerGetCharacter }) => {
 
 												<table className="table table-striped table-hover table-fixed">
 													<tbody>
-														<tr>
-															<td className="col-md-3">13 Aug 20 04:36 PM</td>
-															<td>
-																Died at level{' '}
-																<span className="notranslate">1674</span> to{' '}
-																<a
-																	className="notranslate"
-																	href="/community/player/Huitzilopochtli"
-																>
-																	Huitzilopochtli
-																</a>{' '}
-																and{' '}
-																<a
-																	className="notranslate"
-																	href="/community/player/Biskut Airlines"
-																>
-																	Biskut Airlines
-																</a>
-																.
-															</td>
-															<td className="col-md-3 right">
-																<strong style={{ color: 'green' }}>
-																	BLESS
-																</strong>
-															</td>
-														</tr>
+														{playerDeaths && playerDeaths.length
+															? playerDeaths.map(props => {
+																	console.log('***** props', props)
+																	return (
+																		<tr>
+																			<td className="col-md-3">
+																				13 Aug 20 04:36 PM
+																			</td>
+																			<td>
+																				Died at level{' '}
+																				<span className="notranslate">
+																					{props.level}{' '}
+																				</span>
+																				to{' '}
+																				<a
+																					className="notranslate"
+																					href="/community/player/Huitzilopochtli"
+																				>
+																					{props.killed_by}
+																				</a>
+																				.
+																			</td>
+																			<td className="col-md-3 right">
+																				<strong style={{ color: 'green' }}>
+																					BLESS
+																				</strong>
+																			</td>
+																		</tr>
+																	)
+															  })
+															: 'teste'}
 													</tbody>
 												</table>
 											</div>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { newsList } from '../../actions/NewsActions'
 import { dataAtualFormatada } from '../../helpers/datetime'
