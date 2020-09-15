@@ -3,7 +3,10 @@ import { connect } from 'react-redux'
 import { useParams, Link } from 'react-router-dom'
 import { playerGetCharacter } from '../../actions/PlayerActions'
 import { genders, characterVocations, towns } from '../../config'
-import { dataAtualFormatada } from '../../helpers/datetime'
+import {
+	dataAtualFormatada,
+	convertTimestempToDate,
+} from '../../helpers/datetime'
 import Menu from '../Layouts/Menu'
 import Header from '../Layouts/Header'
 import Footer from '../Layouts/Footer'
@@ -351,14 +354,14 @@ const Character = ({ playerGetCharacter }) => {
 												</div>
 
 												<table className="table table-striped table-hover table-fixed">
-													<tbody>
-														{playerDeaths && playerDeaths.length
-															? playerDeaths.map(props => {
-																	console.log('***** props', props)
-																	return (
+													{playerDeaths && playerDeaths.length
+														? playerDeaths.map(props => {
+																console.log('***** props', props)
+																return (
+																	<tbody key={props.time}>
 																		<tr>
 																			<td className="col-md-3">
-																				13 Aug 20 04:36 PM
+																				{convertTimestempToDate(props.time)}
 																			</td>
 																			<td>
 																				Died at level{' '}
@@ -380,10 +383,10 @@ const Character = ({ playerGetCharacter }) => {
 																				</strong>
 																			</td>
 																		</tr>
-																	)
-															  })
-															: 'teste'}
-													</tbody>
+																	</tbody>
+																)
+														  })
+														: null}
 												</table>
 											</div>
 										</div>
