@@ -16,6 +16,7 @@ router.get('/character/:name', async (req, res) => {
 
 	const players = await player_deaths.findAll({
 		attributes: ['player_id', 'level', 'killed_by', 'time'],
+		limit,
 
 		include: [
 			{
@@ -23,7 +24,29 @@ router.get('/character/:name', async (req, res) => {
 				where: {
 					name,
 				},
-				attributes: ['id', 'name', 'level'],
+				attributes: [
+					'id',
+					'name',
+					'sex',
+					'vocation',
+					'town_id',
+					'level',
+					'health',
+					'healthmax',
+					'mana',
+					'manamax',
+					'soul',
+					'stamina',
+					'maglevel',
+					'skill_fist',
+					'skill_club',
+					'skill_sword',
+					'skill_axe',
+					'skill_dist',
+					'skill_shielding',
+					'skill_fishing',
+					'create_date',
+				],
 			},
 		],
 	})
@@ -32,29 +55,6 @@ router.get('/character/:name', async (req, res) => {
 
 	return res.jsonOK(players)
 })
-
-// router.get('/character/:name', async (req, res) => {
-// 	const { name } = req.params
-// 	const limit = 5
-
-// 	const players = await player.findAll({
-// 		attributes: ['id', 'name'],
-
-// 		where: {
-// 			name: name,
-// 		},
-
-// 		include: [
-// 			{
-// 				model: player_deaths,
-// 			},
-// 		],
-// 	})
-
-// 	if (!players) return res.jsonNotFound(null)
-
-// 	return res.jsonOK(players)
-// })
 
 router.get('/highscores', async (req, res) => {
 	const { vocation, page } = req.query

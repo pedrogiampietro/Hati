@@ -3,10 +3,7 @@ import { connect } from 'react-redux'
 import { useParams, Link } from 'react-router-dom'
 import { playerGetCharacter } from '../../actions/PlayerActions'
 import { genders, characterVocations, towns } from '../../config'
-import {
-	dataAtualFormatada,
-	convertTimestempToDate,
-} from '../../helpers/datetime'
+import { convertTimestempToDate } from '../../helpers/datetime'
 import Menu from '../Layouts/Menu'
 import Header from '../Layouts/Header'
 import Footer from '../Layouts/Footer'
@@ -136,7 +133,9 @@ const Character = ({ playerGetCharacter }) => {
 															</span>
 														</td>
 														<td>
-															{dataAtualFormatada(characterPage.createdAt)}
+															{convertTimestempToDate(
+																characterPage.create_date
+															)}
 														</td>
 													</tr>
 
@@ -192,13 +191,16 @@ const Character = ({ playerGetCharacter }) => {
 																<div className="progress">
 																	<div
 																		className="progress-bar progress-bar-striped bg-primary progress-bar-animated"
+																		aria-valuemin="0"
+																		aria-valuemax="100"
 																		role="progressbar"
-																		// style={{
-																		// 	width:
-																		// 		(characterPage.health /
-																		// 			characterPage.healthmax) *
-																		// 		200,
-																		// }}
+																		style={{
+																			width:
+																				(characterPage.health /
+																					characterPage.healthmax) *
+																					100 +
+																				'%',
+																		}}
 																	>
 																		<span>
 																			{characterPage.health} /{' '}
@@ -211,12 +213,13 @@ const Character = ({ playerGetCharacter }) => {
 																	<div
 																		className="progress-bar progress-bar-striped bg-info progress-bar-animated"
 																		role="progressbar"
-																		// style={{
-																		// 	width:
-																		// 		(characterPage.mana /
-																		// 			characterPage.manamax) *
-																		// 		200,
-																		// }}
+																		style={{
+																			width:
+																				(characterPage.mana /
+																					characterPage.manamax) *
+																					100 +
+																				'%',
+																		}}
 																	>
 																		<span>
 																			{characterPage.mana} /{' '}
@@ -232,9 +235,10 @@ const Character = ({ playerGetCharacter }) => {
 																		aria-valuenow="300"
 																		aria-valuemin="0"
 																		aria-valuemax="200"
-																		// style={{
-																		// 	width: (characterPage.soul / 200) * 200,
-																		// }}
+																		style={{
+																			width:
+																				(characterPage.soul / 200) * 100 + '%',
+																		}}
 																	>
 																		<span>{characterPage.soul} / 200</span>
 																	</div>
@@ -356,7 +360,6 @@ const Character = ({ playerGetCharacter }) => {
 												<table className="table table-striped table-hover table-fixed">
 													{playerDeaths && playerDeaths.length
 														? playerDeaths.map(props => {
-																console.log('***** props', props)
 																return (
 																	<tbody key={props.time}>
 																		<tr>
@@ -368,13 +371,7 @@ const Character = ({ playerGetCharacter }) => {
 																				<span className="notranslate">
 																					{props.level}{' '}
 																				</span>
-																				to{' '}
-																				<a
-																					className="notranslate"
-																					href="/community/player/Huitzilopochtli"
-																				>
-																					{props.killed_by}
-																				</a>
+																				to <Link to="#">{props.killed_by}</Link>
 																				.
 																			</td>
 																			<td className="col-md-3 right">
