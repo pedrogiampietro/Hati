@@ -15,7 +15,15 @@ router.get('/character/:name', async (req, res) => {
 	const limit = 5
 
 	const players = await player_deaths.findAll({
-		attributes: ['player_id', 'level', 'killed_by', 'time'],
+		attributes: [
+			'player_id',
+			'level',
+			'killed_by',
+			'time',
+			'mostdamage_by',
+			'unjustified',
+			'is_player',
+		],
 		limit,
 
 		include: [
