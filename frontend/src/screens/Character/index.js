@@ -232,9 +232,6 @@ const Character = ({ playerGetCharacter }) => {
 																	<div
 																		className="progress-bar progress-bar-striped bg-warning"
 																		role="progressbar"
-																		aria-valuenow="300"
-																		aria-valuemin="0"
-																		aria-valuemax="200"
 																		style={{
 																			width:
 																				(characterPage.soul / 200) * 100 + '%',
@@ -248,9 +245,6 @@ const Character = ({ playerGetCharacter }) => {
 																	<div
 																		className="progress-bar progress-bar-success"
 																		role="progressbar"
-																		aria-valuenow="2520"
-																		aria-valuemin="0"
-																		aria-valuemax="2520"
 																		style={{ width: '0%' }}
 																	>
 																		<span>{characterPage.stamina}</span>
@@ -357,7 +351,137 @@ const Character = ({ playerGetCharacter }) => {
 													</div>
 												</div>
 
-												<table className="table table-striped table-hover table-fixed">
+												<div class="container">
+													<div class="page-header">
+														<h2>
+															Death List{' '}
+															<small>
+																track the death of your<code>enemy!</code>.
+															</small>
+														</h2>
+													</div>
+
+													<div class="timeline">
+														<div class="line text-muted"></div>
+
+														<div class="separator text-muted">
+															<time>25. 3. 2015</time>
+														</div>
+
+														<article class="panel panel-danger">
+															<div class="panel-heading icon">
+																<i class="fas fa-skull-crossbones"></i>
+															</div>
+
+															<div class="panel-heading">
+																<h2 class="panel-title">Died</h2>
+															</div>
+
+															<div class="panel-body">
+																<strong>Died</strong> at level 55.
+																<br />
+																<span
+																	class="profile-image btn btn-outline-primary btn-lg btn-icon rounded-circle waves-effect waves-themed"
+																	style={{
+																		backgroundImage: `url("https://www.tibiawiki.com.br/images/d/da/Outfit_Mage_Male_Addon_3.gif")`,
+																		backgroundSize: 'cover',
+																	}}
+																></span>
+																<code>Neguinho</code> Level 102
+																<br />
+																<br />
+																<span
+																	class="profile-image btn btn-outline-primary btn-lg btn-icon rounded-circle waves-effect waves-themed"
+																	style={{
+																		backgroundImage: `url("https://www.tibiawiki.com.br/images/a/a3/Outfit_Knight_Female_Addon_3.gif")`,
+																		backgroundSize: 'cover',
+																	}}
+																></span>
+																<code>Zezinha Fake</code> Level 74
+															</div>
+														</article>
+
+														<div class="separator text-muted">
+															<time>25. 3. 2015</time>
+														</div>
+
+														<article class="panel panel-danger">
+															<div class="panel-heading icon">
+																<i class="fas fa-skull-crossbones"></i>
+															</div>
+
+															<div class="panel-heading">
+																<h2 class="panel-title">Died</h2>
+															</div>
+
+															<div class="panel-body">
+																<strong>Died</strong> at level 78.
+																<br />
+																<span
+																	class="profile-image btn btn-outline-primary btn-lg btn-icon rounded-circle waves-effect waves-themed"
+																	style={{
+																		backgroundImage: `url("https://www.tibiawiki.com.br/images/1/19/Hydra.gif")`,
+																		backgroundSize: 'cover',
+																	}}
+																></span>
+															</div>
+														</article>
+
+														<div class="separator text-muted">
+															<time>15. 9. 2020</time>
+														</div>
+
+														<article class="panel panel-success">
+															<div class="panel-heading icon">
+																<i class="fas fa-crosshairs"></i>
+															</div>
+
+															<div class="panel-heading">
+																<h2 class="panel-title">Fragged</h2>
+															</div>
+
+															<div class="panel-body">
+																you were the <code>biggest</code> killer of
+																death
+															</div>
+
+															<ul class="list-group ">
+																<li class="list-group-item panel-outline">
+																	You
+																</li>
+																<li class="list-group-item panel-outline">
+																	You Friend
+																</li>
+																<li class="list-group-item panel-outline">
+																	You Friend2
+																</li>
+																<li class="list-group-item panel-outline">
+																	You Friend3
+																</li>
+															</ul>
+														</article>
+
+														<div class="separator text-muted">
+															<time>11. 8. 2020</time>
+														</div>
+
+														<article class="panel panel-danger">
+															<div class="panel-heading icon">
+																<i class="fas fa-skull-crossbones"></i>
+															</div>
+
+															<div class="panel-heading">
+																<h2 class="panel-title">Fragged</h2>
+															</div>
+
+															<div class="panel-body">
+																<strong>Died</strong> at level 78. Hydra
+															</div>
+														</article>
+													</div>
+												</div>
+
+												{/* <table className="table table-striped table-hover table-fixed">
 													{playerDeaths && playerDeaths.length
 														? playerDeaths.map(props => {
 																return (
@@ -384,11 +508,12 @@ const Character = ({ playerGetCharacter }) => {
 																)
 														  })
 														: null}
-												</table>
+												</table> */}
 											</div>
 										</div>
 									</div>
 								</div>
+
 								<div className="col-lg-6 col-xl-3 order-lg-2 order-xl-3">
 									<div className="card mb-g">
 										<div className="row row-grid no-gutters">
