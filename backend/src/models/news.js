@@ -74,8 +74,9 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 			},
 			likes_count: {
-				type: DataTypes.INTEGER,
+				type: DataTypes.JSON,
 				allowNull: false,
+				defaultValue: {},
 				references: {
 					model: 'players',
 					key: 'id',

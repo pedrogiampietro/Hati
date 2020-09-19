@@ -18,20 +18,26 @@ router.get('/getLikes', async (req, res) => {
 
 router.post('/upLike/:id', async (req, res) => {
 	const { id } = req.params
-	const { account_id, body } = req
-	const fields = ['likes_count']
+	const { name } = req.headers
 
-	const likedPost = await z_forum.findOne({
+	let likedPost = await z_forum.findAll({
 		attributes: ['likes_count', 'id', 'author_aid'],
 		where: { id: id },
 	})
 
-	fields.map(fieldName => {
-		const newLike = body[fieldName]
-		if (newLike) likedPost[fieldName] = newLike
-	})
+	const data = likedPost[0].dataValues.likes_count
 
-	await likedPost.save()
+	const newLike = await z_forum.update(
+		{ likes_count: [...data, name] },
+		{ where: { id }}
+	)
+
+	if (newLike) {
+		likedPost = await z_forum.findAll({
+			attributes: ['likes_count', 'id', 'author_aid'],
+			where: { id: id },
+		})
+	} 
 
 	if (!likedPost) return res.jsonNotFound(null)
 
@@ -59,19 +65,6 @@ router.get('/', async (req, res) => {
 	})
 
 	return res.jsonOK(dashboard)
-})
-
-//=================================
-//             Show post by ID;
-//=================================
-router.get('/:id', async (req, res) => {
-	const { id } = req.params
-	const like = await z_forum.findOne({
-		where: { id: id },
-	})
-	if (!like) return res.jsonNotFound(null)
-
-	return res.jsonOK(like)
 })
 
 //=================================
