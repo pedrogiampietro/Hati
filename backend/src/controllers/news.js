@@ -5,7 +5,7 @@ const { getMessage } = require('../helpers/messages')
 const router = express.Router()
 
 //=================================
-//             Likes DisLikes
+//           Get all likes with news.
 //=================================
 
 router.get('/getLikes', async (req, res) => {
@@ -16,19 +16,22 @@ router.get('/getLikes', async (req, res) => {
 	return res.jsonOK(like)
 })
 
+//=================================
+//           Add a new like on news;
+//=================================
+
 router.post('/upLike/:id', async (req, res) => {
 	const { id } = req.params
 	const { name } = req.headers
 
-	let likedPost = await z_forum.findAll({
+	let likedPost = await z_forum.findOne({
 		attributes: ['likes_count', 'id', 'author_aid'],
 		where: { id: id },
 	})
 
-	const data = likedPost[0].dataValues.likes_count
+	const data = likedPost.dataValues.likes_count
 
-	if (data.includes(name))
-		return res.status(400).send('Post already liked.')
+	if (data.includes(name)) return res.status(400).send('Post already liked.')
 
 	const newLike = await z_forum.update(
 		{ likes_count: [...data, name] },
@@ -36,7 +39,7 @@ router.post('/upLike/:id', async (req, res) => {
 	)
 
 	if (newLike) {
-		likedPost = await z_forum.findAll({
+		likedPost = await z_forum.findOne({
 			attributes: ['likes_count', 'id', 'author_aid'],
 			where: { id: id },
 		})
@@ -45,6 +48,41 @@ router.post('/upLike/:id', async (req, res) => {
 	if (!likedPost) return res.jsonNotFound(null)
 
 	return res.jsonOK(likedPost)
+})
+
+//=================================
+//           Dislike on news;
+//=================================
+
+router.post('/disLike/:id', async (req, res) => {
+	const { id } = req.params
+	const { name } = req.headers
+
+	let dislikedPost = await z_forum.findOne({
+		attributes: ['likes_count', 'id', 'author_aid'],
+		where: { id: id },
+	})
+
+	const data = dislikedPost.dataValues.likes_count
+
+	if (!data.includes(name)) return res.status(400).send('Post not liked yet.')
+
+	const array = data
+	console.log(array)
+	const index = array.indexOf(name)
+	if (index > -1) {
+		array.splice(index, 1)
+	}
+	console.log(array)
+
+	const disLike = await z_forum.update(
+		{ likes_count: array },
+		{ where: { id } }
+	)
+
+	if (!dislikedPost) return res.jsonNotFound(null)
+
+	return res.jsonOK(dislikedPost)
 })
 
 //=================================
