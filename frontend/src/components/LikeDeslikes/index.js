@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react'
+import { getPlayerName } from '../../helpers/account'
 import { connect } from 'react-redux'
 
 const LikeDeslikes = props => {
 	const { id, likes_count } = props.propriety
+	const [characterLogged, setCharacterLogged] = useState(
+		getPlayerName()[0].name
+	)
 
 	const [Likes, setLikes] = useState(0)
 	const [Liked, setLiked] = useState(false)
@@ -34,12 +38,17 @@ const LikeDeslikes = props => {
 					className="d-inline-flex align-items-center text-dark"
 					onClick={onLike}
 				>
-					{Liked === false ? (
-						<i className="fas fa-heart fs-xs mr-1"></i>
-					) : (
+					{likes_count.includes(characterLogged) ? (
 						<i className="fas fa-heart fs-xs mr-1 text-danger"></i>
+					) : (
+						<i className="fas fa-heart fs-xs mr-1"></i>
 					)}
-					<span id={`likes-count-${id}`}>{likes_count} Like</span>
+
+					{likes_count.length > 1 ? (
+						<span id={`likes-count-${id}`}>{likes_count.length} Likes</span>
+					) : likes_count.length ? (
+						<span id={`likes-count-${id}`}>{likes_count.length} Like</span>
+					) : null}
 				</span>
 			</div>
 		</div>

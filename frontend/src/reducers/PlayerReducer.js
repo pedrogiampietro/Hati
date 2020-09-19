@@ -20,6 +20,7 @@ export default function (state = initialState, action) {
 		case PLAYER_CREATE: {
 			const response = payload ? payload.data : null
 			const player = response ? response.data : null
+			// console.log('**** player_create', player[0].name)
 			return { ...state, player }
 		}
 
@@ -32,6 +33,7 @@ export default function (state = initialState, action) {
 		case PLAYER_GET: {
 			const response = payload ? payload.data : null
 			const player = response ? response.data : null
+
 			return { ...state, player }
 		}
 
@@ -61,6 +63,7 @@ export default function (state = initialState, action) {
 		case CHARACTER_GET: {
 			const response = payload ? payload.data : null
 			const players = response ? response.players : null
+			console.log('****** players', players)
 			return { ...state, players }
 		}
 

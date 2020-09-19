@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { newsList } from '../../actions/NewsActions'
 import { dataAtualFormatada } from '../../helpers/datetime'
+
 import Menu from '../Layouts/Menu'
 import Header from '../Layouts/Header'
 import Footer from '../Layouts/Footer'
