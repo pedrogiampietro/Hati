@@ -27,9 +27,12 @@ router.post('/upLike/:id', async (req, res) => {
 
 	const data = likedPost[0].dataValues.likes_count
 
+	if (data.includes(name))
+		return res.status(400).send('Post already liked.')
+
 	const newLike = await z_forum.update(
 		{ likes_count: [...data, name] },
-		{ where: { id }}
+		{ where: { id } }
 	)
 
 	if (newLike) {
@@ -37,7 +40,7 @@ router.post('/upLike/:id', async (req, res) => {
 			attributes: ['likes_count', 'id', 'author_aid'],
 			where: { id: id },
 		})
-	} 
+	}
 
 	if (!likedPost) return res.jsonNotFound(null)
 
