@@ -5,6 +5,7 @@ import { dataAtualFormatada } from '../../helpers/datetime'
 import Menu from '../Layouts/Menu'
 import Header from '../Layouts/Header'
 import Footer from '../Layouts/Footer'
+import LikeDeslikes from '../../components/LikeDeslikes'
 
 const Home = ({ newsList }) => {
 	const [newsPost, setNewsPost] = useState([])
@@ -73,12 +74,7 @@ const Home = ({ newsList }) => {
 													<div className="pb-3 pt-2 border-top-0 border-left-0 border-right-0 text-muted">
 														{props.post_text}
 													</div>
-													<div className="d-flex align-items-center demo-h-spacing py-3">
-														<span className="d-inline-flex align-items-center text-dark">
-															<i className="fas fa-heart fs-xs mr-1 text-danger"></i>{' '}
-															<span>2 Likes</span>
-														</span>
-													</div>
+													<LikeDeslikes propriety={{ ...props }} />
 												</div>
 												<div className="card-body py-0 px-4 border-faded border-right-0 border-bottom-0 border-left-0">
 													<div className="d-flex flex-column align-items-center">

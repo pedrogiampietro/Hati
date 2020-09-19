@@ -69,6 +69,18 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 				defaultValue: 0,
 			},
+			news_icon: {
+				type: DataTypes.INTEGER,
+				allowNull: false,
+			},
+			likes_count: {
+				type: DataTypes.INTEGER,
+				allowNull: false,
+				references: {
+					model: 'players',
+					key: 'id',
+				},
+			},
 		},
 		{ freezeTableName: true }
 	)

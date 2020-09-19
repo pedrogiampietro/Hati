@@ -1,4 +1,4 @@
-import { NEWS_CREATE, NEWS_LIST } from '../actions/NewsActions'
+import { NEWS_CREATE, NEWS_LIST, LIKE_UPDATE } from '../actions/NewsActions'
 
 const initialState = {
 	post: null,
@@ -14,6 +14,12 @@ export default function (state = initialState, action) {
 		}
 
 		case NEWS_LIST: {
+			const response = payload ? payload.data : null
+			const post = response ? response.post : null
+			return { ...state, post }
+		}
+
+		case LIKE_UPDATE: {
 			const response = payload ? payload.data : null
 			const post = response ? response.post : null
 			return { ...state, post }

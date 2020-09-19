@@ -4,13 +4,43 @@ const { getMessage } = require('../helpers/messages')
 
 const router = express.Router()
 
-/*
- **
- *** Posts ***
- **
- */
+//=================================
+//             Likes DisLikes
+//=================================
 
-// buscando todas as news;
+router.get('/getLikes', async (req, res) => {
+	const like = await z_forum.findAll({
+		attributes: ['likes_count', 'id', 'author_aid'],
+	})
+
+	return res.jsonOK(like)
+})
+
+router.post('/upLike/:id', async (req, res) => {
+	const { id } = req.params
+	const { account_id, body } = req
+	const fields = ['likes_count']
+
+	const likedPost = await z_forum.findOne({
+		attributes: ['likes_count', 'id', 'author_aid'],
+		where: { id: id },
+	})
+
+	fields.map(fieldName => {
+		const newLike = body[fieldName]
+		if (newLike) likedPost[fieldName] = newLike
+	})
+
+	await likedPost.save()
+
+	if (!likedPost) return res.jsonNotFound(null)
+
+	return res.jsonOK(likedPost)
+})
+
+//=================================
+//             Show all posts;
+//=================================
 
 router.get('/', async (req, res) => {
 	const group_id = 5
@@ -31,7 +61,22 @@ router.get('/', async (req, res) => {
 	return res.jsonOK(dashboard)
 })
 
-// criando uma news nova;
+//=================================
+//             Show post by ID;
+//=================================
+router.get('/:id', async (req, res) => {
+	const { id } = req.params
+	const like = await z_forum.findOne({
+		where: { id: id },
+	})
+	if (!like) return res.jsonNotFound(null)
+
+	return res.jsonOK(like)
+})
+
+//=================================
+//             Create a new news;
+//=================================
 
 router.post('/create', async (req, res) => {
 	const { body } = req
@@ -48,27 +93,17 @@ router.post('/create', async (req, res) => {
 	return res.jsonOK(createNews)
 })
 
-/*
- **
- *** Comentários ***
- **
- */
+//=================================
+//          Comments
+//=================================
 
-// criando um novo comentário em um tópico;
 router.post('/:postId/comment', async (req, res) => {
 	//buscando um post;
-	const post = await Post.findOne({ id: req.params.postId })
+	const post = await z_forum.findOne({ id: req.params.postId })
 
 	//criando um novo comentário;
-	const comment = new Comment()
-	comment.content = req.body
-	comment.post = post.id
-	await comment.save()
 
 	//associando um comentário a um post.
-	post.comments.push(comment.id)
-	await post.save()
-	res.send(comment)
 })
 
 module.exports = router
