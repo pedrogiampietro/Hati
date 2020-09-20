@@ -31,8 +31,6 @@ router.post('/upLike/:id', async (req, res) => {
 
 	const data = likedPost.dataValues.likes_count
 
-	console.log(data)
-
 	if (data.includes(name)) return res.status(400).send('Post already liked.')
 
 	const newLike = await z_forum.update(
@@ -70,12 +68,10 @@ router.post('/disLike/:id', async (req, res) => {
 	if (!data.includes(name)) return res.status(400).send('Post not liked yet.')
 
 	const array = data
-	console.log(array)
 	const index = array.indexOf(name)
 	if (index > -1) {
 		array.splice(index, 1)
 	}
-	console.log(array)
 
 	const disLike = await z_forum.update(
 		{ likes_count: array },

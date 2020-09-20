@@ -15,13 +15,11 @@ const LikeDeslikes = ({ upLike, account, ...props }) => {
 	async function likeANews() {
 		await upLike(id)
 		interaction()
-		alert('Gostou.')
 	}
 
 	async function unlikeANews() {
 		await unLike(id)
 		interaction()
-		alert('Desgostou.')
 	}
 
 	return (

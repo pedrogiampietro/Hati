@@ -104,6 +104,5 @@ export const apiLike = (path, params = {}) => {
 			Authorization: `Bearer ${token}`,
 		},
 	}
-	console.log(options)
 	return axios.post(url, null, options)
 }
