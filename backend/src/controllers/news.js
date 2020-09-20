@@ -31,6 +31,8 @@ router.post('/upLike/:id', async (req, res) => {
 
 	const data = likedPost.dataValues.likes_count
 
+	console.log(data)
+
 	if (data.includes(name)) return res.status(400).send('Post already liked.')
 
 	const newLike = await z_forum.update(

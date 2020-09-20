@@ -38,8 +38,7 @@ export const playerList = data => {
 }
 
 export const playerUpdate = (id, data) => {
-	const isSocial = !!data.isSocial
-	const payload = apiPut(`/player/${id}`, { ...data, isSocial })
+	const payload = apiPut(`/player/${id}`, { ...data })
 	return { type: PLAYER_UPDATE, payload }
 }
 

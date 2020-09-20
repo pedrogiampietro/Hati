@@ -1,55 +1,71 @@
 import React, { useEffect, useState } from 'react'
 import { getPlayerName } from '../../helpers/account'
+import { upLike, unLike } from '../../actions/NewsActions'
 import { connect } from 'react-redux'
 
-const LikeDeslikes = props => {
-	const { id, likes_count } = props.propriety
-	const [characterLogged, setCharacterLogged] = useState(
-		getPlayerName()[0].name
-	)
+const LikeDeslikes = ({ upLike, account, ...props }) => {
+	const { id, likes_count, interaction } = props.propriety
 
-	const [Likes, setLikes] = useState(0)
-	const [Liked, setLiked] = useState(false)
+	const [characterLogged, setCharacterLogged] = useState()
 
-	const onLike = () => {
-		if (Liked === false) {
-			setLikes(Likes + 1)
-			setLiked(true)
+	useEffect(() => {
+		if (account) setCharacterLogged(getPlayerName()[0].name)
+	}, [account])
 
-			console.log('-- likes', Likes)
-			console.log('-- likes', Liked)
-		} else {
-			setLikes(Likes - 1)
-			setLiked(false)
-			console.log('-- dislike', Likes)
-			console.log('-- dislike', Liked)
-		}
+	async function likeANews() {
+		await upLike(id)
+		interaction()
+		alert('Gostou.')
 	}
 
-	const handleClick = e => {
-		console.log(e.currentTarget.id)
+	async function unlikeANews() {
+		await unLike(id)
+		interaction()
+		alert('Desgostou.')
 	}
 
 	return (
 		<div>
 			<div className="d-flex align-items-center demo-h-spacing py-3">
-				<span
-					id={`data-post-${id}`}
-					className="d-inline-flex align-items-center text-dark"
-					onClick={onLike}
-				>
-					{likes_count.includes(characterLogged) ? (
-						<i className="fas fa-heart fs-xs mr-1 text-danger"></i>
-					) : (
-						<i className="fas fa-heart fs-xs mr-1"></i>
-					)}
-
-					{likes_count.length > 1 ? (
-						<span id={`likes-count-${id}`}>{likes_count.length} Likes</span>
-					) : likes_count.length ? (
-						<span id={`likes-count-${id}`}>{likes_count.length} Like</span>
-					) : null}
-				</span>
+				{account ? (
+					<span
+						id={`data-post-${id}`}
+						className="d-inline-flex align-items-center text-dark"
+					>
+						{likes_count.includes(characterLogged) ? (
+							<span className="width-3 height-2 d-inline-flex align-items-center justify-content-center position-relative h1 ">
+								<i
+									className="fas fa-heart text-danger"
+									onClick={() => {
+										unlikeANews()
+									}}
+								></i>
+								<span className="badge badge-icon pos-top pos-right">
+									{likes_count.length}
+								</span>
+							</span>
+						) : (
+							<span className="width-3 height-2 d-inline-flex align-items-center justify-content-center position-relative h1 ">
+								<i
+									className="fas fa-heart"
+									onClick={() => {
+										likeANews()
+									}}
+								></i>
+								<span className="badge badge-icon pos-top pos-right">
+									{likes_count.length}
+								</span>
+							</span>
+						)}
+					</span>
+				) : (
+					<span className="width-3 height-2 d-inline-flex align-items-center justify-content-center position-relative h1 ">
+						<i className="fas fa-heart"></i>
+						<span className="badge badge-icon pos-top pos-right">
+							{likes_count.length}
+						</span>
+					</span>
+				)}
 			</div>
 		</div>
 	)
@@ -58,7 +74,8 @@ const LikeDeslikes = props => {
 const mapStateToProps = state => {
 	return {
 		post: state.post.post,
+		account: state.account.account,
 	}
 }
 
-export default connect(mapStateToProps, {})(LikeDeslikes)
+export default connect(mapStateToProps, { upLike, getPlayerName })(LikeDeslikes)

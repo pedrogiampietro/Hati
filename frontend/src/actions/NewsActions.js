@@ -1,4 +1,4 @@
-import { apiPostNews, apiGetNews, apiPut } from '../helpers/api'
+import { apiPostNews, apiGetNews, apiLike } from '../helpers/api'
 
 export const NEWS_CREATE = 'NEWS_CREATE'
 export const NEWS_LIST = 'NEWS_LIST'
@@ -14,8 +14,12 @@ export const newsCreate = data => {
 	return { type: NEWS_CREATE, payload }
 }
 
-export const likeUpdate = (id, data) => {
-	const Likes = !!data.Likes
-	const payload = apiPut(`/dashboard/${id}`, { ...data, Likes })
+export const upLike = id => {
+	const payload = apiLike(`/dashboard/upLike/${id}`)
+	return { type: LIKE_UPDATE, payload }
+}
+
+export const unLike = id => {
+	const payload = apiLike(`/dashboard/disLike/${id}`)
 	return { type: LIKE_UPDATE, payload }
 }

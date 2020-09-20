@@ -10,6 +10,11 @@ import LikeDeslikes from '../../components/LikeDeslikes'
 
 const Home = ({ newsList }) => {
 	const [newsPost, setNewsPost] = useState([])
+	const [postInteraction, setPostInteraction] = useState(false)
+
+	function interaction() {
+		setPostInteraction(!postInteraction)
+	}
 
 	useEffect(() => {
 		newsList()
@@ -21,7 +26,7 @@ const Home = ({ newsList }) => {
 				alert('posts não foram carregados.')
 				console.log(err)
 			})
-	}, [newsList])
+	}, [newsList, postInteraction])
 
 	return (
 		<div className="mod-bg-1">
@@ -75,7 +80,7 @@ const Home = ({ newsList }) => {
 													<div className="pb-3 pt-2 border-top-0 border-left-0 border-right-0 text-muted">
 														{props.post_text}
 													</div>
-													<LikeDeslikes propriety={{ ...props }} />
+													<LikeDeslikes propriety={{ interaction, ...props }} />
 												</div>
 												<div className="card-body py-0 px-4 border-faded border-right-0 border-bottom-0 border-left-0">
 													<div className="d-flex flex-column align-items-center">

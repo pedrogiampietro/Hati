@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getToken, getRefreshToken } from './account'
+import { getToken, getRefreshToken, getPlayerName } from './account'
 
 export const getApiUrl = path => {
 	return `http://localhost:3001${path}`
@@ -93,4 +93,17 @@ export const apiPostNews = (path, data = {}) => {
 	const options = {}
 
 	return axios.post(url, data, options)
+}
+
+export const apiLike = (path, params = {}) => {
+	const url = getApiUrl(path)
+	const token = getToken()
+	const options = {
+		headers: {
+			name: getPlayerName()[0].name,
+			Authorization: `Bearer ${token}`,
+		},
+	}
+	console.log(options)
+	return axios.post(url, null, options)
 }
