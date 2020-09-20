@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import avatarImg from '../../../assets/img/avatar.png'
+import coverCard from '../../../assets/img/card-backgrounds/cover-2-lg.png'
 
 const Menu = ({ account }) => {
 	return (
@@ -23,11 +24,7 @@ const Menu = ({ account }) => {
 							AAC
 						</span>
 					</div>
-					<img
-						src={require('../../../assets/img/card-backgrounds/cover-2-lg.png')}
-						className="cover"
-						alt="cover"
-					/>
+					<img src={coverCard} className="cover" alt="cover" />
 				</div>
 				<ul id="js-nav-menu" className="nav-menu">
 					<li>

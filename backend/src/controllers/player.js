@@ -25,6 +25,10 @@ router.get('/character/:name', async (req, res) => {
 			'is_player',
 		],
 		limit,
+		order: [
+			['time', 'DESC'],
+			['time', 'ASC'],
+		],
 
 		include: [
 			{

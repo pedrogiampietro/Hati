@@ -4,12 +4,13 @@ import { useParams, Link } from 'react-router-dom'
 import { playerGetCharacter } from '../../actions/PlayerActions'
 import { genders, characterVocations, towns } from '../../config'
 import { convertTimestempToDate } from '../../helpers/datetime'
+import PlayerSkills from '../../components/PlayerSkills'
 import Menu from '../Layouts/Menu'
 import Header from '../Layouts/Header'
 import Footer from '../Layouts/Footer'
 import './styles.css'
 
-const Character = ({ playerGetCharacter }) => {
+const Character = ({ playerGetCharacter, props }) => {
 	const { name } = useParams()
 	const [characterPage, setCharacterPage] = useState([])
 	const [playerDeaths, setPlayerDeaths] = useState([])
@@ -63,10 +64,9 @@ const Character = ({ playerGetCharacter }) => {
 											<div className="d-flex flex-row align-items-center">
 												<span className="status status-success mr-3">
 													<span
-														className="rounded-circle profile-image d-block "
+														className="rounded-circle profile-image d-block cover "
 														style={{
 															backgroundImage: `url("https://www.tibiawiki.com.br/images/e/e4/Outfit_Citizen_Male.gif")`,
-															backgroundSize: 'cover',
 														}}
 													></span>
 												</span>
@@ -106,9 +106,7 @@ const Character = ({ playerGetCharacter }) => {
 																Level:
 															</span>
 														</td>
-														<td className="d-inline-flex border border-primary text-primary width-2 height-2 rounded-circle fw-500 mr-2 align-items-center justify-content-center">
-															{characterPage.level}
-														</td>
+														<td>{characterPage.level}</td>
 													</tr>
 													<tr>
 														<td>
@@ -308,51 +306,20 @@ const Character = ({ playerGetCharacter }) => {
 															</div>
 														</div>
 													</div>
-													<div className="col-md-4">
-														<div className="panel panel-default">
-															<div className="panel-heading">Skills</div>
-															<div className="panel-body panel-player-extra">
-																<table className="table table-striped table-hover table-fixed">
-																	<tbody>
-																		<tr>
-																			<td className="left">Magic Level</td>
-																			<td className="right">
-																				{characterPage.maglevel}
-																			</td>
-																		</tr>
-																		<tr>
-																			<td className="left">Melee</td>
-																			<td className="right">
-																				{characterPage.skill_fist}
-																			</td>
-																		</tr>
-																		<tr>
-																			<td className="left">Distance</td>
-																			<td className="right">
-																				{characterPage.skill_dist}
-																			</td>
-																		</tr>
-																		<tr>
-																			<td className="left">Shielding</td>
-																			<td className="right">
-																				{characterPage.skill_shielding}
-																			</td>
-																		</tr>
-																		<tr>
-																			<td className="left">Fishing</td>
-																			<td className="right">
-																				{characterPage.skill_fishing}
-																			</td>
-																		</tr>
-																	</tbody>
-																</table>
-															</div>
-														</div>
-													</div>
+													<PlayerSkills
+														skillMagic={characterPage.maglevel}
+														skillFist={characterPage.skill_fist}
+														skillSword={characterPage.skill_sword}
+														skillAxe={characterPage.skill_axe}
+														skillClub={characterPage.skill_club}
+														skillDist={characterPage.skill_dist}
+														skillShielding={characterPage.skill_shielding}
+														skillFishing={characterPage.skill_fishing}
+													/>
 												</div>
 
-												<div class="container">
-													<div class="page-header">
+												<div className="container">
+													<div className="page-header">
 														<h2>
 															Death List{' '}
 															<small>
@@ -361,46 +328,46 @@ const Character = ({ playerGetCharacter }) => {
 															</small>
 														</h2>
 													</div>
-													<div class="timeline">
-														<div class="line text-muted"></div>
+													<div className="timeline">
+														<div className="line text-muted"></div>
 														{playerDeaths && playerDeaths.length
 															? playerDeaths.map(props => {
 																	return (
-																		<>
-																			<div class="separator text-muted">
+																		<div key={props.time}>
+																			<div className="separator text-muted">
 																				<time>
 																					{convertTimestempToDate(props.time)}
 																				</time>
 																			</div>
 
-																			<article class="panel panel-danger">
-																				<div class="panel-heading icon">
+																			<article className="panel panel-danger">
+																				<div className="panel-heading icon">
 																					{props.is_player === 1 ? (
-																						<i class="fas fa-crosshairs"></i>
+																						<i className="fas fa-crosshairs"></i>
 																					) : (
-																						<i class="fas fa-skull-crossbones"></i>
+																						<i className="fas fa-skull-crossbones"></i>
 																					)}
 																				</div>
 
-																				<div class="panel-heading">
-																					<h2 class="panel-title">
+																				<div className="panel-heading">
+																					<h2 className="panel-title">
 																						{props.is_player === 1
 																							? 'Fragged'
 																							: 'Died'}
 																					</h2>
 																				</div>
 
-																				<div class="panel-body">
+																				<div className="panel-body">
 																					<strong>Died</strong> at level{' '}
 																					{props.level}.{' '}
 																					{props.unjustified === 1 ? (
-																						<span class="badge badge-danger">
+																						<span className="badge badge-danger">
 																							unjustified
 																						</span>
 																					) : null}
 																					<br />
 																					<span
-																						class="profile-image btn btn-outline-primary btn-lg btn-icon rounded-circle waves-effect waves-themed"
+																						className="profile-image btn btn-outline-primary btn-lg btn-icon rounded-circle waves-effect waves-themed"
 																						style={{
 																							backgroundImage: `url("https://www.tibiawiki.com.br/images/d/da/Outfit_Mage_Male_Addon_3.gif")`,
 																							backgroundSize: 'cover',
@@ -416,13 +383,13 @@ const Character = ({ playerGetCharacter }) => {
 																					props.killed_by ? (
 																						<>
 																							{' '}
-																							<span class="badge badge-primary">
+																							<span className="badge badge-primary">
 																								most damage
 																							</span>
 																							<br />
 																							<br />
 																							<span
-																								class="profile-image btn btn-outline-primary btn-lg btn-icon rounded-circle waves-effect waves-themed"
+																								className="profile-image btn btn-outline-primary btn-lg btn-icon rounded-circle waves-effect waves-themed"
 																								style={{
 																									backgroundImage: `url("https://www.tibiawiki.com.br/images/d/da/Outfit_Mage_Male_Addon_3.gif")`,
 																									backgroundSize: 'cover',
@@ -433,7 +400,7 @@ const Character = ({ playerGetCharacter }) => {
 																					<code>{props.killed_by}</code>
 																				</div>
 																			</article>
-																		</>
+																		</div>
 																	)
 															  })
 															: null}
