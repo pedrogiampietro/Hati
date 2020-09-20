@@ -100,9 +100,11 @@ export const apiLike = (path, params = {}) => {
 	const token = getToken()
 	const options = {
 		headers: {
-			name: getPlayerName()[0].name,
+			name: getPlayerName(),
 			Authorization: `Bearer ${token}`,
 		},
 	}
+
+	console.log(options)
 	return axios.post(url, null, options)
 }

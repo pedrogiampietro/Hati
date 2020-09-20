@@ -9,7 +9,7 @@ const LikeDeslikes = ({ upLike, account, ...props }) => {
 	const [characterLogged, setCharacterLogged] = useState()
 
 	useEffect(() => {
-		if (account) setCharacterLogged(getPlayerName()[0].name)
+		if (account) setCharacterLogged(getPlayerName())
 	}, [account])
 
 	async function likeANews() {

@@ -35,8 +35,7 @@ export default function (state = initialState, action) {
 			const account = response ? response.data : null
 			const metadata = response ? response.metadata : null
 
-			const player = response ? response.data : null
-			// const characterLogged = player[0].name
+			const player = response ? response.data[0]?.name : null
 
 			const token = metadata ? metadata.token : null
 			const refreshToken = metadata ? metadata.refreshToken : null
