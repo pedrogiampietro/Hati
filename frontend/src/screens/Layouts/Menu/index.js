@@ -6,7 +6,7 @@ import coverCard from '../../../assets/img/card-backgrounds/cover-2-lg.png'
 
 const Menu = ({ account }) => {
 	return (
-		<aside className="page-sidebar">
+		<aside className="page-sidebar ">
 			<nav id="js-primary-nav" className="primary-nav" role="navigation">
 				<div className="info-card">
 					<img
@@ -26,7 +26,7 @@ const Menu = ({ account }) => {
 					</div>
 					<img src={coverCard} className="cover" alt="cover" />
 				</div>
-				<ul id="js-nav-menu" className="nav-menu">
+				<ul id="js-nav-menu" className="nav-menu ">
 					<li>
 						<Link to="/">
 							<i className="fal fa-globe"></i>
@@ -156,7 +156,7 @@ const Menu = ({ account }) => {
 	)
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
 		account: state.account.account,
 	}

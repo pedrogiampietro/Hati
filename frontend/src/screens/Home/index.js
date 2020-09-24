@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { newsList } from '../../actions/NewsActions'
 import { dataAtualFormatada } from '../../helpers/datetime'
+import { closeMenuOnMobile } from '../../assets/js/scripts'
 
 import Menu from '../Layouts/Menu'
 import Header from '../Layouts/Header'
 import Footer from '../Layouts/Footer'
 import LikeDeslikes from '../../components/LikeDeslikes'
+import './styles.css'
 
 const Home = ({ newsList }) => {
 	const [newsPost, setNewsPost] = useState([])
@@ -22,7 +24,7 @@ const Home = ({ newsList }) => {
 				const newData = payload.data.data
 				setNewsPost(newData)
 			})
-			.catch(err => {
+			.catch((err) => {
 				alert('posts não foram carregados.')
 				console.log(err)
 			})
@@ -30,6 +32,9 @@ const Home = ({ newsList }) => {
 
 	return (
 		<div className="mod-bg-1">
+			{/* mod-bg-1 mod-hide-nav-icons mod-nav-link header-function-fixed mobile chrome webkit mobile-view-activated no-slimscroll */}
+			{/* mod-bg-1 mod-hide-nav-icons mod-nav-link header-function-fixed mobile chrome webkit mobile-view-activated no-slimscroll pace-done mobile-nav-on */}
+			{/* // <div className="mod-bg-1"> */}
 			<div className="page-wrapper">
 				<div className="page-inner">
 					<Menu />
@@ -45,7 +50,7 @@ const Home = ({ newsList }) => {
 							</div>
 
 							{newsPost && newsPost.length
-								? newsPost.map(props => {
+								? newsPost.map((props) => {
 										return (
 											<div key={props.id} className="card mb-g">
 												<div className="card-body pb-0 px-4">
@@ -125,21 +130,19 @@ const Home = ({ newsList }) => {
 							</div>
 						</main>
 
-						<div
-							className="page-content-overlay"
-							data-action="toggle"
-							data-classname="mobile-nav-on"
-						></div>
-
 						<Footer />
 					</div>
 				</div>
 			</div>
+			<div
+				className="fechaMenu isClose"
+				onClick={() => closeMenuOnMobile()}
+			></div>
 		</div>
 	)
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
 		post: state.post.post,
 	}

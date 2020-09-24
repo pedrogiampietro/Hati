@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import { changeMinify, changeMenuOnMobile } from '../../../assets/js/scripts'
 
 const Header = () => {
 	const history = useHistory()
@@ -12,7 +13,7 @@ const Header = () => {
 	}
 
 	return (
-		<header className="page-header" role="banner">
+		<header className="page-header " role="banner">
 			<div className="page-logo">
 				<span
 					className="page-logo-link press-scale-down d-flex align-items-center position-relative"
@@ -23,6 +24,29 @@ const Header = () => {
 					<span className="page-logo-text mr-1">Hati AAC</span>
 					<span className="position-absolute text-white opacity-50 small pos-top pos-right mr-2 mt-n2"></span>
 					<i className="fal fa-angle-down d-inline-block ml-1 fs-lg color-primary-300"></i>
+				</span>
+			</div>
+
+			<div className="hidden-md-down dropdown-icon-menu position-relative">
+				<span
+					className="header-btn btn js-waves-off"
+					data-action="toggle"
+					data-classname="nav-function-hidden"
+					title="Hide Navigation"
+					onClick={() => changeMinify()}
+				>
+					<i className="ni ni-menu"></i>
+				</span>
+			</div>
+
+			<div className="hidden-lg-up">
+				<span
+					className="header-btn btn press-scale-down waves-effect waves-themed"
+					data-action="toggle"
+					data-classname="mobile-nav-on"
+					onClick={() => changeMenuOnMobile()}
+				>
+					<i className="ni ni-menu"></i>
 				</span>
 			</div>
 

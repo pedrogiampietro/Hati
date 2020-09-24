@@ -17,6 +17,9 @@ import './assets/css/styles.css'
 import './assets/css/styles-bundle.css'
 import './assets/css/toastr.css'
 import '../node_modules/bootstrap/js/src/modal'
+import '../node_modules/bootstrap/js/src/collapse'
+
+import './assets/js/scripts'
 
 const App = ({ initAccount }) => {
 	useEffect(() => {
@@ -66,7 +69,7 @@ const App = ({ initAccount }) => {
 	)
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
 		account: state.account.account,
 	}
