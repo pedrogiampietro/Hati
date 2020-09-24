@@ -11,9 +11,11 @@ import AccountCharacters from './screens/Account/Characters'
 import AccountCharactersCreate from './screens/Account/Characters/Create'
 import Highscores from './screens/Highscores'
 import Character from './screens/Character'
+import PageSearch from './components/PageSearch'
 
 import './assets/css/styles.css'
 import './assets/css/styles-bundle.css'
+import './assets/css/toastr.css'
 import '../node_modules/bootstrap/js/src/modal'
 
 const App = ({ initAccount }) => {
@@ -50,6 +52,10 @@ const App = ({ initAccount }) => {
 
 				<Route path="/character/:name">
 					<Character />
+				</Route>
+
+				<Route path="/PageSearch">
+					<PageSearch />
 				</Route>
 
 				<Route path="/">

@@ -1,0 +1,12 @@
+.NoResultsSection {
+	text-align: center;
+	margin: 3.125rem auto;
+}
+
+.NoResultsContent {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	flex-direction: column;
+}

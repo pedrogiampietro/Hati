@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useHistory } from 'react-router-dom'
 import { playerGetCharacter } from '../../actions/PlayerActions'
 import { genders, characterVocations, towns } from '../../config'
 import { convertTimestempToDate } from '../../helpers/datetime'
@@ -11,6 +11,7 @@ import Footer from '../Layouts/Footer'
 import './styles.css'
 
 const Character = ({ playerGetCharacter, props }) => {
+	const history = useHistory()
 	const { name } = useParams()
 	const [characterPage, setCharacterPage] = useState([])
 	const [playerDeaths, setPlayerDeaths] = useState([])
@@ -37,11 +38,10 @@ const Character = ({ playerGetCharacter, props }) => {
 				const dataDeaths = payload.data.data
 				setPlayerDeaths(dataDeaths)
 			})
-			.catch(err => {
-				alert('o jogador não foi carregado.')
-				console.log(err)
+			.catch((err) => {
+				history.push('/PageSearch')
 			})
-	}, [name, playerGetCharacter])
+	}, [name, history, playerGetCharacter])
 
 	return (
 		<div className="mod-bg-1">
@@ -331,7 +331,7 @@ const Character = ({ playerGetCharacter, props }) => {
 													<div className="timeline">
 														<div className="line text-muted"></div>
 														{playerDeaths && playerDeaths.length
-															? playerDeaths.map(props => {
+															? playerDeaths.map((props) => {
 																	return (
 																		<div key={props.time}>
 																			<div className="separator text-muted">
@@ -507,7 +507,7 @@ const Character = ({ playerGetCharacter, props }) => {
 	)
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
 		players: state.player.player,
 	}

@@ -1,5 +1,6 @@
 const express = require('express')
 const { player, player_deaths } = require('../models')
+const { getMessage } = require('../helpers/messages')
 
 const router = express.Router()
 
@@ -63,7 +64,12 @@ router.get('/character/:name', async (req, res) => {
 		],
 	})
 
-	if (!players) return res.jsonNotFound(null)
+	if (players.length === 0) {
+		return res.jsonBadRequest(
+			null,
+			getMessage('character.search.name_not_exists')
+		)
+	}
 
 	return res.jsonOK(players)
 })
@@ -142,7 +148,7 @@ router.put('/:id', async (req, res) => {
 	})
 	if (!players) return res.jsonNotFound(null)
 
-	fields.map(fieldName => {
+	fields.map((fieldName) => {
 		const newValue = body[fieldName]
 		if (newValue) players[fieldName] = newValue
 	})

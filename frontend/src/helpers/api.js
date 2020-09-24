@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { getToken, getRefreshToken, getPlayerName } from './account'
 
-export const getApiUrl = path => {
+export const getApiUrl = (path) => {
 	return `http://localhost:3001${path}`
 }
 
@@ -105,6 +105,5 @@ export const apiLike = (path, params = {}) => {
 		},
 	}
 
-	console.log(options)
 	return axios.post(url, null, options)
 }
