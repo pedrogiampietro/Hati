@@ -13,14 +13,13 @@ const Header = () => {
 	}
 
 	return (
-		<header className="page-header " role="banner">
+		<header className="page-header" role="banner">
 			<div className="page-logo">
 				<span
 					className="page-logo-link press-scale-down d-flex align-items-center position-relative"
 					data-toggle="modal"
 					data-target="#modal-shortcut"
 				>
-					<img src="img/logo.png" alt="Hati AAC" aria-roledescription="logo" />
 					<span className="page-logo-text mr-1">Hati AAC</span>
 					<span className="position-absolute text-white opacity-50 small pos-top pos-right mr-2 mt-n2"></span>
 					<i className="fal fa-angle-down d-inline-block ml-1 fs-lg color-primary-300"></i>

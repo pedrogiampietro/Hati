@@ -40,6 +40,18 @@ const Menu = ({ account }) => {
 					</li>
 
 					<li>
+						<Link to="/sign-up">
+							<i class="fa fa-user-plus"></i>
+							<span
+								className="nav-link-text"
+								data-i18n="nav.application_intel_analytics_dashboard"
+							>
+								Register
+							</span>
+						</Link>
+					</li>
+
+					<li>
 						<Link to="/sign-in">
 							<i className="fal fa-sign-in" aria-hidden="true"></i>
 							<span
@@ -142,16 +154,6 @@ const Menu = ({ account }) => {
 				</ul>
 				<div className="filter-message js-filter-message bg-success-600"></div>
 			</nav>
-
-			<div className="nav-footer shadow-top">
-				<span
-					data-action="toggle"
-					data-class="nav-function-minify"
-					className="hidden-md-down"
-				>
-					{' '}
-				</span>
-			</div>
 		</aside>
 	)
 }

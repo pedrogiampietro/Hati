@@ -16,7 +16,7 @@ const Characters = ({ players, playerList, signOut, account }) => {
 		return <Redirect to="/" />
 	}
 
-	const signOutHandler = e => {
+	const signOutHandler = (e) => {
 		e.preventDefault()
 		signOut()
 	}
@@ -67,11 +67,11 @@ const Characters = ({ players, playerList, signOut, account }) => {
 										<div className="row no-gutters row-grid">
 											<div className="col-12">
 												<div className="d-flex flex-column align-items-center justify-content-center p-4">
-													<img
+													{/* <img
 														src="img/demo/avatars/avatar-admin-lg.png"
 														className="rounded-circle shadow-2 img-thumbnail"
 														alt=""
-													/>
+													/> */}
 													<h5 className="mb-0 fw-700 text-center mt-3">
 														Pedro Giampietro
 														<small className="text-muted mb-0">
@@ -130,7 +130,7 @@ const Characters = ({ players, playerList, signOut, account }) => {
 												</div>
 											</div>
 											{players && players.length
-												? players.map(player => {
+												? players.map((player) => {
 														return (
 															<div key={player.id} className="col-4">
 																<Link to={`/character/${player.name}`}>
@@ -296,7 +296,7 @@ const Characters = ({ players, playerList, signOut, account }) => {
 	)
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
 		account: state.account.account,
 		players: state.player.player,

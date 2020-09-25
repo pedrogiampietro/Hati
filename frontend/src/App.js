@@ -27,45 +27,47 @@ const App = ({ initAccount }) => {
 	}, [initAccount])
 
 	return (
-		<BrowserRouter>
-			<Switch>
-				<Route path="/sign-in">
-					<SignIn />
-				</Route>
+		<>
+			<BrowserRouter>
+				<Switch>
+					<Route path="/sign-in">
+						<SignIn />
+					</Route>
 
-				<Route path="/sign-up">
-					<SignUp />
-				</Route>
+					<Route path="/sign-up">
+						<SignUp />
+					</Route>
 
-				<Route path="/dashboard">
-					<Dashboard />
-				</Route>
+					<Route path="/dashboard">
+						<Dashboard />
+					</Route>
 
-				<Route path="/account/characters/create">
-					<AccountCharactersCreate />
-				</Route>
+					<Route path="/account/characters/create">
+						<AccountCharactersCreate />
+					</Route>
 
-				<Route path="/account/characters">
-					<AccountCharacters />
-				</Route>
+					<Route path="/account/characters">
+						<AccountCharacters />
+					</Route>
 
-				<Route path="/highscores">
-					<Highscores />
-				</Route>
+					<Route path="/highscores">
+						<Highscores />
+					</Route>
 
-				<Route path="/character/:name">
-					<Character />
-				</Route>
+					<Route path="/character/:name">
+						<Character />
+					</Route>
 
-				<Route path="/PageSearch">
-					<PageSearch />
-				</Route>
+					<Route path="/PageSearch">
+						<PageSearch />
+					</Route>
 
-				<Route path="/">
-					<Home />
-				</Route>
-			</Switch>
-		</BrowserRouter>
+					<Route path="/">
+						<Home />
+					</Route>
+				</Switch>
+			</BrowserRouter>
+		</>
 	)
 }
 
