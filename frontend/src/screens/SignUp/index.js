@@ -1,21 +1,23 @@
-import React, { useState } from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import React from 'react'
+import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { signUp } from '../../actions/AccountActions'
 import { getFormData } from '../../helpers/form'
 
 import Container from '../Layouts/Container'
-import Error from '../../helpers/error'
+// import Error from '../../helpers/error'
 import SignUpBackground from '../../assets/img/backgrounds/pattern-1.svg'
 
 const SignUp = (props) => {
 	const { signUp, account } = props
-	const [error, setError] = useState()
+	// const [error, setError] = useState()
 
 	const submitHandler = (e) => {
 		e.preventDefault()
 		const data = getFormData(e)
 		signUp(data)
+
+		console.log(data)
 	}
 
 	if (account) {
@@ -53,38 +55,36 @@ const SignUp = (props) => {
 									every day. Verification emails can be delayed by up to 10
 									minutes. Check your spam box.
 								</div>
-								<form
-									id="js-login"
-									novalidate=""
-									action="intel_analytics_dashboard.html"
-								>
+								<form onSubmit={submitHandler}>
 									<div className="form-group row">
-										<label className="col-xl-12 form-label" for="fname">
+										<label className="col-xl-12 form-label" htmlFor="name">
 											I never registered the same password used on other
 											servers! Avoid getting hacked.
 										</label>
 										<div className="col-6 pr-1">
 											<input
 												type="text"
-												id="fname"
+												name="name"
 												className="form-control"
 												placeholder="Enter your account name"
-												required=""
+												required
 											/>
 											<div className="invalid-feedback">
 												No, you missed this one.
 											</div>
 										</div>
-										<div className="col-6 pl-1">
+									</div>
+									<div className="form-group row">
+										<div className="col-6 pr-1">
 											<input
-												type="text"
-												id="lname"
+												type="password"
+												name="password"
 												className="form-control"
 												placeholder="Enter your password"
-												required=""
+												required
 											/>
 											<div className="invalid-feedback">
-												Sorry, you missed this one.
+												No, you missed this one.
 											</div>
 											<div className="help-block">
 												Your password must be 8-20 characters long, contain
@@ -92,17 +92,30 @@ const SignUp = (props) => {
 												special characters, or emoji.
 											</div>
 										</div>
+										<div className="col-6 pl-1">
+											<input
+												type="password"
+												name="password_confirmation"
+												className="form-control"
+												placeholder="Confirm password"
+												required
+											/>
+
+											<div className="invalid-feedback">
+												Sorry, you missed this one.
+											</div>
+										</div>
 									</div>
 									<div className="form-group">
-										<label className="form-label" for="emailverify">
+										<label className="form-label" htmlFor="email">
 											Email will be needed for verification and account recovery
 										</label>
 										<input
 											type="email"
-											id="emailverify"
+											name="email"
 											className="form-control"
 											placeholder="Enter your valid e-mail"
-											required=""
+											required
 										/>
 										<div className="invalid-feedback">
 											No, you missed this one.

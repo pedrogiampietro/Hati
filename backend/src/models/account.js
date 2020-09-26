@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
+		email: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
 		secret: {
 			type: DataTypes.STRING,
 			allowNull: true,
@@ -16,10 +20,6 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 			defaultValue: 1,
-		},
-		email: {
-			type: DataTypes.STRING,
-			allowNull: false,
 		},
 		premdays: {
 			type: DataTypes.INTEGER,
@@ -41,6 +41,16 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: false,
 			defaultValue: 0,
 		},
+		// vote: {
+		// 	type: DataTypes.INTEGER,
+		// 	allowNull: false,
+		// 	defaultValue: 0,
+		// },
+		// vip_time: {
+		// 	type: DataTypes.INTEGER,
+		// 	allowNull: false,
+		// 	defaultValue: 0,
+		// },
 		jwtVersion: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
@@ -48,7 +58,7 @@ module.exports = (sequelize, DataTypes) => {
 		},
 	})
 
-	account.associate = models => {
+	account.associate = (models) => {
 		account.hasMany(models.player, { foreignKey: 'account_id' })
 	}
 

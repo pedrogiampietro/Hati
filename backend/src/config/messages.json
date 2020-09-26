@@ -23,7 +23,10 @@
 	"account.signup.password_confirmation.any.only": "Confirmação de senha deve ser igual à senha escolhida.",
 	"account.signup.password.string.empty": "Campo senha é obrigatório.",
 	"account.signup.password.string.pattern.base": "Senha deve ter de 3 à 30 caracteres.",
-	"account.signup.name.string.min": "Senha deve ter de 6 à 30 caracteres.",
+	"account.signup.name.string.min": "Account Name deve ter de 6 à 30 caracteres.",
+	"account.signup.email.string.email": "Um E-mail válido é obrigatório.",
+	"account.signup.email_exists": "E-mail já cadastrado.",
+
 
 	"character.search.success": "Busca efetuada com sucesso.",
 	"character.search.name_not_exists": "Esse nome não existe no nosso banco de dados.",

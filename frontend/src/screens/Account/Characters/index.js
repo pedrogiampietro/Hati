@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { signOut } from '../../../actions/AccountActions'
 import { playerList } from '../../../actions/PlayerActions'
@@ -22,251 +22,189 @@ const Characters = ({ players, playerList, signOut, account }) => {
 
 	return (
 		<Container>
-			<ol className="breadcrumb page-breadcrumb">
-				<Link to="/">
-					<li className="breadcrumb-item">HatiAAC/ </li>
-				</Link>
-				<li className="breadcrumb-item active">Account</li>
-				<li className="position-absolute pos-top pos-right d-none d-sm-block">
-					<span className="js-get-date"></span>
-				</li>
-			</ol>
-			<div className="subheader">
-				<h1 className="subheader-title">
-					<i className="subheader-icon fal fa-plus-circle"></i> Account
-					Management
-					<small>Account Page</small>
-				</h1>
-
-				<div className="d-flex mr-0">
-					<div className="mr-2">
-						<span className="peity-donut" />
-					</div>
-					<div>
-						<button className="btn btn-primary" onClick={signOutHandler}>
-							Logout
-						</button>
+			<div id="contentBody" className="col-sm-9">
+				<div className="panel panel-danger">
+					<div className="panel-heading">Recovery Key</div>
+					<div className="panel-body">
+						<strong>
+							You do not have a recovery key. It is recommended that you
+							generate one.
+							<br />
+							In case you lose your account, using the recovery key is the only
+							option to recover it.
+						</strong>
+						<br />
+						<br />
+						<Link to="/account/key">
+							<button className="btn btn-success btn-sm">
+								Generate Recovery Key
+							</button>
+						</Link>
 					</div>
 				</div>
-			</div>
-			<div className="row">
-				<div className="col-lg-6 col-xl-3 order-lg-1 order-xl-1">
-					<div className="card mb-g rounded-top">
-						<div className="row no-gutters row-grid">
-							<div className="col-12">
-								<div className="d-flex flex-column align-items-center justify-content-center p-4">
-									{/* <img
-														src="img/demo/avatars/avatar-admin-lg.png"
-														className="rounded-circle shadow-2 img-thumbnail"
-														alt=""
-													/> */}
-									<h5 className="mb-0 fw-700 text-center mt-3">
-										Pedro Giampietro
-										<small className="text-muted mb-0">
-											Rio de Janeiro, Brasil
-										</small>
-									</h5>
-								</div>
-							</div>
-							<div className="col-6">
-								<div className="text-center py-3">
-									<h5 className="mb-0 fw-700">
-										31
-										<small className="text-muted mb-0">Premium Account</small>
-									</h5>
-								</div>
-							</div>
-							<div className="col-6">
-								<div className="text-center py-3">
-									<h5 className="mb-0 fw-700">
-										371
-										<small className="text-muted mb-0">Premium Points</small>
-									</h5>
-								</div>
-							</div>
-							<div className="col-12">
-								<div className="p-3 text-center">
-									<Link
-										to="/account/changepassword"
-										className="btn-link font-weight-bold"
-									>
-										Change Password
-									</Link>{' '}
-									<span className="text-primary d-inline-block mx-3"></span>
-									<br />
-									<Link
-										to="/account/changeemail"
-										className="btn-link font-weight-bold"
-									>
-										Change E-Mail
-									</Link>{' '}
-									<span className="text-primary d-inline-block mx-3"></span>
-								</div>
+
+				<div className="panel panel-default">
+					<div className="panel-heading">Account Information</div>
+					<div className="panel-body">
+						<table className="table-highscores">
+							<tbody>
+								<tr>
+									<td>Name</td>
+									<td>159154</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>E-mail Address</td>
+									<td>peoekopa@hotmail.com</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>Discord</td>
+									<td>
+										<a href="https://discordapp.com/api/oauth2/authorize?client_id=528572548489805835&amp;redirect_uri=https%3A%2F%2Fcyntara.org%2Fdiscord&amp;response_type=code&amp;scope=identify">
+											Connect your account with your Discord account.
+										</a>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>Created</td>
+									<td className="col-md-9">25 Sep 20 12:20 AM</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td className="col-md-2 notranslate">Cyntara Coins</td>
+									<td>0 (Refunds Left: 3, Remaining Coins: 0)</td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>Refunded Coins</td>
+									<td>0</td>
+									<td align="right">
+										<big>
+											<span
+												id="coins_refunded_info"
+												href="#"
+												rel="popover"
+												data-placement="top"
+												data-trigger="hover"
+											>
+												<i className="fa fa-info"></i>
+											</span>
+										</big>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<a href="/account/password">
+							<button className="btn btn-primary btn-sm">
+								Change Password
+							</button>
+						</a>
+						<a href="/account/logout">
+							<button
+								className="btn btn-danger btn-sm"
+								onClick={signOutHandler}
+							>
+								Logout
+							</button>
+						</a>
+					</div>
+				</div>
+
+				<div className="row">
+					<div className="col-md-6">
+						<div className="panel panel-default">
+							<div className="panel-heading">Profile Information</div>
+							<div className="panel-body">
+								<table className="table table-striped table-hover table-fixed">
+									<tbody>
+										<tr>
+											<td>Real Name:</td>
+											<td className="col-md-4 notranslate"></td>
+										</tr>
+										<tr>
+											<td>Location:</td>
+											<td className="col-md-4"></td>
+										</tr>
+										<tr>
+											<td>Flag:</td>
+											<td className="col-md-4">
+												{/* <img
+													className="flag"
+													src="/static/img/misc/flags/br.gif"
+												/> */}
+											</td>
+										</tr>
+									</tbody>
+								</table>
+
+								<table>
+									<tbody>
+										<tr>
+											<td className="col-md-3">
+												<a href="/account/profile_info">
+													<button
+														className="btn btn-default btn-sm"
+														align="left"
+													>
+														Update Information
+													</button>
+												</a>
+											</td>
+											<td className="col-md-3" align="right">
+												<a href="/account/profile_name">
+													<button className="btn btn-primary btn-sm">
+														Set Profile Name
+													</button>
+												</a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
 							</div>
 						</div>
 					</div>
-
-					<div className="card mb-g">
-						<div className="row row-grid no-gutters">
-							<div className="col-12">
-								<div className="p-3">
-									<h2 className="mb-0 fs-xl">Characters</h2>
-								</div>
+					<div className="col-md-6">
+						<div className="panel panel-default">
+							<div className="panel-heading">Profile Avatar</div>
+							<div className="panel-body" align="center">
+								{/* <img className="avatar" src="/avatar/10067400.png" /> */}
+								<br />
+								<br />
+								<a href="/account/avatar">
+									<button className="btn btn-default btn-sm">
+										Update Avatar
+									</button>
+								</a>
 							</div>
-							{players && players.length
-								? players.map((player) => {
-										return (
-											<div key={player.id} className="col-4">
-												<Link to={`/character/${player.name}`}>
-													<span
-														className="profile-image rounded-circle d-block m-auto"
-														style={{
-															backgroundImage: `url("https://www.tibiawiki.com.br/images/e/e4/Outfit_Citizen_Male.gif")`,
-															backgroundSize: 'cover',
-														}}
-													></span>
-													<span className="d-block text-truncate text-muted fs-xs mt-1">
-														{player.name}
-													</span>
-												</Link>
-											</div>
-										)
-								  })
-								: null}
-
-							<div className="col-12"></div>
 						</div>
 					</div>
 				</div>
-				<div className="col-lg-12 col-xl-6 order-lg-3 order-xl-2">
-					<div className="card mb-g">
-						<div className="card-body py-0 px-4 border-faded border-right-0 border-bottom-0 border-left-0">
-							<div className="d-flex flex-column align-items-center">
-								ID: {account.id} <br />
-								Name: {account.name} <br />
-								Password: {account.password} <br />
-								Email: {account.email} <br />
-							</div>
-						</div>
-					</div>
-				</div>
-				<div className="col-lg-6 col-xl-3 order-lg-2 order-xl-3">
-					<div className="card mb-2">
-						<div className="card-body">
-							<Link to="/account/characters/create">
-								<div className="icon-stack display-3 flex-shrink-0">
-									<i className="fal fa-circle icon-stack-3x opacity-100 color-primary-400"></i>
-									<i className="fas fa-user-friends icon-stack-1x opacity-100 color-primary-500"></i>
-								</div>
-								<div className="ml-3">
-									<br />
-									<strong>Create Character</strong>
-									<br />
-									Você ainda pode criar + 4.
-								</div>
-							</Link>
-						</div>
-					</div>
-					<div className="card mb-g">
-						<div className="card-body">
-							<Link to="/shop">
-								<div className="icon-stack display-3 flex-shrink-0">
-									<i className="fal fa-circle icon-stack-3x opacity-100 color-warning-400"></i>
-									<i className="fas fa-shopping-cart icon-stack-1x opacity-100 color-warning-500"></i>
-								</div>
-								<div className="ml-3">
-									<br />
-									<strong>Donate</strong>
-									<br />
-									Compre pontos, cresça rapidamente.
-								</div>
-							</Link>
-						</div>
+
+				<div className="panel panel-default">
+					<div className="panel-heading">Characters</div>
+
+					<div className="panel-body hidden-xs hidden-sm">
+						<table className="table table-striped table-hover">
+							<tbody></tbody>
+						</table>
+						<a href="/account/character">
+							<button className="btn btn-success" align="right">
+								Create Character
+							</button>
+						</a>
 					</div>
 
-					<div className="card mb-g">
-						<div className="row row-grid no-gutters">
-							<div className="col-12">
-								<div className="p-3">
-									<h2 className="mb-0 fs-xl">Quests</h2>
-								</div>
-							</div>
-							<div className="col-12">
-								<div className="p-3 d-flex text-primary align-items-center fs-xl">
-									<i className="fas fa-star mr-1"></i>
-									<i className="fas fa-star mr-1"></i>
-									<i className="fas fa-star mr-1"></i>
-									<i className="fas fa-star mr-1"></i>
-									<i className="fal fa-star mr-1"></i>
-									<span className="ml-auto">4/5 Stars</span>
-								</div>
-							</div>
-							<div className="col-12">
-								<div className="p-3">
-									<div className="fw-500 fs-xs">Demon Helmet</div>
-									<div className="progress progress-xs mt-2">
-										<div
-											className="progress-bar bg-primary-300 bg-primary-gradient"
-											role="progressbar"
-											style={{ width: '80%' }}
-										></div>
-									</div>
-								</div>
-							</div>
-							<div className="col-12">
-								<div className="p-3">
-									<div className="fw-500 fs-xs">Annhilator</div>
-									<div className="progress progress-xs mt-2">
-										<div
-											className="progress-bar bg-primary-300 bg-primary-gradient"
-											role="progressbar"
-											style={{ width: '100%' }}
-										></div>
-									</div>
-								</div>
-							</div>
-							<div className="col-12">
-								<div className="p-3">
-									<div className="fw-500 fs-xs">Inquisition</div>
-									<div className="progress progress-xs mt-2">
-										<div
-											className="progress-bar bg-primary-300 bg-primary-gradient"
-											role="progressbar"
-											style={{ width: '75%' }}
-										></div>
-									</div>
-								</div>
-							</div>
-							<div className="col-12">
-								<div className="p-3">
-									<div className="fw-500 fs-xs">Knowledge</div>
-									<div className="progress progress-xs mt-2">
-										<div
-											className="progress-bar bg-primary-300 bg-primary-gradient"
-											role="progressbar"
-											style={{ width: '95%' }}
-										></div>
-									</div>
-								</div>
-							</div>
-							<div className="col-12">
-								<div className="p-3">
-									<div className="fw-500 fs-xs">PostMan</div>
-									<div className="progress progress-xs mt-2">
-										<div
-											className="progress-bar bg-danger-300 bg-warning-gradient"
-											role="progressbar"
-											style={{ width: '30%' }}
-										></div>
-									</div>
-								</div>
-							</div>
-							<div className="col-12">
-								<div className="p-3 text-center">
-									<Link to="/">View all</Link>
-								</div>
-							</div>
-						</div>
+					<div className="panel-body hidden-md hidden-lg">
+						<table className="table table-striped table-hover table-fixed">
+							<tbody></tbody>
+						</table>
+						<a href="/account/character">
+							<button className="btn btn-inverse" align="right">
+								Create Character
+							</button>
+						</a>
 					</div>
 				</div>
 			</div>

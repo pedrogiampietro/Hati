@@ -41,7 +41,7 @@ const Menu = ({ account }) => {
 
 					<li>
 						<Link to="/sign-up">
-							<i class="fa fa-user-plus"></i>
+							<i className="fa fa-user-plus"></i>
 							<span
 								className="nav-link-text"
 								data-i18n="nav.application_intel_analytics_dashboard"

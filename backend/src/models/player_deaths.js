@@ -1,14 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
 	const player_deaths = sequelize.define(
 		'player_deaths',
+
 		{
 			player_id: {
 				type: DataTypes.INTEGER,
-				primaryKey: true,
 			},
-
 			time: {
 				type: DataTypes.DATE,
+				primaryKey: true,
 			},
 			level: {
 				type: DataTypes.INTEGER,
@@ -46,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
 		{ freezeTableName: true }
 	)
 
-	player_deaths.associate = models => {
+	player_deaths.associate = (models) => {
 		player_deaths.belongsTo(models.player, { foreignKey: 'player_id' })
 	}
 

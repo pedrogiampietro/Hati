@@ -15,56 +15,58 @@ router.get('/character/:name', async (req, res) => {
 	const { name } = req.params
 	const limit = 5
 
-	const players = await player_deaths.findAll({
+	const players = await player.findAndCountAll({
+		where: {
+			name,
+		},
+
 		attributes: [
-			'player_id',
+			'id',
+			'name',
+			'sex',
+			'vocation',
+			'town_id',
 			'level',
-			'killed_by',
-			'time',
-			'mostdamage_by',
-			'unjustified',
-			'is_player',
-		],
-		limit,
-		order: [
-			['time', 'DESC'],
-			['time', 'ASC'],
+			'health',
+			'healthmax',
+			'mana',
+			'manamax',
+			'soul',
+			'stamina',
+			'maglevel',
+			'skill_fist',
+			'skill_club',
+			'skill_sword',
+			'skill_axe',
+			'skill_dist',
+			'skill_shielding',
+			'skill_fishing',
+			'create_date',
 		],
 
 		include: [
 			{
-				model: player,
-				where: {
-					name,
-				},
+				model: player_deaths,
+				required: false,
+				limit,
+				order: [
+					['time', 'DESC'],
+					['time', 'ASC'],
+				],
 				attributes: [
-					'id',
-					'name',
-					'sex',
-					'vocation',
-					'town_id',
+					'player_id',
 					'level',
-					'health',
-					'healthmax',
-					'mana',
-					'manamax',
-					'soul',
-					'stamina',
-					'maglevel',
-					'skill_fist',
-					'skill_club',
-					'skill_sword',
-					'skill_axe',
-					'skill_dist',
-					'skill_shielding',
-					'skill_fishing',
-					'create_date',
+					'killed_by',
+					'time',
+					'mostdamage_by',
+					'unjustified',
+					'is_player',
 				],
 			},
 		],
 	})
 
-	if (players.length === 0) {
+	if (players.count === 0) {
 		return res.jsonBadRequest(
 			null,
 			getMessage('character.search.name_not_exists')
@@ -110,6 +112,24 @@ router.get('/highscores', async (req, res) => {
 
 	return res.jsonOK(players)
 })
+
+// router.get('/search/:name', async (req, res) => {
+// 	const { name } = req.params
+
+// 	const players = await player
+// 		.findAndCountAll({
+// 			where: {
+// 				name: name,
+// 			},
+// 			offset: 10,
+// 		})
+// 		.then((result) => {
+// 			console.log(result.count)
+// 			console.log(result.rows)
+// 		})
+
+// 	return res.jsonOK(players)
+// })
 
 router.get('/:id', async (req, res) => {
 	const { account_id } = req

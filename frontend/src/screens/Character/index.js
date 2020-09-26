@@ -30,11 +30,11 @@ const Character = ({ playerGetCharacter, props }) => {
 		playerGetCharacter(name)
 			.then(({ payload }) => {
 				/* data players */
-				const dataPlayers = payload.data.data[0].player
+				const dataPlayers = payload.data.data.rows[0]
 				setCharacterPage(dataPlayers)
 
 				/* data deaths */
-				const dataDeaths = payload.data.data
+				const dataDeaths = payload.data.data.rows[0].player_deaths
 				setPlayerDeaths(dataDeaths)
 			})
 			.catch((err) => {

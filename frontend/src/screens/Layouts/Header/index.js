@@ -1,10 +1,27 @@
-import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
+import { useHistory, useParams } from 'react-router-dom'
+import { playerGetCharacter } from '../../../actions/PlayerActions'
 import { changeMinify, changeMenuOnMobile } from '../../../assets/js/scripts'
 
-const Header = () => {
+const Header = ({ playerGetCharacter }) => {
 	const history = useHistory()
+	const { name } = useParams()
 	const [searchName, setSearchName] = useState()
+	const [error, setError] = useState(false)
+
+	useEffect(() => {
+		playerGetCharacter(name)
+			.then(({ payload }) => {
+				/* data players */
+				const dataPlayers = payload.data
+				setSearchName(dataPlayers)
+			})
+			.catch((err) => {
+				const { data } = err.response
+				setError(data.message)
+			})
+	}, [name, playerGetCharacter])
 
 	const submitHandle = (e) => {
 		e.preventDefault()
@@ -78,4 +95,10 @@ const Header = () => {
 	)
 }
 
-export default Header
+const mapStateToProps = (state) => {
+	return {
+		players: state.player.player,
+	}
+}
+
+export default connect(mapStateToProps, { playerGetCharacter })(Header)
