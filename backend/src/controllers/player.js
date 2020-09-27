@@ -113,24 +113,6 @@ router.get('/highscores', async (req, res) => {
 	return res.jsonOK(players)
 })
 
-// router.get('/search/:name', async (req, res) => {
-// 	const { name } = req.params
-
-// 	const players = await player
-// 		.findAndCountAll({
-// 			where: {
-// 				name: name,
-// 			},
-// 			offset: 10,
-// 		})
-// 		.then((result) => {
-// 			console.log(result.count)
-// 			console.log(result.rows)
-// 		})
-
-// 	return res.jsonOK(players)
-// })
-
 router.get('/:id', async (req, res) => {
 	const { account_id } = req
 	const { id } = req.params

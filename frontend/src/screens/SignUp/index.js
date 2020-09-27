@@ -57,7 +57,7 @@ const SignUp = (props) => {
 								</div>
 								<form onSubmit={submitHandler}>
 									<div className="form-group row">
-										<label className="col-xl-12 form-label" htmlFor="name">
+										<label className="col-xl-12 form-label" htmlhtmlFor="name">
 											I never registered the same password used on other
 											servers! Avoid getting hacked.
 										</label>
@@ -107,7 +107,7 @@ const SignUp = (props) => {
 										</div>
 									</div>
 									<div className="form-group">
-										<label className="form-label" htmlFor="email">
+										<label className="form-label" htmlhtmlFor="email">
 											Email will be needed for verification and account recovery
 										</label>
 										<input
@@ -133,7 +133,7 @@ const SignUp = (props) => {
 												id="terms"
 												required=""
 											/>
-											<label className="custom-control-label" for="terms">
+											<label className="custom-control-label" htmlFor="terms">
 												{' '}
 												I agree to terms &amp; conditions
 											</label>
@@ -147,7 +147,10 @@ const SignUp = (props) => {
 												className="custom-control-input"
 												id="newsletter"
 											/>
-											<label className="custom-control-label" for="newsletter">
+											<label
+												className="custom-control-label"
+												htmlFor="newsletter"
+											>
 												Sign up for newsletters (dont worry, we won't send so
 												many)
 											</label>

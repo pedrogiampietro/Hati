@@ -11,16 +11,18 @@ const Header = ({ playerGetCharacter }) => {
 	const [error, setError] = useState(false)
 
 	useEffect(() => {
-		playerGetCharacter(name)
-			.then(({ payload }) => {
-				/* data players */
-				const dataPlayers = payload.data
-				setSearchName(dataPlayers)
-			})
-			.catch((err) => {
-				const { data } = err.response
-				setError(data.message)
-			})
+		if (name !== undefined) {
+			playerGetCharacter(name)
+				.then(({ payload }) => {
+					/* data players */
+					const dataPlayers = payload.data
+					setSearchName(dataPlayers)
+				})
+				.catch((err) => {
+					const { data } = err.response
+					setError(data.message)
+				})
+		}
 	}, [name, playerGetCharacter])
 
 	const submitHandle = (e) => {

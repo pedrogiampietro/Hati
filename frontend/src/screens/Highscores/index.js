@@ -3,13 +3,11 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { highscoresList } from '../../actions/PlayerActions'
 import { listSkills, characterVocations } from '../../config'
-
+import Outfiter from '../../helpers/outfiter'
 import Container from '../Layouts/Container'
 import './styles.css'
 
 const Highscores = ({ highscoresList }) => {
-	const outfit = `https://www.tibiawiki.com.br/images/e/e4/Outfit_Citizen_Male.gif`
-
 	const [playerList, setPlayerList] = useState([])
 	const [filterVocation, setFilterVocation] = useState('all')
 	const [filterSkill, setFilterSkill] = useState('level')
@@ -202,6 +200,7 @@ const Highscores = ({ highscoresList }) => {
 						</div>
 					</div>
 				</div>
+
 				<div className="col-xl-6">
 					<div id="panel-2" className="panel">
 						<div className="panel-hdr">
@@ -251,7 +250,15 @@ const Highscores = ({ highscoresList }) => {
 												<tr key={props.id}>
 													<td>{pageInitial * characterPerPage + index + 1}</td>
 													<td>
-														<img src={outfit} alt="Outfit" />
+														<Outfiter
+															Name={props.name}
+															LookBody={props.lookbody}
+															LookFeet={props.lookfeet}
+															LookHead={props.lookhead}
+															LookLegs={props.looklegs}
+															LookType={props.looktype}
+															LookAddons={props.lookaddons}
+														/>
 													</td>
 													<td>
 														<Link to={`/character/${props.name}`}>

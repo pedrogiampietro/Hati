@@ -48,7 +48,7 @@ export default function (state = initialState, action) {
 
 		case PLAYER_REMOVE: {
 			const players = state.players.filter(
-				player => player.id !== state.playerToRemove.id
+				(player) => player.id !== state.playerToRemove.id
 			)
 			return { ...state, playerToRemove: null, players }
 		}
