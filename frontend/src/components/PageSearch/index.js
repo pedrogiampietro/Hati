@@ -14,7 +14,7 @@ const PageSearch = ({}) => {
 				<div className="NoResultsContent">
 					<h1>Oops!!</h1>
 
-					{/* <Error error={error} /> */}
+					<Error error="that name does not exists." />
 
 					<img src={NotFound} width="500" alt="No results" />
 				</div>

@@ -47,8 +47,10 @@ router.post('/sign-up', accountSignUp, async (req, res) => {
 	const hash = crypto.createHash('sha1').update(name).digest('hex')
 
 	const accounts = await account.findOne({ where: { name, email } })
-	if (accounts) return res.jsonBadRequest(null, getMessage('account.signup.name_exists'))
-	if (email) return res.jsonBadRequest(null, getMessage('account.signup.email_exists'))
+	if (accounts)
+		return res.jsonBadRequest(null, getMessage('account.signup.name_exists'))
+	if (email)
+		return res.jsonBadRequest(null, getMessage('account.signup.email_exists'))
 
 	const newAccount = await account.create({
 		name,
@@ -66,6 +68,24 @@ router.post('/sign-up', accountSignUp, async (req, res) => {
 		token,
 		refreshToken,
 	})
+})
+
+router.put('/profile_info', async (req, res) => {
+	const { name } = req.headers
+	console.log('************** profile_info.name', name)
+
+	// const fields = ['name'] //['name', 'comments', 'outfits', 'items']
+
+	// const accounts = await account.findOne({ where: { name } })
+	// if (!accounts) return res.jsonNotFound(null)
+
+	// fields.map((fieldName) => {
+	// 	const newValue = body[fieldName]
+	// 	if (newValue) players[fieldName] = newValue
+	// })
+
+	// await players.save()
+	// return res.jsonOK(players)
 })
 
 router.post('/refresh', async (req, res) => {

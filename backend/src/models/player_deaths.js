@@ -1,7 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
 	const player_deaths = sequelize.define(
 		'player_deaths',
-
 		{
 			player_id: {
 				type: DataTypes.INTEGER,
@@ -17,6 +16,11 @@ module.exports = (sequelize, DataTypes) => {
 			killed_by: {
 				type: DataTypes.STRING,
 				allowNull: false,
+				reference: {
+					model: 'player',
+
+					key: 'id',
+				},
 			},
 			is_player: {
 				type: DataTypes.INTEGER,

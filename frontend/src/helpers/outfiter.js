@@ -10,11 +10,18 @@ const Outfiter = ({ ...props }) => {
 	const legs = props.LookLegs
 	const feet = props.LookFeet
 	return (
-		<>
-			<img
-				src={`${URL}id=${id}&addons=${addons}&head=${head}&body=${body}&legs=${legs}&feet=${feet}&name=${name}`}
-			/>
-		</>
+		<img
+			src={`${URL}id=${id}&addons=${addons}&head=${head}&body=${body}&legs=${legs}&feet=${feet}&name=${name}`}
+			alt="Outfiter"
+		/>
+
+		// <span className="profile-image btn btn-outline-primary btn-lg btn-icon rounded-circle waves-effect waves-themed">
+		// 	<img
+		// 		src={`${URL}id=${id}&addons=${addons}&head=${head}&body=${body}&legs=${legs}&feet=${feet}&name=${name}`}
+		// 		alt="Outfiter"
+		// 		className="profile-image rounded-circle"
+		// 	/>
+		// </span>
 	)
 }
 

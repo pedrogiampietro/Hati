@@ -5,6 +5,7 @@ import { initAccount } from './actions/AccountActions'
 
 import Home from './screens/Home'
 import SignIn from './screens/SignIn'
+import AccountProfile from './screens/Account/Profile'
 import SignUp from './screens/SignUp'
 import Dashboard from './screens/Dashboard'
 import AccountCharacters from './screens/Account/Characters'
@@ -18,6 +19,7 @@ import './assets/css/styles-bundle.css'
 import './assets/css/toastr.css'
 import '../node_modules/bootstrap/js/src/modal'
 import '../node_modules/bootstrap/js/src/collapse'
+import '../node_modules/bootstrap/js/src/tab'
 
 import './assets/js/scripts'
 
@@ -40,6 +42,10 @@ const App = ({ initAccount }) => {
 
 					<Route path="/dashboard">
 						<Dashboard />
+					</Route>
+
+					<Route path="/account/profile_info">
+						<AccountProfile />
 					</Route>
 
 					<Route path="/account/characters/create">

@@ -5,11 +5,12 @@ import { playerGetCharacter } from '../../actions/PlayerActions'
 import { genders, characterVocations, towns } from '../../config'
 import { convertTimestempToDate } from '../../helpers/datetime'
 import PlayerSkills from '../../components/PlayerSkills'
+import Outfiter from '../../helpers/outfiter'
 
 import Container from '../Layouts/Container'
 import './styles.css'
 
-const Character = ({ playerGetCharacter, props }) => {
+const Character = ({ playerGetCharacter, ...props }) => {
 	const history = useHistory()
 	const { name } = useParams()
 	const [characterPage, setCharacterPage] = useState([])
@@ -54,12 +55,17 @@ const Character = ({ playerGetCharacter, props }) => {
 						<div className="card-body border-faded border-top-0 border-left-0 border-right-0 rounded-top">
 							<div className="d-flex flex-row align-items-center">
 								<span className="status status-success mr-3">
-									<span
-										className="rounded-circle profile-image d-block cover "
-										style={{
-											backgroundImage: `url("https://www.tibiawiki.com.br/images/e/e4/Outfit_Citizen_Male.gif")`,
-										}}
-									></span>
+									<span className="rounded-circle profile-image d-block cover">
+										<Outfiter
+											Name={characterPage.name}
+											LookBody={characterPage.lookbody}
+											LookFeet={characterPage.lookfeet}
+											LookHead={characterPage.lookhead}
+											LookLegs={characterPage.looklegs}
+											LookType={characterPage.looktype}
+											LookAddons={characterPage.lookaddons}
+										/>
+									</span>
 								</span>
 								<div className="info-card-text flex-1">
 									<span
@@ -309,6 +315,7 @@ const Character = ({ playerGetCharacter, props }) => {
 										<div className="line text-muted"></div>
 										{playerDeaths && playerDeaths.length
 											? playerDeaths.map((props) => {
+													console.log(props)
 													return (
 														<div key={props.time}>
 															<div className="separator text-muted">
@@ -340,13 +347,7 @@ const Character = ({ playerGetCharacter, props }) => {
 																		</span>
 																	) : null}
 																	<br />
-																	<span
-																		className="profile-image btn btn-outline-primary btn-lg btn-icon rounded-circle waves-effect waves-themed"
-																		style={{
-																			backgroundImage: `url("https://www.tibiawiki.com.br/images/d/da/Outfit_Mage_Male_Addon_3.gif")`,
-																			backgroundSize: 'cover',
-																		}}
-																	></span>
+																	<br />
 																	<code>
 																		{props.mostdamage_by !== props.killed_by
 																			? props.mostdamage_by
@@ -360,13 +361,6 @@ const Character = ({ playerGetCharacter, props }) => {
 																			</span>
 																			<br />
 																			<br />
-																			<span
-																				className="profile-image btn btn-outline-primary btn-lg btn-icon rounded-circle waves-effect waves-themed"
-																				style={{
-																					backgroundImage: `url("https://www.tibiawiki.com.br/images/d/da/Outfit_Mage_Male_Addon_3.gif")`,
-																					backgroundSize: 'cover',
-																				}}
-																			></span>
 																		</>
 																	) : null}
 																	<code>{props.killed_by}</code>

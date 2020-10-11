@@ -1,12 +1,30 @@
 const express = require('express')
-const { player, player_deaths } = require('../models')
+const { player, player_deaths, account } = require('../models')
 const { getMessage } = require('../helpers/messages')
 
 const router = express.Router()
 
 router.get('/characters', async (req, res) => {
 	const { account_id } = req
-	const players = await player.findAll({ where: { account_id: account_id } })
+	const players = await player.findAll({
+		where: { account_id: account_id },
+
+		include: [
+			{
+				model: account,
+				attributes: [
+					'name',
+					'email',
+					'type',
+					'creation',
+					'premdays',
+					'rlname',
+					'location',
+					'flag',
+				],
+			},
+		],
+	})
 
 	return res.jsonOK(players)
 })
@@ -42,12 +60,17 @@ router.get('/character/:name', async (req, res) => {
 			'skill_shielding',
 			'skill_fishing',
 			'create_date',
+			'lookbody',
+			'lookfeet',
+			'lookhead',
+			'looklegs',
+			'looktype',
+			'lookaddons',
 		],
 
 		include: [
 			{
 				model: player_deaths,
-				required: false,
 				limit,
 				order: [
 					['time', 'DESC'],
