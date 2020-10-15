@@ -36,7 +36,10 @@
 
 </div>
 
-## Apresentação:
+<h3 align="center">
+    BackEnd
+    <br><br>
+</h3>
 
 BackEnd Project: RESTful API following **MVC** concept using Stack **NodeJS**, standardizing the code with **Eslint** and **Prettier**.
 
@@ -350,7 +353,7 @@ notes: if you are not logged in, you will receive a token error, example: { "mes
 
 
 
-Important note: some routes `/ account /` it is necessary to pass in the ** header ** the parameter ** authentication ** containing the Token Bearer collected in the route `sigin-in`
+Important note: some routes `/ account /` it is necessary to pass in the **header** the parameter **authentication** containing the Token Bearer collected in the route `sigin-in`
 
 ## Test
 
