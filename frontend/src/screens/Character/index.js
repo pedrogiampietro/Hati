@@ -122,10 +122,10 @@ const Character = ({ playerGetCharacter, ...props }) => {
 												className="fs-xl text-truncate text-truncate-lg text-primary"
 												aria-expanded="false"
 											>
-												Created:
+												Last Login:
 											</span>
 										</td>
-										<td>{convertTimestempToDate(characterPage.create_date)}</td>
+										<td>{convertTimestempToDate(characterPage.lastlogin)}</td>
 									</tr>
 
 									<tr>

@@ -269,6 +269,16 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: false,
 			defaultValue: 0,
 		},
+		comment: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			defaultValue: 0,
+		},
+		signature: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			defaultValue: 0,
+		},
 	})
 
 	player.associate = (models) => {

@@ -18,7 +18,6 @@ router.post('/sign-in', accountSignIn, async (req, res) => {
 	const { name, password } = req.body
 	const accounts = await account.findOne({ where: { name } })
 
-	// validar o password     (password, account.password)
 	const parsedBody = req.body
 	const encryptedPassword = encrypt(parsedBody.password)
 
@@ -46,10 +45,12 @@ router.post('/sign-up', accountSignUp, async (req, res) => {
 
 	const hash = crypto.createHash('sha1').update(name).digest('hex')
 
-	const accounts = await account.findOne({ where: { name, email } })
+	const accounts = await account.findOne({ where: { name } })
 	if (accounts)
 		return res.jsonBadRequest(null, getMessage('account.signup.name_exists'))
-	if (email)
+
+	const emails = await account.findOne({ where: { email } })
+	if (emails)
 		return res.jsonBadRequest(null, getMessage('account.signup.email_exists'))
 
 	const newAccount = await account.create({

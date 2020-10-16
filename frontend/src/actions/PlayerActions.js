@@ -28,7 +28,7 @@ export const playerGetCharacter = (name) => {
 }
 
 export const playerCreate = (data) => {
-	const payload = apiPost('/player', data)
+	const payload = apiPost('/player/create', data)
 	return { type: PLAYER_CREATE, payload }
 }
 

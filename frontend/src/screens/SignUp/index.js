@@ -3,21 +3,37 @@ import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { signUp } from '../../actions/AccountActions'
 import { getFormData } from '../../helpers/form'
+import { createCharacterVocations } from '../../config'
 
 import Container from '../Layouts/Container'
 // import Error from '../../helpers/error'
 import SignUpBackground from '../../assets/img/backgrounds/pattern-1.svg'
 
+import './styles.css'
+
 const SignUp = (props) => {
 	const { signUp, account } = props
-	// const [error, setError] = useState()
+	const [selectedVocation, setSelectedVocation] = React.useState([])
 
-	const submitHandler = (e) => {
-		e.preventDefault()
-		const data = getFormData(e)
-		signUp(data)
+	React.useEffect(() => {
+		
+	}, [])
+
+
+	function handleSelectVocation(event) {
+		const chosedVocation = event.target.id
+		setSelectedVocation(chosedVocation)
+
+		console.log(selectedVocation)
+	}
+
+	const submitHandler = (event) => {
+		event.preventDefault()
+		const data = getFormData(event)
 
 		console.log(data)
+
+		// signUp(data)
 	}
 
 	if (account) {
@@ -57,7 +73,7 @@ const SignUp = (props) => {
 								</div>
 								<form onSubmit={submitHandler}>
 									<div className="form-group row">
-										<label className="col-xl-12 form-label" htmlhtmlFor="name">
+										<label className="col-xl-12 form-label" htmlFor="name">
 											I never registered the same password used on other
 											servers! Avoid getting hacked.
 										</label>
@@ -107,7 +123,7 @@ const SignUp = (props) => {
 										</div>
 									</div>
 									<div className="form-group">
-										<label className="form-label" htmlhtmlFor="email">
+										<label className="form-label" htmlFor="email">
 											Email will be needed for verification and account recovery
 										</label>
 										<input
@@ -122,6 +138,53 @@ const SignUp = (props) => {
 										</div>
 										<div className="help-block">
 											Your email will also be your username
+										</div>
+									</div>
+
+									{/* Create Character */}
+
+									<div className="section over-hide z-bigger">
+										<div className="background-color"></div>
+										<div className="section over-hide z-bigger">
+											<div className="container pb-5">
+												<div className="row justify-content-center pb-5">
+													<div className="col-12 pt-5">
+														<p className="mb-4 pb-2">Choose Characters</p>
+													</div>
+													<div className="col-12 pb-5">
+														{Object.keys(createCharacterVocations).map(
+															(vocation) => (
+																<span
+																	key={
+																		createCharacterVocations[vocation]
+																			.vocation_id
+																	}
+																>
+																	<input
+																		className="checkbox-tools"
+																		type="radio"
+																		name="vocations"
+																		id={
+																			createCharacterVocations[vocation]
+																				.vocation_id
+																		}
+																		onChange={handleSelectVocation}
+																	/>
+																	<label
+																		className="for-checkbox-tools"
+																		htmlFor={
+																			createCharacterVocations[vocation]
+																				.vocation_id
+																		}
+																	>
+																		{createCharacterVocations[vocation].name}
+																	</label>
+																</span>
+															)
+														)}
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 

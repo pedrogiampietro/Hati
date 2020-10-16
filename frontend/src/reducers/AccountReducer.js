@@ -32,10 +32,10 @@ export default function (state = initialState, action) {
 		case SIGN_UP:
 		case PLAYER_CREATE:
 			const response = payload ? payload.data : null
+			const account = response ? response.data : null
 			const metadata = response ? response.metadata : null
 
 			const player = response ? response.data[0]?.name : null
-			const account = response ? response.data : null
 
 			const token = metadata ? metadata.token : null
 			const refreshToken = metadata ? metadata.refreshToken : null
@@ -58,6 +58,7 @@ export default function (state = initialState, action) {
 		case INIT_ACCOUNT: {
 			const account = getAccount()
 			const player = getPlayerName()
+
 			return { ...state, account, player }
 		}
 

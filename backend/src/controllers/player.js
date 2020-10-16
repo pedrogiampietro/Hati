@@ -52,6 +52,7 @@ router.get('/character/:name', async (req, res) => {
 			'soul',
 			'stamina',
 			'maglevel',
+			'lastlogin',
 			'skill_fist',
 			'skill_club',
 			'skill_sword',
@@ -59,7 +60,6 @@ router.get('/character/:name', async (req, res) => {
 			'skill_dist',
 			'skill_shielding',
 			'skill_fishing',
-			'create_date',
 			'lookbody',
 			'lookfeet',
 			'lookhead',
@@ -147,16 +147,14 @@ router.get('/:id', async (req, res) => {
 	return res.jsonOK(players)
 })
 
-router.post('/', async (req, res) => {
+router.post('/create', async (req, res) => {
 	const { account_id, body } = req
-	const { name, level, vocation } = body
+	const { name, sex } = body
 
 	const players = await player.create({
 		name,
 		account_id,
-		level,
-		vocation,
-		looktype: 128,
+		sex,
 	})
 
 	return res.jsonOK(players)

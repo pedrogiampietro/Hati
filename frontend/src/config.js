@@ -15,6 +15,14 @@ module.exports = {
 		1: 'Male',
 	},
 
+	createCharacterVocations: [
+		// { vocation_id: '0', name: 'Rook' }, -> comment or uncomment to use the desired vocations in creating account
+		{ vocation_id: '1', name: 'Sorcerer' },
+		{ vocation_id: '2', name: 'Druid' },
+		{ vocation_id: '3', name: 'Paladin' },
+		{ vocation_id: '4', name: 'Knight' },
+	],
+
 	characterVocations: {
 		0: 'No Vocation',
 		1: 'Sorcerer',

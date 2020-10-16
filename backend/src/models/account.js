@@ -41,16 +41,16 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: false,
 			defaultValue: 0,
 		},
-		// vote: {
-		// 	type: DataTypes.INTEGER,
-		// 	allowNull: false,
-		// 	defaultValue: 0,
-		// },
-		// vip_time: {
-		// 	type: DataTypes.INTEGER,
-		// 	allowNull: false,
-		// 	defaultValue: 0,
-		// },
+		vote: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+			defaultValue: 0,
+		},
+		vip_time: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+			defaultValue: 0,
+		},
 		jwtVersion: {
 			type: DataTypes.INTEGER,
 			allowNull: false,

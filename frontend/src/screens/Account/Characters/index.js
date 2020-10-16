@@ -4,8 +4,10 @@ import { connect } from 'react-redux'
 import { signOut } from '../../../actions/AccountActions'
 import { playerList } from '../../../actions/PlayerActions'
 import { convertTimestempToDate } from '../../../helpers/datetime'
+import { FiPlus } from 'react-icons/fi'
 
 import Container from '../../Layouts/Container'
+import './styles.css'
 
 const Characters = ({ players, playerList, signOut, account }) => {
 	useEffect(() => {
@@ -96,15 +98,6 @@ const Characters = ({ players, playerList, signOut, account }) => {
 												<tr>
 													<td>E-mail Address</td>
 													<td>{Account?.email}</td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>Discord</td>
-													<td>
-														<a href="https://discordapp.com/api/oauth2/authorize?client_id=528572548489805835">
-															Connect your account with your Discord.
-														</a>
-													</td>
 													<td></td>
 												</tr>
 												<tr>
@@ -241,14 +234,33 @@ const Characters = ({ players, playerList, signOut, account }) => {
 					<div className="panel-heading">Characters</div>
 
 					<div className="panel-body hidden-md hidden-lg">
-						<table className="table table-striped table-hover table-fixed">
-							<tbody></tbody>
-						</table>
-						<a href="/account/character">
-							<button className="btn btn-success" align="right">
-								Create Character
-							</button>
-						</a>
+						<div className="character-container">
+							{players && players.length
+								? players.map((player) => {
+										return (
+											<div key={player.id} className="new-character">
+												<Link to={`/character/${player.name}`}>
+													<span
+														className="profile-image rounded-circle d-block m-auto"
+														style={{
+															backgroundImage: `url("https://www.tibiawiki.com.br/images/e/e4/Outfit_Citizen_Male.gif")`,
+															backgroundSize: 'cover',
+														}}
+													></span>
+													<span className="d-block text-truncate text-muted fs-xs mt-1">
+														{player.name}
+													</span>
+												</Link>
+											</div>
+										)
+								  })
+								: null}
+							<Link to="/account/characters/create">
+								<label htmlFor="create-character" className="new-character">
+									<FiPlus size={24} color="#886ab5" />
+								</label>
+							</Link>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -257,6 +269,7 @@ const Characters = ({ players, playerList, signOut, account }) => {
 }
 
 const mapStateToProps = (state) => {
+	console.log(state)
 	return {
 		account: state.account.account,
 		players: state.player.player,
