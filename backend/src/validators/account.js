@@ -6,6 +6,14 @@ const rules = {
 	password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
 	password_confirmation: Joi.string().valid(Joi.ref('password')).required(),
 	email: Joi.string().email().required(),
+	characterName: Joi.string()
+		.alphanum()
+		.min(5)
+		.max(21)
+		.valid('My Hati', 'Your Hati')
+		.insensitive()
+		.prefs({ convert: true })
+		.required(),
 }
 
 const options = { abortEarly: false }
@@ -49,4 +57,20 @@ const accountSignUp = (req, res, next) => {
 	next()
 }
 
-module.exports = { accountSignUp, accountSignIn }
+const createCharacter = (req, res, next) => {
+	const { name } = req.body
+	const schema = Joi.object({
+		name: rules.characterName,
+	})
+
+	const { error } = schema.validate({ name }, options)
+
+	if (error) {
+		const messages = getValidatorError(error, null)
+		return res.jsonBadRequest(null, null, { error: messages })
+	}
+
+	next()
+}
+
+module.exports = { accountSignUp, accountSignIn, createCharacter }

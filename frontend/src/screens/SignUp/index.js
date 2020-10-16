@@ -57,7 +57,7 @@ const SignUp = (props) => {
 								</div>
 								<form onSubmit={submitHandler}>
 									<div className="form-group row">
-										<label className="col-xl-12 form-label" htmlhtmlFor="name">
+										<label className="col-xl-12 form-label" htmlFor="name">
 											I never registered the same password used on other
 											servers! Avoid getting hacked.
 										</label>

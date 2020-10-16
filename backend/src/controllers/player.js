@@ -1,5 +1,6 @@
 const express = require('express')
 const { player, player_deaths, account } = require('../models')
+const { createCharacter } = require('../validators/player')
 const { getMessage } = require('../helpers/messages')
 
 const router = express.Router()
@@ -147,15 +148,20 @@ router.get('/:id', async (req, res) => {
 	return res.jsonOK(players)
 })
 
-router.post('/create', async (req, res) => {
+router.post('/', createCharacter, async (req, res) => {
 	const { account_id, body } = req
-	const { name, sex, vocation } = body
+	const { name, level, vocation } = body
+
+	const findCharacter = await player.findOne({ where: { name } })
+	if (findCharacter)
+	return res.jsonBadRequest(null, getMessage('account.signin.failed'))
 
 	const players = await player.create({
 		name,
 		account_id,
-		sex,
-		vocation
+		level,
+		vocation,
+		looktype: 128,
 	})
 
 	return res.jsonOK(players)

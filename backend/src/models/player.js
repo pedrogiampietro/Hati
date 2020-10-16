@@ -14,6 +14,15 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: false,
 			defaultValue: 1,
 		},
+		account_id: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+			reference: {
+				model: 'account',
+
+				key: 'id',
+			},
+		},
 		vocation: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
