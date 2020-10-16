@@ -149,12 +149,13 @@ router.get('/:id', async (req, res) => {
 
 router.post('/create', async (req, res) => {
 	const { account_id, body } = req
-	const { name, sex } = body
+	const { name, sex, vocation } = body
 
 	const players = await player.create({
 		name,
 		account_id,
 		sex,
+		vocation
 	})
 
 	return res.jsonOK(players)

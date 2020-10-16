@@ -197,7 +197,7 @@ const Dashboard = ({ playerList, newsCreate, account, players }) => {
 									<input type="hidden" name="author_guid" value={account?.id} />
 
 									<div className="form-group">
-										<label className="form-label" htmlFor="simpleinput">
+										<label className="form-label" htmlhtmlFor="simpleinput">
 											Titulo
 										</label>
 										<input
@@ -210,7 +210,10 @@ const Dashboard = ({ playerList, newsCreate, account, players }) => {
 									</div>
 
 									<div className="form-group">
-										<label className="form-label" htmlFor="example-textarea">
+										<label
+											className="form-label"
+											htmlhtmlFor="example-textarea"
+										>
 											Descrição
 										</label>
 										<textarea

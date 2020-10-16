@@ -55,7 +55,7 @@ const SignIn = (props) => {
 					<div className="card p-4 rounded-plus bg-faded">
 						<form onSubmit={submitHandler}>
 							<div className="form-group">
-								<label className="form-label" htmlFor="accountname">
+								<label className="form-label" htmlhtmlFor="accountname">
 									Account Name
 								</label>
 								<input
@@ -67,7 +67,7 @@ const SignIn = (props) => {
 							</div>
 
 							<div className="form-group">
-								<label className="form-label" htmlFor="password">
+								<label className="form-label" htmlhtmlFor="password">
 									Password
 								</label>
 								<input

@@ -12,7 +12,7 @@ const ProfileInfo = () => {
 					<div className="panel-body">
 						<form method="post" action="/account/profile_info">
 							<div className="form-group">
-								<label for="rlname">Real Name:</label>
+								<label htmlFor="rlname">Real Name:</label>
 								<input
 									className="form-control"
 									id="rlname"
@@ -21,7 +21,7 @@ const ProfileInfo = () => {
 								/>
 							</div>
 							<div className="form-group">
-								<label for="location">Location:</label>
+								<label htmlFor="location">Location:</label>
 								<input
 									className="form-control"
 									id="location"
@@ -30,7 +30,7 @@ const ProfileInfo = () => {
 								/>
 							</div>
 							<div className="form-group">
-								<label for="country">Country:</label>
+								<label htmlFor="country">Country:</label>
 								<br />
 								<select name="country">
 									<option value="af">Afghanistan</option>

@@ -104,7 +104,7 @@ const Highscores = ({ highscoresList }) => {
 												checked={filterSkill === 'level'}
 												onChange={onValueChangeSkill}
 											/>
-											<label htmlFor="level">Experience</label>
+											<label htmlhtmlFor="level">Experience</label>
 										</div>
 
 										<div className="funkyradio-primary">
@@ -115,7 +115,7 @@ const Highscores = ({ highscoresList }) => {
 												value="skill_dist"
 												onChange={onValueChangeSkill}
 											/>
-											<label htmlFor="dist">Distance</label>
+											<label htmlhtmlFor="dist">Distance</label>
 										</div>
 
 										<div className="funkyradio-primary">
@@ -126,7 +126,7 @@ const Highscores = ({ highscoresList }) => {
 												value="maglevel"
 												onChange={onValueChangeSkill}
 											/>
-											<label htmlFor="magic">Magic Level</label>
+											<label htmlhtmlFor="magic">Magic Level</label>
 										</div>
 
 										<div className="funkyradio-primary">
@@ -137,7 +137,7 @@ const Highscores = ({ highscoresList }) => {
 												value="skill_sword"
 												onChange={onValueChangeSkill}
 											/>
-											<label htmlFor="sword">Sword Fighting</label>
+											<label htmlhtmlFor="sword">Sword Fighting</label>
 										</div>
 
 										<div className="funkyradio-primary">
@@ -148,7 +148,7 @@ const Highscores = ({ highscoresList }) => {
 												value="skill_axe"
 												onChange={onValueChangeSkill}
 											/>
-											<label htmlFor="axe">Axe Fighting</label>
+											<label htmlhtmlFor="axe">Axe Fighting</label>
 										</div>
 
 										<div className="funkyradio-primary">
@@ -159,7 +159,7 @@ const Highscores = ({ highscoresList }) => {
 												value="skill_club"
 												onChange={onValueChangeSkill}
 											/>
-											<label htmlFor="club">Club Fighting</label>
+											<label htmlhtmlFor="club">Club Fighting</label>
 										</div>
 
 										<div className="funkyradio-primary">
@@ -170,7 +170,7 @@ const Highscores = ({ highscoresList }) => {
 												value="skill_shielding"
 												onChange={onValueChangeSkill}
 											/>
-											<label htmlFor="shield">Shielding</label>
+											<label htmlhtmlFor="shield">Shielding</label>
 										</div>
 
 										<div className="funkyradio-primary">
@@ -181,7 +181,7 @@ const Highscores = ({ highscoresList }) => {
 												value="skill_fist"
 												onChange={onValueChangeSkill}
 											/>
-											<label htmlFor="fist">Fist Fighting</label>
+											<label htmlhtmlFor="fist">Fist Fighting</label>
 										</div>
 
 										<div className="funkyradio-primary">
@@ -192,7 +192,7 @@ const Highscores = ({ highscoresList }) => {
 												value="skill_fishing"
 												onChange={onValueChangeSkill}
 											/>
-											<label htmlFor="fishing">Fishing Fighting</label>
+											<label htmlhtmlFor="fishing">Fishing Fighting</label>
 										</div>
 									</div>
 								</form>

@@ -4,9 +4,9 @@ import { connect } from 'react-redux'
 import { signOut } from '../../../actions/AccountActions'
 import { playerList } from '../../../actions/PlayerActions'
 import { convertTimestempToDate } from '../../../helpers/datetime'
-import { FiPlus } from 'react-icons/fi'
 
 import Container from '../../Layouts/Container'
+import CreateCharacter from './Create/index'
 import './styles.css'
 
 const Characters = ({ players, playerList, signOut, account }) => {
@@ -48,187 +48,192 @@ const Characters = ({ players, playerList, signOut, account }) => {
 					</div>
 				</div>
 
-				<div className="panel-content">
-					<div className="border px-3 pt-3 pb-0 rounded">
-						<ul className="nav nav-pills" role="tablist">
-							<li className="nav-item">
-								<a
-									className="nav-link active"
-									data-toggle="tab"
-									href="#js_pill_border_icon-1"
+				{Account === undefined ? null : (
+					<div className="panel-content">
+						<div className="border px-3 pt-3 pb-0 rounded">
+							<ul className="nav nav-pills" role="tablist">
+								<li className="nav-item">
+									<a
+										className="nav-link active"
+										data-toggle="tab"
+										href="#js_pill_border_icon-1"
+									>
+										<i className="fal fa-home mr-1"></i>Account Information
+									</a>
+								</li>
+								<li className="nav-item">
+									<a
+										className="nav-link"
+										data-toggle="tab"
+										href="#js_pill_border_icon-2"
+									>
+										<i className="fal fa-user mr-1"></i>Profile
+									</a>
+								</li>
+								{/* <li className="nav-item">
+						<a
+							className="nav-link"
+							data-toggle="tab"
+							href="#js_pill_border_icon-3"
+						>
+							<i className="fal fa-clock mr-1"></i>Configurations
+						</a>
+					</li> */}
+							</ul>
+							<div className="tab-content py-3">
+								<div
+									className="tab-pane fade active show"
+									id="js_pill_border_icon-1"
+									role="tabpanel"
 								>
-									<i className="fal fa-home mr-1"></i>Account Information
-								</a>
-							</li>
-							<li className="nav-item">
-								<a
-									className="nav-link"
-									data-toggle="tab"
-									href="#js_pill_border_icon-2"
-								>
-									<i className="fal fa-user mr-1"></i>Profile
-								</a>
-							</li>
-							{/* <li className="nav-item">
-								<a
-									className="nav-link"
-									data-toggle="tab"
-									href="#js_pill_border_icon-3"
-								>
-									<i className="fal fa-clock mr-1"></i>Configurations
-								</a>
-							</li> */}
-						</ul>
-						<div className="tab-content py-3">
-							<div
-								className="tab-pane fade active show"
-								id="js_pill_border_icon-1"
-								role="tabpanel"
-							>
-								<div className="panel panel-default">
-									<div className="panel-heading">Account Information</div>
-									<div className="panel-body">
-										<table className="table table-striped table-hover table-fixed">
-											<tbody>
-												<tr>
-													<td>Name</td>
-													<td>{Account?.name}</td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>E-mail Address</td>
-													<td>{Account?.email}</td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>Created</td>
-													<td className="col-md-9">
-														{convertTimestempToDate(Account?.creation)}
-													</td>
-													<td></td>
-												</tr>
-												<tr>
-													<td className="col-md-2 notranslate">Hati Coins</td>
-													<td>0</td>
-													<td></td>
-												</tr>
-												<tr>
-													<td>Premium Account</td>
-													<td>(Premmium Days: {Account?.premdays})</td>
-													<td align="right">
-														<big>
-															<span
-																id="coins_refunded_info"
-																href="#"
-																rel="popover"
-																data-placement="top"
-																data-trigger="hover"
-															>
-																<i className="fa fa-info"></i>
-															</span>
-														</big>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-										<div className="demo">
-											<a href="/account/password">
-												<button className="btn btn-primary btn-sm">
-													Change Password
-												</button>
-											</a>
-											<a href="/account/logout">
-												<button
-													className="btn btn-danger btn-sm"
-													onClick={signOutHandler}
-												>
-													Logout
-												</button>
-											</a>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div
-								className="tab-pane fade"
-								id="js_pill_border_icon-2"
-								role="tabpanel"
-							>
-								<div className="row">
-									<div className="col-md-6">
-										<div className="panel panel-default">
-											<div className="panel-heading">Profile Information</div>
-											<div className="panel-body">
-												<table className="table table-striped table-hover table-fixed">
-													<tbody>
-														<tr>
-															<td>Real Name:</td>
-															<td className="col-md-4 notranslate">
-																{Account?.rlname}
-															</td>
-														</tr>
-														<tr>
-															<td>Location:</td>
-															<td className="col-md-4">{Account?.location}</td>
-														</tr>
-														<tr>
-															<td>Flag:</td>
-															<td className="col-md-4">{Account?.flag}</td>
-														</tr>
-													</tbody>
-												</table>
-
-												<table>
-													<tbody>
-														<tr>
-															<td className="col-md-3">
-																<a href="/account/profile_info">
-																	<button
-																		className="btn btn-primary btn-sm"
-																		align="left"
-																	>
-																		Update Information
-																	</button>
-																</a>
-															</td>
-														</tr>
-													</tbody>
-												</table>
-											</div>
-										</div>
-									</div>
-									<div className="col-md-6">
-										<div className="panel panel-default">
-											<div className="panel-heading">Profile Avatar</div>
-											<div className="panel-body" align="center">
-												{/* <img className="avatar" src="/avatar/10067400.png" /> */}
-												<br />
-												<br />
-												<a href="/account/avatar">
+									<div className="panel panel-default">
+										<div className="panel-heading">Account Information</div>
+										<div className="panel-body">
+											<table className="table table-striped table-hover table-fixed">
+												<tbody>
+													<tr>
+														<td>Name</td>
+														<td>{Account?.name}</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>E-mail Address</td>
+														<td>{Account?.email}</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>Created</td>
+														<td className="col-md-9">
+															{convertTimestempToDate(Account?.creation)}
+														</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td className="col-md-2 notranslate">Hati Coins</td>
+														<td>0</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td>Premium Account</td>
+														<td>(Premmium Days: {Account?.premdays})</td>
+														<td align="right">
+															<big>
+																<span
+																	id="coins_refunded_info"
+																	href="#"
+																	rel="popover"
+																	data-placement="top"
+																	data-trigger="hover"
+																>
+																	<i className="fa fa-info"></i>
+																</span>
+															</big>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+											<div className="demo">
+												<a href="/account/password">
 													<button className="btn btn-primary btn-sm">
-														Update Avatar
+														Change Password
+													</button>
+												</a>
+												<a href="/account/logout">
+													<button
+														className="btn btn-danger btn-sm"
+														onClick={signOutHandler}
+													>
+														Logout
 													</button>
 												</a>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<div
-								className="tab-pane fade"
-								id="js_pill_border_icon-3"
-								role="tabpanel"
-							>
-								Etsy mixtape wayfarers, ethical wes anderson tofu before they
-								sold out mcsweeney's organic lomo retro fanny pack lo-fi
-								farm-to-table readymade. Messenger bag gentrify pitchfork
-								tattooed craft beer, iphone skateboard locavore carles etsy
-								salvia banksy hoodie helvetica. DIY synth PBR banksy irony.
-								Leggings gentrify squid 8-bit cred pitchfork.
+								<div
+									className="tab-pane fade"
+									id="js_pill_border_icon-2"
+									role="tabpanel"
+								>
+									<div className="row">
+										<div className="col-md-6">
+											<div className="panel panel-default">
+												<div className="panel-heading">Profile Information</div>
+												<div className="panel-body">
+													<table className="table table-striped table-hover table-fixed">
+														<tbody>
+															<tr>
+																<td>Real Name:</td>
+																<td className="col-md-4 notranslate">
+																	{Account?.rlname}
+																</td>
+															</tr>
+															<tr>
+																<td>Location:</td>
+																<td className="col-md-4">
+																	{Account?.location}
+																</td>
+															</tr>
+															<tr>
+																<td>Flag:</td>
+																<td className="col-md-4">{Account?.flag}</td>
+															</tr>
+														</tbody>
+													</table>
+
+													<table>
+														<tbody>
+															<tr>
+																<td className="col-md-3">
+																	<a href="/account/profile_info">
+																		<button
+																			className="btn btn-primary btn-sm"
+																			align="left"
+																		>
+																			Update Information
+																		</button>
+																	</a>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+										<div className="col-md-6">
+											<div className="panel panel-default">
+												<div className="panel-heading">Profile Avatar</div>
+												<div className="panel-body" align="center">
+													{/* <img className="avatar" src="/avatar/10067400.png" /> */}
+													<br />
+													<br />
+													<a href="/account/avatar">
+														<button className="btn btn-primary btn-sm">
+															Update Avatar
+														</button>
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div
+									className="tab-pane fade"
+									id="js_pill_border_icon-3"
+									role="tabpanel"
+								>
+									Etsy mixtape wayfarers, ethical wes anderson tofu before they
+									sold out mcsweeney's organic lomo retro fanny pack lo-fi
+									farm-to-table readymade. Messenger bag gentrify pitchfork
+									tattooed craft beer, iphone skateboard locavore carles etsy
+									salvia banksy hoodie helvetica. DIY synth PBR banksy irony.
+									Leggings gentrify squid 8-bit cred pitchfork.
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				)}
+
 				<br />
 				<div className="panel panel-default">
 					<div className="panel-heading">Characters</div>
@@ -255,11 +260,8 @@ const Characters = ({ players, playerList, signOut, account }) => {
 										)
 								  })
 								: null}
-							<Link to="/account/characters/create">
-								<label htmlFor="create-character" className="new-character">
-									<FiPlus size={24} color="#886ab5" />
-								</label>
-							</Link>
+
+							<CreateCharacter />
 						</div>
 					</div>
 				</div>
@@ -269,7 +271,6 @@ const Characters = ({ players, playerList, signOut, account }) => {
 }
 
 const mapStateToProps = (state) => {
-	console.log(state)
 	return {
 		account: state.account.account,
 		players: state.player.player,
