@@ -3,11 +3,9 @@ const { getValidatorError } = require('../helpers/validator')
 
 const rules = {
 	name: Joi.string()
-		.alphanum()
-		.min(5)
+		.min(4)
 		.max(21)
-		.allow('')
-		.regex(/^[A-Z][a-z0-9_-]{3,19}$/)
+		.regex(/^[a-zA-Z]*$/)
 		.required(),
 }
 
