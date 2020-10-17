@@ -7,6 +7,7 @@ import { convertTimestempToDate } from '../../../helpers/datetime'
 
 import Container from '../../Layouts/Container'
 import CreateCharacter from './Create/index'
+import { FiPlus } from 'react-icons/fi'
 import './styles.css'
 
 const Characters = ({ players, playerList, signOut, account }) => {
@@ -29,7 +30,14 @@ const Characters = ({ players, playerList, signOut, account }) => {
 		<Container>
 			<div id="contentBody" className="col-sm-9">
 				<div className="panel panel-danger">
-					<div className="panel-heading">Recovery Key</div>
+					<div className="panel-heading ">Recovery Key</div>
+
+					<button
+						className="btn btn-danger btn-sm align-self-end"
+						onClick={signOutHandler}
+					>
+						Logout
+					</button>
 					<div className="panel-body">
 						<strong>
 							You do not have a recovery key. It is recommended that you
@@ -133,19 +141,16 @@ const Characters = ({ players, playerList, signOut, account }) => {
 												</tbody>
 											</table>
 											<div className="demo">
-												<a href="/account/password">
-													<button className="btn btn-primary btn-sm">
-														Change Password
-													</button>
-												</a>
-												<a href="/account/logout">
-													<button
-														className="btn btn-danger btn-sm"
-														onClick={signOutHandler}
-													>
-														Logout
-													</button>
-												</a>
+												<button className="btn btn-primary btn-sm">
+													Change Password
+												</button>
+
+												<button
+													className="btn btn-danger btn-sm"
+													onClick={signOutHandler}
+												>
+													Logout
+												</button>
 											</div>
 										</div>
 									</div>
@@ -260,8 +265,11 @@ const Characters = ({ players, playerList, signOut, account }) => {
 										)
 								  })
 								: null}
-
-							<CreateCharacter />
+							<Link to="/account/characters/create">
+								<span className="new-character">
+									<FiPlus size={24} color="#886ab5" />
+								</span>
+							</Link>
 						</div>
 					</div>
 				</div>
