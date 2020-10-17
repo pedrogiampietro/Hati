@@ -6,7 +6,7 @@ import { playerList } from '../../../actions/PlayerActions'
 import { convertTimestempToDate } from '../../../helpers/datetime'
 
 import Container from '../../Layouts/Container'
-import CreateCharacter from './Create/index'
+// import CreateCharacter from './Create/index'
 import { FiPlus } from 'react-icons/fi'
 import './styles.css'
 
@@ -265,11 +265,13 @@ const Characters = ({ players, playerList, signOut, account }) => {
 										)
 								  })
 								: null}
-							<Link to="/account/characters/create">
-								<span className="new-character">
-									<FiPlus size={24} color="#886ab5" />
-								</span>
-							</Link>
+							{players?.length < 5 && (
+								<Link to="/account/characters/create">
+									<span className="new-character">
+										<FiPlus size={24} color="#886ab5" />
+									</span>
+								</Link>
+							)}
 						</div>
 					</div>
 				</div>

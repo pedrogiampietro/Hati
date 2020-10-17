@@ -148,43 +148,26 @@ router.get('/:id', async (req, res) => {
 	return res.jsonOK(players)
 })
 
-// createCharacter
-
-// router.post('/', async (req, res) => {
-// 	const { account_id, body } = req
-// 	const { name, vocation, sex } = body
-
-// 	const findCharacter = await player.findOne({ where: { name } })
-// 	if (findCharacter)
-// 		return res.jsonBadRequest(
-// 			null,
-// 			getMessage('player.createcharacter.name_exists')
-// 		)
-
-// 	const players = await player.create({
-// 		name,
-// 		account_id,
-// 		vocation,
-// 		sex,
-// 		looktype: 128,
-// 	})
-
-// 	return res.jsonOK(players, getMessage('player.createcharacter.success'))
-// })
-
-router.post('/', async (req, res) => {
+router.post('/', createCharacter, async (req, res) => {
 	const { account_id, body } = req
-	const { name, level, vocation } = body
+	const { name, vocation, sex } = body
+
+	const findCharacter = await player.findOne({ where: { name } })
+	if (findCharacter)
+		return res.jsonBadRequest(
+			null,
+			getMessage('player.createcharacter.name_exists')
+		)
 
 	const players = await player.create({
 		name,
 		account_id,
-		level,
 		vocation,
+		sex,
 		looktype: 128,
 	})
 
-	return res.jsonOK(players)
+	return res.jsonOK(players, getMessage('player.createcharacter.success'))
 })
 
 router.put('/:id', async (req, res) => {

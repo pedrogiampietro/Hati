@@ -8,7 +8,7 @@ const Header = ({ playerGetCharacter }) => {
 	const history = useHistory()
 	const { name } = useParams()
 	const [searchName, setSearchName] = useState()
-	const [error, setError] = useState(false)
+	const [, setError] = useState(false)
 
 	useEffect(() => {
 		if (name !== undefined) {

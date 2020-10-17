@@ -1,34 +1,40 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { playerCreate } from '../../../../actions/PlayerActions'
+import { Redirect } from 'react-router-dom'
+import { playerCreate, playerList } from '../../../../actions/PlayerActions'
 
 import Container from '../../../Layouts/Container'
 import { createCharacterVocations } from '../../../../config'
 import Error from '../../../../helpers/error'
 import './styles.css'
 
-const CreateCharacter = ({ playerCreate }) => {
-	const [error, setError] = React.useState()
+const CreateCharacter = ({ playerCreate, playerList, player }) => {
+	const [error, setError] = React.useState('')
 	const [name, setName] = React.useState('')
 	const [sex, setSex] = React.useState('')
 	const [vocation, setVocation] = React.useState('')
 
+	React.useEffect(() => {
+		playerList()
+	}, [playerList])
+
 	const submitHandler = (event) => {
 		event.preventDefault()
 
-		const formData = new FormData()
-		formData.append('name', name)
-		formData.append('sex', sex)
-		formData.append('vocation', vocation)
+		const data = {
+			name,
+			sex,
+			vocation,
+		}
 
-
-console.log(name);
-
-		playerCreate(formData).catch((err) => {
+		playerCreate(data).catch((err) => {
 			const { data } = err.response
-
 			setError(data.message)
 		})
+	}
+
+	if (player?.length >= 5) {
+		return <Redirect to="/account/characters" />
 	}
 
 	return (
@@ -204,4 +210,6 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps, { playerCreate })(CreateCharacter)
+export default connect(mapStateToProps, { playerCreate, playerList })(
+	CreateCharacter
+)
