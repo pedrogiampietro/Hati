@@ -2,11 +2,12 @@ const express = require('express')
 const encrypt = require('js-sha1')
 const crypto = require('crypto')
 
-const { account } = require('../models')
+const { account, player } = require('../models')
 const { accountSignUp, accountSignIn } = require('../validators/account')
 const { getMessage } = require('../helpers/messages')
 const {
 	generateJwt,
+	verifyJwt,
 	generateRefreshJwt,
 	verifyRefreshJwt,
 	getTokenFromHeaders,
@@ -41,7 +42,7 @@ router.post('/sign-in', accountSignIn, async (req, res) => {
 })
 
 router.post('/sign-up', accountSignUp, async (req, res) => {
-	const { name, password, email } = req.body
+	const { name, email } = req.body
 
 	const hash = crypto.createHash('sha1').update(name).digest('hex')
 
@@ -72,21 +73,26 @@ router.post('/sign-up', accountSignUp, async (req, res) => {
 })
 
 router.put('/profile_info', async (req, res) => {
-	const { name } = req.headers
-	console.log('************** profile_info.name', name)
+	const { body } = req
+	const fields = ['rlname', 'location']
+	const token = getTokenFromHeaders(req.headers)
 
-	// const fields = ['name'] //['name', 'comments', 'outfits', 'items']
+	if (!token) {
+		return res.jsonUnauthorized(null, 'Invalid token')
+	}
 
-	// const accounts = await account.findOne({ where: { name } })
-	// if (!accounts) return res.jsonNotFound(null)
+	const decoded = verifyJwt(token)
 
-	// fields.map((fieldName) => {
-	// 	const newValue = body[fieldName]
-	// 	if (newValue) players[fieldName] = newValue
-	// })
+	const accounts = await account.findByPk(decoded.id)
+	if (!accounts) return res.jsonUnauthorized(null, 'Invalid token.')
 
-	// await players.save()
-	// return res.jsonOK(players)
+	fields.map((fieldName) => {
+		const newValue = body[fieldName]
+		if (newValue) accounts[fieldName] = newValue
+	})
+
+	await accounts.save()
+	return res.jsonOK(accounts)
 })
 
 router.post('/refresh', async (req, res) => {

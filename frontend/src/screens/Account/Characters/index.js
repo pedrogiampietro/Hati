@@ -179,10 +179,10 @@ const Characters = ({ players, playerList, signOut, account }) => {
 																	{Account?.location}
 																</td>
 															</tr>
-															<tr>
+															{/* <tr>
 																<td>Flag:</td>
 																<td className="col-md-4">{Account?.flag}</td>
-															</tr>
+															</tr> */}
 														</tbody>
 													</table>
 

@@ -51,6 +51,21 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: false,
 			defaultValue: 0,
 		},
+		rlname: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			defaultValue: '',
+		},
+		location: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			defaultValue: '',
+		},
+		flag: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			defaultValue: '',
+		},
 		jwtVersion: {
 			type: DataTypes.INTEGER,
 			allowNull: false,

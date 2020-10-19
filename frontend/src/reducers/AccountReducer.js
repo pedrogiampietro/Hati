@@ -4,6 +4,7 @@ import {
 	SIGN_OUT,
 	INIT_ACCOUNT,
 	REFRESH_TOKEN,
+	PROFILE_INFO,
 } from '../actions/AccountActions'
 import {
 	getAccount,
@@ -31,6 +32,7 @@ export default function (state = initialState, action) {
 		case SIGN_IN:
 		case SIGN_UP:
 		case PLAYER_CREATE:
+		case PROFILE_INFO:
 			const response = payload ? payload.data : null
 			const account = response ? response.data : null
 			const metadata = response ? response.metadata : null
