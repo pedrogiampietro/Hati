@@ -1,4 +1,5 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom'
 
 import Header from '../Header'
 import Menu from '../Menu'
@@ -9,6 +10,26 @@ import { closeMenuOnMobile } from '../../../assets/js/scripts'
 import './styles.css'
 
 const Container = ({ children }) => {
+	const [title, setTitle] = React.useState('')
+	const location = useLocation()
+	console.log(location)
+
+	React.useEffect(() => {
+		const { pathname } = location
+
+		switch (pathname) {
+			case '/':
+				setTitle('Home')
+				break
+			case '/highscores':
+				setTitle('Highscores')
+				break
+			case '/account/characters':
+				setTitle('Account Managment')
+				break
+		}
+	}, [location])
+
 	return (
 		<div className="mod-bg-1">
 			<div className="page-wrapper">
@@ -19,7 +40,7 @@ const Container = ({ children }) => {
 						<main id="js-page-content" role="main" className="page-content">
 							<div className="subheader">
 								<h1 className="subheader-title">
-									<i className="fal fa-home"></i> Home
+									<i className="fal fa-home"></i> {title}
 								</h1>
 							</div>
 

@@ -4,23 +4,26 @@ import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router-dom'
 
 import { profileInfo } from '../../../actions/AccountActions'
+import { playerList } from '../../../actions/PlayerActions'
+
 import { getFormData } from '../../../helpers/form'
 import Container from '../../Layouts/Container'
 import ProfileForm from '../../../components/ProfileForm'
 
-const ProfileInfo = ({ account, profileInfo }) => {
+const ProfileInfo = ({ account, profileInfo, playerList }) => {
 	const history = useHistory()
 
 	React.useEffect(() => {
 		profileInfo()
-	}, [profileInfo])
+		playerList()
+	}, [profileInfo, playerList])
 
 	const submitHandler = (event) => {
 		event.preventDefault()
 		const data = getFormData(event)
 		profileInfo(data)
 
-		history.push('/account/characters#')
+		history.push('/account/characters')
 	}
 
 	return (
@@ -65,4 +68,6 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps, { profileInfo })(ProfileInfo)
+export default connect(mapStateToProps, { profileInfo, playerList })(
+	ProfileInfo
+)

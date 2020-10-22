@@ -64,7 +64,7 @@ const Characters = ({ players, playerList, signOut, account }) => {
 									<a
 										className="nav-link active"
 										data-toggle="tab"
-										href="#js_pill_border_icon-1"
+										href="#account-information"
 									>
 										<i className="fal fa-home mr-1"></i>Account Information
 									</a>
@@ -73,7 +73,7 @@ const Characters = ({ players, playerList, signOut, account }) => {
 									<a
 										className="nav-link"
 										data-toggle="tab"
-										href="#js_pill_border_icon-2"
+										href="#account-profile"
 									>
 										<i className="fal fa-user mr-1"></i>Profile
 									</a>
@@ -91,7 +91,7 @@ const Characters = ({ players, playerList, signOut, account }) => {
 							<div className="tab-content py-3">
 								<div
 									className="tab-pane fade active show"
-									id="js_pill_border_icon-1"
+									id="account-information"
 									role="tabpanel"
 								>
 									<div className="panel panel-default">
@@ -157,7 +157,7 @@ const Characters = ({ players, playerList, signOut, account }) => {
 								</div>
 								<div
 									className="tab-pane fade"
-									id="js_pill_border_icon-2"
+									id="account-profile"
 									role="tabpanel"
 								>
 									<div className="row">

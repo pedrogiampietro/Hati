@@ -34,7 +34,6 @@ const CreateCharacter = ({ playerCreate, playerList, player }) => {
 				history.push('/account/characters#')
 			})
 			.catch((err) => {
-				const { data } = err.response
 				const metadata = err.response.data.metadata
 				const message = err.response.data.message
 
