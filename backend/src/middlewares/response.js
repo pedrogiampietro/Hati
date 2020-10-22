@@ -23,6 +23,8 @@ const jsonBadRequest = function (data, message, metadata) {
 	message = message ? message : getMessage('response.json_bad_request')
 	metadata = metadata ? metadata : {}
 
+	console.log(data, message, metadata)
+
 	this.status(status)
 	this.type(TYPE_JSON)
 	return this.json({ message, data, metadata, status })

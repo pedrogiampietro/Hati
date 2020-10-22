@@ -1,15 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import { profileInfo } from '../../../actions/AccountActions'
 import { getFormData } from '../../../helpers/form'
 import Container from '../../Layouts/Container'
-import FormGroup from '../../../components/FormGroup'
-
-// import Error from '../../../helpers/error'
+import ProfileForm from '../../../components/ProfileForm'
 
 const ProfileInfo = ({ account, profileInfo }) => {
+	const history = useHistory()
+
 	React.useEffect(() => {
 		profileInfo()
 	}, [profileInfo])
@@ -18,6 +19,8 @@ const ProfileInfo = ({ account, profileInfo }) => {
 		event.preventDefault()
 		const data = getFormData(event)
 		profileInfo(data)
+
+		history.push('/account/characters#')
 	}
 
 	return (
@@ -27,13 +30,13 @@ const ProfileInfo = ({ account, profileInfo }) => {
 					<div className="panel-heading">Update Profile Information</div>
 					<div className="panel-body">
 						<form onSubmit={submitHandler}>
-							<FormGroup
+							<ProfileForm
 								label="Real Name"
 								name="rlname"
 								type="text"
 								data={account}
 							/>
-							<FormGroup
+							<ProfileForm
 								label="Location"
 								name="location"
 								type="text"

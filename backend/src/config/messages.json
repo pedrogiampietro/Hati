@@ -33,7 +33,7 @@
 	"player.createcharacter.name.string.empty": "Chracter Name é obrigatório.",
 	"player.createcharacter.name.string.name": "Character Name precisa ser um nome válido, somente texto.",
 	"player.createcharacter.name.any.required": "Character Name é obrigatório.",
-	"player.createcharacter.name.string.pattern.base": "O nome precisa obter letras maiúsculas.",
+	"player.createcharacter.name.string.pattern.base": "O nome não pode ter caracteres especiais -@#! e números",
 	"player.createcharacter.name.string.min": "O nome precisa ter o minimo de 4 letras e o máximo de 21.",
 
 	"character.search.success": "Busca efetuada com sucesso.",

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const FormGroup = (props) => {
+const ProfileForm = (props) => {
 	const { data, name, label, type } = props
 	const [value, setValue] = React.useState('')
 
@@ -28,4 +28,4 @@ const FormGroup = (props) => {
 	)
 }
 
-export default FormGroup
+export default ProfileForm
