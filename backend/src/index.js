@@ -3,7 +3,7 @@ const cors = require('cors')
 const db = require('./models')
 const authController = require('./controllers/auth')
 const playerController = require('./controllers/player')
-const newsController = require('./controllers/news')
+const forumController = require('./controllers/forum')
 const response = require('./middlewares/response')
 const checkJwt = require('./middlewares/jwt')
 
@@ -16,7 +16,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use('/account', authController)
 app.use('/player', playerController)
-app.use('/dashboard', newsController)
+app.use('/forum', forumController)
 
 app.get('/', (req, res) => {
 	return res.json('OK')

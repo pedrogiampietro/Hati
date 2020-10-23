@@ -4,8 +4,41 @@ const { getMessage } = require('../helpers/messages')
 
 const router = express.Router()
 
+const topics = {
+	'last-news': '1',
+	'discussions': '2',
+	'off-topic': '3',
+	'tutorials': '4',
+	'bug-report': '5',
+	'dev-atts': '6',
+	'trade': '7',
+}
+
+// Helper functions
+
+function getCategoryFromTopic(topic) {
+	return topics[topic]
+}
+
+function topicExists(topic) {
+	return Object.keys(topics).includes(topic)
+}
+
 //=================================
-//           Get all likes with news.
+//           Category Routes
+//=================================
+
+router.get('/:section', async (req, res) => {
+	const { section } = req.params
+	const convert = parseInt(getCategoryFromTopic(section))
+
+	const getThred = await z_forum.findAll({ where: { section: convert } })
+
+	return res.jsonOK(getThred)
+})
+
+//=================================
+//        Get all likes with news.
 //=================================
 
 router.get('/getLikes', async (req, res) => {
@@ -17,7 +50,7 @@ router.get('/getLikes', async (req, res) => {
 })
 
 //=================================
-//           Add a new like on news;
+//         Add a new like on news;
 //=================================
 
 router.post('/upLike/:id', async (req, res) => {

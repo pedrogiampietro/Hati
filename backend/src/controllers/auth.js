@@ -2,7 +2,7 @@ const express = require('express')
 const encrypt = require('js-sha1')
 const crypto = require('crypto')
 
-const { account, player } = require('../models')
+const { account } = require('../models')
 const { accountSignUp, accountSignIn } = require('../validators/account')
 const { getMessage } = require('../helpers/messages')
 const {

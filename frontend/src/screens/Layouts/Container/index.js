@@ -27,6 +27,9 @@ const Container = ({ children }) => {
 			case '/account/characters':
 				setTitle('Account Managment')
 				break
+
+				default:
+					setTitle('Teste')
 		}
 	}, [location])
 
