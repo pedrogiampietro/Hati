@@ -58,7 +58,8 @@ const Threads = ({ forumList }) => {
 				<div className="card-body p-0">
 					<div className="row no-gutters row-grid">
 						{threadList.map((props) => {
-							return (
+							return props.post_topic === '' ||
+								props.post_topic === null ? null : (
 								<div key={props.id} className="col-12">
 									<div className="row no-gutters row-grid align-items-stretch">
 										<div className="col-md">

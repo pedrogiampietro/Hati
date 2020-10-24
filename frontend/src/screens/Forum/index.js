@@ -132,9 +132,6 @@ const Forum = () => {
 															className="fs-lg fw-500 d-block"
 														>
 															Complaints or Questions
-															<span className="badge badge-warning rounded">
-																Sticky
-															</span>
 														</Link>
 														<div className="d-block text-muted fs-sm">
 															Fusce at velit viverra, luctus augue nec, dapibus
