@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getPlayerName } from '../../helpers/account'
-import { upLike, unLike } from '../../actions/NewsActions'
+import { upLike, unLike } from '../../actions/ForumActions'
 import { connect } from 'react-redux'
 
 const LikeDeslikes = ({ upLike, account, ...props }) => {

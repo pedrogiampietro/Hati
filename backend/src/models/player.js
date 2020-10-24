@@ -19,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: false,
 			reference: {
 				model: 'account',
-
 				key: 'id',
 			},
 		},
@@ -292,7 +291,7 @@ module.exports = (sequelize, DataTypes) => {
 
 	player.associate = (models) => {
 		player.belongsTo(models.account, { foreignKey: 'account_id' })
-		player.hasMany(models.z_forum, { foreignKey: 'id' }) // <- alterar aqui depois.
+		player.hasMany(models.z_forum, { foreignKey: 'id' })
 		player.hasMany(models.player_deaths, { foreignKey: 'player_id' })
 	}
 

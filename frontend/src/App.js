@@ -13,6 +13,8 @@ import AccountCharactersCreate from './screens/Account/Characters/Create'
 import Highscores from './screens/Highscores'
 import Character from './screens/Character'
 import Forum from './screens/Forum'
+import Threads from './screens/Forum/Threads'
+import Discussions from './screens/Forum/Discussions'
 
 import PageSearch from './components/PageSearch'
 
@@ -70,8 +72,16 @@ const App = ({ initAccount }) => {
 						<PageSearch />
 					</Route>
 
-					<Route path="/forum">
+					<Route exact path="/forum">
 						<Forum />
+					</Route>
+
+					<Route exact path="/forum/:section">
+						<Threads />
+					</Route>
+
+					<Route exact path="/forum/:section/:id">
+						<Discussions />
 					</Route>
 
 					<Route path="/">

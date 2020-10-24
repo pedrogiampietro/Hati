@@ -7,14 +7,6 @@ import Container from '../Layouts/Container'
 const Forum = () => {
 	return (
 		<Container>
-			<div class="subheader">
-				<h1 class="subheader-title">
-					<i class="subheader-icon fal fa-plus-circle"></i> Forum:{' '}
-					<span class="fw-300">List</span>
-					<small>Forum list page</small>
-				</h1>
-			</div>
-
 			<div className="row">
 				<div className="col-xl-12">
 					<div className="input-group input-group-lg mb-g">
@@ -185,10 +177,7 @@ const Forum = () => {
 														</Link>
 														<div className="text-muted small text-truncate">
 															Today, 12:12{' '}
-															<Link
-																to="/character/:name"
-																className="text-info"
-															>
+															<Link to="/character/:name" className="text-info">
 																yinz
 															</Link>
 														</div>
@@ -257,10 +246,7 @@ const Forum = () => {
 														</Link>
 														<div className="text-muted small text-truncate">
 															Today, 05:01{' '}
-															<Link
-																to="/character/:name"
-																className="text-info"
-															>
+															<Link to="/character/:name" className="text-info">
 																gege
 															</Link>
 														</div>

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { playerList } from '../../actions/PlayerActions'
 import { getAccount } from '../../helpers/account'
 import { getFormData } from '../../helpers/form'
-import { newsCreate } from '../../actions/NewsActions'
+import { newsCreate } from '../../actions/ForumActions'
 
 import Menu from '../Layouts/Menu'
 import Header from '../Layouts/Header'

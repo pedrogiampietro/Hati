@@ -31,6 +31,10 @@ module.exports = (sequelize, DataTypes) => {
 				type: DataTypes.INTEGER,
 				allowNull: false,
 				defaultValue: 0,
+				references: {
+					model: 'player',
+					key: 'id',
+				},
 			},
 			post_text: {
 				type: DataTypes.STRING,
@@ -85,8 +89,8 @@ module.exports = (sequelize, DataTypes) => {
 		{ freezeTableName: true }
 	)
 
-	z_forum.associate = models => {
-		z_forum.belongsTo(models.player, { foreignKey: 'author_aid' })
+	z_forum.associate = (models) => {
+		z_forum.belongsTo(models.player, { foreignKey: 'author_guid' })
 	}
 
 	return z_forum

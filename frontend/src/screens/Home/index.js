@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { newsList } from '../../actions/NewsActions'
+import { forumList } from '../../actions/ForumActions'
 import { dataAtualFormatada } from '../../helpers/datetime'
 
 import Container from '../Layouts/Container'
 import LikeDeslikes from '../../components/LikeDeslikes'
 
-const Home = ({ newsList }) => {
+const Home = ({ forumList }) => {
 	const [newsPost, setNewsPost] = useState([])
 	const [postInteraction, setPostInteraction] = useState(false)
 
@@ -15,7 +15,7 @@ const Home = ({ newsList }) => {
 	}
 
 	useEffect(() => {
-		newsList()
+		forumList()
 			.then(({ payload }) => {
 				const newData = payload.data.data
 				setNewsPost(newData)
@@ -24,7 +24,7 @@ const Home = ({ newsList }) => {
 				alert('posts não foram carregados.')
 				console.log(err)
 			})
-	}, [newsList, postInteraction])
+	}, [forumList, postInteraction])
 
 	return (
 		<Container>
@@ -84,4 +84,4 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps, { newsList })(Home)
+export default connect(mapStateToProps, { forumList })(Home)

@@ -6,12 +6,12 @@ const router = express.Router()
 
 const topics = {
 	'last-news': '1',
-	'discussions': '2',
+	discussions: '2',
 	'off-topic': '3',
-	'tutorials': '4',
+	tutorials: '4',
 	'bug-report': '5',
 	'dev-atts': '6',
-	'trade': '7',
+	trade: '7',
 }
 
 // Helper functions
@@ -32,7 +32,18 @@ router.get('/:section', async (req, res) => {
 	const { section } = req.params
 	const convert = parseInt(getCategoryFromTopic(section))
 
-	const getThred = await z_forum.findAll({ where: { section: convert } })
+	const getThred = await z_forum.findAll({
+		where: { section: convert },
+
+		include: [
+			{
+				model: player,
+				attributes: ['name'],
+			},
+		],
+	})
+
+	console.log(player)
 
 	return res.jsonOK(getThred)
 })
