@@ -1,6 +1,8 @@
 const express = require('express')
 const encrypt = require('js-sha1')
 const crypto = require('crypto')
+const multer = require('multer')
+const uuidv5 = require('uuid/v5')
 
 const { account } = require('../models')
 const { accountSignUp, accountSignIn } = require('../validators/account')
@@ -12,6 +14,20 @@ const {
 	verifyRefreshJwt,
 	getTokenFromHeaders,
 } = require('../helpers/jwt')
+
+// File upload middleware (for profile pictures)
+const storage = multer.diskStorage({
+	destination: 'uploads/',
+	filename: (req, file, cb) => {
+		const filename = file.originalname
+
+		const finalFileName = `${uuidv5(filename, uuidv5.DNS)}${filename}`
+
+		cb(null, finalFileName)
+	},
+})
+
+const upload = multer({ storage: storage, limits: { fileSize: 1000000 } })
 
 const router = express.Router()
 
@@ -116,6 +132,51 @@ router.post('/refresh', async (req, res) => {
 		return res.jsonOK(null, null, meta)
 	} catch (error) {
 		return res.jsonUnauthorized(null, 'Invalid token.')
+	}
+})
+
+router.post('/avatar', upload.single('avatar'), async (req, res) => {
+	try {
+		const token = getTokenFromHeaders(req.headers)
+
+		if (!token) {
+			return res.jsonUnauthorized(null, 'Invalid token')
+		}
+
+		const decoded = verifyJwt(token)
+
+		const accounts = await account.findByPk(decoded.id)
+		if (!accounts) return res.jsonUnauthorized(null, 'Invalid token.')
+
+		const filename = req.file.originalname
+		const finalFileName = `${uuidv5(filename, uuidv5.DNS)}${filename}`
+
+		await accounts.update({
+			avatar: `uploads/${finalFileName}`,
+		})
+
+		return res.jsonOK(accounts)
+	} catch (error) {
+		return res.jsonBadRequest(null, error)
+	}
+})
+
+router.get('/avatar', async (req, res) => {
+	try {
+		const token = getTokenFromHeaders(req.headers)
+
+		if (!token) {
+			return res.jsonUnauthorized(null, 'Invalid token')
+		}
+
+		const decoded = verifyJwt(token)
+
+		const accounts = await account.findByPk(decoded.id)
+		if (!accounts) return res.jsonUnauthorized(null, 'Invalid token.')
+
+		res.json(accounts.toJSON().avatar)
+	} catch (error) {
+		return res.jsonBadRequest(null, error)
 	}
 })
 

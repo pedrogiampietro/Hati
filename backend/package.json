@@ -15,8 +15,10 @@
     "express": "^4.17.1",
     "js-sha1": "^0.6.0",
     "jsonwebtoken": "^8.5.1",
+    "multer": "^1.4.2",
     "mysql2": "^2.1.0",
     "nodemon": "^2.0.4",
-    "sequelize": "^6.3.0"
+    "sequelize": "^6.3.0",
+    "uuidv5": "^1.0.0"
   }
 }

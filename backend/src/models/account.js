@@ -71,6 +71,16 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: false,
 			defaultValue: 0,
 		},
+		avatar: {
+			type: DataTypes.STRING,
+			validate: {
+				isString(val) {
+					if (typeof val !== 'string') {
+						throw new sequelize.ValidationError('Avatar must be a string.')
+					}
+				},
+			},
+		},
 	})
 
 	account.associate = (models) => {
