@@ -4,6 +4,9 @@ import { connect } from 'react-redux'
 
 import Container from '../Layouts/Container'
 
+const avatarImg =
+	'https://carismartes.com.br/assets/global/images/avatars/avatar7_big@2x.png'
+
 const Forum = () => {
 	return (
 		<Container>
@@ -85,13 +88,10 @@ const Forum = () => {
 											<div className="p-3 p-md-3">
 												<div className="d-flex align-items-center">
 													<div className="d-inline-block align-middle status status-success status-sm mr-2">
-														<span
+														<img
+															src={avatarImg}
 															className="profile-image-md rounded-circle d-block"
-															style={{
-																backgroundImage:
-																	'url("img/demo/avatars/avatar-c.png")',
-																backgroundSize: 'cover',
-															}}
+															alt=""
 														/>
 													</div>
 													<div className="flex-1 min-width-0">
@@ -155,13 +155,10 @@ const Forum = () => {
 											<div className="p-3 p-md-3">
 												<div className="d-flex align-items-center">
 													<div className="d-inline-block align-middle status status-success status-sm mr-2">
-														<span
+														<img
+															src={avatarImg}
 															className="profile-image-md rounded-circle d-block"
-															style={{
-																backgroundImage:
-																	'url("img/demo/avatars/avatar-a.png")',
-																backgroundSize: 'cover',
-															}}
+															alt=""
 														/>
 													</div>
 													<div className="flex-1 min-width-0">
@@ -225,13 +222,10 @@ const Forum = () => {
 											<div className="p-3 p-md-3">
 												<div className="d-flex align-items-center">
 													<div className="d-inline-block align-middle status status-success status-sm mr-2">
-														<span
+														<img
+															src={avatarImg}
 															className="profile-image-md rounded-circle d-block"
-															style={{
-																backgroundImage:
-																	'url("img/demo/avatars/avatar-b.png")',
-																backgroundSize: 'cover',
-															}}
+															alt=""
 														/>
 													</div>
 													<div className="flex-1 min-width-0">

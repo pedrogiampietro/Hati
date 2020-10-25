@@ -155,7 +155,7 @@ router.post('/avatar', upload.single('avatar'), async (req, res) => {
 			avatar: `uploads/${finalFileName}`,
 		})
 
-		return res.jsonOK(accounts)
+		res.jsonOK(accounts, getMessage('account.settings.avatar_success'))
 	} catch (error) {
 		return res.jsonBadRequest(null, error)
 	}
@@ -174,7 +174,7 @@ router.get('/avatar', async (req, res) => {
 		const accounts = await account.findByPk(decoded.id)
 		if (!accounts) return res.jsonUnauthorized(null, 'Invalid token.')
 
-		res.json(accounts.toJSON().avatar)
+		res.jsonOK(accounts.toJSON().avatar)
 	} catch (error) {
 		return res.jsonBadRequest(null, error)
 	}

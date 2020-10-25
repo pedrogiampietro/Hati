@@ -16,8 +16,6 @@ const SignUp = (props) => {
 		e.preventDefault()
 		const data = getFormData(e)
 		signUp(data)
-
-		console.log(data)
 	}
 
 	if (account) {

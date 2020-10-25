@@ -3,14 +3,13 @@ const { verifyJwt, getTokenFromHeaders } = require('../helpers/jwt')
 const checkJwt = (req, res, next) => {
 	const { url: path } = req
 
-	const { vocation, skill, page } = req.query
-
-	const name = req.url
-	const newName = name.replace('/player/character/', '')
+	// const { vocation, skill, page } = req.query
+	// const name = req.url
+	// const newName = name.replace('/player/character/', '')
 
 	const excludedPaths = ['/player/characters', '/account/dashboard']
 
-	const isExcluded = !excludedPaths.find(p => p.startsWith(path))
+	const isExcluded = !excludedPaths.find((p) => p.startsWith(path))
 	if (isExcluded) return next()
 
 	const token = getTokenFromHeaders(req.headers)

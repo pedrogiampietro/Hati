@@ -1,16 +1,19 @@
 import React, { useEffect } from 'react'
 import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { signOut } from '../../../actions/AccountActions'
+import { signOut, postProfileAvatar } from '../../../actions/AccountActions'
 import { playerList } from '../../../actions/PlayerActions'
 import { convertTimestempToDate } from '../../../helpers/datetime'
+import { getAvatarUrl } from '../../../helpers/api'
 
 import Container from '../../Layouts/Container'
-// import CreateCharacter from './Create/index'
+
+import ProfileAvatar from '../../../assets/img/Profile_Avatar.png'
 import { FiPlus } from 'react-icons/fi'
 import './styles.css'
 
 const Characters = ({ players, playerList, signOut, account }) => {
+	const [image, setImage] = React.useState('')
 	useEffect(() => {
 		playerList()
 	}, [playerList])
@@ -24,7 +27,24 @@ const Characters = ({ players, playerList, signOut, account }) => {
 		signOut()
 	}
 
+	function handleSelectImages(event) {
+		if (!event.target.files) {
+			return
+		}
+
+		const selectedImage = event.target.files
+		console.log(selectedImage)
+	}
+
+	function handleSubmit(event) {
+		event.preventDefault()
+
+		postProfileAvatar(image)
+	}
+
 	const Account = account[0]?.account
+	const pathAvatar = account[0]?.account.avatar
+	const Avatar = getAvatarUrl(pathAvatar)
 
 	return (
 		<Container>
@@ -209,14 +229,38 @@ const Characters = ({ players, playerList, signOut, account }) => {
 											<div className="panel panel-default">
 												<div className="panel-heading">Profile Avatar</div>
 												<div className="panel-body" align="center">
-													{/* <img className="avatar" src="/avatar/10067400.png" /> */}
+													{pathAvatar === '' || pathAvatar === null ? (
+														<img
+															src={ProfileAvatar}
+															alt={ProfileAvatar}
+															style={{
+																backgroundRepeat: 'no-repeat',
+																backgroundPosition: 'center',
+																backgroundSize: 'cover',
+															}}
+														/>
+													) : (
+														<img
+															src={Avatar}
+															alt="Avatar"
+															className="profile-image rounded-circle d-block m-auto"
+														/>
+													)}
+
 													<br />
 													<br />
-													<a href="/account/avatar">
-														<button className="btn btn-primary btn-sm">
-															Update Avatar
+
+													<form onSubmit={handleSubmit}>
+														<input
+															type="file"
+															id="image"
+															className="btn btn-primary btn-sm"
+															onChange={handleSelectImages}
+														/>
+														<button className="confirm-button" type="submit">
+															Confirmar
 														</button>
-													</a>
+													</form>
 												</div>
 											</div>
 										</div>
@@ -287,4 +331,7 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps, { playerList, signOut })(Characters)
+export default connect(mapStateToProps, {
+	playerList,
+	signOut,
+})(Characters)

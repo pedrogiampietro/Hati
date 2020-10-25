@@ -27,6 +27,8 @@
 	"account.signup.email.string.email": "Um E-mail válido é obrigatório.",
 	"account.signup.email_exists": "E-mail já cadastrado.",
 
+	"account.settings.avatar_success": "Upload feito com sucesso.",
+
 	"player.createcharacter.success": "Character criado com sucesso.",
 	"player.createcharacter.failed": "Character name inválido.",
 	"player.createcharacter.name_exists": "Character Name já cadastrado.",

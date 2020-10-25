@@ -5,6 +5,10 @@ export const getApiUrl = (path) => {
 	return `http://localhost:3001${path}`
 }
 
+export const getAvatarUrl = (path) => {
+	return `http://localhost:3001/${path}`
+}
+
 export const getHeaders = () => {
 	const token = getToken()
 
@@ -106,4 +110,14 @@ export const apiLike = (path, params = {}) => {
 	}
 
 	return axios.post(url, null, options)
+}
+
+export const apiPostAvatar = (path, data = {}) => {
+	const url = getApiUrl(path)
+	const options = {
+		headers: getHeaders(),
+		'content-type': 'multipart/form-data',
+	}
+
+	return axios.post(url, data, options)
 }
