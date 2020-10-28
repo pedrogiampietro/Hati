@@ -46,7 +46,7 @@ const Threads = ({ forumList }) => {
 							<div className="text-uppercase text-muted py-2 px-3">Title</div>
 						</div>
 						<div className="col-sm-6 col-md-2 col-xl-1 hidden-md-down">
-							<div className="text-uppercase text-muted py-2 px-3">Replies</div>
+							<div className="text-uppercase text-muted py-2 px-3">Views</div>
 						</div>
 						<div className="col-sm-6 col-md-3 hidden-md-down">
 							<div className="text-uppercase text-muted py-2 px-3">
@@ -86,9 +86,6 @@ const Threads = ({ forumList }) => {
 										</div>
 										<div className="col-4 col-md-2 col-xl-1 hidden-md-down">
 											<div className="p-3 p-md-3">
-												<span className="d-block text-muted">
-													72 <i>Replies</i>
-												</span>
 												<span className="d-block text-muted">
 													{props.views} <i>Views</i>
 												</span>

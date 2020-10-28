@@ -7,6 +7,7 @@ import {
 	PROFILE_INFO,
 	GET_PROFILE_AVATAR,
 	POST_PROFILE_AVATAR,
+	DELETE_PROFILE_AVATAR,
 } from '../actions/AccountActions'
 import {
 	getAccount,
@@ -37,6 +38,7 @@ export default function (state = initialState, action) {
 		case PROFILE_INFO:
 		case GET_PROFILE_AVATAR:
 		case POST_PROFILE_AVATAR:
+		case DELETE_PROFILE_AVATAR:
 			const response = payload ? payload.data : null
 			const account = response ? response.data : null
 			const metadata = response ? response.metadata : null

@@ -287,6 +287,16 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: false,
 			defaultValue: 0,
 		},
+		madphp_signature_bg: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			defaultValue: 0,
+		},
+		madphp_signature_cache: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			defaultValue: 0,
+		},
 	})
 
 	player.associate = (models) => {

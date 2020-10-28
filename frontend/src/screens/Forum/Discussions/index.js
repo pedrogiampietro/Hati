@@ -3,6 +3,8 @@ import { Link, useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { forumList } from '../../../actions/ForumActions'
 import Container from '../../Layouts/Container'
+import { getAvatarUrl } from '../../../helpers/api'
+import { groups_ID } from '../../../config'
 
 const avatarImg =
 	'https://carismartes.com.br/assets/global/images/avatars/avatar7_big@2x.png'
@@ -47,11 +49,21 @@ const Discussions = ({ forumList }) => {
 								<div className="card-header bg-white p-0">
 									<div className="p-3 d-flex flex-row">
 										<div className="d-block flex-shrink-0">
-											<img
-												src={avatarImg}
-												className="profile-image rounded-circle"
-												alt=""
-											/>
+											{props.player &&
+											props.player.account &&
+											props.player.account.avatar ? (
+												<img
+													src={getAvatarUrl(props.player.account.avatar)}
+													className="profile-image rounded-circle"
+													alt=""
+												/>
+											) : (
+												<img
+													src={avatarImg}
+													className="profile-image rounded-circle"
+													alt=""
+												/>
+											)}
 										</div>
 										<div className="d-block ml-2">
 											<span className="h6 font-weight-bold text-uppercase d-block m-0">
@@ -61,26 +73,13 @@ const Discussions = ({ forumList }) => {
 												to="#"
 												className="fs-sm text-info h6 fw-500 mb-0 d-block"
 											>
-												Administrator
+												{groups_ID[props.player.group_id]}
 											</Link>
-											<div className="d-flex mt-1 text-warning align-items-center">
-												<i className="fas fa-star mr-1" />
-												<i className="fas fa-star mr-1" />
-												<i className="fas fa-star mr-1" />
-												<i className="fas fa-star mr-1" />
-												<i className="fal fa-star mr-1" />
-												<span className="text-muted fs-xs font-italic">
-													(140 votes)
-												</span>
+											<div className="d-flex mt-1 text-black align-items-center">
+												<span>55</span>
+												<i className="fas fa-heart ml-1 text-danger" />
 											</div>
 										</div>
-										<Link
-											to="#"
-											className="d-inline-flex align-items-center text-dark ml-auto align-self-start"
-										>
-											<span>55</span>
-											<i className="fas fa-heart ml-1 text-danger" />
-										</Link>
 									</div>
 								</div>
 								<div

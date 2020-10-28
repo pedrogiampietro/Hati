@@ -30,7 +30,7 @@ const LikeDeslikes = ({ upLike, account, ...props }) => {
 						id={`data-post-${id}`}
 						className="d-inline-flex align-items-center text-dark"
 					>
-						{likes_count.includes(characterLogged) ? (
+						{likes_count && likes_count.includes(characterLogged) ? (
 							<span className="width-3 height-2 d-inline-flex align-items-center justify-content-center position-relative h1 ">
 								<i
 									className="fas fa-heart text-danger"
@@ -69,7 +69,7 @@ const LikeDeslikes = ({ upLike, account, ...props }) => {
 	)
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {
 		post: state.post.post,
 		account: state.account.account,

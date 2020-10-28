@@ -7,12 +7,13 @@ export const changeMinify = () => {
 export const changeMenuOnMobile = () => {
 	document.querySelector('.mod-bg-1').classList.toggle('mobile-nav-on')
 	document.querySelector('.fechaMenu').classList.remove('isClose')
-
-	console.log('abri menu')
 }
 
 export const closeMenuOnMobile = () => {
 	document.querySelector('.mod-bg-1').classList.toggle('mobile-nav-on')
 	document.querySelector('.fechaMenu').classList.toggle('isClose')
-	console.log('fechei menu')
+}
+
+export const closeModalAvatar = () => {
+	document.querySelector('.modal').classList.remove('show')
 }

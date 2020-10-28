@@ -3,10 +3,10 @@
 module.exports = {
 	up: async (queryInterface, Sequelize) => {
 		return queryInterface.addColumn('z_forum', 'likes_count', {
-			type: Sequelize.INTEGER,
+			type: Sequelize.JSON,
 			allowNull: false,
 			after: 'views',
-			defaultValue: 0,
+			defaultValue: [],
 		})
 	},
 

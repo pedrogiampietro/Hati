@@ -15,6 +15,7 @@ const SignUp = (props) => {
 	const submitHandler = (e) => {
 		e.preventDefault()
 		const data = getFormData(e)
+
 		signUp(data)
 	}
 
@@ -105,7 +106,7 @@ const SignUp = (props) => {
 										</div>
 									</div>
 									<div className="form-group">
-										<label className="form-label" htmlhtmlhtmlFor="email">
+										<label className="form-label" htmlFor="email">
 											Email will be needed for verification and account recovery
 										</label>
 										<input
@@ -131,10 +132,7 @@ const SignUp = (props) => {
 												id="terms"
 												required=""
 											/>
-											<label
-												className="custom-control-label"
-												htmlhtmlFor="terms"
-											>
+											<label className="custom-control-label" htmlFor="terms">
 												{' '}
 												I agree to terms &amp; conditions
 											</label>
@@ -150,7 +148,7 @@ const SignUp = (props) => {
 											/>
 											<label
 												className="custom-control-label"
-												htmlhtmlFor="newsletter"
+												htmlFor="newsletter"
 											>
 												Sign up for newsletters (dont worry, we won't send so
 												many)

@@ -1,29 +1,46 @@
 import React, { useEffect } from 'react'
 import { Redirect, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { signOut, postProfileAvatar } from '../../../actions/AccountActions'
+import {
+	signOut,
+	postProfileAvatar,
+	deleteProfileAvatar,
+} from '../../../actions/AccountActions'
+import { getProfileAvatar } from '../../../actions/AccountActions'
 import { playerList } from '../../../actions/PlayerActions'
 import { convertTimestempToDate } from '../../../helpers/datetime'
-import { getAvatarUrl } from '../../../helpers/api'
 
 import Container from '../../Layouts/Container'
 
 import ProfileAvatar from '../../../assets/img/Profile_Avatar.png'
+import { closeModalAvatar } from '../../../assets/js/scripts'
 import { FiPlus } from 'react-icons/fi'
+import { RiDeleteBin6Line } from 'react-icons/ri'
 import './styles.css'
 
-const Characters = ({ players, playerList, signOut, account }) => {
+const Characters = ({
+	players,
+	playerList,
+	getProfileAvatar,
+	signOut,
+	account,
+}) => {
 	const [image, setImage] = React.useState('')
+	const [avatar, setAvatar] = React.useState('')
+
 	useEffect(() => {
+		getProfileAvatar().then(({ payload }) => {
+			setAvatar(payload.data.data)
+		})
 		playerList()
-	}, [playerList])
+	}, [playerList, getProfileAvatar])
 
 	if (!account) {
 		return <Redirect to="/sign-in" />
 	}
 
-	const signOutHandler = (e) => {
-		e.preventDefault()
+	const signOutHandler = (event) => {
+		event.preventDefault()
 		signOut()
 	}
 
@@ -32,19 +49,25 @@ const Characters = ({ players, playerList, signOut, account }) => {
 			return
 		}
 
-		const selectedImage = event.target.files
-		console.log(selectedImage)
+		const selectedImage = event.target.files[0]
+		setImage(selectedImage)
+	}
+
+	function handleDeleteAvatar(event) {
+		event.preventDefault()
+		deleteProfileAvatar()
+		closeModalAvatar()
 	}
 
 	function handleSubmit(event) {
 		event.preventDefault()
+		const formData = new FormData()
+		formData.append('avatar', image)
 
-		postProfileAvatar(image)
+		postProfileAvatar(formData)
 	}
 
 	const Account = account[0]?.account
-	const pathAvatar = account[0]?.account.avatar
-	const Avatar = getAvatarUrl(pathAvatar)
 
 	return (
 		<Container>
@@ -229,7 +252,7 @@ const Characters = ({ players, playerList, signOut, account }) => {
 											<div className="panel panel-default">
 												<div className="panel-heading">Profile Avatar</div>
 												<div className="panel-body" align="center">
-													{pathAvatar === '' || pathAvatar === null ? (
+													{avatar.avatar === '' ? (
 														<img
 															src={ProfileAvatar}
 															alt={ProfileAvatar}
@@ -240,12 +263,75 @@ const Characters = ({ players, playerList, signOut, account }) => {
 															}}
 														/>
 													) : (
-														<img
-															src={Avatar}
-															alt="Avatar"
-															className="profile-image rounded-circle d-block m-auto"
-														/>
+														<div className="imagem-avatar">
+															<img
+																src={avatar}
+																alt="Avatar"
+																className="profile-image rounded-circle"
+															/>
+															<div
+																className="avatar-delete"
+																data-toggle="modal"
+																data-target=".example-modal-centered-transparent"
+															>
+																<RiDeleteBin6Line size={30} color="#fff" />
+															</div>
+														</div>
 													)}
+
+													<div
+														class="modal fade example-modal-centered-transparent"
+														tabIndex="-1"
+														role="dialog"
+														aria-hidden="true"
+														style={{ display: 'none' }}
+													>
+														<div
+															class="modal-dialog modal-dialog-centered modal-transparent"
+															role="document"
+														>
+															<div class="modal-content">
+																<div class="modal-header">
+																	<h4 class="modal-title text-white">
+																		do you want to delete this avatar?
+																		<small class="m-0 text-white opacity-70">
+																			do you really intend to delete your
+																			avatar? you will delete it from our
+																			database, and you will not be able to
+																			recover it again.
+																		</small>
+																	</h4>
+																	<button
+																		type="button"
+																		class="close text-white"
+																		data-dismiss="modal"
+																		aria-label="Close"
+																	>
+																		<span aria-hidden="true">
+																			<i class="fal fa-times"></i>
+																		</span>
+																	</button>
+																</div>
+
+																<div class="modal-footer">
+																	<button
+																		type="button"
+																		class="btn btn-secondary waves-effect waves-themed"
+																		data-dismiss="modal"
+																	>
+																		Close
+																	</button>
+																	<button
+																		type="button"
+																		class="btn btn-primary waves-effect waves-themed"
+																		onClick={handleDeleteAvatar}
+																	>
+																		Delete
+																	</button>
+																</div>
+															</div>
+														</div>
+													</div>
 
 													<br />
 													<br />
@@ -254,6 +340,7 @@ const Characters = ({ players, playerList, signOut, account }) => {
 														<input
 															type="file"
 															id="image"
+															accept="image/*"
 															className="btn btn-primary btn-sm"
 															onChange={handleSelectImages}
 														/>
@@ -334,4 +421,5 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
 	playerList,
 	signOut,
+	getProfileAvatar,
 })(Characters)

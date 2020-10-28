@@ -1,5 +1,5 @@
 const express = require('express')
-const { z_forum, player } = require('../models')
+const { z_forum, player, account } = require('../models')
 const { getMessage } = require('../helpers/messages')
 
 const router = express.Router()
@@ -38,12 +38,16 @@ router.get('/:section', async (req, res) => {
 		include: [
 			{
 				model: player,
-				attributes: ['name'],
+				attributes: ['name', 'group_id'],
+				include: [
+					{
+						model: account,
+						attributes: ['avatar'],
+					},
+				],
 			},
 		],
 	})
-
-	console.log(player)
 
 	return res.jsonOK(getThred)
 })

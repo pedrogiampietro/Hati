@@ -4,6 +4,7 @@ import {
 	apiPut,
 	apiGet,
 	apiPostAvatar,
+	apiDelete,
 } from '../helpers/api'
 
 export const SIGN_UP = 'SIGN_UP'
@@ -14,6 +15,7 @@ export const REFRESH_TOKEN = 'REFRESH_TOKEN'
 export const PROFILE_INFO = 'PROFILE_INFO'
 export const GET_PROFILE_AVATAR = 'GET_PROFILE_AVATAR'
 export const POST_PROFILE_AVATAR = 'POST_PROFILE_AVATAR'
+export const DELETE_PROFILE_AVATAR = 'DELETE_PROFILE_AVATAR'
 
 export const signUp = (data) => {
 	const payload = apiPost('/account/sign-up', data)
@@ -42,6 +44,11 @@ export const getProfileAvatar = (data) => {
 export const postProfileAvatar = (data) => {
 	const payload = apiPostAvatar('/account/avatar', data)
 	return { type: POST_PROFILE_AVATAR, payload }
+}
+
+export const deleteProfileAvatar = (data) => {
+	const payload = apiDelete('/account/avatarDelete', data)
+	return { type: DELETE_PROFILE_AVATAR, payload }
 }
 
 export const initAccount = () => {

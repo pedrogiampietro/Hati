@@ -2,7 +2,9 @@ const express = require('express')
 const encrypt = require('js-sha1')
 const crypto = require('crypto')
 const multer = require('multer')
-const uuidv5 = require('uuid/v5')
+const fs = require('fs')
+const { promisify } = require('util')
+const path = require('path')
 
 const { account } = require('../models')
 const { accountSignUp, accountSignIn } = require('../validators/account')
@@ -20,8 +22,7 @@ const storage = multer.diskStorage({
 	destination: 'uploads/',
 	filename: (req, file, cb) => {
 		const filename = file.originalname
-
-		const finalFileName = `${uuidv5(filename, uuidv5.DNS)}${filename}`
+		const finalFileName = `${Date.now()}-${filename}`
 
 		cb(null, finalFileName)
 	},
@@ -58,9 +59,9 @@ router.post('/sign-in', accountSignIn, async (req, res) => {
 })
 
 router.post('/sign-up', accountSignUp, async (req, res) => {
-	const { name, email } = req.body
+	const { name, password, email } = req.body
 
-	const hash = crypto.createHash('sha1').update(name).digest('hex')
+	const hash = crypto.createHash('sha1').update(password).digest('hex')
 
 	const accounts = await account.findOne({ where: { name } })
 	if (accounts)
@@ -148,11 +149,10 @@ router.post('/avatar', upload.single('avatar'), async (req, res) => {
 		const accounts = await account.findByPk(decoded.id)
 		if (!accounts) return res.jsonUnauthorized(null, 'Invalid token.')
 
-		const filename = req.file.originalname
-		const finalFileName = `${uuidv5(filename, uuidv5.DNS)}${filename}`
+		const finalFileName = req.file
 
 		await accounts.update({
-			avatar: `uploads/${finalFileName}`,
+			avatar: `uploads/${finalFileName.filename}`,
 		})
 
 		res.jsonOK(accounts, getMessage('account.settings.avatar_success'))
@@ -174,7 +174,48 @@ router.get('/avatar', async (req, res) => {
 		const accounts = await account.findByPk(decoded.id)
 		if (!accounts) return res.jsonUnauthorized(null, 'Invalid token.')
 
-		res.jsonOK(accounts.toJSON().avatar)
+		const { avatar } = accounts
+
+		if (avatar !== '') {
+			const URL_AVATAR = `http://localhost:3001/${avatar}`
+			res.jsonOK(URL_AVATAR)
+		} else {
+			res.jsonOK(accounts)
+		}
+	} catch (error) {
+		return res.jsonBadRequest(null, error)
+	}
+})
+
+router.delete('/avatarDelete', async (req, res) => {
+	try {
+		const token = getTokenFromHeaders(req.headers)
+
+		if (!token) {
+			return res.jsonUnauthorized(null, 'Invalid token')
+		}
+
+		const decoded = verifyJwt(token)
+
+		const accounts = await account.findByPk(decoded.id)
+		if (!accounts) return res.jsonUnauthorized(null, 'Invalid token.')
+
+		const { avatar } = accounts
+		if (avatar !== '') {
+			await accounts.update({
+				avatar: '',
+			})
+
+			const removeUpload = avatar.slice(8, avatar.length)
+
+			promisify(fs.unlink)(
+				path.resolve(__dirname, '..', '..', 'uploads', removeUpload)
+			)
+
+			res.jsonOK(accounts, 'avatar deletado.')
+		} else {
+			res.jsonBadRequest(null, 'não foi encontrado nenhum avatar.')
+		}
 	} catch (error) {
 		return res.jsonBadRequest(null, error)
 	}

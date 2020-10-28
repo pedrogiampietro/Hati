@@ -15,6 +15,15 @@ module.exports = {
 		1: 'Male',
 	},
 
+	groups_ID: {
+		1: 'Player',
+		2: 'Tutor',
+		3: 'Senior Tutor',
+		4: 'GameMaster',
+		5: 'Community Manager',
+		6: 'Administator',
+	},
+
 	createCharacterVocations: [
 		// { vocation_id: '0', name: 'Rook' }, -> comment or uncomment to use the desired vocations in creating account
 		{ vocation_id: '1', name: 'Sorcerer' },
