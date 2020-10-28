@@ -1,21 +1,21 @@
 import React, { useEffect } from 'react'
-import { Redirect, Link } from 'react-router-dom'
+import { Redirect, Link, useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { signOut } from '../../../actions/AccountActions'
 import {
-	signOut,
-	postProfileAvatar,
+	getProfileAvatar,
 	deleteProfileAvatar,
 } from '../../../actions/AccountActions'
-import { getProfileAvatar } from '../../../actions/AccountActions'
 import { playerList } from '../../../actions/PlayerActions'
 import { convertTimestempToDate } from '../../../helpers/datetime'
-
+import { closeModalAvatar } from '../../../assets/js/scripts'
+import { toast, ToastContainer } from 'react-toastify'
 import Container from '../../Layouts/Container'
 
 import ProfileAvatar from '../../../assets/img/Profile_Avatar.png'
-import { closeModalAvatar } from '../../../assets/js/scripts'
-import { FiPlus } from 'react-icons/fi'
 import { RiDeleteBin6Line } from 'react-icons/ri'
+import { FiPlus } from 'react-icons/fi'
+
 import './styles.css'
 
 const Characters = ({
@@ -25,8 +25,8 @@ const Characters = ({
 	signOut,
 	account,
 }) => {
-	const [image, setImage] = React.useState('')
 	const [avatar, setAvatar] = React.useState('')
+	const history = useHistory()
 
 	useEffect(() => {
 		getProfileAvatar().then(({ payload }) => {
@@ -44,27 +44,13 @@ const Characters = ({
 		signOut()
 	}
 
-	function handleSelectImages(event) {
-		if (!event.target.files) {
-			return
-		}
-
-		const selectedImage = event.target.files[0]
-		setImage(selectedImage)
-	}
-
 	function handleDeleteAvatar(event) {
 		event.preventDefault()
 		deleteProfileAvatar()
 		closeModalAvatar()
-	}
+		toast.success('Your avatar has been deleted..')
 
-	function handleSubmit(event) {
-		event.preventDefault()
-		const formData = new FormData()
-		formData.append('avatar', image)
-
-		postProfileAvatar(formData)
+		setTimeout(() => history.push('/account/avatar'), 5000)
 	}
 
 	const Account = account[0]?.account
@@ -280,21 +266,21 @@ const Characters = ({
 													)}
 
 													<div
-														class="modal fade example-modal-centered-transparent"
+														className="modal fade example-modal-centered-transparent"
 														tabIndex="-1"
 														role="dialog"
 														aria-hidden="true"
 														style={{ display: 'none' }}
 													>
 														<div
-															class="modal-dialog modal-dialog-centered modal-transparent"
+															className="modal-dialog modal-dialog-centered modal-transparent"
 															role="document"
 														>
-															<div class="modal-content">
-																<div class="modal-header">
-																	<h4 class="modal-title text-white">
+															<div className="modal-content">
+																<div className="modal-header">
+																	<h4 className="modal-title text-white">
 																		do you want to delete this avatar?
-																		<small class="m-0 text-white opacity-70">
+																		<small className="m-0 text-white opacity-70">
 																			do you really intend to delete your
 																			avatar? you will delete it from our
 																			database, and you will not be able to
@@ -303,27 +289,27 @@ const Characters = ({
 																	</h4>
 																	<button
 																		type="button"
-																		class="close text-white"
+																		className="close text-white"
 																		data-dismiss="modal"
 																		aria-label="Close"
 																	>
 																		<span aria-hidden="true">
-																			<i class="fal fa-times"></i>
+																			<i className="fal fa-times"></i>
 																		</span>
 																	</button>
 																</div>
 
-																<div class="modal-footer">
+																<div className="modal-footer">
 																	<button
 																		type="button"
-																		class="btn btn-secondary waves-effect waves-themed"
+																		className="btn btn-secondary waves-effect waves-themed"
 																		data-dismiss="modal"
 																	>
 																		Close
 																	</button>
 																	<button
 																		type="button"
-																		class="btn btn-primary waves-effect waves-themed"
+																		className="btn btn-primary waves-effect waves-themed"
 																		onClick={handleDeleteAvatar}
 																	>
 																		Delete
@@ -336,18 +322,24 @@ const Characters = ({
 													<br />
 													<br />
 
-													<form onSubmit={handleSubmit}>
-														<input
-															type="file"
-															id="image"
-															accept="image/*"
-															className="btn btn-primary btn-sm"
-															onChange={handleSelectImages}
-														/>
-														<button className="confirm-button" type="submit">
-															Confirmar
+													{avatar && avatar.length > 0 ? (
+														<button
+															className="btn btn-primary btn-sm disabled"
+															align="center"
+															disabled
+														>
+															Update Avatar
 														</button>
-													</form>
+													) : (
+														<Link to="/account/avatar">
+															<button
+																className="btn btn-primary btn-sm"
+																align="center"
+															>
+																Update Avatar
+															</button>
+														</Link>
+													)}
 												</div>
 											</div>
 										</div>
@@ -407,6 +399,7 @@ const Characters = ({
 					</div>
 				</div>
 			</div>
+			<ToastContainer />
 		</Container>
 	)
 }

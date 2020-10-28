@@ -6,6 +6,7 @@ import { initAccount } from './actions/AccountActions'
 import Home from './screens/Home'
 import SignIn from './screens/SignIn'
 import AccountProfile from './screens/Account/Profile'
+import ProfileAvatar from './screens/Account/ProfileAvatar'
 import SignUp from './screens/SignUp'
 import Dashboard from './screens/Dashboard'
 import AccountCharacters from './screens/Account/Characters'
@@ -18,6 +19,7 @@ import Discussions from './screens/Forum/Discussions'
 
 import PageSearch from './components/PageSearch'
 
+import 'react-toastify/dist/ReactToastify.min.css'
 import './assets/css/styles.css'
 import './assets/css/styles-bundle.css'
 import './assets/css/toastr.css'
@@ -50,6 +52,10 @@ const App = ({ initAccount }) => {
 
 					<Route path="/account/profile_info">
 						<AccountProfile />
+					</Route>
+
+					<Route path="/account/avatar">
+						<ProfileAvatar />
 					</Route>
 
 					<Route path="/account/characters/create">
