@@ -1,23 +1,38 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { signUp } from '../../actions/AccountActions'
 import { getFormData } from '../../helpers/form'
 
 import Container from '../Layouts/Container'
-// import Error from '../../helpers/error'
 import SignUpBackground from '../../assets/img/backgrounds/pattern-1.svg'
+import { toast, ToastContainer } from 'react-toastify'
 
-const SignUp = (props) => {
-	const { signUp, account } = props
-	// const [error, setError] = useState()
+const SignUp = ({ signUp, account, children }) => {
+	const history = useHistory()
+	const [error, setError] = React.useState()
 
 	const submitHandler = (e) => {
 		e.preventDefault()
 		const data = getFormData(e)
-
 		signUp(data)
+			.then(({ payload }) => {
+				// history.push('/sigin-in')
+			})
+			.catch((err) => {
+				const { data } = err.response
+
+				if (Object.entries(data.metadata).length > 0) {
+					Object.keys(data.metadata.error).forEach(function (item) {
+						setError(data.metadata.error[item])
+					})
+				} else {
+					setError(data.message)
+				}
+			})
 	}
+
+	toast.error(error)
 
 	if (account) {
 		return <Redirect to="/account/characters" />
@@ -68,6 +83,7 @@ const SignUp = (props) => {
 												placeholder="Enter your account name"
 												required
 											/>
+
 											<div className="invalid-feedback">
 												No, you missed this one.
 											</div>
@@ -129,10 +145,10 @@ const SignUp = (props) => {
 											<input
 												type="checkbox"
 												className="custom-control-input"
-												id="terms"
-												required=""
+												name="isTerms"
+												id="isTerms"
 											/>
-											<label className="custom-control-label" htmlFor="terms">
+											<label className="custom-control-label" htmlFor="isTerms">
 												{' '}
 												I agree to terms &amp; conditions
 											</label>
@@ -140,7 +156,7 @@ const SignUp = (props) => {
 												You must agree before proceeding
 											</div>
 										</div>
-										<div className="custom-control custom-checkbox">
+										{/* <div className="custom-control custom-checkbox">
 											<input
 												type="checkbox"
 												className="custom-control-input"
@@ -153,7 +169,7 @@ const SignUp = (props) => {
 												Sign up for newsletters (dont worry, we won't send so
 												many)
 											</label>
-										</div>
+										</div> */}
 									</div>
 									<div className="row no-gutters">
 										<div className="col-md-4 ml-auto text-right">
@@ -171,7 +187,8 @@ const SignUp = (props) => {
 						</div>
 					</div>
 				</div>
-			</Container>{' '}
+				<ToastContainer />
+			</Container>
 		</>
 	)
 }

@@ -219,7 +219,7 @@ const Characters = ({
 														<tbody>
 															<tr>
 																<td className="col-md-3">
-																	<a href="/account/profile_info">
+																	<a href="/account/profile">
 																		<button
 																			className="btn btn-primary btn-sm"
 																			align="left"

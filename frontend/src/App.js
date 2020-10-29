@@ -50,7 +50,7 @@ const App = ({ initAccount }) => {
 						<Dashboard />
 					</Route>
 
-					<Route path="/account/profile_info">
+					<Route path="/account/profile">
 						<AccountProfile />
 					</Route>
 

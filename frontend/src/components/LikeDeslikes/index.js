@@ -3,8 +3,8 @@ import { getPlayerName } from '../../helpers/account'
 import { upLike, unLike } from '../../actions/ForumActions'
 import { connect } from 'react-redux'
 
-const LikeDeslikes = ({ upLike, account, ...props }) => {
-	const { id, likes_count, interaction } = props.propriety
+const LikeDeslikes = ({ upLike, account, id, likes_count, interaction }) => {
+	// const { id, likes_count, interaction } = props.propriety
 
 	const [characterLogged, setCharacterLogged] = useState()
 
@@ -30,7 +30,7 @@ const LikeDeslikes = ({ upLike, account, ...props }) => {
 						id={`data-post-${id}`}
 						className="d-inline-flex align-items-center text-dark"
 					>
-						{likes_count && likes_count.includes(characterLogged) ? (
+						{likes_count?.includes(characterLogged) ? (
 							<span className="width-3 height-2 d-inline-flex align-items-center justify-content-center position-relative h1 ">
 								<i
 									className="fas fa-heart text-danger"
@@ -39,7 +39,7 @@ const LikeDeslikes = ({ upLike, account, ...props }) => {
 									}}
 								></i>
 								<span className="badge badge-icon pos-top pos-right">
-									{likes_count.length}
+									{likes_count?.length}
 								</span>
 							</span>
 						) : (
@@ -51,7 +51,7 @@ const LikeDeslikes = ({ upLike, account, ...props }) => {
 									}}
 								></i>
 								<span className="badge badge-icon pos-top pos-right">
-									{likes_count.length}
+									{likes_count?.length}
 								</span>
 							</span>
 						)}
@@ -60,7 +60,7 @@ const LikeDeslikes = ({ upLike, account, ...props }) => {
 					<span className="width-3 height-2 d-inline-flex align-items-center justify-content-center position-relative h1 ">
 						<i className="fas fa-heart"></i>
 						<span className="badge badge-icon pos-top pos-right">
-							{likes_count.length}
+							{likes_count?.length}
 						</span>
 					</span>
 				)}
