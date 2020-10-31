@@ -6,6 +6,8 @@ const fs = require('fs')
 const { promisify } = require('util')
 const path = require('path')
 
+const mailer = require('../services/mailer')
+
 const { account } = require('../models')
 const { accountSignUp, accountSignIn } = require('../validators/account')
 const { getMessage } = require('../helpers/messages')
@@ -87,6 +89,78 @@ router.post('/sign-up', accountSignUp, async (req, res) => {
 		token,
 		refreshToken,
 	})
+})
+
+router.post('/forgot', async (req, res) => {
+	const { email } = req.body
+	try {
+		const accounts = await account.findOne({ where: { email } })
+
+		if (!accounts) return res.jsonBadRequest(null, 'error: e-mail not found.')
+
+		const forgotToken = crypto.randomBytes(20).toString('hex')
+
+		const now = new Date()
+		now.setHours(now.getHours() + 1)
+
+		await accounts.update({
+			passwordResetToken: forgotToken,
+			passwordResetExpires: now,
+		})
+
+		mailer.sendMail(
+			{
+				to: email,
+				from: 'hatiaac@gmail.com',
+				template: 'auth/forgot_password',
+				context: { forgotToken },
+			},
+			(err) => {
+				console.log(err)
+				if (err) return res.jsonBadRequest(null)
+				return res.jsonOK(mailer)
+			}
+		)
+	} catch (error) {
+		return res.jsonBadRequest(
+			null,
+			'error: Erro on forgot password, try again.'
+		)
+	}
+})
+
+router.post('/reset', async (req, res) => {
+	const { email, token, password } = req.body
+
+	try {
+		const accounts = await account.findOne({
+			where: { email },
+		})
+
+		if (!accounts) return res.jsonBadRequest(null, 'error: e-mail not found.')
+
+		if (token !== accounts.passwordResetToken)
+			return res.jsonUnauthorized(null, 'Invalid token')
+
+		const now = new Date()
+
+		if (now > accounts.passwordResetExpires)
+			return res.jsonBadRequest(
+				null,
+				'error: Token expired, generate a new one.'
+			)
+
+		const hash = crypto.createHash('sha1').update(password).digest('hex')
+
+		await accounts.update({
+			password: hash,
+		})
+
+		res.jsonOK(accounts)
+	} catch (error) {
+		console.log(error)
+		return res.jsonBadRequest(null)
+	}
 })
 
 router.put('/profile_info', async (req, res) => {

@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-import Menu from '../../Layouts/Menu'
+import ContainerOnlyMenu from '../../Layouts/Container/Menu'
 import Background from '../../../assets/img/backgrounds/pattern-1.svg'
 
 import './styles.css'
@@ -10,27 +11,22 @@ const ForgotPassword = () => {
 	return (
 		<>
 			<div class="page-inner bg-brand-gradient ">
-				<Menu />
+				<ContainerOnlyMenu />
 				<div class="page-content-wrapper bg-transparent m-0">
 					<div class="height-10 w-100 shadow-lg px-4 bg-brand-gradient">
 						<div class="d-flex align-items-center container p-0">
-							<div class="page-logo width-mobile-auto m-0 align-items-center justify-content-center p-0 bg-transparent bg-img-none shadow-0 height-9">
+							<div class="page-logo width-mobile-auto m-0 align-items-center justify-content-center bg-transparent bg-img-none shadow-0 height-9">
 								<span class="page-logo-link press-scale-down d-flex align-items-center">
-									<span class="page-logo-text mr-1">
-										Hati Account Management
-									</span>
+									<span class="page-logo-text mr-1">Hati AAC</span>
 								</span>
 							</div>
 
 							<span class="text-white opacity-50 ml-auto mr-2 hidden-sm-down">
 								Already a member?
 							</span>
-							<a
-								href="page_login-alt.html"
-								class="btn-link text-white ml-auto ml-sm-0"
-							>
+							<Link to="/sign-in" class="btn-link text-white ml-auto ml-sm-0">
 								Secure Login
-							</a>
+							</Link>
 						</div>
 					</div>
 

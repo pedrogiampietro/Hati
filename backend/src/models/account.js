@@ -81,6 +81,14 @@ module.exports = (sequelize, DataTypes) => {
 				},
 			},
 		},
+		passwordResetToken: {
+			type: DataTypes.STRING,
+			select: false,
+		},
+		passwordResetExpires: {
+			type: DataTypes.DATE,
+			select: false,
+		},
 	})
 
 	account.associate = (models) => {
