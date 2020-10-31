@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import avatarImg from '../../../assets/img/avatar.png'
+import Logo from '../../../assets/img/logo.png'
 import coverCard from '../../../assets/img/card-backgrounds/cover-2-lg.png'
 
 const Menu = ({ account }) => {
@@ -9,11 +9,7 @@ const Menu = ({ account }) => {
 		<aside className="page-sidebar ">
 			<nav id="js-primary-nav" className="primary-nav" role="navigation">
 				<div className="info-card">
-					<img
-						src={avatarImg}
-						className="profile-image rounded-circle"
-						alt="Logo"
-					/>
+					<img src={Logo} className="profile-image rounded-circle" alt="Logo" />
 					<div className="info-card-text">
 						<span className="d-flex align-items-center text-white">
 							<span className="text-truncate text-truncate-sm d-inline-block">

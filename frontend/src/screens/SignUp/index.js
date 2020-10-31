@@ -17,7 +17,7 @@ const SignUp = ({ signUp, account, children }) => {
 		const data = getFormData(e)
 		signUp(data)
 			.then(({ payload }) => {
-				// history.push('/sigin-in')
+				history.push('/sigin-in')
 			})
 			.catch((err) => {
 				const { data } = err.response
@@ -31,7 +31,6 @@ const SignUp = ({ signUp, account, children }) => {
 				}
 			})
 	}
-
 	toast.error(error)
 
 	if (account) {
@@ -81,7 +80,6 @@ const SignUp = ({ signUp, account, children }) => {
 												name="name"
 												className="form-control"
 												placeholder="Enter your account name"
-												required
 											/>
 
 											<div className="invalid-feedback">
@@ -96,7 +94,6 @@ const SignUp = ({ signUp, account, children }) => {
 												name="password"
 												className="form-control"
 												placeholder="Enter your password"
-												required
 											/>
 											<div className="invalid-feedback">
 												No, you missed this one.
@@ -113,7 +110,6 @@ const SignUp = ({ signUp, account, children }) => {
 												name="password_confirmation"
 												className="form-control"
 												placeholder="Confirm password"
-												required
 											/>
 
 											<div className="invalid-feedback">
@@ -130,7 +126,6 @@ const SignUp = ({ signUp, account, children }) => {
 											name="email"
 											className="form-control"
 											placeholder="Enter your valid e-mail"
-											required
 										/>
 										<div className="invalid-feedback">
 											No, you missed this one.

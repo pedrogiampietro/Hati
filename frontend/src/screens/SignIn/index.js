@@ -88,7 +88,7 @@ const SignIn = (props) => {
 									</button>
 								</div>
 								<div className="col-lg-6 pl-lg-1 my-2">
-									<Link to="/forgot-password">
+									<Link to="/forgot">
 										{' '}
 										<button
 											id="js-login-btn"

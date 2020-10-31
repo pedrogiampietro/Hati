@@ -16,6 +16,7 @@ import Character from './screens/Character'
 import Forum from './screens/Forum'
 import Threads from './screens/Forum/Threads'
 import Discussions from './screens/Forum/Discussions'
+import ForgotPassword from './screens/Account/ForgotPassword'
 
 import PageSearch from './components/PageSearch'
 
@@ -44,6 +45,10 @@ const App = ({ initAccount }) => {
 
 					<Route path="/sign-up">
 						<SignUp />
+					</Route>
+
+					<Route path="/forgot">
+						<ForgotPassword />
 					</Route>
 
 					<Route path="/dashboard">
