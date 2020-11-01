@@ -24,7 +24,7 @@ module.exports = {
 		6: 'Administator',
 	},
 
-	createCharacterVocations: [
+	createVocations: [
 		// { vocation_id: '0', name: 'Rook' }, -> comment or uncomment to use the desired vocations in creating account
 		{ vocation_id: '1', name: 'Sorcerer' },
 		{ vocation_id: '2', name: 'Druid' },

@@ -3,6 +3,8 @@ import { getPlayerName } from '../../helpers/account'
 import { upLike, unLike } from '../../actions/ForumActions'
 import { connect } from 'react-redux'
 
+import { ImHeart } from 'react-icons/im'
+
 const LikeDeslikes = ({ upLike, account, id, likes_count, interaction }) => {
 	// const { id, likes_count, interaction } = props.propriety
 
@@ -32,24 +34,24 @@ const LikeDeslikes = ({ upLike, account, id, likes_count, interaction }) => {
 					>
 						{likes_count?.includes(characterLogged) ? (
 							<span className="width-3 height-2 d-inline-flex align-items-center justify-content-center position-relative h1 ">
-								<i
-									className="fas fa-heart text-danger"
+								<ImHeart
+									className="text-danger"
 									onClick={() => {
 										unlikeANews()
 									}}
-								></i>
+								/>
 								<span className="badge badge-icon pos-top pos-right">
 									{likes_count?.length}
 								</span>
 							</span>
 						) : (
 							<span className="width-3 height-2 d-inline-flex align-items-center justify-content-center position-relative h1 ">
-								<i
-									className="fas fa-heart"
+								<ImHeart
 									onClick={() => {
 										likeANews()
 									}}
-								></i>
+								/>
+
 								<span className="badge badge-icon pos-top pos-right">
 									{likes_count?.length}
 								</span>
@@ -58,7 +60,7 @@ const LikeDeslikes = ({ upLike, account, id, likes_count, interaction }) => {
 					</span>
 				) : (
 					<span className="width-3 height-2 d-inline-flex align-items-center justify-content-center position-relative h1 ">
-						<i className="fas fa-heart"></i>
+						<ImHeart />
 						<span className="badge badge-icon pos-top pos-right">
 							{likes_count?.length}
 						</span>

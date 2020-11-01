@@ -1,8 +1,8 @@
-export const secondsToReadableTime = seconds => {
+export const secondsToReadableTime = (seconds) => {
 	const h = Math.floor(seconds / 60 / 60)
 	const m = Math.floor(seconds / 60) - h * 60
 	const s = seconds % 60
-	const formatNumber = v => `0${Number.parseInt(v, 10)}`.slice(-2)
+	const formatNumber = (v) => `0${Number.parseInt(v, 10)}`.slice(-2)
 	const readableTime = [h, m, s].map(formatNumber).join(':')
 
 	return readableTime
@@ -21,7 +21,33 @@ export const dataAtualFormatada = () => {
 	return date.toLocaleTimeString('pt-BR', options)
 }
 
-export const convertTimestempToDate = UNIX_timestamp => {
+export const formatDate = (userDOB) => {
+	const dob = new Date(userDOB)
+
+	const monthNames = [
+		'January',
+		'February',
+		'March',
+		'April',
+		'May',
+		'June',
+		'July',
+		'August',
+		'September',
+		'October',
+		'November',
+		'December',
+	]
+
+	const day = dob.getDate()
+	const monthIndex = dob.getMonth()
+	const year = dob.getFullYear()
+
+	// return day + ' ' + monthNames[monthIndex] + ' ' + year;
+	return `${day} ${monthNames[monthIndex]} ${year}`
+}
+
+export const convertTimestempToDate = (UNIX_timestamp) => {
 	var a = new Date(UNIX_timestamp * 1000)
 	var months = [
 		'Jan',

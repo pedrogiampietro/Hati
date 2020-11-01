@@ -4,7 +4,7 @@ import { Redirect, useHistory } from 'react-router-dom'
 import { playerCreate, playerList } from '../../../../actions/PlayerActions'
 
 import Container from '../../../Layouts/Container'
-import { createCharacterVocations } from '../../../../config'
+import { createVocations } from '../../../../config'
 import Error from '../../../../helpers/error'
 import './styles.css'
 
@@ -28,6 +28,8 @@ const CreateCharacter = ({ playerCreate, playerList, player }) => {
 			sex,
 			vocation,
 		}
+
+		console.log(data)
 
 		playerCreate(data)
 			.then(() => {
@@ -95,67 +97,54 @@ const CreateCharacter = ({ playerCreate, playerList, player }) => {
 															</span>
 														</div>
 
-														<div className="col-12 pb-5">
+														<div className="row justify-content-center pb-5">
 															<input
-																className="checkbox-tools"
 																type="radio"
-																name={sex}
-																id="male"
-																value="1"
-																onChange={(event) =>
-																	setSex(Number(event.target.value))
-																}
-															/>
-															<label
-																className="for-checkbox-tools"
-																htmlFor="male"
-															>
-																<i className="uil uil-line-alt"></i>
-																Male
-															</label>
-															<input
-																className="checkbox-tools"
-																type="radio"
-																name={sex}
-																id="female"
+																name="sex"
 																value="0"
+																data-icon=""
 																onChange={(event) =>
 																	setSex(Number(event.target.value))
 																}
 															/>
-															<label
-																className="for-checkbox-tools"
-																htmlFor="female"
-															>
-																<i className="uil uil-vector-square"></i>
-																Female
-															</label>
+															<input
+																type="radio"
+																name="sex"
+																value="1"
+																data-icon=""
+																onChange={(event) =>
+																	setSex(Number(event.target.value))
+																}
+															/>
 														</div>
 
-														<div className="row justify-content-center pb-5">
-															<div className="col-12 pt-5">
-																<p className="mb-4 pb-2">Choose Characters</p>
+														<div class="main-container">
+															<h2>What's your favourite vocation?</h2>
+
+															<div className="row justify-content-center pb-5">
+																<Error error={error} />
 															</div>
+
 															<div className="col-12 pb-5">
-																{Object.keys(createCharacterVocations).map(
+																{Object.keys(createVocations).map(
 																	(vocation) => (
-																		<span
+																		<label
 																			key={
-																				createCharacterVocations[vocation]
-																					.vocation_id
+																				createVocations[vocation].vocation_id
 																			}
+																			htmlFor={
+																				createVocations[vocation].vocation_id
+																			}
+																			class="custom-radio"
 																		>
 																			<input
-																				className="checkbox-tools"
 																				type="radio"
 																				name="vocation"
 																				id={
-																					createCharacterVocations[vocation]
-																						.vocation_id
+																					createVocations[vocation].vocation_id
 																				}
 																				value={
-																					createCharacterVocations[vocation]
-																						.vocation_id
+																					createVocations[vocation].vocation_id
 																				}
 																				onChange={(event) =>
 																					setVocation(
@@ -163,25 +152,19 @@ const CreateCharacter = ({ playerCreate, playerList, player }) => {
 																					)
 																				}
 																			/>
-																			<label
-																				className="for-checkbox-tools"
-																				htmlFor={
-																					createCharacterVocations[vocation]
-																						.vocation_id
-																				}
-																			>
-																				{
-																					createCharacterVocations[vocation]
-																						.name
-																				}
-																			</label>
-																		</span>
+																			<span class="radio-btn">
+																				<i class="las la-check"></i>
+																				<div class="hobbies-icon">
+																					<i class="fas fa-ghost"></i>
+																					<h3>
+																						{createVocations[vocation].name}
+																					</h3>
+																				</div>
+																			</span>
+																		</label>
 																	)
 																)}
 															</div>
-														</div>
-														<div className="row justify-content-center pb-5">
-															<Error error={error} />
 														</div>
 													</div>
 												</div>

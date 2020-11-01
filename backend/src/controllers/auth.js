@@ -118,7 +118,6 @@ router.post('/forgot', async (req, res) => {
 			(err) => {
 				console.log(err)
 				if (err) return res.jsonBadRequest(null)
-				return res.jsonOK(mailer)
 			}
 		)
 	} catch (error) {
@@ -127,6 +126,7 @@ router.post('/forgot', async (req, res) => {
 			'error: Erro on forgot password, try again.'
 		)
 	}
+	return res.jsonOK('request successful!')
 })
 
 router.post('/reset', async (req, res) => {

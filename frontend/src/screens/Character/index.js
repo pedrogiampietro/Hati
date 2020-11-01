@@ -7,6 +7,8 @@ import { convertTimestempToDate } from '../../helpers/datetime'
 import PlayerSkills from '../../components/PlayerSkills'
 import Outfiter from '../../helpers/outfiter'
 
+import { FaCrosshairs, FaSkullCrossbones, FaTimes } from 'react-icons/fa'
+
 import Container from '../Layouts/Container'
 import './styles.css'
 
@@ -274,7 +276,7 @@ const Character = ({ playerGetCharacter, ...props }) => {
 																<img src={legs} alt="legs" />
 															</td>
 															<td align="center">
-																<i className="far fa-times-circle"></i>
+																<FaTimes size={20} className="mt-2" />
 															</td>
 														</tr>
 														<tr>
@@ -327,9 +329,12 @@ const Character = ({ playerGetCharacter, ...props }) => {
 															<article className="panel panel-danger">
 																<div className="panel-heading icon">
 																	{props.is_player === 1 ? (
-																		<i className="fas fa-crosshairs"></i>
+																		<FaCrosshairs size={20} className="mt-2" />
 																	) : (
-																		<i className="fas fa-skull-crossbones"></i>
+																		<FaSkullCrossbones
+																			size={20}
+																			className="mt-2"
+																		/>
 																	)}
 																</div>
 

@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { forumList } from '../../actions/ForumActions'
-import { dataAtualFormatada } from '../../helpers/datetime'
+import { formatDate } from '../../helpers/datetime'
 import { groups_ID } from '../../config'
 import Container from '../Layouts/Container'
 import LikeDeslikes from '../../components/LikeDeslikes'
 import { getAvatarUrl } from '../../helpers/api'
+
+import { FaNewspaper } from 'react-icons/fa'
+import { BiTimeFive } from 'react-icons/bi'
+
 const Home = ({ forumList }) => {
 	const [newsPost, setNewsPost] = useState([])
 	const [postInteraction, setPostInteraction] = useState(false)
@@ -57,14 +61,15 @@ const Home = ({ forumList }) => {
 										</h5>
 
 										<span className="js-get-date">
-											<i className="far fa-clock"></i>{' '}
-											{dataAtualFormatada(news.createdAt)}
+											<BiTimeFive size={20} className="mr-1" />
+											{formatDate(news.createdAt)}
 										</span>
 									</div>
 									<hr className="m-0 w-100" />
 									<br />
 									<h1 className="subheader-title">
-										<i className="fas fa-newspaper"></i> {news.post_topic}
+										<FaNewspaper size={20} className="mr-2" />
+										{news.post_topic}
 									</h1>
 									<div
 										className="pb-3 pt-2 border-top-0 border-left-0 border-right-0 text-muted"
