@@ -2,16 +2,15 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 import { getFormData } from '../../../helpers/form'
-import { forgotPassword } from '../../../actions/AccountActions'
+import { resetPassword } from '../../../actions/AccountActions'
 
 import ContainerOnlyMenu from '../../Layouts/Container/Menu'
 import Background from '../../../assets/img/backgrounds/pattern-1.svg'
-
 import Error from '../../../helpers/error'
 
 import './styles.css'
 
-const ForgotPassword = ({ forgotPassword }) => {
+const ResetPassword = ({ resetPassword }) => {
 	const [error, setError] = React.useState()
 	const history = useHistory()
 
@@ -19,9 +18,9 @@ const ForgotPassword = ({ forgotPassword }) => {
 		e.preventDefault()
 		const data = getFormData(e)
 
-		forgotPassword(data)
+		resetPassword(data)
 			.then(({ payload }) => {
-				history.push('/reset')
+				history.push('/sign-in')
 			})
 			.catch((err) => {
 				const { data } = err.response
@@ -75,10 +74,10 @@ const ForgotPassword = ({ forgotPassword }) => {
 							<div className="row">
 								<div className="col-xl-12">
 									<h2 className="fs-xxl fw-500 mt-4 text-white text-center">
-										"My dog ate my password"
+										Thank you request! Please check your email.
 										<small className="h3 fw-300 mt-3 mb-5 text-white opacity-60 hidden-sm-down">
-											Not a problem, happens to the best of us. Just use the
-											form below to reset it!
+											We’ve sent a message to your e-mail a link to forgot your
+											account.
 										</small>
 									</h2>
 								</div>
@@ -87,14 +86,14 @@ const ForgotPassword = ({ forgotPassword }) => {
 										<form onSubmit={submitHandler}>
 											<div className="form-group">
 												<label className="form-label" htmlFor="email">
-													Your username or email
+													Your e-mail
 												</label>
 												<input
 													type="email"
 													id="email"
 													name="email"
 													className="form-control"
-													placeholder="Recovery email"
+													placeholder="email from your account you want to recover"
 													required
 												/>
 												<div className="invalid-feedback">
@@ -103,7 +102,40 @@ const ForgotPassword = ({ forgotPassword }) => {
 												<div className="help-block">
 													We will email you the instructions
 												</div>
-												<Error error={error} />
+											</div>
+
+											<div className="form-group">
+												<label className="form-label" htmlFor="token">
+													Token
+												</label>
+												<input
+													type="text"
+													id="token"
+													name="token"
+													className="form-control"
+													placeholder="token you received in the requested email."
+													required
+												/>
+											</div>
+
+											<div className="form-group">
+												<label className="form-label" htmlFor="password">
+													New Password
+												</label>
+												<input
+													type="password"
+													id="password"
+													name="password"
+													className="form-control"
+													placeholder="enter the new password, avoid using password from other servers."
+													required
+												/>
+												<div className="invalid-feedback">
+													No, you missed this one.
+												</div>
+												<div className="help-block">
+													<Error error={error} />
+												</div>
 											</div>
 											<div className="row no-gutters">
 												<div className="col-md-4 ml-auto text-right">
@@ -121,7 +153,7 @@ const ForgotPassword = ({ forgotPassword }) => {
 							</div>
 						</div>
 						<div className="d-block text-center text-white">
-							2020 © HatiAAC ;
+							2020 © HatiAAC.
 						</div>
 					</div>
 				</div>
@@ -136,4 +168,4 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps, { forgotPassword })(ForgotPassword)
+export default connect(mapStateToProps, { resetPassword })(ResetPassword)

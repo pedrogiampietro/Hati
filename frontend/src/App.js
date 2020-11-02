@@ -17,6 +17,7 @@ import Forum from './screens/Forum'
 import Threads from './screens/Forum/Threads'
 import Discussions from './screens/Forum/Discussions'
 import ForgotPassword from './screens/Account/ForgotPassword'
+import ResetPassword from './screens/Account/ResetPassword'
 
 import PageSearch from './components/PageSearch'
 
@@ -49,6 +50,10 @@ const App = ({ initAccount }) => {
 
 					<Route path="/forgot">
 						<ForgotPassword />
+					</Route>
+
+					<Route path="/reset">
+						<ResetPassword />
 					</Route>
 
 					<Route path="/dashboard">

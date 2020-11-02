@@ -96,7 +96,11 @@ router.post('/forgot', async (req, res) => {
 	try {
 		const accounts = await account.findOne({ where: { email } })
 
-		if (!accounts) return res.jsonBadRequest(null, 'error: e-mail not found.')
+		if (!accounts)
+			return res.jsonBadRequest(
+				null,
+				getMessage('account.forgot_password.email_notexists')
+			)
 
 		const forgotToken = crypto.randomBytes(20).toString('hex')
 
@@ -117,16 +121,17 @@ router.post('/forgot', async (req, res) => {
 			},
 			(err) => {
 				console.log(err)
-				if (err) return res.jsonBadRequest(null)
+				if (err)
+					return res.jsonBadRequest(
+						null,
+						getMessage('response.json_server_error')
+					)
 			}
 		)
+		return res.jsonOK(email, getMessage('account.forgot_password.sucess'))
 	} catch (error) {
-		return res.jsonBadRequest(
-			null,
-			'error: Erro on forgot password, try again.'
-		)
+		return res.jsonBadRequest(null, getMessage('response.json_server_error'))
 	}
-	return res.jsonOK('request successful!')
 })
 
 router.post('/reset', async (req, res) => {
@@ -140,7 +145,10 @@ router.post('/reset', async (req, res) => {
 		if (!accounts) return res.jsonBadRequest(null, 'error: e-mail not found.')
 
 		if (token !== accounts.passwordResetToken)
-			return res.jsonUnauthorized(null, 'Invalid token')
+			return res.jsonUnauthorized(
+				null,
+				getMessage('account.reset_password.invalid_token')
+			)
 
 		const now = new Date()
 
@@ -183,7 +191,7 @@ router.put('/profile_info', async (req, res) => {
 	})
 
 	await accounts.save()
-	return res.jsonOK(accounts)
+	return res.jsonOK(accounts, getMessage('account.reset_password.sucess'))
 })
 
 router.post('/refresh', async (req, res) => {

@@ -31,6 +31,14 @@
 	"account.signup.email.string.empty": "Email is not allowed to be empty",
 	"account.settings.avatar_success": "Upload feito com sucesso.",
 
+	"account.forgot_password.sucess": "Seu e-mail com um token de recuperação foi enviado com sucesso.",
+	"account.forgot_password.email_notexists": "O e-mail digitado não existe em nosso banco de dados.",
+	"account.forgot_password.any.required": "È necessário digitar um e-mail para recuperação de conta.",
+	
+	"account.reset_password.sucess": "Sua senha foi redefinida com sucesso.",
+	"account.reset_password.invalid_token": "Token inserido inválido.",
+
+
 	"player.createcharacter.success": "Character criado com sucesso.",
 	"player.createcharacter.failed": "Character name inválido.",
 	"player.createcharacter.name_exists": "Character Name já cadastrado.",

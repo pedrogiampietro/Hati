@@ -16,6 +16,8 @@ export const PROFILE_INFO = 'PROFILE_INFO'
 export const GET_PROFILE_AVATAR = 'GET_PROFILE_AVATAR'
 export const POST_PROFILE_AVATAR = 'POST_PROFILE_AVATAR'
 export const DELETE_PROFILE_AVATAR = 'DELETE_PROFILE_AVATAR'
+export const FORGOT_PASSWORD = 'FORGOT_PASSWORD'
+export const RESET_PASSWORD = 'RESET_PASSWORD'
 
 export const signUp = (data) => {
 	const payload = apiPost('/account/sign-up', data)
@@ -58,4 +60,14 @@ export const initAccount = () => {
 export const getFreshToken = () => {
 	const payload = apiRefreshToken()
 	return { type: REFRESH_TOKEN, payload }
+}
+
+export const forgotPassword = (data) => {
+	const payload = apiPost('/account/forgot', data)
+	return { type: FORGOT_PASSWORD, payload }
+}
+
+export const resetPassword = (data) => {
+	const payload = apiPost('/account/reset', data)
+	return { type: RESET_PASSWORD, payload }
 }

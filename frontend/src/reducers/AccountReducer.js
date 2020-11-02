@@ -8,6 +8,8 @@ import {
 	GET_PROFILE_AVATAR,
 	POST_PROFILE_AVATAR,
 	DELETE_PROFILE_AVATAR,
+	FORGOT_PASSWORD,
+	RESET_PASSWORD,
 } from '../actions/AccountActions'
 import {
 	getAccount,
@@ -62,6 +64,15 @@ export default function (state = initialState, action) {
 			removeRefreshToken()
 
 			return { ...state, account: null, player: null }
+
+		case FORGOT_PASSWORD:
+		case RESET_PASSWORD: {
+			const response = payload ? payload.data : null
+			const metadata = response ? response.metadata : null
+			
+
+			return state
+		}
 
 		case INIT_ACCOUNT: {
 			const account = getAccount()
