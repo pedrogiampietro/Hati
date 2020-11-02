@@ -142,7 +142,11 @@ router.post('/reset', async (req, res) => {
 			where: { email },
 		})
 
-		if (!accounts) return res.jsonBadRequest(null, 'error: e-mail not found.')
+		if (!accounts)
+			return res.jsonBadRequest(
+				null,
+				getMessage('account.reset_password.email_notexists')
+			)
 
 		if (token !== accounts.passwordResetToken)
 			return res.jsonUnauthorized(
@@ -155,7 +159,7 @@ router.post('/reset', async (req, res) => {
 		if (now > accounts.passwordResetExpires)
 			return res.jsonBadRequest(
 				null,
-				'error: Token expired, generate a new one.'
+				getMessage('account.reset_password.passwordResetExpires')
 			)
 
 		const hash = crypto.createHash('sha1').update(password).digest('hex')
@@ -177,13 +181,14 @@ router.put('/profile_info', async (req, res) => {
 	const token = getTokenFromHeaders(req.headers)
 
 	if (!token) {
-		return res.jsonUnauthorized(null, 'Invalid token')
+		return res.jsonUnauthorized(null, getMessage('response.json_invalid_token'))
 	}
 
 	const decoded = verifyJwt(token)
 
 	const accounts = await account.findByPk(decoded.id)
-	if (!accounts) return res.jsonUnauthorized(null, 'Invalid token.')
+	if (!accounts)
+		return res.jsonUnauthorized(null, getMessage('response.json_invalid_token'))
 
 	fields.map((fieldName) => {
 		const newValue = body[fieldName]
@@ -197,16 +202,23 @@ router.put('/profile_info', async (req, res) => {
 router.post('/refresh', async (req, res) => {
 	const token = getTokenFromHeaders(req.headers)
 	if (!token) {
-		return res.jsonUnauthorized(null, 'Invalid token')
+		return res.jsonUnauthorized(null, getMessage('response.json_invalid_token'))
 	}
 
 	try {
 		const decoded = verifyRefreshJwt(token)
 		const accounts = await account.findByPk(decoded.id)
-		if (!accounts) return res.jsonUnauthorized(null, 'Invalid token.')
+		if (!accounts)
+			return res.jsonUnauthorized(
+				null,
+				getMessage('response.json_invalid_token')
+			)
 
 		if (decoded.version !== accounts.jwtVersion)
-			return res.jsonUnauthorized(null, 'Invalid token.')
+			return res.jsonUnauthorized(
+				null,
+				getMessage('response.json_invalid_token')
+			)
 
 		const meta = {
 			token: generateJwt({ id: accounts.id }),
@@ -214,7 +226,7 @@ router.post('/refresh', async (req, res) => {
 
 		return res.jsonOK(null, null, meta)
 	} catch (error) {
-		return res.jsonUnauthorized(null, 'Invalid token.')
+		return res.jsonUnauthorized(null, getMessage('response.json_invalid_token'))
 	}
 })
 
@@ -223,13 +235,20 @@ router.post('/avatar', upload.single('avatar'), async (req, res) => {
 		const token = getTokenFromHeaders(req.headers)
 
 		if (!token) {
-			return res.jsonUnauthorized(null, 'Invalid token')
+			return res.jsonUnauthorized(
+				null,
+				getMessage('response.json_invalid_token')
+			)
 		}
 
 		const decoded = verifyJwt(token)
 
 		const accounts = await account.findByPk(decoded.id)
-		if (!accounts) return res.jsonUnauthorized(null, 'Invalid token.')
+		if (!accounts)
+			return res.jsonUnauthorized(
+				null,
+				getMessage('response.json_invalid_token')
+			)
 
 		const finalFileName = req.file
 
@@ -248,13 +267,20 @@ router.get('/avatar', async (req, res) => {
 		const token = getTokenFromHeaders(req.headers)
 
 		if (!token) {
-			return res.jsonUnauthorized(null, 'Invalid token')
+			return res.jsonUnauthorized(
+				null,
+				getMessage('response.json_invalid_token')
+			)
 		}
 
 		const decoded = verifyJwt(token)
 
 		const accounts = await account.findByPk(decoded.id)
-		if (!accounts) return res.jsonUnauthorized(null, 'Invalid token.')
+		if (!accounts)
+			return res.jsonUnauthorized(
+				null,
+				getMessage('response.json_invalid_token')
+			)
 
 		const { avatar } = accounts
 
