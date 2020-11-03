@@ -1,13 +1,16 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-
+import { forumList } from '../../actions/ForumActions'
 import Container from '../Layouts/Container'
 
-const avatarImg =
-	'https://carismartes.com.br/assets/global/images/avatars/avatar7_big@2x.png'
+import noneAvatar from '../../assets/img/none_avatar.png'
 
-const Forum = () => {
+const Forum = ({ forumList }) => {
+	React.useEffect(() => {
+		forumList()
+	}, [forumList])
+
 	return (
 		<Container>
 			<div className="row">
@@ -89,7 +92,7 @@ const Forum = () => {
 												<div className="d-flex align-items-center">
 													<div className="d-inline-block align-middle status status-success status-sm mr-2">
 														<img
-															src={avatarImg}
+															src={noneAvatar}
 															className="profile-image-md rounded-circle d-block"
 															alt=""
 														/>
@@ -156,7 +159,7 @@ const Forum = () => {
 												<div className="d-flex align-items-center">
 													<div className="d-inline-block align-middle status status-success status-sm mr-2">
 														<img
-															src={avatarImg}
+															src={noneAvatar}
 															className="profile-image-md rounded-circle d-block"
 															alt=""
 														/>
@@ -223,7 +226,7 @@ const Forum = () => {
 												<div className="d-flex align-items-center">
 													<div className="d-inline-block align-middle status status-success status-sm mr-2">
 														<img
-															src={avatarImg}
+															src={noneAvatar}
 															className="profile-image-md rounded-circle d-block"
 															alt=""
 														/>
@@ -263,4 +266,4 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps, {})(Forum)
+export default connect(mapStateToProps, { forumList })(Forum)

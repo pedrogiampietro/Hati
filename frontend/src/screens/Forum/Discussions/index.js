@@ -1,21 +1,21 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { forumList } from '../../../actions/ForumActions'
-import Container from '../../Layouts/Container'
+import { forumSection } from '../../../actions/ForumActions'
 import { getAvatarUrl } from '../../../helpers/api'
 import { groups_ID } from '../../../config'
+import { convertTimestempToDate } from '../../../helpers/datetime'
+import Container from '../../Layouts/Container'
 
-const avatarImg =
-	'https://carismartes.com.br/assets/global/images/avatars/avatar7_big@2x.png'
+import noneAvatar from '../../../assets/img/none_avatar.png'
 
-const Discussions = ({ forumList }) => {
+const Discussions = ({ forumSection }) => {
 	const [discussionPost, setDiscussionPost] = React.useState([])
 	const { section, id } = useParams()
 	const convertToVerify = parseInt(id)
 
 	React.useEffect(() => {
-		forumList(section)
+		forumSection(section)
 			.then(({ payload }) => {
 				const newData = payload.data.data
 				setDiscussionPost(newData)
@@ -24,7 +24,7 @@ const Discussions = ({ forumList }) => {
 				alert('error!')
 				console.log(err)
 			})
-	}, [forumList, section])
+	}, [forumSection, section])
 
 	return (
 		<Container>
@@ -59,7 +59,7 @@ const Discussions = ({ forumList }) => {
 												/>
 											) : (
 												<img
-													src={avatarImg}
+													src={noneAvatar}
 													className="profile-image rounded-circle"
 													alt=""
 												/>
@@ -75,10 +75,10 @@ const Discussions = ({ forumList }) => {
 											>
 												{groups_ID[props.player.group_id]}
 											</Link>
-											<div className="d-flex mt-1 text-black align-items-center">
-												<span>55</span>
-												<i className="fas fa-heart ml-1 text-danger" />
-											</div>
+											{/* <div className="d-flex mt-1 text-black align-items-center">
+
+
+											</div> */}
 										</div>
 									</div>
 								</div>
@@ -89,7 +89,8 @@ const Discussions = ({ forumList }) => {
 								<div className="card-footer">
 									<div className="d-flex align-items-center">
 										<span className="text-sm text-muted font-italic">
-											<i className="fal fa-clock mr-1" /> Posted 1 week ago
+											<i className="fal fa-clock mr-1" />
+											{convertTimestempToDate(props.post_date)}
 										</span>
 										<Link to="#" className="flex-shrink-0 ml-auto">
 											Reply <i className="fal fa-reply ml-2" />{' '}
@@ -143,4 +144,4 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps, { forumList })(Discussions)
+export default connect(mapStateToProps, { forumSection })(Discussions)

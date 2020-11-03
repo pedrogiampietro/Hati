@@ -1,17 +1,18 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { forumList } from '../../../actions/ForumActions'
+import { forumSection } from '../../../actions/ForumActions'
 import { convertTimestempToDate } from '../../../helpers/datetime'
 
 import Container from '../../Layouts/Container'
+import noneAvatar from '../../../assets/img/none_avatar.png'
 
-const Threads = ({ forumList }) => {
+const Threads = ({ forumSection }) => {
 	const [threadList, setThreadList] = React.useState([])
 	const { section } = useParams()
 
 	React.useEffect(() => {
-		forumList(section)
+		forumSection(section)
 			.then(({ payload }) => {
 				const newData = payload.data.data
 				setThreadList(newData)
@@ -20,7 +21,7 @@ const Threads = ({ forumList }) => {
 				alert('error!')
 				console.log(err)
 			})
-	}, [forumList, section])
+	}, [forumSection, section])
 
 	return (
 		<Container>
@@ -95,11 +96,11 @@ const Threads = ({ forumList }) => {
 											<div className="p-3 p-md-3">
 												<div className="d-flex align-items-center">
 													<div className="d-inline-block align-middle status status-success status-sm mr-2">
-														<span
+														<img
+															src={noneAvatar}
+															alt="None Avatar"
 															className="profile-image-md rounded-circle d-block"
 															style={{
-																backgroundImage:
-																	'url("img/demo/avatars/avatar-admin.png")',
 																backgroundSize: 'cover',
 															}}
 														/>
@@ -139,4 +140,4 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps, { forumList })(Threads)
+export default connect(mapStateToProps, { forumSection })(Threads)

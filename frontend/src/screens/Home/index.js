@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
-import { forumList } from '../../actions/ForumActions'
+import { forumSection } from '../../actions/ForumActions'
 import { formatDate } from '../../helpers/datetime'
 import { groups_ID } from '../../config'
 import Container from '../Layouts/Container'
@@ -10,7 +10,7 @@ import { getAvatarUrl } from '../../helpers/api'
 import { FaNewspaper } from 'react-icons/fa'
 import { BiTimeFive } from 'react-icons/bi'
 
-const Home = ({ forumList }) => {
+const Home = ({ forumSection }) => {
 	const [newsPost, setNewsPost] = useState([])
 	const [postInteraction, setPostInteraction] = useState(false)
 	const news = 'last-news'
@@ -20,7 +20,7 @@ const Home = ({ forumList }) => {
 	}
 
 	useEffect(() => {
-		forumList(news)
+		forumSection(news)
 			.then(({ payload }) => {
 				const newData = payload.data.data
 				setNewsPost(newData)
@@ -29,7 +29,7 @@ const Home = ({ forumList }) => {
 				alert('posts não foram carregados.')
 				console.log(err)
 			})
-	}, [forumList, postInteraction])
+	}, [forumSection, postInteraction])
 
 	function removeDuplicity(datas) {
 		return datas.filter((item, index, arr) => {
@@ -100,4 +100,4 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps, { forumList })(Home)
+export default connect(mapStateToProps, { forumSection })(Home)

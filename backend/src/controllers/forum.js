@@ -1,5 +1,5 @@
 const express = require('express')
-const { z_forum, player, account } = require('../models')
+const { z_forum, player, account, forumBoard, threads } = require('../models')
 const { getMessage } = require('../helpers/messages')
 
 const router = express.Router()
@@ -24,11 +24,99 @@ function topicExists(topic) {
 	return Object.keys(topics).includes(topic)
 }
 
+// z_forum is too messy and confusing to work with, starting to make a 0 forum.
+
+//crud borad.
+router.get('/', async (req, res) => {
+	const getAllBoards = await forumBoard.findAll()
+
+	return res.jsonOK(getAllBoards)
+})
+
+router.post('/', async (req, res) => {
+	const { body } = req
+	const { title, description } = body
+
+	const createNewBoard = await forumBoard.create({
+		title,
+		description,
+	})
+
+	return res.jsonOK(createNewBoard)
+})
+
+router.delete('/:id', async (req, res) => {
+	const { id } = req.params
+	try {
+		const deleteBoard = await forumBoard.findByPk(id)
+
+		if (!deleteBoard) {
+			return res.jsonBadRequest(null, 'não foi possivel deletar o board.')
+		} else {
+			await deleteBoard.destroy()
+
+			res.jsonOK(deleteBoard)
+		}
+	} catch (error) {
+		return res.jsonBadRequest(null, error)
+	}
+})
+
+//crud threads
+router.get('/:threads', async (req, res) => {
+	const getThreads = await threads.findAll()
+
+	return res.jsonOK(getThreads)
+})
+
+router.post('/:treads', async (req, res) => {
+	const { body } = req
+	const { title, body_text } = body
+	const createNewThread = await threads.create({
+		title,
+		body_text,
+	})
+
+	return res.jsonOK(createNewThread)
+})
+
 //=================================
 //           Category Routes
 //=================================
 
 router.get('/:section', async (req, res) => {
+	const { section } = req.params
+	const convert = parseInt(getCategoryFromTopic(section))
+
+	const getThred = await z_forum.findAll({
+		// order: [
+		// 	['last_post', 'ASC'],
+		// 	['last_post', 'DESC'],
+		// ],
+		where: { section: convert },
+
+		include: [
+			{
+				model: player,
+				attributes: ['name', 'group_id'],
+				include: [
+					{
+						model: account,
+						attributes: ['avatar'],
+					},
+				],
+			},
+		],
+	})
+
+	return res.jsonOK(getThred)
+})
+
+//=================================
+//        Get Discussion topic.
+//=================================
+
+router.get('/:discussion', async (req, res) => {
 	const { section } = req.params
 	const convert = parseInt(getCategoryFromTopic(section))
 
@@ -136,22 +224,16 @@ router.post('/disLike/:id', async (req, res) => {
 //=================================
 
 router.get('/', async (req, res) => {
-	const group_id = 5
-
-	const dashboard = await z_forum.findAll({
+	const forumPost = await z_forum.findAll({
 		include: [
 			{
 				model: player,
 				required: true,
-
-				where: {
-					group_id: group_id,
-				},
 			},
 		],
 	})
 
-	return res.jsonOK(dashboard)
+	return res.jsonOK(forumPost)
 })
 
 //=================================
