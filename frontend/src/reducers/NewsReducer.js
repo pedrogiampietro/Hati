@@ -3,6 +3,7 @@ import {
 	FORUM_LIST,
 	LIKE_UPDATE,
 	SECTION_LIST,
+	NEW_THREAD,
 } from '../actions/ForumActions'
 
 const initialState = {
@@ -13,6 +14,7 @@ export default function (state = initialState, action) {
 	const { type, payload } = action
 	switch (type) {
 		case NEWS_CREATE:
+		case NEW_THREAD:
 		case FORUM_LIST:
 		case SECTION_LIST:
 		case LIKE_UPDATE: {

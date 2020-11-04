@@ -1,18 +1,19 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { forumSection } from '../../../actions/ForumActions'
+import { forumBoard } from '../../../actions/ForumActions'
 import { convertTimestempToDate } from '../../../helpers/datetime'
 
 import Container from '../../Layouts/Container'
+import CreateThread from './Create'
 import noneAvatar from '../../../assets/img/none_avatar.png'
 
-const Threads = ({ forumSection }) => {
+const Threads = ({ forumBoard }) => {
 	const [threadList, setThreadList] = React.useState([])
-	const { section } = useParams()
+	const { board_id } = useParams()
 
 	React.useEffect(() => {
-		forumSection(section)
+		forumBoard(board_id)
 			.then(({ payload }) => {
 				const newData = payload.data.data
 				setThreadList(newData)
@@ -21,7 +22,7 @@ const Threads = ({ forumSection }) => {
 				alert('error!')
 				console.log(err)
 			})
-	}, [forumSection, section])
+	}, [forumBoard, board_id])
 
 	return (
 		<Container>
@@ -33,7 +34,7 @@ const Threads = ({ forumSection }) => {
 						</div>
 						<div className="col d-flex align-items-center">
 							<Link
-								to="/forum/:section/create"
+								to={`/forum/:board_id/create`}
 								className="btn btn-success shadow-0 btn-sm ml-auto flex-shrink-0 waves-effect waves-themed"
 							>
 								New Thread
@@ -67,7 +68,7 @@ const Threads = ({ forumSection }) => {
 											<div className="p-3">
 												<div className="d-flex flex-column">
 													<Link
-														to={`/forum/${section}/${props.id}`}
+														to={`/forum/${props.id}`}
 														className="fs-lg fw-500 d-flex align-items-start"
 													>
 														{props.post_topic}
@@ -127,6 +128,7 @@ const Threads = ({ forumSection }) => {
 								</div>
 							)
 						})}
+						<CreateThread />
 					</div>
 				</div>
 			</div>
@@ -140,4 +142,4 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps, { forumSection })(Threads)
+export default connect(mapStateToProps, { forumBoard })(Threads)

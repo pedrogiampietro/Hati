@@ -4,7 +4,12 @@ module.exports = (sequelize, DataTypes) => {
 		{
 			title: {
 				type: DataTypes.STRING,
-				primaryKey: true,
+				// primaryKey: true,
+				allowNull: false,
+				defaultValue: '',
+			},
+			character_name: {
+				type: DataTypes.STRING,
 				allowNull: false,
 				defaultValue: '',
 			},
@@ -21,17 +26,27 @@ module.exports = (sequelize, DataTypes) => {
 			board_id: {
 				type: DataTypes.INTEGER,
 				allowNull: false,
+				references: { model: 'forumBoard', key: 'id' },
+				onUpdate: 'CASCADE',
+				onDelete: 'CASCADE',
+			},
+			account_id: {
+				type: DataTypes.INTEGER,
+				allowNull: false,
 				reference: {
-					model: 'forumBoard',
+					model: 'account',
 					key: 'id',
 				},
+				onUpdate: 'CASCADE',
+				onDelete: 'CASCADE',
 			},
 		},
 		{ freezeTableName: true }
 	)
 
 	threads.associate = (models) => {
-		threads.belongsToMany(models.forumBoard, { through: 'forumBoard', as: 'boards', foreignKey: 'board_id' })
+		threads.belongsTo(models.forumBoard, { foreignKey: 'board_id' })
+		threads.belongsTo(models.account, { foreignKey: 'account_id' })
 	}
 
 	return threads

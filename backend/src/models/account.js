@@ -93,6 +93,7 @@ module.exports = (sequelize, DataTypes) => {
 
 	account.associate = (models) => {
 		account.hasMany(models.player, { foreignKey: 'account_id' })
+		account.hasMany(models.threads, { foreignKey: 'account_id' })
 	}
 
 	account.prototype.toJSON = function () {

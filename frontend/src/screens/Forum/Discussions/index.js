@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { forumSection } from '../../../actions/ForumActions'
+import { forumBoard } from '../../../actions/ForumActions'
 import { getAvatarUrl } from '../../../helpers/api'
 import { groups_ID } from '../../../config'
 import { convertTimestempToDate } from '../../../helpers/datetime'
@@ -9,13 +9,13 @@ import Container from '../../Layouts/Container'
 
 import noneAvatar from '../../../assets/img/none_avatar.png'
 
-const Discussions = ({ forumSection }) => {
+const Discussions = ({ forumBoard }) => {
 	const [discussionPost, setDiscussionPost] = React.useState([])
 	const { section, id } = useParams()
 	const convertToVerify = parseInt(id)
 
 	React.useEffect(() => {
-		forumSection(section)
+		forumBoard(section)
 			.then(({ payload }) => {
 				const newData = payload.data.data
 				setDiscussionPost(newData)
@@ -24,7 +24,7 @@ const Discussions = ({ forumSection }) => {
 				alert('error!')
 				console.log(err)
 			})
-	}, [forumSection, section])
+	}, [forumBoard, section])
 
 	return (
 		<Container>
@@ -144,4 +144,4 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps, { forumSection })(Discussions)
+export default connect(mapStateToProps, { forumBoard })(Discussions)

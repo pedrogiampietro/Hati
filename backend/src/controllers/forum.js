@@ -51,7 +51,7 @@ router.delete('/:id', async (req, res) => {
 		const deleteBoard = await forumBoard.findByPk(id)
 
 		if (!deleteBoard) {
-			return res.jsonBadRequest(null, 'não foi possivel deletar o board.')
+			return res.jsonBadRequest(null, 'not possible delete board, try again.')
 		} else {
 			await deleteBoard.destroy()
 
@@ -63,21 +63,33 @@ router.delete('/:id', async (req, res) => {
 })
 
 //crud threads
-router.get('/:threads', async (req, res) => {
+router.get('/:board_id', async (req, res) => {
 	const getThreads = await threads.findAll()
 
 	return res.jsonOK(getThreads)
 })
 
-router.post('/:treads', async (req, res) => {
-	const { body } = req
-	const { title, body_text } = body
-	const createNewThread = await threads.create({
-		title,
-		body_text,
-	})
+router.post('/:board_id', async (req, res) => {
+	const { body, account_id } = req
+	const { board_id } = req.params
+	const { character_name, title, body_text } = body
 
-	return res.jsonOK(createNewThread)
+	console.log(board_id)
+
+	// const board = await forumBoard.findByPk(board_id)
+	// if (!board) {
+	// 	return res.jsonBadRequest(null, 'Board not found.')
+	// }
+
+	// const createNewThread = await threads.create({
+	// 	character_name,
+	// 	title,
+	// 	body_text,
+	// 	board_id,
+	// 	account_id,
+	// })
+
+	// return res.jsonOK(createNewThread)
 })
 
 //=================================

@@ -15,6 +15,7 @@ import Highscores from './screens/Highscores'
 import Character from './screens/Character'
 import Forum from './screens/Forum'
 import Threads from './screens/Forum/Threads'
+import CreateThread from './screens/Forum/Threads/Create'
 import Discussions from './screens/Forum/Discussions'
 import ForgotPassword from './screens/Account/ForgotPassword'
 import ResetPassword from './screens/Account/ResetPassword'
@@ -92,11 +93,15 @@ const App = ({ initAccount }) => {
 						<Forum />
 					</Route>
 
-					<Route exact path="/forum/:section">
+					<Route exact path="/forum/:board_id">
 						<Threads />
 					</Route>
 
-					<Route exact path="/forum/:section/:id">
+					<Route exact path="/forum/:board_id">
+						<CreateThread />
+					</Route>
+
+					<Route exact path="/forum/:board_id/:id">
 						<Discussions />
 					</Route>
 
