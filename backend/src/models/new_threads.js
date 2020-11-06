@@ -31,15 +31,6 @@ module.exports = (sequelize, DataTypes) => {
 			onUpdate: 'CASCADE',
 			onDelete: 'CASCADE',
 		},
-		// owner_id: {
-		// 	type: DataTypes.INTEGER,
-		// 	allowNull: false,
-		// 	defaultValue: 0,
-		// 	references: {
-		// 		model: 'players',
-		// 		key: 'id',
-		// 	},
-		// },
 		likes_count: {
 			type: DataTypes.JSON,
 			defaultValue: [],

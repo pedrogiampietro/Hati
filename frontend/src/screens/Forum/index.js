@@ -43,7 +43,7 @@ const Forum = ({
 		forumCreateBoard(data)
 			.then(() => {
 				closeModalAvatar()
-				history.push('/forum')
+				// history.push('/forum')
 			})
 			.catch((err) => {
 				console.error(err)
@@ -280,7 +280,6 @@ const Forum = ({
 										</div>
 									)
 								})}
-
 								{boardToRemove ? (
 									<div className="alert alert-danger rounded shadow-bold col-xl-6 ml-auto mr-auto pl-3 pr-3">
 										<h4 className="alert-heading">Delete Confirmation!</h4>
@@ -305,7 +304,6 @@ const Forum = ({
 										</div>
 									</div>
 								) : null}
-
 								<CreateThread />
 							</div>
 						</div>

@@ -1,28 +1,8 @@
 const express = require('express')
-const { z_forum, player, account, forumBoard, thread } = require('../models')
+const { z_forum, player, account, forumBoard, thread, comment } = require('../models')
 const { getMessage } = require('../helpers/messages')
 
 const router = express.Router()
-
-const topics = {
-	'last-news': '1',
-	discussions: '2',
-	'off-topic': '3',
-	tutorials: '4',
-	'bug-report': '5',
-	'dev-atts': '6',
-	trade: '7',
-}
-
-// Helper functions
-
-function getCategoryFromTopic(topic) {
-	return topics[topic]
-}
-
-function topicExists(topic) {
-	return Object.keys(topics).includes(topic)
-}
 
 // z_forum is too messy and confusing to work with, starting to make a 0 forum.
 
@@ -130,66 +110,6 @@ router.get('/thread/:board_id/:discussion', async (req, res) => {
 })
 
 //=================================
-//           Category Routes
-//=================================
-
-router.get('/:section', async (req, res) => {
-	const { section } = req.params
-	const convert = parseInt(getCategoryFromTopic(section))
-
-	const getThred = await z_forum.findAll({
-		// order: [
-		// 	['last_post', 'ASC'],
-		// 	['last_post', 'DESC'],
-		// ],
-		where: { section: convert },
-
-		include: [
-			{
-				model: player,
-				attributes: ['name', 'group_id'],
-				include: [
-					{
-						model: account,
-						attributes: ['avatar'],
-					},
-				],
-			},
-		],
-	})
-
-	return res.jsonOK(getThred)
-})
-
-//=================================
-//        Get Discussion topic.
-//=================================
-
-router.get('/:discussion', async (req, res) => {
-	const { section } = req.params
-	const convert = parseInt(getCategoryFromTopic(section))
-
-	const getThred = await z_forum.findAll({
-		where: { section: convert },
-
-		include: [
-			{
-				model: player,
-				attributes: ['name', 'group_id'],
-				include: [
-					{
-						model: account,
-						attributes: ['avatar'],
-					},
-				],
-			},
-		],
-	})
-
-	return res.jsonOK(getThred)
-})
-
-//=================================
 //        Get all likes with news.
 //=================================
 
@@ -258,10 +178,7 @@ router.post('/disLike/:id', async (req, res) => {
 		array.splice(index, 1)
 	}
 
-	const disLike = await thread.update(
-		{ likes_count: array },
-		{ where: { id } }
-	)
+	const disLike = await thread.update({ likes_count: array }, { where: { id } })
 
 	if (!dislikedPost) return res.jsonNotFound(null)
 
@@ -269,48 +186,27 @@ router.post('/disLike/:id', async (req, res) => {
 })
 
 //=================================
-//             Show all posts;
-//=================================
-
-router.get('/', async (req, res) => {
-	const forumPost = await z_forum.findAll({
-		include: [
-			{
-				model: player,
-				required: true,
-			},
-		],
-	})
-
-	return res.jsonOK(forumPost)
-})
-
-//=================================
-//             Create a new news;
-//=================================
-
-router.post('/create', async (req, res) => {
-	const { body } = req
-
-	const { post_topic, post_text, author_aid, author_guid } = body
-
-	const createNews = await z_forum.create({
-		author_guid,
-		author_aid,
-		post_topic,
-		post_text,
-	})
-
-	return res.jsonOK(createNews)
-})
-
-//=================================
 //          Comments
 //=================================
 
-router.post('/:postId/comment', async (req, res) => {
+router.post('/thread/:board_id/:discussion/reply', async (req, res) => {
+	const { board_id, discussion } = req.params
+
+	const getDiscussion = await thread.findOne({
+		where: { id: discussion, board_id },
+	})
+
+	if (!getDiscussion)
+		return jsonBadRequest(
+			null,
+			'thread not exists, select other and try again.'
+		)
+
+	
+
+	return res.jsonOK(getDiscussion)
+
 	//buscando um post;
-	const post = await z_forum.findOne({ id: req.params.postId })
 
 	//criando um novo comentário;
 

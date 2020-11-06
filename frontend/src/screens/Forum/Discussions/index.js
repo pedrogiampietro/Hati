@@ -7,8 +7,11 @@ import { getAvatarUrl } from '../../../helpers/api'
 import { formatDate } from '../../../helpers/datetime'
 import Container from '../../Layouts/Container'
 import LikeDeslikes from '../../../components/LikeDeslikes'
-import { BsFillReplyFill } from 'react-icons/bs'
+import { BsReply } from 'react-icons/bs'
+
 import noneAvatar from '../../../assets/img/none_avatar.png'
+
+import JoditEditor from 'jodit-react'
 
 const Discussions = ({ forumDiscussion }) => {
 	const [discussionPost, setDiscussionPost] = React.useState([])
@@ -90,7 +93,10 @@ const Discussions = ({ forumDiscussion }) => {
 									Discord: Pedro#6666
 									<br />
 								</div>
-								<div className="col-md-10">{discussionPost.body_text}</div>
+								<div
+									className="col-md-10"
+									dangerouslySetInnerHTML={{ __html: discussionPost.body_text }}
+								/>
 							</div>
 
 							<br />
@@ -105,7 +111,7 @@ const Discussions = ({ forumDiscussion }) => {
 									/>
 									<a href="/forum/post/reply/150">
 										<button className="btn btn-sm btn-default">
-											<BsFillReplyFill size={20} /> Reply
+											<BsReply size={24} color="#886ab5" /> Reply
 										</button>
 									</a>
 								</div>
@@ -146,6 +152,22 @@ const Discussions = ({ forumDiscussion }) => {
 					</ul>
 				</div>
 			</div>
+			<div className="panel panel-default">
+				<div className="panel-heading">Quick Reply Box</div>
+				<div className="panel-body">
+					<form method="post" action="/forum/thread/473">
+						<div className="form-group">
+							<label htmlFor="inputContent">Content</label>
+							<JoditEditor name="body_text" id="body_text" tabIndex={1} />
+						</div>
+
+						<button type="submit" className="btn btn-primary">
+							<BsReply size={24} /> Reply
+						</button>
+					</form>
+				</div>
+			</div>
+			;
 		</Container>
 	)
 }
