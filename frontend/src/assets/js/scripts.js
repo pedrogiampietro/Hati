@@ -17,3 +17,13 @@ export const closeMenuOnMobile = () => {
 export const closeModalAvatar = () => {
 	document.querySelector('.modal').classList.remove('show')
 }
+
+export const hideNewThread = () => {
+	const body = document.getElementById('panel-compose')
+	body.style.display = 'none'
+}
+
+export const showNewThread = () => {
+	const body = document.getElementById('panel-compose')
+	body.style.display = 'block'
+}

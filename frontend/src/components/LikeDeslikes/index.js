@@ -26,54 +26,52 @@ const LikeDeslikes = ({ upLike, account, id, likes_count, interaction }) => {
 
 	return (
 		<div>
-			<div className="d-flex align-items-center demo-h-spacing py-3">
-				{account ? (
-					<span
-						id={`data-post-${id}`}
-						className="d-inline-flex align-items-center text-dark"
-					>
-						{likes_count?.includes(characterLogged) ? (
-							<span className="width-3 height-2 d-inline-flex align-items-center justify-content-center position-relative h1 ">
-								<ImHeart
-									className="text-danger"
-									onClick={() => {
-										unlikeANews()
-									}}
-								/>
-								<span className="badge badge-icon pos-top pos-right">
-									{likes_count?.length}
-								</span>
+			{account ? (
+				<span
+					id={`data-post-${id}`}
+					className="d-inline-flex align-items-center text-dark"
+				>
+					{likes_count?.includes(characterLogged) ? (
+						<span className="width-3 height-2 d-inline-flex align-items-center justify-content-center position-relative h1 ">
+							<ImHeart
+								className="text-danger"
+								onClick={() => {
+									unlikeANews()
+								}}
+							/>
+							<span className="badge badge-icon pos-top pos-right">
+								{likes_count?.length}
 							</span>
-						) : (
-							<span className="width-3 height-2 d-inline-flex align-items-center justify-content-center position-relative h1 ">
-								<ImHeart
-									onClick={() => {
-										likeANews()
-									}}
-								/>
-
-								<span className="badge badge-icon pos-top pos-right">
-									{likes_count?.length}
-								</span>
-							</span>
-						)}
-					</span>
-				) : (
-					<span className="width-3 height-2 d-inline-flex align-items-center justify-content-center position-relative h1 ">
-						<ImHeart />
-						<span className="badge badge-icon pos-top pos-right">
-							{likes_count?.length}
 						</span>
+					) : (
+						<span className="width-3 height-2 d-inline-flex align-items-center justify-content-center position-relative h1 ">
+							<ImHeart
+								onClick={() => {
+									likeANews()
+								}}
+							/>
+
+							<span className="badge badge-icon pos-top pos-right">
+								{likes_count?.length}
+							</span>
+						</span>
+					)}
+				</span>
+			) : (
+				<span className="width-3 height-2 d-inline-flex align-items-center justify-content-center position-relative h1 ">
+					<ImHeart />
+					<span className="badge badge-icon pos-top pos-right">
+						{likes_count?.length}
 					</span>
-				)}
-			</div>
+				</span>
+			)}
 		</div>
 	)
 }
 
 const mapStateToProps = (state) => {
 	return {
-		post: state.post.post,
+		forum: state.forum.forum,
 		account: state.account.account,
 	}
 }

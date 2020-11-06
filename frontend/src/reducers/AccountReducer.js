@@ -24,10 +24,12 @@ import {
 	removePlayerName,
 } from '../helpers/account'
 import { PLAYER_CREATE } from '../actions/PlayerActions'
+import { CREATE_THREAD } from '../actions/ForumActions'
 
 const initialState = {
 	account: null,
 	player: null,
+	forum: null,
 }
 
 export default function (state = initialState, action) {
@@ -37,6 +39,7 @@ export default function (state = initialState, action) {
 		case SIGN_IN:
 		case SIGN_UP:
 		case PLAYER_CREATE:
+		case CREATE_THREAD:
 		case PROFILE_INFO:
 		case GET_PROFILE_AVATAR:
 		case POST_PROFILE_AVATAR:
@@ -69,8 +72,7 @@ export default function (state = initialState, action) {
 		case RESET_PASSWORD: {
 			const response = payload ? payload.data : null
 			const metadata = response ? response.metadata : null
-			
-
+			console.log(metadata)
 			return state
 		}
 

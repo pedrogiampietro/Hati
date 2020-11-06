@@ -31,16 +31,9 @@ const Home = ({ forumBoard }) => {
 			})
 	}, [forumBoard, postInteraction])
 
-	function removeDuplicity(datas) {
-		return datas.filter((item, index, arr) => {
-			const c = arr.map((item) => item.first_post)
-			return index === c.indexOf(item.first_post)
-		})
-	}
-
 	return (
 		<Container>
-			{newsPost && newsPost.length
+			{/* {newsPost && newsPost.length
 				? removeDuplicity(newsPost).map((news) => {
 						return (
 							<div key={news.id} className="card mb-g">
@@ -89,14 +82,14 @@ const Home = ({ forumBoard }) => {
 							</div>
 						)
 				  })
-				: null}
+				: null} */}
 		</Container>
 	)
 }
 
 const mapStateToProps = (state) => {
 	return {
-		post: state.post.post,
+		forum: state.forum.forum,
 	}
 }
 

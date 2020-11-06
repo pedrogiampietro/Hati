@@ -2,15 +2,19 @@
 
 module.exports = {
 	up: async (queryInterface, Sequelize) => {
-		return queryInterface.addColumn('z_forum', 'likes_count', {
+		return queryInterface.addColumn('threads', 'likes_count', {
 			type: Sequelize.JSON,
 			allowNull: false,
 			after: 'views',
 			defaultValue: [],
+			references: {
+				model: 'players',
+				key: 'id',
+			},
 		})
 	},
 
 	down: async (queryInterface, Sequelize) => {
-		return queryInterface.removeColumn('z_forum', 'likes_count')
+		return queryInterface.removeColumn('threads', 'likes_count')
 	},
 }

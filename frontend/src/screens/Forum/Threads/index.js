@@ -2,10 +2,9 @@ import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { forumBoard } from '../../../actions/ForumActions'
-import { convertTimestempToDate } from '../../../helpers/datetime'
+import { formatDate } from '../../../helpers/datetime'
 
 import Container from '../../Layouts/Container'
-import CreateThread from './Create'
 import noneAvatar from '../../../assets/img/none_avatar.png'
 
 const Threads = ({ forumBoard }) => {
@@ -32,14 +31,6 @@ const Threads = ({ forumBoard }) => {
 						<div className="col">
 							<span className="h6 font-weight-bold text-uppercase">Forum</span>
 						</div>
-						<div className="col d-flex align-items-center">
-							<Link
-								to={`/forum/:board_id/create`}
-								className="btn btn-success shadow-0 btn-sm ml-auto flex-shrink-0 waves-effect waves-themed"
-							>
-								New Thread
-							</Link>
-						</div>
 					</div>
 				</div>
 				<div className="card-header bg-white p-0">
@@ -59,19 +50,21 @@ const Threads = ({ forumBoard }) => {
 				</div>
 				<div className="card-body p-0">
 					<div className="row no-gutters row-grid">
-						{threadList.map((props) => {
-							return props.post_topic === '' ||
-								props.post_topic === null ? null : (
-								<div key={props.id} className="col-12">
+						{threadList.map((thread) => {
+							console.log(thread)
+
+							return (
+								<div key={thread.id} className="col-12">
 									<div className="row no-gutters row-grid align-items-stretch">
 										<div className="col-md">
 											<div className="p-3">
 												<div className="d-flex flex-column">
 													<Link
-														to={`/forum/${props.id}`}
+														to={`/forum/thread/${thread.board_id}/${thread.id}`}
 														className="fs-lg fw-500 d-flex align-items-start"
 													>
-														{props.post_topic}
+														{thread.title}
+
 														{/* <span className="badge badge-warning ml-auto">
 															Em Alta
 														</span> */}
@@ -79,9 +72,9 @@ const Threads = ({ forumBoard }) => {
 													<div className="d-block text-muted fs-sm">
 														Started by{' '}
 														<Link to="/characters/:name" className="text-info">
-															{props.player.name}
+															{thread.character_name}
 														</Link>{' '}
-														on {convertTimestempToDate(props.post_date)}
+														on {formatDate(thread.createdAt)}
 													</div>
 												</div>
 											</div>
@@ -89,7 +82,7 @@ const Threads = ({ forumBoard }) => {
 										<div className="col-4 col-md-2 col-xl-1 hidden-md-down">
 											<div className="p-3 p-md-3">
 												<span className="d-block text-muted">
-													{props.views} <i>Views</i>
+													{thread.views} <i>Views</i>
 												</span>
 											</div>
 										</div>
@@ -128,7 +121,6 @@ const Threads = ({ forumBoard }) => {
 								</div>
 							)
 						})}
-						<CreateThread />
 					</div>
 				</div>
 			</div>

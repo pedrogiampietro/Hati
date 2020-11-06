@@ -1,21 +1,26 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { forumBoard } from '../../../actions/ForumActions'
+import { forumDiscussion } from '../../../actions/ForumActions'
 import { getAvatarUrl } from '../../../helpers/api'
-import { groups_ID } from '../../../config'
-import { convertTimestempToDate } from '../../../helpers/datetime'
-import Container from '../../Layouts/Container'
 
+import { formatDate } from '../../../helpers/datetime'
+import Container from '../../Layouts/Container'
+import LikeDeslikes from '../../../components/LikeDeslikes'
+import { BsFillReplyFill } from 'react-icons/bs'
 import noneAvatar from '../../../assets/img/none_avatar.png'
 
-const Discussions = ({ forumBoard }) => {
+const Discussions = ({ forumDiscussion }) => {
 	const [discussionPost, setDiscussionPost] = React.useState([])
-	const { section, id } = useParams()
-	const convertToVerify = parseInt(id)
+	const [postInteraction, setPostInteraction] = React.useState(false)
+	const { board_id, discussion } = useParams()
+
+	function interaction() {
+		setPostInteraction(!postInteraction)
+	}
 
 	React.useEffect(() => {
-		forumBoard(section)
+		forumDiscussion(board_id, discussion)
 			.then(({ payload }) => {
 				const newData = payload.data.data
 				setDiscussionPost(newData)
@@ -24,7 +29,9 @@ const Discussions = ({ forumBoard }) => {
 				alert('error!')
 				console.log(err)
 			})
-	}, [forumBoard, section])
+	}, [forumDiscussion, postInteraction, board_id, discussion])
+
+	console.log(discussionPost)
 
 	return (
 		<Container>
@@ -43,63 +50,70 @@ const Discussions = ({ forumBoard }) => {
 						</div>
 					</div>
 
-					{discussionPost.map((props, index) => {
-						return props.first_post === convertToVerify ? (
-							<div key={props.id} className="card mb-g border shadow-0">
-								<div className="card-header bg-white p-0">
-									<div className="p-3 d-flex flex-row">
-										<div className="d-block flex-shrink-0">
-											{props.player &&
-											props.player.account &&
-											props.player.account.avatar ? (
-												<img
-													src={getAvatarUrl(props.player.account.avatar)}
-													className="profile-image rounded-circle"
-													alt=""
-												/>
-											) : (
-												<img
-													src={noneAvatar}
-													className="profile-image rounded-circle"
-													alt=""
-												/>
-											)}
-										</div>
-										<div className="d-block ml-2">
-											<span className="h6 font-weight-bold text-uppercase d-block m-0">
-												<Link to="#">{props.player.name}</Link>
-											</span>
-											<Link
-												to="#"
-												className="fs-sm text-info h6 fw-500 mb-0 d-block"
-											>
-												{groups_ID[props.player.group_id]}
-											</Link>
-											{/* <div className="d-flex mt-1 text-black align-items-center">
-
-
-											</div> */}
-										</div>
-									</div>
+					<div className="panel panel-default hidden-xs hidden-sm">
+						<div className="panel-heading">
+							{formatDate(discussionPost.createdAt)}
+						</div>
+						<div className="panel-body forum-content-body">
+							<div className="row">
+								<div className="col-md-2" align="center">
+									<Link
+										className="forum-profilename forum-profilename-color7 notranslate"
+										to={`/character/${discussionPost.character_name}`}
+									>
+										{discussionPost.character_name}
+									</Link>
+									<br />
+									{discussionPost.player &&
+									discussionPost.player.account &&
+									discussionPost.player.account.avatar ? (
+										<img
+											src={getAvatarUrl(discussionPost.player.account.avatar)}
+											className="profile-image rounded-circle"
+											alt=""
+										/>
+									) : (
+										<img
+											src={noneAvatar}
+											className="profile-image rounded-circle"
+											alt=""
+										/>
+									)}
+									<br />
+									<br />
+									Posts: 221
+									<br />
+									Likes: <span id="like_count_150">135</span>
+									<br />
+									Country: BR
+									<br />
+									Member since: 10/12/2019
+									<br />
+									Discord: Pedro#6666
+									<br />
 								</div>
-								<div
-									className="card-body"
-									dangerouslySetInnerHTML={{ __html: props.post_text }}
-								></div>
-								<div className="card-footer">
-									<div className="d-flex align-items-center">
-										<span className="text-sm text-muted font-italic">
-											<i className="fal fa-clock mr-1" />
-											{convertTimestempToDate(props.post_date)}
-										</span>
-										<Link to="#" className="flex-shrink-0 ml-auto">
-											Reply <i className="fal fa-reply ml-2" />{' '}
-										</Link>
-									</div>
+								<div className="col-md-10">{discussionPost.body_text}</div>
+							</div>
+
+							<br />
+							<div className="row">
+								<div className="col-md-2">Administrador// IMG LATER</div>
+								<div className="col-md-4"></div>
+								<div className="col-md-6" align="right">
+									<LikeDeslikes
+										id={discussionPost.id}
+										likes_count={discussionPost.likes_count}
+										interaction={interaction}
+									/>
+									<a href="/forum/post/reply/150">
+										<button className="btn btn-sm btn-default">
+											<BsFillReplyFill size={20} /> Reply
+										</button>
+									</a>
 								</div>
 							</div>
-						) : null
-					})}
+						</div>
+					</div>
 
 					<ul className="pagination mt-3">
 						<li className="page-item disabled">
@@ -144,4 +158,4 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps, { forumBoard })(Discussions)
+export default connect(mapStateToProps, { forumDiscussion })(Discussions)

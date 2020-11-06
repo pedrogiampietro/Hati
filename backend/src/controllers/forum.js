@@ -1,5 +1,5 @@
 const express = require('express')
-const { z_forum, player, account, forumBoard, threads } = require('../models')
+const { z_forum, player, account, forumBoard, thread } = require('../models')
 const { getMessage } = require('../helpers/messages')
 
 const router = express.Router()
@@ -63,33 +63,70 @@ router.delete('/:id', async (req, res) => {
 })
 
 //crud threads
-router.get('/:board_id', async (req, res) => {
-	const getThreads = await threads.findAll()
+router.get('/thread/:board_id', async (req, res) => {
+	const { board_id } = req.params
+
+	const getThreads = await thread.findAll({
+		where: { board_id },
+		// include: [
+		// 	{
+		// 		model: account,
+		// 		attributes: ['avatar'],
+		// 	},
+		// ],
+
+		order: [
+			['createdAt', 'DESC'],
+			['createdAt', 'ASC'],
+		],
+	})
 
 	return res.jsonOK(getThreads)
 })
 
-router.post('/:board_id', async (req, res) => {
-	const { body, account_id } = req
-	const { board_id } = req.params
-	const { character_name, title, body_text } = body
+router.post('/newThread', async (req, res) => {
+	const { account_id, body } = req
+	const { character_name, title, body_text, board_id } = body
 
-	console.log(board_id)
+	const board = await forumBoard.findByPk(board_id)
+	if (!board) {
+		return res.jsonBadRequest(null, 'Board not found.')
+	}
 
-	// const board = await forumBoard.findByPk(board_id)
-	// if (!board) {
-	// 	return res.jsonBadRequest(null, 'Board not found.')
-	// }
+	const createNewThread = await thread.create({
+		character_name,
+		title,
+		body_text,
+		board_id,
+		account_id,
+	})
 
-	// const createNewThread = await threads.create({
-	// 	character_name,
-	// 	title,
-	// 	body_text,
-	// 	board_id,
-	// 	account_id,
-	// })
+	return res.jsonOK(createNewThread)
+})
 
-	// return res.jsonOK(createNewThread)
+//missing delete thread, create later
+
+//crud discussion
+router.get('/thread/:board_id/:discussion', async (req, res) => {
+	const { board_id, discussion } = req.params
+
+	const getDiscussion = await thread.findOne({
+		where: { id: discussion, board_id },
+		include: [
+			{
+				model: account,
+				attributes: ['avatar'],
+				include: [
+					{
+						model: player,
+						attributes: ['name', 'group_id'],
+					},
+				],
+			},
+		],
+	})
+
+	return res.jsonOK(getDiscussion)
 })
 
 //=================================
@@ -157,8 +194,8 @@ router.get('/:discussion', async (req, res) => {
 //=================================
 
 router.get('/getLikes', async (req, res) => {
-	const like = await z_forum.findAll({
-		attributes: ['likes_count', 'id', 'author_aid'],
+	const like = await thread.findAll({
+		attributes: ['likes_count', 'id', 'character_name'],
 	})
 
 	return res.jsonOK(like)
@@ -172,8 +209,8 @@ router.post('/upLike/:id', async (req, res) => {
 	const { id } = req.params
 	const { name } = req.headers
 
-	let likedPost = await z_forum.findOne({
-		attributes: ['likes_count', 'id', 'author_aid'],
+	let likedPost = await thread.findOne({
+		attributes: ['likes_count', 'id', 'account_id'],
 		where: { id: id },
 	})
 
@@ -181,14 +218,14 @@ router.post('/upLike/:id', async (req, res) => {
 
 	if (data.includes(name)) return res.status(400).send('Post already liked.')
 
-	const newLike = await z_forum.update(
+	const newLike = await thread.update(
 		{ likes_count: [...data, name] },
 		{ where: { id } }
 	)
 
 	if (newLike) {
-		likedPost = await z_forum.findOne({
-			attributes: ['likes_count', 'id', 'author_aid'],
+		likedPost = await thread.findOne({
+			attributes: ['likes_count', 'id', 'account_id'],
 			where: { id: id },
 		})
 	}
@@ -206,8 +243,8 @@ router.post('/disLike/:id', async (req, res) => {
 	const { id } = req.params
 	const { name } = req.headers
 
-	let dislikedPost = await z_forum.findOne({
-		attributes: ['likes_count', 'id', 'author_aid'],
+	let dislikedPost = await thread.findOne({
+		attributes: ['likes_count', 'id', 'account_id'],
 		where: { id: id },
 	})
 
@@ -221,7 +258,7 @@ router.post('/disLike/:id', async (req, res) => {
 		array.splice(index, 1)
 	}
 
-	const disLike = await z_forum.update(
+	const disLike = await thread.update(
 		{ likes_count: array },
 		{ where: { id } }
 	)

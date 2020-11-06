@@ -94,7 +94,9 @@ export const apiGetForum = async (path, params = {}) => {
 
 export const apiPostNews = (path, data = {}) => {
 	const url = getApiUrl(path)
-	const options = {}
+	const options = {
+		headers: getHeaders(),
+	}
 
 	return axios.post(url, data, options)
 }

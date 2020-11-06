@@ -2,12 +2,12 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import ReduxPromise from 'redux-promise'
 import accountReducer from './reducers/AccountReducer'
 import playerReducer from './reducers/PlayerReducer'
-import newsReducer from './reducers/NewsReducer'
+import forumReducer from './reducers/ForumReducer'
 
 const reducers = combineReducers({
 	account: accountReducer,
 	player: playerReducer,
-	post: newsReducer,
+	forum: forumReducer,
 })
 
 const store = createStore(reducers, applyMiddleware(ReduxPromise))

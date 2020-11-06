@@ -243,7 +243,7 @@ const mapStateToProps = (state) => {
 	return {
 		account: state.account.account,
 		players: state.player.player,
-		post: state.post.post,
+		forum: state.forum.forum,
 	}
 }
 

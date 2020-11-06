@@ -7,7 +7,7 @@ const checkJwt = (req, res, next) => {
 	// const name = req.url
 	// const newName = name.replace('/player/character/', '')
 
-	const excludedPaths = ['/player/characters', '/account/dashboard']
+	const excludedPaths = ['/player/characters', '/account/dashboard', '/forum/newThread']
 
 	const isExcluded = !excludedPaths.find((p) => p.startsWith(path))
 	if (isExcluded) return next()
