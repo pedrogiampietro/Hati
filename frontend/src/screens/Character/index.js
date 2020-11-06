@@ -317,7 +317,6 @@ const Character = ({ playerGetCharacter, ...props }) => {
 										<div className="line text-muted"></div>
 										{playerDeaths && playerDeaths.length
 											? playerDeaths.map((props) => {
-													console.log(props)
 													return (
 														<div key={props.time}>
 															<div className="separator text-muted">

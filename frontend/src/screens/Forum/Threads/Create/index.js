@@ -24,8 +24,6 @@ const CreateThread = ({ forumNewThread, playerList, forum }) => {
 		forumNewThread(data)
 	}
 
-	console.log('***** newThread', newThread)
-
 	return (
 		<form onSubmit={subbmitHandle}>
 			<div
@@ -73,7 +71,6 @@ const CreateThread = ({ forumNewThread, playerList, forum }) => {
 							>
 								{forum && forum.length
 									? forum.map((board) => {
-											console.log(board)
 											return (
 												<option key={board.id} value={board.id}>
 													{board.title}

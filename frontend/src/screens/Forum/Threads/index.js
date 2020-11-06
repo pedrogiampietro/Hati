@@ -51,8 +51,6 @@ const Threads = ({ forumBoard }) => {
 				<div className="card-body p-0">
 					<div className="row no-gutters row-grid">
 						{threadList.map((thread) => {
-							console.log(thread)
-
 							return (
 								<div key={thread.id} className="col-12">
 									<div className="row no-gutters row-grid align-items-stretch">

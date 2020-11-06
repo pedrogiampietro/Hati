@@ -50,8 +50,6 @@ const Forum = ({
 			})
 	}
 
-	console.log('****** categoryList', categoryLists)
-
 	return (
 		<Container>
 			<div className="row">
@@ -319,7 +317,6 @@ const Forum = ({
 }
 
 const mapStateToProps = (state) => {
-	console.log(state)
 	return {
 		account: state.account.account,
 		forum: state.forum.forums,

@@ -29,8 +29,6 @@ const CreateCharacter = ({ playerCreate, playerList, player }) => {
 			vocation,
 		}
 
-		console.log(data)
-
 		playerCreate(data)
 			.then(() => {
 				history.push('/account/characters')

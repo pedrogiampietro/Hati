@@ -31,8 +31,6 @@ const Discussions = ({ forumDiscussion }) => {
 			})
 	}, [forumDiscussion, postInteraction, board_id, discussion])
 
-	console.log(discussionPost)
-
 	return (
 		<Container>
 			<div className="row">

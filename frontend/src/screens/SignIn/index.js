@@ -24,7 +24,6 @@ const SignIn = (props) => {
 		const data = getFormData(e)
 		signIn(data).catch((err) => {
 			const { data } = err.response
-			console.log(data)
 			setError(data.message)
 		})
 	}
