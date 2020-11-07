@@ -122,6 +122,25 @@ router.get('/thread/:board_id/:discussion', async (req, res) => {
 	return res.jsonOK(getDiscussion)
 })
 
+router.put('/post/edit/:id', async (req, res) => {
+	const { account_id, body } = req
+	const { id } = req.params
+	const fields = ['body_text']
+
+	const getDiscussion = await thread.findOne({
+		where: { id: id, account_id: account_id },
+	})
+	if (!getDiscussion) return res.jsonNotFound(null)
+
+	fields.map((fieldName) => {
+		const newValue = body[fieldName]
+		if (newValue) getDiscussion[fieldName] = newValue
+	})
+
+	await getDiscussion.save()
+	return res.jsonOK(getDiscussion, getMessage('post edited sucessfuly!'))
+})
+
 //=================================
 //        Get all likes with news.
 //=================================

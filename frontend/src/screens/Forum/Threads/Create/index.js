@@ -5,7 +5,6 @@ import { forumNewThread } from '../../../../actions/ForumActions'
 import { playerList } from '../../../../actions/PlayerActions'
 import { hideNewThread } from '../../../../assets/js/scripts'
 
-// import JoditEditor from 'jodit-react'
 import JoditEditor from '../../../../components/Jodit'
 
 const CreateThread = ({ forumNewThread, playerList, forum }) => {
@@ -22,6 +21,7 @@ const CreateThread = ({ forumNewThread, playerList, forum }) => {
 		event.preventDefault()
 
 		const data = getFormData(event)
+
 		forumNewThread(data)
 	}
 
@@ -85,15 +85,12 @@ const CreateThread = ({ forumNewThread, playerList, forum }) => {
 								className="custom-select form-control"
 								name="character_name"
 							>
-								{newThread && newThread.length
-									? newThread.map((player) => {
-											return (
-												<option key={player.id} value={player.name}>
-													{player.name}
-												</option>
-											)
-									  })
-									: null}
+								<option
+									key={newThread[0]?.account_id}
+									value={newThread[0]?.account.profileName}
+								>
+									{newThread[0]?.account.profileName}
+								</option>
 							</select>
 
 							<input

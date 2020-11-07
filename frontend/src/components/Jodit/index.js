@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import JoditEditor from 'jodit-react'
 
-const TextEditor = ({ name }) => {
+const TextEditor = ({ name, value }) => {
 	const editor = useRef(null)
 	const config = {
 		readonly: false,
@@ -13,6 +13,7 @@ const TextEditor = ({ name }) => {
 				ref={editor}
 				config={config}
 				name={name}
+				value={value}
 				tabIndex={1} // tabIndex of textarea
 			/>
 		</div>

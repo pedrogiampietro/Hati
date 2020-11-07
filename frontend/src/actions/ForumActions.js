@@ -4,6 +4,7 @@ import {
 	apiLike,
 	apiPost,
 	apiDelete,
+	apiPut,
 } from '../helpers/api'
 
 export const NEWS_CREATE = 'NEWS_CREATE'
@@ -17,7 +18,9 @@ export const BOARD_REMOVE = 'BOARD_REMOVE'
 
 export const SECTION_LIST = 'SECTION_LIST'
 export const CREATE_THREAD = 'CREATE_THREAD'
+
 export const GET_DISCUSSION = 'GET_DISCUSSION'
+export const EDIT_POST = 'EDIT_POST'
 
 export const forumList = (data) => {
 	const payload = apiGet('/forum', data)
@@ -51,6 +54,11 @@ export const forumNewThread = (data) => {
 export const forumDiscussion = (board_id, discussion, data) => {
 	const payload = apiGet(`/forum/thread/${board_id}/${discussion}`, data)
 	return { type: SECTION_LIST, payload }
+}
+
+export const editPost = (id, data) => {
+	const payload = apiPut(`/forum/post/edit/${id}`, { ...data })
+	return { type: EDIT_POST, payload }
 }
 
 export const newsCreate = (data) => {

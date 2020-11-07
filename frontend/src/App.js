@@ -18,6 +18,7 @@ import Forum from './screens/Forum'
 import Threads from './screens/Forum/Threads'
 import CreateThread from './screens/Forum/Threads/Create'
 import Discussions from './screens/Forum/Discussions'
+import EditPost from './screens/Forum/Discussions/EditPost'
 import ForgotPassword from './screens/Account/ForgotPassword'
 import ResetPassword from './screens/Account/ResetPassword'
 
@@ -108,6 +109,10 @@ const App = ({ initAccount }) => {
 
 					<Route exact path="/forum/thread/:board_id/:discussion">
 						<Discussions />
+					</Route>
+
+					<Route exact path="/forum/post/edit/:id">
+						<EditPost />
 					</Route>
 
 					<Route path="/">

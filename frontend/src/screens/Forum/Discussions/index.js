@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { forumDiscussion } from '../../../actions/ForumActions'
+import { forumDiscussion, editPost } from '../../../actions/ForumActions'
 import { getAvatarUrl } from '../../../helpers/api'
 
 import { formatDate } from '../../../helpers/datetime'
@@ -13,9 +13,10 @@ import noneAvatar from '../../../assets/img/none_avatar.png'
 
 import JoditEditor from 'jodit-react'
 
-const Discussions = ({ forumDiscussion }) => {
+const Discussions = ({ forumDiscussion, editPost }) => {
 	const [discussionPost, setDiscussionPost] = React.useState([])
 	const [postInteraction, setPostInteraction] = React.useState(false)
+	const [editingPost, setEditingPost] = React.useState([])
 	const { board_id, discussion } = useParams()
 
 	function interaction() {
@@ -23,6 +24,11 @@ const Discussions = ({ forumDiscussion }) => {
 	}
 
 	React.useEffect(() => {
+		editPost(discussion).then(({ payload }) => {
+			const newData = payload.data.data
+			setEditingPost(newData)
+		})
+
 		forumDiscussion(board_id, discussion)
 			.then(({ payload }) => {
 				const newData = payload.data.data
@@ -32,7 +38,7 @@ const Discussions = ({ forumDiscussion }) => {
 				alert('error!')
 				console.log(err)
 			})
-	}, [forumDiscussion, postInteraction, board_id, discussion])
+	}, [forumDiscussion, editPost, postInteraction, board_id, discussion])
 
 	return (
 		<Container>
@@ -55,6 +61,20 @@ const Discussions = ({ forumDiscussion }) => {
 						<div className="panel-heading">
 							{formatDate(discussionPost.createdAt)}
 						</div>
+						<div className="panel-toolbar pr-3 align-self-end">
+							<ul className="nav nav-tabs border-bottom-0 nav-tabs-clean">
+								{editingPost?.length <= 0 ? null : (
+									<li className="nav-item">
+										<Link to={`/forum/post/edit/${discussionPost.id}`}>
+											<button className="nav-link active" role="tab">
+												Edit Post
+											</button>
+										</Link>
+									</li>
+								)}
+							</ul>
+						</div>
+
 						<div className="panel-body forum-content-body">
 							<div className="row">
 								<div className="col-md-2" align="center">
@@ -175,7 +195,10 @@ const Discussions = ({ forumDiscussion }) => {
 const mapStateToProps = (state) => {
 	return {
 		account: state.account.account,
+		forum: state.forum.forum,
 	}
 }
 
-export default connect(mapStateToProps, { forumDiscussion })(Discussions)
+export default connect(mapStateToProps, { forumDiscussion, editPost })(
+	Discussions
+)

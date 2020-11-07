@@ -4,10 +4,16 @@ const checkJwt = (req, res, next) => {
 	const { url: path } = req
 
 	// const { vocation, skill, page } = req.query
-	// const name = req.url
-	// const newName = name.replace('/player/character/', '')
 
-	const excludedPaths = ['/player/characters', '/account/dashboard', '/forum/newThread']
+	const name = req.url
+	const id = name.replace('/forum/post/edit/', '')
+
+	const excludedPaths = [
+		'/player/characters',
+		'/account/dashboard',
+		'/forum/newThread',
+		`/forum/post/edit/${id}`,
+	]
 
 	const isExcluded = !excludedPaths.find((p) => p.startsWith(path))
 	if (isExcluded) return next()

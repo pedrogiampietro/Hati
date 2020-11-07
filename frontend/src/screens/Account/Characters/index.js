@@ -227,9 +227,9 @@ const Characters = ({
 													</span>
 
 													{Account?.profileName !== '' ? null : (
-														<span class="col-md-3" align="right">
+														<span className="col-md-3 mb-1" align="right">
 															<Link to="/account/profile_name">
-																<button class="btn btn-primary btn-sm">
+																<button className="btn btn-primary btn-sm">
 																	Set Profile Name
 																</button>
 															</Link>
@@ -242,7 +242,7 @@ const Characters = ({
 											<div className="panel panel-default">
 												<div className="panel-heading">Profile Avatar</div>
 												<div className="panel-body" align="center">
-													<span class="fs-xl text-truncate text-truncate-lg text-primary">
+													<span className="fs-xl text-truncate text-truncate-lg text-primary">
 														{Account?.profileName}
 													</span>
 													{avatar.avatar === '' ? (

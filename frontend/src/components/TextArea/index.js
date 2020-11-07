@@ -1,6 +1,7 @@
 import React from 'react'
+import JoditEditor from '../../components/Jodit'
 
-const ProfileForm = (props) => {
+const TextArea = (props) => {
 	const { data, name, label, type } = props
 	const [value, setValue] = React.useState('')
 
@@ -17,7 +18,7 @@ const ProfileForm = (props) => {
 	return (
 		<div className="form-group">
 			<label>{label}</label>
-			<input
+			<JoditEditor
 				type={type}
 				className="form-control"
 				name={name}
@@ -28,4 +29,4 @@ const ProfileForm = (props) => {
 	)
 }
 
-export default ProfileForm
+export default TextArea

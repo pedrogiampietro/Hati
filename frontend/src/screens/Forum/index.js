@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import {
 	forumList,
@@ -10,7 +10,6 @@ import {
 import { showNewThread } from '../../assets/js/scripts'
 import { getFormData } from '../../helpers/form'
 import Container from '../Layouts/Container'
-import HatiBoard from './HatiBoard/index'
 import CreateThread from './Threads/Create'
 import noneAvatar from '../../assets/img/none_avatar.png'
 import { closeModalAvatar } from '../../assets/js/scripts'
@@ -23,7 +22,6 @@ const Forum = ({
 	boardRemove,
 }) => {
 	const [categoryLists, setCategoryLists] = React.useState([])
-	const history = useHistory()
 
 	React.useEffect(() => {
 		forumList().then(({ payload }) => {
@@ -43,7 +41,6 @@ const Forum = ({
 		forumCreateBoard(data)
 			.then(() => {
 				closeModalAvatar()
-				// history.push('/forum')
 			})
 			.catch((err) => {
 				console.error(err)
@@ -66,8 +63,6 @@ const Forum = ({
 							</span>
 						</div>
 					</div>
-
-					{/* <HatiBoard /> */}
 
 					<div className="card mb-g border shadow-0">
 						<div className="card-header bg-white p-0">
