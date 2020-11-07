@@ -10,6 +10,7 @@ import {
 	BOARD_REMOVE,
 	EDIT_POST,
 	ADD_COMMENT,
+	GET_COMMENT,
 } from '../actions/ForumActions'
 
 const initialState = {
@@ -28,6 +29,7 @@ export default function (state = initialState, action) {
 		case SECTION_LIST:
 		case EDIT_POST:
 		case ADD_COMMENT:
+		case GET_COMMENT:
 		case LIKE_UPDATE: {
 			const response = payload ? payload.data : null
 			const forum = response ? response.data : null

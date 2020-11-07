@@ -99,6 +99,7 @@ router.get('/thread/:board_id/:discussion', async (req, res) => {
 
 	const getDiscussion = await thread.findOne({
 		where: { id: discussion, board_id },
+
 		include: [
 			{
 				model: account,
@@ -214,6 +215,16 @@ router.post('/disLike/:id', async (req, res) => {
 //=================================
 //          Comments
 //=================================
+
+router.get('/thread/:board_id/:discussion/comments', async (req, res) => {
+	const { board_id, discussion } = req.params
+
+	const getComments = await comment.findAll({
+		where: { id: discussion },
+	})
+
+	return res.jsonOK(getComments)
+})
 
 router.post('/thread/:board_id/:discussion/reply', async (req, res) => {
 	const { body } = req

@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import {
 	forumDiscussion,
 	addComments,
+	getComments,
 	editPost,
 } from '../../../actions/ForumActions'
 import { getAvatarUrl } from '../../../helpers/api'
@@ -18,8 +19,9 @@ import noneAvatar from '../../../assets/img/none_avatar.png'
 
 import JoditEditor from 'jodit-react'
 
-const Discussions = ({ forumDiscussion, editPost }) => {
+const Discussions = ({ forumDiscussion, editPost, account, getComments }) => {
 	const [discussionPost, setDiscussionPost] = React.useState([])
+	const [comments, setComments] = React.useState([])
 	const [postInteraction, setPostInteraction] = React.useState(false)
 	const [editingPost, setEditingPost] = React.useState([])
 	const { board_id, discussion } = useParams()
@@ -29,6 +31,10 @@ const Discussions = ({ forumDiscussion, editPost }) => {
 	}
 
 	React.useEffect(() => {
+		getComments(board_id, discussion).then(({ payload }) => {
+			const newData = payload.data.data
+			setComments(newData)
+		})
 		editPost(discussion).then(({ payload }) => {
 			const newData = payload.data.data
 			setEditingPost(newData)
@@ -43,14 +49,24 @@ const Discussions = ({ forumDiscussion, editPost }) => {
 				alert('error!')
 				console.log(err)
 			})
-	}, [forumDiscussion, editPost, postInteraction, board_id, discussion])
+	}, [
+		forumDiscussion,
+		editPost,
+		getComments,
+		postInteraction,
+		board_id,
+		discussion,
+	])
 
 	const submitHandler = (event) => {
 		event.preventDefault()
 
 		const data = getFormData(event)
+
 		addComments(board_id, discussion, data)
 	}
+
+	console.log('***** discussionPost', discussionPost)
 
 	return (
 		<Container>
@@ -97,11 +113,9 @@ const Discussions = ({ forumDiscussion, editPost }) => {
 										{discussionPost.character_name}
 									</Link>
 									<br />
-									{discussionPost.player &&
-									discussionPost.player.account &&
-									discussionPost.player.account.avatar ? (
+									{discussionPost?.account?.avatar ? (
 										<img
-											src={getAvatarUrl(discussionPost.player.account.avatar)}
+											src={getAvatarUrl(discussionPost.account.avatar)}
 											className="profile-image rounded-circle"
 											alt=""
 										/>
@@ -112,11 +126,6 @@ const Discussions = ({ forumDiscussion, editPost }) => {
 											alt=""
 										/>
 									)}
-									<br />
-									<br />
-									Posts: 221
-									<br />
-									Likes: <span id="like_count_150">135</span>
 									<br />
 									Country: BR
 									<br />
@@ -141,15 +150,95 @@ const Discussions = ({ forumDiscussion, editPost }) => {
 										likes_count={discussionPost.likes_count}
 										interaction={interaction}
 									/>
-									<a href="/forum/post/reply/150">
-										<button className="btn btn-sm btn-default">
-											<BsReply size={24} color="#886ab5" /> Reply
-										</button>
-									</a>
 								</div>
 							</div>
 						</div>
 					</div>
+
+					{comments.map((comment) => {
+						console.log(comment)
+						return (
+							<div
+								key={comment.id}
+								className="panel panel-default hidden-xs hidden-sm"
+							>
+								<div className="panel-heading">
+									{formatDate(comment.createdAt)}
+								</div>
+								{/* <div className="panel-toolbar pr-3 align-self-end">
+										<ul className="nav nav-tabs border-bottom-0 nav-tabs-clean">
+											{editingPost?.length <= 0 ? null : (
+												<li className="nav-item">
+													<Link to={`/forum/post/edit/${comment.id}`}>
+														<button className="nav-link active" role="tab">
+															Edit Post
+														</button>
+													</Link>
+												</li>
+											)}
+										</ul>
+									</div> */}
+
+								<div className="panel-body forum-content-body">
+									<div className="row">
+										<div className="col-md-2" align="center">
+											<Link
+												className="forum-profilename forum-profilename-color7 notranslate"
+												to={`/character/${comment.character_name}`}
+											>
+												{discussionPost.character_name}
+											</Link>
+											<br />
+											{discussionPost?.account?.avatar ? (
+												<img
+													src={getAvatarUrl(discussionPost.account.avatar)}
+													className="profile-image rounded-circle"
+													alt=""
+												/>
+											) : (
+												<img
+													src={noneAvatar}
+													className="profile-image rounded-circle"
+													alt=""
+												/>
+											)}
+											<br />
+											Country: BR
+											<br />
+											Member since: 10/12/2019
+											<br />
+											Discord: Pedro#6666
+											<br />
+										</div>
+										<div
+											className="col-md-10"
+											dangerouslySetInnerHTML={{
+												__html: comment.post_content,
+											}}
+										/>
+									</div>
+
+									<br />
+									<div className="row">
+										<div className="col-md-2">Administrador// IMG LATER</div>
+										<div className="col-md-4"></div>
+										<div className="col-md-6" align="right">
+											{/* <LikeDeslikes
+              id={discussionPost.id}
+              likes_count={discussionPost.likes_count}
+              interaction={interaction}
+            /> */}
+											<a href="/forum/post/reply/150">
+												<button className="btn btn-sm btn-default">
+													<BsReply size={24} color="#886ab5" /> Reply
+												</button>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						)
+					})}
 
 					<ul className="pagination mt-3">
 						<li className="page-item disabled">
@@ -190,8 +279,13 @@ const Discussions = ({ forumDiscussion, editPost }) => {
 					<form onSubmit={submitHandler}>
 						<div className="form-group">
 							<label htmlFor="inputContent">Content</label>
-							<JoditEditor name="post_content" id="post_content" tabIndex={1} />
-							<input type="text" name="character_name" />
+							<JoditEditor name="post_content" id="reply" tabIndex={1} />
+							<input
+								type="text"
+								name="character_name"
+								defaultValue={account?.[0].account.profileName}
+								hidden
+							/>
 						</div>
 
 						<button type="submit" className="btn btn-primary">
@@ -211,6 +305,8 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps, { forumDiscussion, editPost })(
-	Discussions
-)
+export default connect(mapStateToProps, {
+	forumDiscussion,
+	getComments,
+	editPost,
+})(Discussions)

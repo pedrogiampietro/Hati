@@ -301,7 +301,6 @@ module.exports = (sequelize, DataTypes) => {
 
 	player.associate = (models) => {
 		player.belongsTo(models.account, { foreignKey: 'account_id' })
-		// player.hasMany(models.thread, { foreignKey: 'id' })
 		player.hasMany(models.player_deaths, { foreignKey: 'player_id' })
 	}
 

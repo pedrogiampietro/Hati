@@ -23,6 +23,7 @@ export const GET_DISCUSSION = 'GET_DISCUSSION'
 export const EDIT_POST = 'EDIT_POST'
 
 export const ADD_COMMENT = 'ADD_COMMENT'
+export const GET_COMMENT = 'GET_COMMENT'
 
 export const forumList = (data) => {
 	const payload = apiGet('/forum', data)
@@ -63,10 +64,13 @@ export const editPost = (id, data) => {
 	return { type: EDIT_POST, payload }
 }
 
-// export const getComments = (board_id, discussion, data) => {
-// 	const payload = apiGet(`/forum/thread/${board_id}/${discussion}/`, data)
-// 	return { type: ADD_COMMENT, payload }
-// }
+export const getComments = (board_id, discussion, data) => {
+	const payload = apiGet(
+		`/forum/thread/${board_id}/${discussion}/comments`,
+		data
+	)
+	return { type: GET_COMMENT, payload }
+}
 
 export const addComments = (board_id, discussion, data) => {
 	const payload = apiPost(`/forum/thread/${board_id}/${discussion}/reply`, data)
