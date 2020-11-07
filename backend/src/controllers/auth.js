@@ -199,6 +199,49 @@ router.put('/profile_info', async (req, res) => {
 	return res.jsonOK(accounts, getMessage('account.reset_password.sucess'))
 })
 
+router.post('/profile_name', async (req, res) => {
+	const { body } = req
+	const { profileName } = body
+
+	try {
+		const token = getTokenFromHeaders(req.headers)
+
+		if (!token) {
+			return res.jsonUnauthorized(
+				null,
+				getMessage('response.json_invalid_token')
+			)
+		}
+
+		const decoded = verifyJwt(token)
+
+		const accounts = await account.findByPk(decoded.id)
+		if (!accounts)
+			return res.jsonUnauthorized(
+				null,
+				getMessage('response.json_invalid_token')
+			)
+
+		const checkProfileName = await account.findOne({ where: { profileName } })
+		if (checkProfileName)
+			return res.jsonBadRequest(
+				null,
+				getMessage('Profile name exists, please choose other.')
+			)
+
+		await accounts.update({
+			profileName,
+		})
+
+		res.jsonOK(
+			accounts.profileName,
+			getMessage('account.settings.avatar_success')
+		)
+	} catch (error) {
+		return res.jsonBadRequest(null, error)
+	}
+})
+
 router.post('/refresh', async (req, res) => {
 	const token = getTokenFromHeaders(req.headers)
 	if (!token) {

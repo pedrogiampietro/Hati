@@ -67,7 +67,7 @@ const Forum = ({
 						</div>
 					</div>
 
-					<HatiBoard />
+					{/* <HatiBoard /> */}
 
 					<div className="card mb-g border shadow-0">
 						<div className="card-header bg-white p-0">

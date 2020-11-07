@@ -10,6 +10,7 @@ import {
 	DELETE_PROFILE_AVATAR,
 	FORGOT_PASSWORD,
 	RESET_PASSWORD,
+	PROFILE_NAME,
 } from '../actions/AccountActions'
 import {
 	getAccount,
@@ -41,6 +42,7 @@ export default function (state = initialState, action) {
 		case PLAYER_CREATE:
 		case CREATE_THREAD:
 		case PROFILE_INFO:
+		case PROFILE_NAME:
 		case GET_PROFILE_AVATAR:
 		case POST_PROFILE_AVATAR:
 		case DELETE_PROFILE_AVATAR:

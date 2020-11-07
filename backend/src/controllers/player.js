@@ -23,6 +23,7 @@ router.get('/characters', async (req, res) => {
 					'location',
 					'flag',
 					'avatar',
+					'profileName',
 				],
 			},
 		],

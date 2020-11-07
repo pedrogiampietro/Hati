@@ -6,6 +6,7 @@ import { initAccount } from './actions/AccountActions'
 import Home from './screens/Home'
 import SignIn from './screens/SignIn'
 import AccountProfile from './screens/Account/Profile'
+import ProfileName from './screens/Account/ProfileName'
 import ProfileAvatar from './screens/Account/ProfileAvatar'
 import SignUp from './screens/SignUp'
 import Dashboard from './screens/Dashboard'
@@ -63,6 +64,10 @@ const App = ({ initAccount }) => {
 
 					<Route path="/account/profile">
 						<AccountProfile />
+					</Route>
+
+					<Route path="/account/profile_name">
+						<ProfileName />
 					</Route>
 
 					<Route path="/account/avatar">

@@ -215,22 +215,26 @@ const Characters = ({
 														</tbody>
 													</table>
 
-													<table>
-														<tbody>
-															<tr>
-																<td className="col-md-3">
-																	<a href="/account/profile">
-																		<button
-																			className="btn btn-primary btn-sm"
-																			align="left"
-																		>
-																			Update Information
-																		</button>
-																	</a>
-																</td>
-															</tr>
-														</tbody>
-													</table>
+													<span className="col-md-3">
+														<Link to="/account/profile">
+															<button
+																className="btn btn-primary btn-sm"
+																align="left"
+															>
+																Update Information
+															</button>
+														</Link>
+													</span>
+
+													{Account?.profileName !== '' ? null : (
+														<span class="col-md-3" align="right">
+															<Link to="/account/profile_name">
+																<button class="btn btn-primary btn-sm">
+																	Set Profile Name
+																</button>
+															</Link>
+														</span>
+													)}
 												</div>
 											</div>
 										</div>
@@ -238,6 +242,9 @@ const Characters = ({
 											<div className="panel panel-default">
 												<div className="panel-heading">Profile Avatar</div>
 												<div className="panel-body" align="center">
+													<span class="fs-xl text-truncate text-truncate-lg text-primary">
+														{Account?.profileName}
+													</span>
 													{avatar.avatar === '' ? (
 														<img
 															src={ProfileAvatar}

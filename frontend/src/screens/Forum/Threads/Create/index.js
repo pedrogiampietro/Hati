@@ -5,7 +5,8 @@ import { forumNewThread } from '../../../../actions/ForumActions'
 import { playerList } from '../../../../actions/PlayerActions'
 import { hideNewThread } from '../../../../assets/js/scripts'
 
-import JoditEditor from 'jodit-react'
+// import JoditEditor from 'jodit-react'
+import JoditEditor from '../../../../components/Jodit'
 
 const CreateThread = ({ forumNewThread, playerList, forum }) => {
 	const [newThread, setNewThread] = React.useState([])
@@ -109,7 +110,7 @@ const CreateThread = ({ forumNewThread, playerList, forum }) => {
 								rows="13"
 								required
 							></textarea> */}
-							<JoditEditor name="body_text" id="body_text" tabIndex={1} />
+							<JoditEditor name="body_text" tabIndex={1} />
 						</div>
 
 						<div className="px-1 py-1 d-flex flex-row align-items-center flex-wrap flex-shrink-0">

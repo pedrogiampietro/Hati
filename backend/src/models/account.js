@@ -89,6 +89,11 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.DATE,
 			select: false,
 		},
+		profileName: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			defaultValue: '',
+		},
 	})
 
 	account.associate = (models) => {

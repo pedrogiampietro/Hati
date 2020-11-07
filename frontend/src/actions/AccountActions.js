@@ -13,6 +13,7 @@ export const SIGN_OUT = 'SIGN_OUT'
 export const INIT_ACCOUNT = 'INIT_ACCOUNT'
 export const REFRESH_TOKEN = 'REFRESH_TOKEN'
 export const PROFILE_INFO = 'PROFILE_INFO'
+export const PROFILE_NAME = 'PROFILE_NAME'
 export const GET_PROFILE_AVATAR = 'GET_PROFILE_AVATAR'
 export const POST_PROFILE_AVATAR = 'POST_PROFILE_AVATAR'
 export const DELETE_PROFILE_AVATAR = 'DELETE_PROFILE_AVATAR'
@@ -36,6 +37,11 @@ export const signOut = () => {
 export const profileInfo = (data) => {
 	const payload = apiPut('/account/profile_info', { ...data })
 	return { type: PROFILE_INFO, payload }
+}
+
+export const profileName = (data) => {
+	const payload = apiPost('/account/profile_name', data)
+	return { type: PROFILE_NAME, payload }
 }
 
 export const getProfileAvatar = (data) => {

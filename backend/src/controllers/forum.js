@@ -1,5 +1,12 @@
 const express = require('express')
-const { z_forum, player, account, forumBoard, thread, comment } = require('../models')
+const {
+	z_forum,
+	player,
+	account,
+	forumBoard,
+	thread,
+	comment,
+} = require('../models')
 const { getMessage } = require('../helpers/messages')
 
 const router = express.Router()
@@ -48,12 +55,18 @@ router.get('/thread/:board_id', async (req, res) => {
 
 	const getThreads = await thread.findAll({
 		where: { board_id },
-		// include: [
-		// 	{
-		// 		model: account,
-		// 		attributes: ['avatar'],
-		// 	},
-		// ],
+		include: [
+			{
+				model: account,
+				attributes: ['avatar'],
+				include: [
+					{
+						model: player,
+						attributes: ['name', 'group_id'],
+					},
+				],
+			},
+		],
 
 		order: [
 			['createdAt', 'DESC'],
@@ -201,8 +214,6 @@ router.post('/thread/:board_id/:discussion/reply', async (req, res) => {
 			null,
 			'thread not exists, select other and try again.'
 		)
-
-	
 
 	return res.jsonOK(getDiscussion)
 
