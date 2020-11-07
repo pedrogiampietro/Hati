@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
 	thread.associate = (models) => {
 		thread.belongsTo(models.forumBoard, { foreignKey: 'board_id' })
 		thread.belongsTo(models.account, { foreignKey: 'account_id' })
-		// thread.belongsTo(models.player, { foreignKey: 'owner_id' })
+		thread.hasMany(models.comment, { foreignKey: 'thread_id' })
 	}
 
 	return thread

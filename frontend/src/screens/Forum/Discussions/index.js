@@ -1,10 +1,15 @@
 import React from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { forumDiscussion, editPost } from '../../../actions/ForumActions'
+import {
+	forumDiscussion,
+	addComments,
+	editPost,
+} from '../../../actions/ForumActions'
 import { getAvatarUrl } from '../../../helpers/api'
 
 import { formatDate } from '../../../helpers/datetime'
+import { getFormData } from '../../../helpers/form'
 import Container from '../../Layouts/Container'
 import LikeDeslikes from '../../../components/LikeDeslikes'
 import { BsReply } from 'react-icons/bs'
@@ -39,6 +44,13 @@ const Discussions = ({ forumDiscussion, editPost }) => {
 				console.log(err)
 			})
 	}, [forumDiscussion, editPost, postInteraction, board_id, discussion])
+
+	const submitHandler = (event) => {
+		event.preventDefault()
+
+		const data = getFormData(event)
+		addComments(board_id, discussion, data)
+	}
 
 	return (
 		<Container>
@@ -175,10 +187,11 @@ const Discussions = ({ forumDiscussion, editPost }) => {
 			<div className="panel panel-default">
 				<div className="panel-heading">Quick Reply Box</div>
 				<div className="panel-body">
-					<form method="post" action="/forum/thread/473">
+					<form onSubmit={submitHandler}>
 						<div className="form-group">
 							<label htmlFor="inputContent">Content</label>
-							<JoditEditor name="body_text" id="body_text" tabIndex={1} />
+							<JoditEditor name="post_content" id="post_content" tabIndex={1} />
+							<input type="text" name="character_name" />
 						</div>
 
 						<button type="submit" className="btn btn-primary">
@@ -187,7 +200,6 @@ const Discussions = ({ forumDiscussion, editPost }) => {
 					</form>
 				</div>
 			</div>
-			;
 		</Container>
 	)
 }

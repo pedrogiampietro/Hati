@@ -1,13 +1,7 @@
 const express = require('express')
-const {
-	z_forum,
-	player,
-	account,
-	forumBoard,
-	thread,
-	comment,
-} = require('../models')
+const { player, account, forumBoard, thread, comment } = require('../models')
 const { getMessage } = require('../helpers/messages')
+const { verifyJwt, getTokenFromHeaders } = require('../helpers/jwt')
 
 const router = express.Router()
 
@@ -222,25 +216,45 @@ router.post('/disLike/:id', async (req, res) => {
 //=================================
 
 router.post('/thread/:board_id/:discussion/reply', async (req, res) => {
+	const { body } = req
+	const { post_content, character_name } = body
 	const { board_id, discussion } = req.params
 
-	const getDiscussion = await thread.findOne({
-		where: { id: discussion, board_id },
-	})
+	try {
+		const token = getTokenFromHeaders(req.headers)
 
-	if (!getDiscussion)
-		return jsonBadRequest(
-			null,
-			'thread not exists, select other and try again.'
-		)
+		if (!token) {
+			return res.jsonUnauthorized(
+				null,
+				getMessage('response.json_invalid_token')
+			)
+		}
 
-	return res.jsonOK(getDiscussion)
+		const decoded = verifyJwt(token)
 
-	//buscando um post;
+		const accounts = await account.findByPk(decoded.id)
+		if (!accounts)
+			return res.jsonUnauthorized(
+				null,
+				getMessage('response.json_invalid_token')
+			)
 
-	//criando um novo comentário;
+		const getDiscussion = await thread.findOne({
+			where: { id: discussion, board_id },
+		})
+		if (!getDiscussion) return res.jsonNotFound(null)
 
-	//associando um comentário a um post.
+		const createComment = await comment.create({
+			post_content,
+			character_name,
+			account_id: decoded.id,
+			thread_id: Number(board_id),
+		})
+
+		res.jsonOK(createComment, getMessage('comments added sucessfuly!'))
+	} catch (error) {
+		return res.jsonBadRequest(null, error)
+	}
 })
 
 module.exports = router

@@ -9,6 +9,7 @@ import {
 	BOARD_TO_REMOVE,
 	BOARD_REMOVE,
 	EDIT_POST,
+	ADD_COMMENT,
 } from '../actions/ForumActions'
 
 const initialState = {
@@ -26,6 +27,7 @@ export default function (state = initialState, action) {
 		case CREATE_BOARD:
 		case SECTION_LIST:
 		case EDIT_POST:
+		case ADD_COMMENT:
 		case LIKE_UPDATE: {
 			const response = payload ? payload.data : null
 			const forum = response ? response.data : null

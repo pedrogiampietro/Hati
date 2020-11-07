@@ -22,6 +22,8 @@ export const CREATE_THREAD = 'CREATE_THREAD'
 export const GET_DISCUSSION = 'GET_DISCUSSION'
 export const EDIT_POST = 'EDIT_POST'
 
+export const ADD_COMMENT = 'ADD_COMMENT'
+
 export const forumList = (data) => {
 	const payload = apiGet('/forum', data)
 	return { type: FORUM_LIST, payload }
@@ -59,6 +61,16 @@ export const forumDiscussion = (board_id, discussion, data) => {
 export const editPost = (id, data) => {
 	const payload = apiPut(`/forum/post/edit/${id}`, { ...data })
 	return { type: EDIT_POST, payload }
+}
+
+// export const getComments = (board_id, discussion, data) => {
+// 	const payload = apiGet(`/forum/thread/${board_id}/${discussion}/`, data)
+// 	return { type: ADD_COMMENT, payload }
+// }
+
+export const addComments = (board_id, discussion, data) => {
+	const payload = apiPost(`/forum/thread/${board_id}/${discussion}/reply`, data)
+	return { type: ADD_COMMENT, payload }
 }
 
 export const newsCreate = (data) => {
