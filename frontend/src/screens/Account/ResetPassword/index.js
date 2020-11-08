@@ -8,8 +8,6 @@ import ContainerOnlyMenu from '../../Layouts/Container/Menu'
 import Background from '../../../assets/img/backgrounds/pattern-1.svg'
 import Error from '../../../helpers/error'
 
-import './styles.css'
-
 const ResetPassword = ({ resetPassword }) => {
 	const [error, setError] = React.useState()
 	const history = useHistory()

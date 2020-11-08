@@ -18,19 +18,29 @@ const Forum = ({
 	setBoardToRemove,
 	boardToRemove,
 	boardRemove,
+	account,
 }) => {
 	const [categoryLists, setCategoryLists] = React.useState([])
+	const [postInteraction, setPostInteraction] = React.useState(false)
+
+	function interaction() {
+		setPostInteraction(!postInteraction)
+	}
 
 	React.useEffect(() => {
 		forumList().then(({ payload }) => {
 			const newData = payload.data.data
 			setCategoryLists(newData)
 		})
-	}, [forumList])
+	}, [forumList, postInteraction])
 
 	const cancelDelete = (e) => setBoardToRemove(null)
-	const confirmDelete = (e) =>
-		boardToRemove ? boardRemove(boardToRemove) : null
+	const confirmDelete = async (e) => {
+		if (boardToRemove) {
+			await boardRemove(boardToRemove)
+			interaction()
+		}
+	}
 
 	const submitHandler = (event) => {
 		event.preventDefault()
@@ -39,6 +49,7 @@ const Forum = ({
 		forumCreateBoard(data)
 			.then(() => {
 				closeModalAvatar()
+				interaction()
 			})
 			.catch((err) => {
 				console.error(err)
@@ -71,16 +82,18 @@ const Forum = ({
 											General
 										</span>
 									</div>
-									<div className="col d-flex">
-										<button
-											type="button"
-											className="btn btn-outline-primary btn-sm ml-auto mr-2 flex-shrink-0 waves-effect waves-themed"
-											data-toggle="modal"
-											data-target=".example-modal-centered-transparent"
-										>
-											Add new Category
-										</button>
-									</div>
+									{account?.[0].account.page_access >= 3 ? (
+										<div className="col d-flex">
+											<button
+												type="button"
+												className="btn btn-outline-primary btn-sm ml-auto mr-2 flex-shrink-0 waves-effect waves-themed"
+												data-toggle="modal"
+												data-target=".example-modal-centered-transparent"
+											>
+												Add new Category
+											</button>
+										</div>
+									) : null}
 								</div>
 							</div>
 							<div className="row no-gutters row-grid align-items-stretch">
@@ -209,21 +222,24 @@ const Forum = ({
 														</div>
 													</div>
 												</div>
-												<div className="col-md">
-													<div className="p-3">
-														<div className="d-flex">
-															<div className="d-inline-flex flex-column">
-																<span
-																	className="btn btn-outline-danger btn-xs waves-effect waves-themed"
-																	title="Delete Board"
-																	onClick={deleteClick}
-																>
-																	<i className="fal fa-times" />
-																</span>
+												{account?.[0].account.page_access >= 3 ? (
+													<div className="col-md">
+														<div className="p-3">
+															<div className="d-flex">
+																<div className="d-inline-flex flex-column">
+																	<span
+																		className="btn btn-outline-danger btn-xs waves-effect waves-themed"
+																		title="Delete Board"
+																		onClick={deleteClick}
+																	>
+																		<i className="fal fa-times" />
+																	</span>
+																</div>
 															</div>
 														</div>
 													</div>
-												</div>
+												) : null}
+
 												<div className="col-4 col-md-2 col-xl-1 hidden-md-down">
 													<div className="p-3 p-md-3">
 														<span className="d-block text-muted">

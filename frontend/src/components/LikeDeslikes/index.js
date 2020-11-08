@@ -6,8 +6,6 @@ import { connect } from 'react-redux'
 import { ImHeart } from 'react-icons/im'
 
 const LikeDeslikes = ({ upLike, account, id, likes_count, interaction }) => {
-	// const { id, likes_count, interaction } = props.propriety
-
 	const [characterLogged, setCharacterLogged] = useState()
 
 	useEffect(() => {

@@ -12,7 +12,13 @@ import { showNewThread } from '../../../assets/js/scripts'
 
 const Threads = ({ forumBoard }) => {
 	const [threadList, setThreadList] = React.useState([])
+	const [postInteraction, setPostInteraction] = React.useState(false)
+
 	const { board_id } = useParams()
+
+	function interaction() {
+		setPostInteraction(!postInteraction)
+	}
 
 	React.useEffect(() => {
 		forumBoard(board_id)
@@ -24,7 +30,8 @@ const Threads = ({ forumBoard }) => {
 				alert('error!')
 				console.log(err)
 			})
-	}, [forumBoard, board_id])
+	}, [forumBoard, board_id, postInteraction])
+	interaction()
 
 	return (
 		<Container>

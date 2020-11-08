@@ -66,7 +66,7 @@ const Discussions = ({ forumDiscussion, editPost, account, getComments }) => {
 		addComments(board_id, discussion, data)
 	}
 
-	console.log('***** discussionPost', discussionPost)
+	console.log(comments)
 
 	return (
 		<Container>
@@ -188,12 +188,14 @@ const Discussions = ({ forumDiscussion, editPost, account, getComments }) => {
 												className="forum-profilename forum-profilename-color7 notranslate"
 												to={`/character/${comment.character_name}`}
 											>
-												{discussionPost.character_name}
+												<span className="subheader-title text-truncate text-truncate-lg text-primary">
+													{comment.character_name}
+												</span>
 											</Link>
 											<br />
-											{discussionPost?.account?.avatar ? (
+											{comment?.account?.avatar ? (
 												<img
-													src={getAvatarUrl(discussionPost.account.avatar)}
+													src={getAvatarUrl(comment.account.avatar)}
 													className="profile-image rounded-circle"
 													alt=""
 												/>
@@ -230,11 +232,6 @@ const Discussions = ({ forumDiscussion, editPost, account, getComments }) => {
               likes_count={discussionPost.likes_count}
               interaction={interaction}
             /> */}
-											<a href="/forum/post/reply/150">
-												<button className="btn btn-sm btn-default">
-													<BsReply size={24} color="#886ab5" /> Reply
-												</button>
-											</a>
 										</div>
 									</div>
 								</div>

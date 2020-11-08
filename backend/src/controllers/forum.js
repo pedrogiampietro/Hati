@@ -218,10 +218,16 @@ router.post('/disLike/:id', async (req, res) => {
 //=================================
 
 router.get('/thread/:board_id/:discussion/comments', async (req, res) => {
-	const { board_id, discussion } = req.params
+	const { discussion } = req.params
 
 	const getComments = await comment.findAll({
-		where: { id: discussion },
+		where: { thread_id: discussion },
+		include: [
+			{
+				model: account,
+				attributes: ['avatar'],
+			},
+		],
 	})
 
 	return res.jsonOK(getComments)

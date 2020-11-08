@@ -27,12 +27,9 @@ const Home = ({ forumBoard }) => {
 				setNewsPost(newData)
 			})
 			.catch((err) => {
-				alert('posts não foram carregados.')
 				console.log(err)
 			})
 	}, [forumBoard, postInteraction])
-
-	console.log('*****newspost', newsPost)
 
 	return (
 		<Container>

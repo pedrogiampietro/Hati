@@ -25,7 +25,12 @@ const CreateThread = ({ forumNewThread, playerList, forum }) => {
 
 		const data = getFormData(event)
 		forumNewThread(board_id, data)
-		history.push(`/forum/${board_id}`)
+			.then(() => {
+				hideNewThread()
+			})
+			.catch((err) => {
+				console.error(err)
+			})
 	}
 
 	if (

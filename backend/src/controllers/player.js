@@ -24,6 +24,7 @@ router.get('/characters', async (req, res) => {
 					'flag',
 					'avatar',
 					'profileName',
+					'page_access',
 				],
 			},
 		],

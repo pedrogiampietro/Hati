@@ -9,8 +9,6 @@ import Background from '../../../assets/img/backgrounds/pattern-1.svg'
 
 import Error from '../../../helpers/error'
 
-import './styles.css'
-
 const ForgotPassword = ({ forgotPassword }) => {
 	const [error, setError] = React.useState()
 	const history = useHistory()
