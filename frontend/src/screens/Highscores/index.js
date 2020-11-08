@@ -273,30 +273,55 @@ const Highscores = ({ highscoresList }) => {
 									</thead>
 								</table>
 
-								<center>
-									<button
-										className="previous round"
-										onClick={(e) => setPageInitial(pageInitial - 1)}
-									>
-										&#8249;
-									</button>
-									{playerList.length >= 10 ? (
-										<button
-											className="next round"
-											onClick={() => setPageInitial(pageInitial + 1)}
-										>
-											&#8250;
-										</button>
-									) : (
-										<button
-											className="next round disabled"
-											disabled
-											onClick={() => setPageInitial(pageInitial + 1)}
-										>
-											&#8250;
-										</button>
-									)}
-								</center>
+								<div className="row justify-content-center pb-5">
+									{' '}
+									<ul class="pagination my-4">
+										{pageInitial <= 0 ? (
+											<li class="page-item">
+												<button
+													className="page-link disabled mr-3"
+													aria-label="Previous"
+													onClick={(e) => setPageInitial(pageInitial - 1)}
+													disabled
+												>
+													&#8249;
+												</button>
+											</li>
+										) : (
+											<li class="page-item">
+												<button
+													className="page-link round mr-3"
+													aria-label="Previous"
+													onClick={(e) => setPageInitial(pageInitial - 1)}
+												>
+													&#8249;
+												</button>
+											</li>
+										)}
+
+										{playerList.length >= 10 ? (
+											<li class="page-item">
+												<button
+													className="page-link"
+													aria-label="Next"
+													onClick={() => setPageInitial(pageInitial + 1)}
+												>
+													&#8250;
+												</button>
+											</li>
+										) : (
+											<li class="page-item">
+												<button
+													className="page-link disabled"
+													disabled
+													onClick={() => setPageInitial(pageInitial + 1)}
+												>
+													&#8250;
+												</button>
+											</li>
+										)}
+									</ul>
+								</div>
 							</div>
 						</div>
 					</div>
