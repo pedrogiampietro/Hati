@@ -74,6 +74,8 @@ export default function (state = initialState, action) {
 		case RESET_PASSWORD: {
 			const response = payload ? payload.data : null
 			const metadata = response ? response.metadata : null
+			const token = metadata ? metadata.token : null
+			if (token) setToken(token)
 
 			return state
 		}

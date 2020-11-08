@@ -49,8 +49,8 @@ export const forumBoard = (board_id) => {
 	return { type: SECTION_LIST, payload }
 }
 
-export const forumNewThread = (data) => {
-	const payload = apiPostNews('/forum/newThread', data)
+export const forumNewThread = (board_id, data) => {
+	const payload = apiPostNews(`/forum/newThread/${board_id}`, data)
 	return { type: CREATE_THREAD, payload }
 }
 

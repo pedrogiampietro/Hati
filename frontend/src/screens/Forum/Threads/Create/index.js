@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { useHistory, useParams } from 'react-router-dom'
 import { getFormData } from '../../../../helpers/form'
 import { forumNewThread } from '../../../../actions/ForumActions'
 import { playerList } from '../../../../actions/PlayerActions'
@@ -9,6 +10,8 @@ import JoditEditor from '../../../../components/Jodit'
 
 const CreateThread = ({ forumNewThread, playerList, forum }) => {
 	const [newThread, setNewThread] = React.useState([])
+	const { board_id } = useParams()
+	const history = useHistory()
 
 	React.useEffect(() => {
 		playerList().then(({ payload }) => {
@@ -21,8 +24,15 @@ const CreateThread = ({ forumNewThread, playerList, forum }) => {
 		event.preventDefault()
 
 		const data = getFormData(event)
+		forumNewThread(board_id, data)
+		history.push(`/forum/${board_id}`)
+	}
 
-		forumNewThread(data)
+	if (
+		newThread[0]?.account.profileName === '' ||
+		newThread[0]?.account.profileName === null
+	) {
+		history.push('/account/profile_name')
 	}
 
 	return (
@@ -65,22 +75,7 @@ const CreateThread = ({ forumNewThread, playerList, forum }) => {
 					</div>
 					{/* end mobile view */}
 					<div className="panel-container show rounded-0 flex-1 d-flex flex-column">
-						<div className="px-3">
-							<select
-								className="custom-select form-control mt-3 mb-2"
-								name="board_id"
-							>
-								{forum && forum.length
-									? forum.map((board) => {
-											return (
-												<option key={board.id} value={board.id}>
-													{board.title}
-												</option>
-											)
-									  })
-									: null}
-							</select>
-
+						<div className="px-3 mt-3">
 							<select
 								className="custom-select form-control"
 								name="character_name"

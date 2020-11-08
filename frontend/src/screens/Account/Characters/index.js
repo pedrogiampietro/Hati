@@ -242,9 +242,16 @@ const Characters = ({
 											<div className="panel panel-default">
 												<div className="panel-heading">Profile Avatar</div>
 												<div className="panel-body" align="center">
-													<span className="fs-xl text-truncate text-truncate-lg text-primary">
-														{Account?.profileName}
-													</span>
+													<div class="fc-toolbar fc-header-toolbar">
+														<div class="fc-left">
+															<h2 class="fs-md">
+																{' '}
+																<span className="subheader-title text-truncate text-truncate-lg text-primary">
+																	{Account?.profileName}
+																</span>
+															</h2>
+														</div>
+													</div>
 													{avatar.avatar === '' ? (
 														<img
 															src={ProfileAvatar}

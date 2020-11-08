@@ -7,10 +7,8 @@ import {
 	setBoardToRemove,
 	boardRemove,
 } from '../../actions/ForumActions'
-import { showNewThread } from '../../assets/js/scripts'
 import { getFormData } from '../../helpers/form'
 import Container from '../Layouts/Container'
-import CreateThread from './Threads/Create'
 import noneAvatar from '../../assets/img/none_avatar.png'
 import { closeModalAvatar } from '../../assets/js/scripts'
 
@@ -82,13 +80,6 @@ const Forum = ({
 										>
 											Add new Category
 										</button>
-
-										<span
-											className="btn btn-primary btn-sm flex-shrink-0 waves-effect waves-themed ml-2"
-											onClick={() => showNewThread()}
-										>
-											New Thread
-										</span>
 									</div>
 								</div>
 							</div>
@@ -299,7 +290,6 @@ const Forum = ({
 										</div>
 									</div>
 								) : null}
-								<CreateThread />
 							</div>
 						</div>
 					</div>

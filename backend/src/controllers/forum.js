@@ -71,9 +71,10 @@ router.get('/thread/:board_id', async (req, res) => {
 	return res.jsonOK(getThreads)
 })
 
-router.post('/newThread', async (req, res) => {
+router.post('/newThread/:board_id', async (req, res) => {
 	const { account_id, body } = req
-	const { character_name, title, body_text, board_id } = body
+	const { board_id } = req.params
+	const { character_name, title, body_text } = body
 
 	const board = await forumBoard.findByPk(board_id)
 	if (!board) {

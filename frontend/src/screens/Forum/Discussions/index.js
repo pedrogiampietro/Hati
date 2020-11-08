@@ -110,7 +110,9 @@ const Discussions = ({ forumDiscussion, editPost, account, getComments }) => {
 										className="forum-profilename forum-profilename-color7 notranslate"
 										to={`/character/${discussionPost.character_name}`}
 									>
-										{discussionPost.character_name}
+										<span className="subheader-title text-truncate text-truncate-lg text-primary">
+											{discussionPost.character_name}
+										</span>
 									</Link>
 									<br />
 									{discussionPost?.account?.avatar ? (

@@ -103,7 +103,7 @@ const App = ({ initAccount }) => {
 						<Threads />
 					</Route>
 
-					<Route exact path="/forum">
+					<Route exact path="/forum/:board_id">
 						<CreateThread />
 					</Route>
 

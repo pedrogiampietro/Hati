@@ -6,6 +6,9 @@ import { formatDate } from '../../../helpers/datetime'
 
 import Container from '../../Layouts/Container'
 import noneAvatar from '../../../assets/img/none_avatar.png'
+import CreateThread from '../Threads/Create'
+
+import { showNewThread } from '../../../assets/js/scripts'
 
 const Threads = ({ forumBoard }) => {
 	const [threadList, setThreadList] = React.useState([])
@@ -31,6 +34,15 @@ const Threads = ({ forumBoard }) => {
 						<div className="col">
 							<span className="h6 font-weight-bold text-uppercase">Forum</span>
 						</div>
+					</div>
+					<div className="col d-flex">
+						<button
+							type="button"
+							className="btn btn-outline-primary btn-sm ml-auto mr-2 flex-shrink-0 waves-effect waves-themed"
+							onClick={() => showNewThread()}
+						>
+							Add new Thread
+						</button>
 					</div>
 				</div>
 				<div className="card-header bg-white p-0">
@@ -119,6 +131,7 @@ const Threads = ({ forumBoard }) => {
 								</div>
 							)
 						})}
+						<CreateThread />
 					</div>
 				</div>
 			</div>

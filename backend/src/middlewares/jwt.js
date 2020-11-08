@@ -6,12 +6,13 @@ const checkJwt = (req, res, next) => {
 	// const { vocation, skill, page } = req.query
 
 	const name = req.url
+	const board_id = name.replace('/forum/newThread/', '')
 	const id = name.replace('/forum/post/edit/', '')
 
 	const excludedPaths = [
 		'/player/characters',
 		'/account/dashboard',
-		'/forum/newThread',
+		`/forum/newThread/${board_id}`,
 		`/forum/post/edit/${id}`,
 	]
 
