@@ -17,7 +17,7 @@ const SignUp = ({ signUp, account, children }) => {
 		const data = getFormData(e)
 		signUp(data)
 			.then(({ payload }) => {
-				history.push('/sigin-in')
+				history.push('/sign-in')
 			})
 			.catch((err) => {
 				const { data } = err.response

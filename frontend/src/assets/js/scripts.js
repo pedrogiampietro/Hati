@@ -16,6 +16,8 @@ export const closeMenuOnMobile = () => {
 
 export const closeModalAvatar = () => {
 	document.querySelector('.modal').classList.remove('show')
+	const body = document.getElementById('newCategory')
+	body.style.display = 'none'
 }
 
 export const hideNewThread = () => {

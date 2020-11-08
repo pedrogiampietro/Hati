@@ -42,11 +42,11 @@ const Forum = ({
 		}
 	}
 
-	const submitHandler = (event) => {
+	const submitHandler = async (event) => {
 		event.preventDefault()
 
 		const data = getFormData(event)
-		forumCreateBoard(data)
+		await forumCreateBoard(data)
 			.then(() => {
 				closeModalAvatar()
 				interaction()
@@ -82,7 +82,7 @@ const Forum = ({
 											General
 										</span>
 									</div>
-									{account?.[0].account.page_access >= 3 ? (
+									{account?.[0]?.account?.page_access >= 3 ? (
 										<div className="col d-flex">
 											<button
 												type="button"
@@ -122,6 +122,7 @@ const Forum = ({
 							role="dialog"
 							style={{ display: 'none' }}
 							aria-hidden="true"
+							id="newCategory"
 						>
 							<div
 								className="modal-dialog modal-dialog-centered modal-transparent"
@@ -222,7 +223,7 @@ const Forum = ({
 														</div>
 													</div>
 												</div>
-												{account?.[0].account.page_access >= 3 ? (
+												{account?.[0]?.account?.page_access >= 3 ? (
 													<div className="col-md">
 														<div className="p-3">
 															<div className="d-flex">

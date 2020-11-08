@@ -15,7 +15,6 @@ const Threads = ({ forumBoard }) => {
 	const [postInteraction, setPostInteraction] = React.useState(false)
 
 	const { board_id } = useParams()
-
 	function interaction() {
 		setPostInteraction(!postInteraction)
 	}
@@ -31,7 +30,6 @@ const Threads = ({ forumBoard }) => {
 				console.log(err)
 			})
 	}, [forumBoard, board_id, postInteraction])
-	interaction()
 
 	return (
 		<Container>
@@ -138,7 +136,7 @@ const Threads = ({ forumBoard }) => {
 								</div>
 							)
 						})}
-						<CreateThread />
+						<CreateThread interaction={interaction} />
 					</div>
 				</div>
 			</div>

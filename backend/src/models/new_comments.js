@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
 	const comment = sequelize.define('comment', {
 		post_content: {
-			type: DataTypes.STRING,
+			type: DataTypes.TEXT('long'),
 			allowNull: false,
 		},
 		character_name: {

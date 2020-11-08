@@ -50,7 +50,7 @@ const Characters = ({
 		closeModalAvatar()
 		toast.success('Your avatar has been deleted..')
 
-		setTimeout(() => history.push('/account/avatar'), 5000)
+		setTimeout(() => history.push('/account/avatar'), 2000)
 	}
 
 	const Account = account[0]?.account
@@ -242,9 +242,9 @@ const Characters = ({
 											<div className="panel panel-default">
 												<div className="panel-heading">Profile Avatar</div>
 												<div className="panel-body" align="center">
-													<div class="fc-toolbar fc-header-toolbar">
-														<div class="fc-left">
-															<h2 class="fs-md">
+													<div className="fc-toolbar fc-header-toolbar">
+														<div className="fc-left">
+															<h2 className="fs-md">
 																{' '}
 																<span className="subheader-title text-truncate text-truncate-lg text-primary">
 																	{Account?.profileName}

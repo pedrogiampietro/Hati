@@ -19,7 +19,13 @@ import noneAvatar from '../../../assets/img/none_avatar.png'
 
 import JoditEditor from 'jodit-react'
 
-const Discussions = ({ forumDiscussion, editPost, account, getComments }) => {
+const Discussions = ({
+	forumDiscussion,
+	editPost,
+	account,
+	getComments,
+	addComments,
+}) => {
 	const [discussionPost, setDiscussionPost] = React.useState([])
 	const [comments, setComments] = React.useState([])
 	const [postInteraction, setPostInteraction] = React.useState(false)
@@ -46,7 +52,6 @@ const Discussions = ({ forumDiscussion, editPost, account, getComments }) => {
 				setDiscussionPost(newData)
 			})
 			.catch((err) => {
-				alert('error!')
 				console.log(err)
 			})
 	}, [
@@ -60,13 +65,11 @@ const Discussions = ({ forumDiscussion, editPost, account, getComments }) => {
 
 	const submitHandler = (event) => {
 		event.preventDefault()
-
 		const data = getFormData(event)
-
-		addComments(board_id, discussion, data)
+		addComments(board_id, discussion, data).then(() => {
+			interaction()
+		})
 	}
-
-	console.log(comments)
 
 	return (
 		<Container>
@@ -158,7 +161,6 @@ const Discussions = ({ forumDiscussion, editPost, account, getComments }) => {
 					</div>
 
 					{comments.map((comment) => {
-						console.log(comment)
 						return (
 							<div
 								key={comment.id}
@@ -282,7 +284,7 @@ const Discussions = ({ forumDiscussion, editPost, account, getComments }) => {
 							<input
 								type="text"
 								name="character_name"
-								defaultValue={account?.[0].account.profileName}
+								defaultValue={account?.[0]?.account?.profileName}
 								hidden
 							/>
 						</div>
@@ -305,6 +307,7 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, {
+	addComments,
 	forumDiscussion,
 	getComments,
 	editPost,

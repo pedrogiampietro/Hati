@@ -13,7 +13,7 @@ import './styles.css'
 const Container = ({ children }) => {
 	const [title, setTitle] = React.useState('')
 	const location = useLocation()
-	console.log(location)
+	// console.log(location)
 
 	React.useEffect(() => {
 		const { pathname } = location

@@ -116,7 +116,7 @@ const CreateCharacter = ({ playerCreate, playerList, player }) => {
 															/>
 														</div>
 
-														<div class="main-container">
+														<div className="main-container">
 															<h2>What's your favourite vocation?</h2>
 
 															<div className="row justify-content-center pb-5">
@@ -133,7 +133,7 @@ const CreateCharacter = ({ playerCreate, playerList, player }) => {
 																			htmlFor={
 																				createVocations[vocation].vocation_id
 																			}
-																			class="custom-radio"
+																			className="custom-radio"
 																		>
 																			<input
 																				type="radio"
@@ -150,10 +150,10 @@ const CreateCharacter = ({ playerCreate, playerList, player }) => {
 																					)
 																				}
 																			/>
-																			<span class="radio-btn">
-																				<i class="las la-check"></i>
-																				<div class="hobbies-icon">
-																					<i class="fas fa-ghost"></i>
+																			<span className="radio-btn">
+																				<i className="las la-check"></i>
+																				<div className="hobbies-icon">
+																					<i className="fas fa-ghost"></i>
 																					<h3>
 																						{createVocations[vocation].name}
 																					</h3>

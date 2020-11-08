@@ -275,9 +275,9 @@ const Highscores = ({ highscoresList }) => {
 
 								<div className="row justify-content-center pb-5">
 									{' '}
-									<ul class="pagination my-4">
+									<ul className="pagination my-4">
 										{pageInitial <= 0 ? (
-											<li class="page-item">
+											<li className="page-item">
 												<button
 													className="page-link disabled mr-3"
 													aria-label="Previous"
@@ -288,7 +288,7 @@ const Highscores = ({ highscoresList }) => {
 												</button>
 											</li>
 										) : (
-											<li class="page-item">
+											<li className="page-item">
 												<button
 													className="page-link round mr-3"
 													aria-label="Previous"
@@ -300,7 +300,7 @@ const Highscores = ({ highscoresList }) => {
 										)}
 
 										{playerList.length >= 10 ? (
-											<li class="page-item">
+											<li className="page-item">
 												<button
 													className="page-link"
 													aria-label="Next"
@@ -310,7 +310,7 @@ const Highscores = ({ highscoresList }) => {
 												</button>
 											</li>
 										) : (
-											<li class="page-item">
+											<li className="page-item">
 												<button
 													className="page-link disabled"
 													disabled

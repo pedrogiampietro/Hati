@@ -8,7 +8,7 @@ import { hideNewThread } from '../../../../assets/js/scripts'
 
 import JoditEditor from '../../../../components/Jodit'
 
-const CreateThread = ({ forumNewThread, playerList, forum }) => {
+const CreateThread = ({ forumNewThread, playerList, interaction }) => {
 	const [newThread, setNewThread] = React.useState([])
 	const { board_id } = useParams()
 	const history = useHistory()
@@ -20,13 +20,14 @@ const CreateThread = ({ forumNewThread, playerList, forum }) => {
 		})
 	}, [playerList])
 
-	const subbmitHandle = (event) => {
+	const subbmitHandle = async (event) => {
 		event.preventDefault()
 
 		const data = getFormData(event)
-		forumNewThread(board_id, data)
+		await forumNewThread(board_id, data)
 			.then(() => {
 				hideNewThread()
+				interaction()
 			})
 			.catch((err) => {
 				console.error(err)

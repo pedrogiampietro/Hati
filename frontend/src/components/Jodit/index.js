@@ -2,6 +2,8 @@ import React, { useRef } from 'react'
 import JoditEditor from 'jodit-react'
 
 const TextEditor = ({ name, value }) => {
+
+
 	const editor = useRef(null)
 	const config = {
 		readonly: false,

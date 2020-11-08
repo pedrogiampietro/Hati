@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: false,
 		},
 		body_text: {
-			type: DataTypes.STRING,
+			type: DataTypes.TEXT('long'),
 			allowNull: false,
 		},
 		views: {
