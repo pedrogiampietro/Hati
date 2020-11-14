@@ -7,6 +7,8 @@ import Container from '../Layouts/Container'
 import LikeDeslikes from '../../components/LikeDeslikes'
 import { getAvatarUrl } from '../../helpers/api'
 
+import noneAvatar from '../../assets/img/none_avatar.png'
+
 import { FaNewspaper } from 'react-icons/fa'
 import { BiTimeFive } from 'react-icons/bi'
 
@@ -39,16 +41,24 @@ const Home = ({ forumBoard }) => {
 						<div className="card-body pb-0 px-4">
 							<div className="d-flex flex-row pb-3 pt-2  border-top-0 border-left-0 border-right-0">
 								<div className="d-inline-block align-middle status status-success mr-3">
-									<img
-										src={getAvatarUrl(news.account.avatar)}
-										className="profile-image rounded-circle"
-										alt="AvatarProfile"
-									/>
+									{news?.account.avatar ? (
+										<img
+											src={getAvatarUrl(news?.account.avatar)}
+											className="profile-image rounded-circle"
+											alt=""
+										/>
+									) : (
+										<img
+											src={noneAvatar}
+											className="profile-image rounded-circle"
+											alt=""
+										/>
+									)}
 								</div>
 								<h5 className="mb-0 flex-1 text-dark fw-500">
 									{news.character_name}
 									<small className="m-0 l-h-n">
-										{groups_ID[news.account.players[0].group_id]}
+										{groups_ID[news?.account.players[0].group_id]}
 									</small>
 								</h5>
 

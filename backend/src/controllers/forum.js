@@ -56,7 +56,7 @@ router.get('/thread/:board_id', async (req, res) => {
 				include: [
 					{
 						model: player,
-						attributes: ['name', 'group_id'],
+						attributes: ['group_id'],
 					},
 				],
 			},
@@ -93,6 +93,25 @@ router.post('/newThread/:board_id', async (req, res) => {
 })
 
 //missing delete thread, create later
+router.delete('/thread/:board_id/', async (req, res) => {
+	const { board_id } = req.params
+	try {
+		const findThreadToDelete = await thread.findByPk(board_id)
+		if (!findThreadToDelete) {
+			return res.jsonBadRequest(null, 'Board not found.')
+		}
+
+		if (!findThreadToDelete) {
+			return res.jsonBadRequest(null, 'not possible delete board, try again.')
+		} else {
+			await findThreadToDelete.destroy()
+
+			res.jsonOK(findThreadToDelete)
+		}
+	} catch (error) {
+		return res.jsonBadRequest(null, error)
+	}
+})
 
 //crud discussion
 router.get('/thread/:board_id/:discussion', async (req, res) => {

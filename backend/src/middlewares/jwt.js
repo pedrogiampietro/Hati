@@ -3,8 +3,6 @@ const { verifyJwt, getTokenFromHeaders } = require('../helpers/jwt')
 const checkJwt = (req, res, next) => {
 	const { url: path } = req
 
-	// const { vocation, skill, page } = req.query
-
 	const name = req.url
 	const board_id = name.replace('/forum/newThread/', '')
 	const id = name.replace('/forum/post/edit/', '')

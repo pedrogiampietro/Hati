@@ -30,10 +30,15 @@ const Characters = ({
 
 	useEffect(() => {
 		getProfileAvatar().then(({ payload }) => {
-			setAvatar(payload.data.data)
+			const newData = payload.data.data
+			setAvatar(newData)
 		})
 		playerList()
 	}, [playerList, getProfileAvatar])
+
+	if (!avatar) {
+		return null
+	}
 
 	if (!account) {
 		return <Redirect to="/sign-in" />

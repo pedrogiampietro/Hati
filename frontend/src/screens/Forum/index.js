@@ -9,6 +9,7 @@ import {
 } from '../../actions/ForumActions'
 import { getFormData } from '../../helpers/form'
 import Container from '../Layouts/Container'
+import InvalidToken from '../../components/Error/InvalidToken'
 import noneAvatar from '../../assets/img/none_avatar.png'
 import { closeModalAvatar } from '../../assets/js/scripts'
 
@@ -16,7 +17,7 @@ const Forum = ({
 	forumList,
 	forumCreateBoard,
 	setBoardToRemove,
-	boardToRemove,
+	forumToRemove,
 	boardRemove,
 	account,
 }) => {
@@ -34,10 +35,14 @@ const Forum = ({
 		})
 	}, [forumList, postInteraction])
 
+	if (categoryLists.length === 0) {
+		return <InvalidToken />
+	}
+
 	const cancelDelete = (e) => setBoardToRemove(null)
 	const confirmDelete = async (e) => {
-		if (boardToRemove) {
-			await boardRemove(boardToRemove)
+		if (forumToRemove) {
+			await boardRemove(forumToRemove)
 			interaction()
 		}
 	}
@@ -283,7 +288,7 @@ const Forum = ({
 										</div>
 									)
 								})}
-								{boardToRemove ? (
+								{forumToRemove ? (
 									<div className="alert alert-danger rounded shadow-bold col-xl-6 ml-auto mr-auto pl-3 pr-3">
 										<h4 className="alert-heading">Delete Confirmation!</h4>
 										<p>
@@ -320,7 +325,7 @@ const mapStateToProps = (state) => {
 	return {
 		account: state.account.account,
 		forum: state.forum.forums,
-		boardToRemove: state.forum.boardToRemove,
+		forumToRemove: state.forum.forumToRemove,
 	}
 }
 
@@ -328,6 +333,5 @@ export default connect(mapStateToProps, {
 	forumList,
 	forumCreateBoard,
 	setBoardToRemove,
-
 	boardRemove,
 })(Forum)

@@ -11,6 +11,8 @@ import {
 	EDIT_POST,
 	ADD_COMMENT,
 	GET_COMMENT,
+	THREAD_REMOVE,
+	THREAD_TO_REMOVE,
 } from '../actions/ForumActions'
 
 const initialState = {
@@ -36,15 +38,17 @@ export default function (state = initialState, action) {
 			return { ...state, forum }
 		}
 
+		case THREAD_TO_REMOVE:
 		case BOARD_TO_REMOVE: {
-			return { ...state, boardToRemove: payload }
+			return { ...state, forumToRemove: payload }
 		}
 
+		case THREAD_REMOVE:
 		case BOARD_REMOVE: {
 			const forums = state.forums.filter(
-				(forum) => forum.id !== state.boardToRemove.id
+				(forum) => forum.id !== state.forumToRemove.id
 			)
-			return { ...state, boardToRemove: null, forums }
+			return { ...state, forumToRemove: null, forums }
 		}
 
 		default:

@@ -21,6 +21,8 @@ export const CREATE_THREAD = 'CREATE_THREAD'
 
 export const GET_DISCUSSION = 'GET_DISCUSSION'
 export const EDIT_POST = 'EDIT_POST'
+export const THREAD_TO_REMOVE = 'THREAD_TO_REMOVE'
+export const THREAD_REMOVE = 'THREAD_REMOVE'
 
 export const ADD_COMMENT = 'ADD_COMMENT'
 export const GET_COMMENT = 'GET_COMMENT'
@@ -57,6 +59,15 @@ export const forumNewThread = (board_id, data) => {
 export const forumDiscussion = (board_id, discussion, data) => {
 	const payload = apiGet(`/forum/thread/${board_id}/${discussion}`, data)
 	return { type: SECTION_LIST, payload }
+}
+
+export const setThreadToRemove = (board) => {
+	return { type: THREAD_TO_REMOVE, payload: board }
+}
+
+export const threadRemove = (forumThread) => {
+	const payload = apiDelete(`/forum/thread/${forumThread.id}`)
+	return { type: THREAD_REMOVE, payload }
 }
 
 export const editPost = (id, data) => {
