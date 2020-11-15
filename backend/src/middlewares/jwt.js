@@ -9,7 +9,6 @@ const checkJwt = (req, res, next) => {
 
 	const excludedPaths = [
 		'/player/characters',
-		'/account/dashboard',
 		`/forum/newThread/${board_id}`,
 		`/forum/post/edit/${id}`,
 	]

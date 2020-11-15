@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { useHistory, Redirect } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import PasswordStrengthBar from 'react-password-strength-bar'
 import Container from '../../Layouts/Container'
@@ -15,10 +15,6 @@ const ChangePassword = ({ account, changePassword }) => {
 	const [passwordStrength, setPasswordStrength] = React.useState('')
 	const [inputError, setInputError] = React.useState()
 	const history = useHistory()
-
-	// if (!account) {
-	// 	return Redirect('/sign-in')
-	// }
 
 	const submitHandler = (event) => {
 		event.preventDefault()

@@ -24,6 +24,7 @@ import ResetPassword from './screens/Account/ResetPassword'
 import ChangePassword from './screens/Account/ChangePassword'
 
 import PageSearch from './components/PageSearch'
+import ProtectedRoute from './helpers/ProtectedRoute'
 
 import 'react-toastify/dist/ReactToastify.min.css'
 import './assets/css/styles.css'
@@ -44,85 +45,40 @@ const App = ({ initAccount }) => {
 		<>
 			<BrowserRouter>
 				<Switch>
-					<Route path="/sign-in">
-						<SignIn />
-					</Route>
+					<Route path="/sign-in" component={SignIn} />
+					<Route path="/sign-up" component={SignUp} />
+					<Route path="/forgot" component={ForgotPassword} />
+					<Route path="/reset" component={ResetPassword} />
 
-					<Route path="/sign-up">
-						<SignUp />
-					</Route>
+					{/* Protected Routes */}
+					<ProtectedRoute path="/dashboard" component={Dashboard} />
+					<ProtectedRoute path="/account/profile" component={AccountProfile} />
+					<ProtectedRoute
+						path="/account/profile_name"
+						component={ProfileName}
+					/>
+					<ProtectedRoute path="/account/avatar" component={ProfileAvatar} />
+					<ProtectedRoute path="/account/password" component={ChangePassword} />
+					<ProtectedRoute
+						path="/account/characters/create"
+						component={AccountCharactersCreate}
+					/>
+					{/* Finaly Protected Routes */}
 
-					<Route path="/forgot">
-						<ForgotPassword />
-					</Route>
-
-					<Route path="/reset">
-						<ResetPassword />
-					</Route>
-
-					<Route path="/dashboard">
-						<Dashboard />
-					</Route>
-
-					<Route path="/account/profile">
-						<AccountProfile />
-					</Route>
-
-					<Route path="/account/profile_name">
-						<ProfileName />
-					</Route>
-
-					<Route path="/account/avatar">
-						<ProfileAvatar />
-					</Route>
-
-					<Route path="/account/password">
-						<ChangePassword />
-					</Route>
-
-					<Route path="/account/characters/create">
-						<AccountCharactersCreate />
-					</Route>
-
-					<Route path="/account/characters">
-						<AccountCharacters />
-					</Route>
-
-					<Route path="/highscores">
-						<Highscores />
-					</Route>
-
-					<Route path="/character/:name">
-						<Character />
-					</Route>
-
-					<Route path="/PageSearch">
-						<PageSearch />
-					</Route>
-
-					<Route exact path="/forum">
-						<Forum />
-					</Route>
-
-					<Route exact path="/forum/:board_id">
-						<Threads />
-					</Route>
-
-					<Route exact path="/forum/:board_id">
-						<CreateThread />
-					</Route>
-
-					<Route exact path="/forum/thread/:board_id/:discussion">
-						<Discussions />
-					</Route>
-
-					<Route exact path="/forum/post/edit/:id">
-						<EditPost />
-					</Route>
-
-					<Route path="/">
-						<Home />
-					</Route>
+					<Route path="/account/characters" component={AccountCharacters} />
+					<Route path="/highscores" component={Highscores} />
+					<Route path="/character/:name" component={Character} />
+					<Route path="/PageSearch" component={PageSearch} />
+					<Route exact path="/forum" component={Forum} />
+					<Route exact path="/forum/:board_id" component={Threads} />
+					<Route exact path="/forum/:board_id" component={CreateThread} />
+					<Route
+						exact
+						path="/forum/thread/:board_id/:discussion"
+						component={Discussions}
+					/>
+					<Route exact path="/forum/post/edit/:id" component={EditPost} />
+					<Route path="/" component={Home} />
 				</Switch>
 			</BrowserRouter>
 		</>
