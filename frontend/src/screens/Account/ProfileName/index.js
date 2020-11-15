@@ -6,8 +6,10 @@ import { profileName } from '../../../actions/AccountActions'
 
 import { getFormData } from '../../../helpers/form'
 import Container from '../../Layouts/Container'
+import Error from '../../../helpers/error'
 
 const ProfileName = ({ profileName }) => {
+	const [error, setError] = React.useState()
 	const history = useHistory()
 
 	const submitHandler = (event) => {
@@ -18,7 +20,8 @@ const ProfileName = ({ profileName }) => {
 				history.push('/account/characters')
 			})
 			.catch((err) => {
-				console.error(err)
+				const { data } = err.response
+				setError(data.message)
 			})
 	}
 
@@ -28,6 +31,7 @@ const ProfileName = ({ profileName }) => {
 				<div className="panel panel-default">
 					<div className="panel-heading">Add Profile Name</div>
 					<div className="panel-body">
+						<Error error={error} />
 						<form onSubmit={submitHandler}>
 							Here you can set your account's profile name.
 							<br />

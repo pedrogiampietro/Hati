@@ -33,9 +33,12 @@
 	"account.settings.avatar_success": "Upload successfully.",
 	"account.settings.profile_sucess": "Profile successfully edit.",
 	"account.settings.password.sucess": "Your password has been successfully exchanged.",
-	"account.forgot_password.sucess": "Seu e-mail com um token de recuperação foi enviado com sucesso.",
-	"account.forgot_password.email_notexists": "O e-mail digitado não existe em nosso banco de dados.",
-	"account.forgot_password.any.required": "È necessário digitar um e-mail para recuperação de conta.",
+	"account.settings.profile_name_sucess": "Profile Name successfully Added.",
+	"account.settings.profile_name_exists": "Profile Name already registered.",
+
+	"account.forgot_password.sucess": "Your email with a recovery token was sent successfully.",
+	"account.forgot_password.email_notexists": "The email you entered does not exist in our database.",
+	"account.forgot_password.any.required": "It is necessary to enter an email for account recovery.",
 
 	"account.reset_password.sucess": "Your password has been successfully reset.",
 	"account.reset_password.invalid_token": "Invalid token inserted.",

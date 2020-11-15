@@ -5,7 +5,7 @@ const rules = {
 	name: Joi.string()
 		.min(4)
 		.max(21)
-		.regex(/^[a-zA-Z]*$/)
+		.regex(/^(?!$)[a-zA-Z ]*$/)
 		.required(),
 }
 

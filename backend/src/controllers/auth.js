@@ -270,7 +270,7 @@ router.post('/profile_name', async (req, res) => {
 		if (checkProfileName)
 			return res.jsonBadRequest(
 				null,
-				getMessage('Profile name exists, please choose other.')
+				getMessage('account.settings.profile_name_exists')
 			)
 
 		await accounts.update({
