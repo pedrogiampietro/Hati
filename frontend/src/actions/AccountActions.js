@@ -13,6 +13,7 @@ export const SIGN_OUT = 'SIGN_OUT'
 export const INIT_ACCOUNT = 'INIT_ACCOUNT'
 export const REFRESH_TOKEN = 'REFRESH_TOKEN'
 export const PROFILE_INFO = 'PROFILE_INFO'
+export const CHANGE_PASSWORD = 'CHANGE_PASSWORD'
 export const PROFILE_NAME = 'PROFILE_NAME'
 export const GET_PROFILE_AVATAR = 'GET_PROFILE_AVATAR'
 export const POST_PROFILE_AVATAR = 'POST_PROFILE_AVATAR'
@@ -32,6 +33,11 @@ export const signIn = (data) => {
 
 export const signOut = () => {
 	return { type: SIGN_OUT, payload: {} }
+}
+
+export const changePassword = (data) => {
+	const payload = apiPut('/account/password', { ...data })
+	return { type: CHANGE_PASSWORD, payload }
 }
 
 export const profileInfo = (data) => {

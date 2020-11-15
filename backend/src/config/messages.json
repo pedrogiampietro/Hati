@@ -31,6 +31,8 @@
 	"account.signup.email.any.required": "A valid email is required",
 	"account.signup.email.string.empty": "Email is not allowed to be empty",
 	"account.settings.avatar_success": "Upload successfully.",
+	"account.settings.profile_sucess": "Profile successfully edit.",
+	"account.settings.password.sucess": "Your password has been successfully exchanged.",
 	"account.forgot_password.sucess": "Seu e-mail com um token de recuperação foi enviado com sucesso.",
 	"account.forgot_password.email_notexists": "O e-mail digitado não existe em nosso banco de dados.",
 	"account.forgot_password.any.required": "È necessário digitar um e-mail para recuperação de conta.",

@@ -21,6 +21,7 @@ import Discussions from './screens/Forum/Discussions'
 import EditPost from './screens/Forum/Discussions/EditPost'
 import ForgotPassword from './screens/Account/ForgotPassword'
 import ResetPassword from './screens/Account/ResetPassword'
+import ChangePassword from './screens/Account/ChangePassword'
 
 import PageSearch from './components/PageSearch'
 
@@ -73,6 +74,10 @@ const App = ({ initAccount }) => {
 
 					<Route path="/account/avatar">
 						<ProfileAvatar />
+					</Route>
+
+					<Route path="/account/password">
+						<ChangePassword />
 					</Route>
 
 					<Route path="/account/characters/create">

@@ -9,7 +9,11 @@ const path = require('path')
 const mailer = require('../services/mailer')
 
 const { account } = require('../models')
-const { accountSignUp, accountSignIn } = require('../validators/account')
+const {
+	accountSignUp,
+	accountSignIn,
+	accountChangePassword,
+} = require('../validators/account')
 const { getMessage } = require('../helpers/messages')
 const {
 	generateJwt,
@@ -89,6 +93,46 @@ router.post('/sign-up', accountSignUp, async (req, res) => {
 		token,
 		refreshToken,
 	})
+})
+
+router.put('/password', accountChangePassword, async (req, res) => {
+	const { body } = req
+	const { password } = body
+	const fields = ['password']
+	const token = getTokenFromHeaders(req.headers)
+
+	try {
+		if (!token) {
+			return res.jsonUnauthorized(
+				null,
+				getMessage('response.json_invalid_token')
+			)
+		}
+
+		const decoded = verifyJwt(token)
+
+		const accounts = await account.findByPk(decoded.id)
+		if (!accounts)
+			return res.jsonUnauthorized(
+				null,
+				getMessage('response.json_invalid_token')
+			)
+
+		fields.map((fieldName) => {
+			const newValue = body[fieldName]
+			if (newValue) accounts[fieldName] = newValue
+		})
+
+		const hash = crypto.createHash('sha1').update(password).digest('hex')
+
+		await accounts.update({
+			password: hash,
+		})
+
+		return res.jsonOK(accounts, getMessage('account.settings.password.sucess'))
+	} catch (error) {
+		console.log(error)
+	}
 })
 
 router.post('/forgot', async (req, res) => {
@@ -196,7 +240,7 @@ router.put('/profile_info', async (req, res) => {
 	})
 
 	await accounts.save()
-	return res.jsonOK(accounts, getMessage('account.reset_password.sucess'))
+	return res.jsonOK(accounts, getMessage('account.settings.profile_sucess'))
 })
 
 router.post('/profile_name', async (req, res) => {

@@ -57,6 +57,26 @@ const accountSignUp = (req, res, next) => {
 	next()
 }
 
+const accountChangePassword = (req, res, next) => {
+	const { password, password_confirmation } = req.body
+	const schema = Joi.object({
+		password: rules.password,
+		password_confirmation: rules.password_confirmation,
+	})
+
+	const { error } = schema.validate(
+		{ password, password_confirmation },
+		options
+	)
+
+	if (error) {
+		const messages = getValidatorError(error, 'account.signup')
+		return res.jsonBadRequest(null, null, { error: messages })
+	}
+
+	next()
+}
+
 const createCharacter = (req, res, next) => {
 	const { name } = req.body
 	const schema = Joi.object({
@@ -73,4 +93,9 @@ const createCharacter = (req, res, next) => {
 	next()
 }
 
-module.exports = { accountSignUp, accountSignIn, createCharacter }
+module.exports = {
+	accountSignUp,
+	accountSignIn,
+	createCharacter,
+	accountChangePassword,
+}

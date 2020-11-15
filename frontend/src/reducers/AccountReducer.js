@@ -11,6 +11,7 @@ import {
 	FORGOT_PASSWORD,
 	RESET_PASSWORD,
 	PROFILE_NAME,
+	CHANGE_PASSWORD,
 } from '../actions/AccountActions'
 import {
 	getAccount,
@@ -42,6 +43,7 @@ export default function (state = initialState, action) {
 		case PLAYER_CREATE:
 		case CREATE_THREAD:
 		case PROFILE_INFO:
+		case CHANGE_PASSWORD:
 		case PROFILE_NAME:
 		case GET_PROFILE_AVATAR:
 		case POST_PROFILE_AVATAR:

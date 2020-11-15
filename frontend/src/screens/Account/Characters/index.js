@@ -174,18 +174,18 @@ const Characters = ({
 													</tr>
 												</tbody>
 											</table>
-											<div className="demo">
-												<button className="btn btn-primary btn-sm">
+
+											<Link to="/account/password">
+												<button className="btn btn-primary btn-sm mr-3">
 													Change Password
 												</button>
-
-												<button
-													className="btn btn-danger btn-sm"
-													onClick={signOutHandler}
-												>
-													Logout
-												</button>
-											</div>
+											</Link>
+											<button
+												className="btn btn-danger btn-sm"
+												onClick={signOutHandler}
+											>
+												Logout
+											</button>
 										</div>
 									</div>
 								</div>
