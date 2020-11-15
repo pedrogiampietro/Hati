@@ -40,11 +40,11 @@ const ProfileInfo = ({ account, profileInfo, playerList }) => {
 							data={account}
 						/>
 
-						<button type="submit" className="btn btn-primary">
+						<button type="submit" className="btn btn-primary mr-3">
 							Update Profile
 						</button>
 						<Link to="/account/characters">
-							<button type="button" className="btn btn-inverse">
+							<button type="button" className="btn btn-danger btn-sm">
 								Return
 							</button>
 						</Link>

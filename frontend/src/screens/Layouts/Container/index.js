@@ -66,6 +66,7 @@ const Container = ({ children }) => {
 			<div className="page-wrapper">
 				<div className="page-inner">
 					<Menu />
+
 					<div className="page-content-wrapper">
 						<Header />
 						<main id="js-page-content" role="main" className="page-content">

@@ -22,6 +22,7 @@ import EditPost from './screens/Forum/Discussions/EditPost'
 import ForgotPassword from './screens/Account/ForgotPassword'
 import ResetPassword from './screens/Account/ResetPassword'
 import ChangePassword from './screens/Account/ChangePassword'
+import Downloads from './screens/Downloads'
 
 import PageSearch from './components/PageSearch'
 import ProtectedRoute from './helpers/ProtectedRoute'
@@ -29,6 +30,7 @@ import ProtectedRoute from './helpers/ProtectedRoute'
 import 'react-toastify/dist/ReactToastify.min.css'
 import './assets/css/styles.css'
 import './assets/css/styles-bundle.css'
+import './assets/css/style-dark.css'
 import './assets/css/toastr.css'
 import '../node_modules/bootstrap/js/src/modal'
 import '../node_modules/bootstrap/js/src/collapse'
@@ -45,30 +47,48 @@ const App = ({ initAccount }) => {
 		<>
 			<BrowserRouter>
 				<Switch>
-					<Route path="/sign-in" component={SignIn} />
-					<Route path="/sign-up" component={SignUp} />
-					<Route path="/forgot" component={ForgotPassword} />
-					<Route path="/reset" component={ResetPassword} />
+					<Route exact path="/sign-in" component={SignIn} />
+					<Route exact path="/sign-up" component={SignUp} />
+					<Route exact path="/forgot" component={ForgotPassword} />
+					<Route exact path="/reset" component={ResetPassword} />
 
 					{/* Protected Routes */}
-					<ProtectedRoute path="/dashboard" component={Dashboard} />
-					<ProtectedRoute path="/account/profile" component={AccountProfile} />
+					<ProtectedRoute exact path="/dashboard" component={Dashboard} />
 					<ProtectedRoute
+						exact
+						path="/account/profile"
+						component={AccountProfile}
+					/>
+					<ProtectedRoute
+						exact
 						path="/account/profile_name"
 						component={ProfileName}
 					/>
-					<ProtectedRoute path="/account/avatar" component={ProfileAvatar} />
-					<ProtectedRoute path="/account/password" component={ChangePassword} />
 					<ProtectedRoute
+						exact
+						path="/account/avatar"
+						component={ProfileAvatar}
+					/>
+					<ProtectedRoute
+						exact
+						path="/account/password"
+						component={ChangePassword}
+					/>
+					<ProtectedRoute
+						exact
 						path="/account/characters/create"
 						component={AccountCharactersCreate}
 					/>
 					{/* Finaly Protected Routes */}
 
-					<Route path="/account/characters" component={AccountCharacters} />
-					<Route path="/highscores" component={Highscores} />
-					<Route path="/character/:name" component={Character} />
-					<Route path="/PageSearch" component={PageSearch} />
+					<Route
+						exact
+						path="/account/characters"
+						component={AccountCharacters}
+					/>
+					<Route exact path="/highscores" component={Highscores} />
+					<Route exact path="/character/:name" component={Character} />
+					<Route exact path="/PageSearch" component={PageSearch} />
 					<Route exact path="/forum" component={Forum} />
 					<Route exact path="/forum/:board_id" component={Threads} />
 					<Route exact path="/forum/:board_id" component={CreateThread} />
@@ -78,6 +98,9 @@ const App = ({ initAccount }) => {
 						component={Discussions}
 					/>
 					<Route exact path="/forum/post/edit/:id" component={EditPost} />
+
+					<Route path="/downloads" component={Downloads} />
+
 					<Route path="/" component={Home} />
 				</Switch>
 			</BrowserRouter>

@@ -55,9 +55,9 @@ const Menu = ({ account }) => {
 					</li>
 
 					<li>
-						<Link to="/download">
+						<Link to="/downloads">
 							<GoCloudDownload size={18} className="mr-2" />
-							<span className="nav-link-text">Download</span>
+							<span className="nav-link-text">Downloads</span>
 						</Link>
 					</li>
 					<li className="nav-title">Community</li>
