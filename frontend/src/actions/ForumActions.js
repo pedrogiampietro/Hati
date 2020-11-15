@@ -5,7 +5,7 @@ import {
 	apiPost,
 	apiDelete,
 	apiPut,
-} from '../helpers/api'
+} from '../helpers/Api'
 
 export const NEWS_CREATE = 'NEWS_CREATE'
 export const LIKE_UPDATE = 'LIKE_UPDATE'

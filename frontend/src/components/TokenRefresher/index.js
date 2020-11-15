@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { getToken } from '../../helpers/account'
-import { getTokenExpire } from '../../helpers/jwt'
+import { getToken } from '../../helpers/Account'
+import { getTokenExpire } from '../../helpers/Jwt'
 import { getFreshToken } from '../../actions/AccountActions'
 
 const TokenRefresher = ({ getFreshToken }) => {
@@ -24,7 +24,7 @@ const TokenRefresher = ({ getFreshToken }) => {
 	return null
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	return {}
 }
 

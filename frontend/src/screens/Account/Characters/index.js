@@ -7,7 +7,7 @@ import {
 	deleteProfileAvatar,
 } from '../../../actions/AccountActions'
 import { playerList } from '../../../actions/PlayerActions'
-import { convertTimestempToDate } from '../../../helpers/datetime'
+import { convertTimestempToDate } from '../../../helpers/DateTime'
 import { closeModalAvatar } from '../../../assets/js/scripts'
 import { toast, ToastContainer } from 'react-toastify'
 import Container from '../../Layouts/Container'

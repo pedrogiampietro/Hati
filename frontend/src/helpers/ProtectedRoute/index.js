@@ -1,7 +1,7 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import { Route, Redirect } from 'react-router-dom'
-import { getToken } from '../account'
+import { getToken } from '../Account'
 
 const ProtectedRoute = ({ component, path }) => {
 	return getToken() ? (

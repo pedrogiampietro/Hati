@@ -5,7 +5,7 @@ import {
 	apiGet,
 	apiPostAvatar,
 	apiDelete,
-} from '../helpers/api'
+} from '../helpers/Api'
 
 export const SIGN_UP = 'SIGN_UP'
 export const SIGN_IN = 'SIGN_IN'

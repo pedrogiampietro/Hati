@@ -1,13 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
-import { getFormData } from '../../../helpers/form'
+import { getFormData } from '../../../helpers/FormData'
 import { forgotPassword } from '../../../actions/AccountActions'
 
 import ContainerOnlyMenu from '../../Layouts/Container/Menu'
 import Background from '../../../assets/img/backgrounds/pattern-1.svg'
 
-import Error from '../../../helpers/error'
+import Error from '../../../helpers/Error'
 
 const ForgotPassword = ({ forgotPassword }) => {
 	const [error, setError] = React.useState()

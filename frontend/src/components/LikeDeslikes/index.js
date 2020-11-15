@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { getPlayerName } from '../../helpers/account'
+import { getPlayerName } from '../../helpers/Account'
 import { upLike, unLike } from '../../actions/ForumActions'
 import { connect } from 'react-redux'
 

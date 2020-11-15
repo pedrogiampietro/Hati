@@ -6,7 +6,7 @@ import {
 	threadRemove,
 	setThreadToRemove,
 } from '../../../actions/ForumActions'
-import { formatDate } from '../../../helpers/datetime'
+import { formatDate } from '../../../helpers/DateTime'
 
 import Container from '../../Layouts/Container'
 import noneAvatar from '../../../assets/img/none_avatar.png'

@@ -7,9 +7,9 @@ import Container from '../../Layouts/Container'
 import { toast, ToastContainer } from 'react-toastify'
 
 import { changePassword } from '../../../actions/AccountActions'
-import { getFormData } from '../../../helpers/form'
+import { getFormData } from '../../../helpers/FormData'
 
-import Error from '../../../helpers/error'
+import Error from '../../../helpers/Error'
 
 const ChangePassword = ({ account, changePassword }) => {
 	const [passwordStrength, setPasswordStrength] = React.useState('')

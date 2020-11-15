@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { forumBoard } from '../../actions/ForumActions'
-import { formatDate } from '../../helpers/datetime'
+import { formatDate } from '../../helpers/DateTime'
 import { groups_ID } from '../../config'
 import Container from '../Layouts/Container'
 import LikeDeslikes from '../../components/LikeDeslikes'
-import { getAvatarUrl } from '../../helpers/api'
+import { getAvatarUrl } from '../../helpers/Api'
 
 import noneAvatar from '../../assets/img/none_avatar.png'
 

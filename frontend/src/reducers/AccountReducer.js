@@ -24,7 +24,7 @@ import {
 	setPlayerName,
 	getPlayerName,
 	removePlayerName,
-} from '../helpers/account'
+} from '../helpers/Account'
 import { PLAYER_CREATE } from '../actions/PlayerActions'
 import { CREATE_THREAD } from '../actions/ForumActions'
 

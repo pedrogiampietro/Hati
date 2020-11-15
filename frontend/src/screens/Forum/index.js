@@ -7,7 +7,8 @@ import {
 	setBoardToRemove,
 	boardRemove,
 } from '../../actions/ForumActions'
-import { getFormData } from '../../helpers/form'
+import { getToken } from '../../helpers/Account'
+import { getFormData } from '../../helpers/FormData'
 import Container from '../Layouts/Container'
 import InvalidToken from '../../components/Error/InvalidToken'
 import noneAvatar from '../../assets/img/none_avatar.png'
@@ -35,7 +36,7 @@ const Forum = ({
 		})
 	}, [forumList, postInteraction])
 
-	if (categoryLists.length === 0) {
+	if (!getToken()) {
 		return <InvalidToken />
 	}
 

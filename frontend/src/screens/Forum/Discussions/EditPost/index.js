@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
 import { editPost } from '../../../../actions/ForumActions'
 
-import { getFormData } from '../../../../helpers/form'
+import { getFormData } from '../../../../helpers/FormData'
 import TextArea from '../../../../components/TextArea'
 import Container from '../../../Layouts/Container'
 

@@ -1,4 +1,4 @@
-export const getTokenExpire = token => {
+export const getTokenExpire = (token) => {
 	if (!token) return 0
 
 	// const tokenParts = token.split('.')

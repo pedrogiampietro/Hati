@@ -7,10 +7,10 @@ import {
 	getComments,
 	editPost,
 } from '../../../actions/ForumActions'
-import { getAvatarUrl } from '../../../helpers/api'
+import { getAvatarUrl } from '../../../helpers/Api'
 
-import { formatDate } from '../../../helpers/datetime'
-import { getFormData } from '../../../helpers/form'
+import { formatDate } from '../../../helpers/DateTime'
+import { getFormData } from '../../../helpers/FormData'
 import Container from '../../Layouts/Container'
 import LikeDeslikes from '../../../components/LikeDeslikes'
 import { BsReply } from 'react-icons/bs'

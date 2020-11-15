@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getToken, getRefreshToken, getPlayerName } from './account'
+import { getToken, getRefreshToken, getPlayerName } from '../Account'
 
 export const getApiUrl = (path) => {
 	return `http://localhost:3001${path}`

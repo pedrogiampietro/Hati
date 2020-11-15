@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getFormData } from '../../helpers/form'
+import { getFormData } from '../../helpers/FormData'
 import { signIn } from '../../actions/AccountActions'
 
 import Container from '../Layouts/Container'
-import Error from '../../helpers/error'
+import Error from '../../helpers/Error'
 
 import { FaSignInAlt } from 'react-icons/fa'
 import { GiPadlock } from 'react-icons/gi'

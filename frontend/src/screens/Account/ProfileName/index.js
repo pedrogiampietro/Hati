@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router-dom'
 import { profileName } from '../../../actions/AccountActions'
 
-import { getFormData } from '../../../helpers/form'
+import { getFormData } from '../../../helpers/FormData'
 import Container from '../../Layouts/Container'
-import Error from '../../../helpers/error'
+import Error from '../../../helpers/Error'
 
 const ProfileName = ({ profileName }) => {
 	const [error, setError] = React.useState()

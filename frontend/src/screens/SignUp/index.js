@@ -2,7 +2,7 @@ import React from 'react'
 import { Redirect, useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { signUp } from '../../actions/AccountActions'
-import { getFormData } from '../../helpers/form'
+import { getFormData } from '../../helpers/FormData'
 
 import Container from '../Layouts/Container'
 import SignUpBackground from '../../assets/img/backgrounds/pattern-1.svg'

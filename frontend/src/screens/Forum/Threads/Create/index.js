@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
-import { getFormData } from '../../../../helpers/form'
+import { getFormData } from '../../../../helpers/FormData'
 import { forumNewThread } from '../../../../actions/ForumActions'
 import { playerList } from '../../../../actions/PlayerActions'
 import { hideNewThread } from '../../../../assets/js/scripts'

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { highscoresList } from '../../actions/PlayerActions'
 import { listSkills, characterVocations } from '../../config'
-import Outfiter from '../../helpers/outfiter'
+import Outfiter from '../../helpers/Outfiter'
 import Container from '../Layouts/Container'
 import './styles.css'
 

@@ -3,9 +3,9 @@ import { connect } from 'react-redux'
 import { useParams, Link, useHistory } from 'react-router-dom'
 import { playerGetCharacter } from '../../actions/PlayerActions'
 import { genders, characterVocations, towns } from '../../config'
-import { convertTimestempToDate } from '../../helpers/datetime'
+import { convertTimestempToDate } from '../../helpers/DateTime'
 import PlayerSkills from '../../components/PlayerSkills'
-import Outfiter from '../../helpers/outfiter'
+import Outfiter from '../../helpers/Outfiter'
 
 import { FaCrosshairs, FaSkullCrossbones, FaTimes } from 'react-icons/fa'
 

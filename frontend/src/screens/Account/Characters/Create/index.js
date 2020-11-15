@@ -5,7 +5,7 @@ import { playerCreate, playerList } from '../../../../actions/PlayerActions'
 
 import Container from '../../../Layouts/Container'
 import { createVocations } from '../../../../config'
-import Error from '../../../../helpers/error'
+import Error from '../../../../helpers/Error'
 import './styles.css'
 
 const CreateCharacter = ({ playerCreate, playerList, player }) => {

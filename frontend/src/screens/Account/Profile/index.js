@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom'
 import { profileInfo } from '../../../actions/AccountActions'
 import { playerList } from '../../../actions/PlayerActions'
 
-import { getFormData } from '../../../helpers/form'
+import { getFormData } from '../../../helpers/FormData'
 import Container from '../../Layouts/Container'
 import Input from '../../../components/Input'
 
