@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom'
 import { getFormData } from '../../../helpers/FormData'
 import { forgotPassword } from '../../../actions/AccountActions'
 
-import ContainerOnlyMenu from '../../Layouts/Container/Menu'
+import { GiWolfHowl } from 'react-icons/gi'
 import Background from '../../../assets/img/backgrounds/pattern-1.svg'
 
 import Error from '../../../helpers/Error'
@@ -37,14 +37,18 @@ const ForgotPassword = ({ forgotPassword }) => {
 	return (
 		<>
 			<div className="page-inner bg-brand-gradient ">
-				<ContainerOnlyMenu />
 				<div className="page-content-wrapper bg-transparent m-0">
 					<div className="height-10 w-100 shadow-lg px-4 bg-brand-gradient">
 						<div className="d-flex align-items-center container p-0">
 							<div className="page-logo width-mobile-auto m-0 align-items-center justify-content-center bg-transparent bg-img-none shadow-0 height-9">
-								<span className="page-logo-link press-scale-down d-flex align-items-center">
-									<span className="page-logo-text mr-1">Hati AAC</span>
-								</span>
+								<Link to="/sign-in">
+									<span className="page-logo-link press-scale-down d-flex align-items-center">
+										<h1 className="subheader-title">
+											<GiWolfHowl size={44} color="#ffff" />
+										</h1>
+										<span className="page-logo-text mr-1">Hati AAC</span>
+									</span>
+								</Link>
 							</div>
 
 							<span className="text-white opacity-50 ml-auto mr-2 hidden-sm-down">
