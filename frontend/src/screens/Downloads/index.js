@@ -77,7 +77,7 @@ const Downloads = () => {
 											<p>
 												ZIP download or no shortcut to the client: You need to
 												execute Launcher.exe inside the /bin/ folder to open the
-												client. If it fail, execute the taleon.exe inside the
+												client. If it fail, execute the Tibia.exe inside the
 												/bin/ folder as administrator.
 											</p>
 										</div>

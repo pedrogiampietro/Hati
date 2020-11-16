@@ -23,6 +23,7 @@ import ForgotPassword from './screens/Account/ForgotPassword'
 import ResetPassword from './screens/Account/ResetPassword'
 import ChangePassword from './screens/Account/ChangePassword'
 import Downloads from './screens/Downloads'
+import Guilds from './screens/Guilds'
 
 import PageSearch from './components/PageSearch'
 import ProtectedRoute from './helpers/ProtectedRoute'
@@ -99,9 +100,11 @@ const App = ({ initAccount }) => {
 					/>
 					<Route exact path="/forum/post/edit/:id" component={EditPost} />
 
-					<Route path="/downloads" component={Downloads} />
+					<Route exact path="/downloads" component={Downloads} />
 
-					<Route path="/" component={Home} />
+					<Route exact path="/guilds" component={Guilds} />
+
+					<Route exact path="/" component={Home} />
 				</Switch>
 			</BrowserRouter>
 		</>
