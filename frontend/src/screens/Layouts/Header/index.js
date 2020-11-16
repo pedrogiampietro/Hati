@@ -82,7 +82,7 @@ const Header = ({ playerGetCharacter, id }) => {
 					title="Hide Navigation"
 					onClick={() => changeMinify()}
 				>
-					<i className="ni ni-menu"></i>
+					<i className="ni ni-menu text-primary"></i>
 				</span>
 			</div>
 
