@@ -128,3 +128,14 @@ input[name='sex']:checked:after {
 	box-shadow: 2px 2px 14px rgba(0, 0, 0, 0.4);
 	color: #8373e6;
 }
+
+.visible {
+	visibility: visible !important;
+	position: static !important;
+	left: auto !important;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100px !important;
+	height: 150px !important;
+}

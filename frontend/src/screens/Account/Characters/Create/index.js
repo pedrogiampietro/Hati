@@ -98,6 +98,7 @@ const CreateCharacter = ({ playerCreate, playerList, player }) => {
 														<div className="row justify-content-center pb-5">
 															<input
 																type="radio"
+																className="visible"
 																name="sex"
 																value="0"
 																data-icon=""
@@ -107,6 +108,7 @@ const CreateCharacter = ({ playerCreate, playerList, player }) => {
 															/>
 															<input
 																type="radio"
+																className="visible"
 																name="sex"
 																value="1"
 																data-icon=""
