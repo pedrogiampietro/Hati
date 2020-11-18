@@ -1,10 +1,25 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { guildCreate } from '../../actions/GuildActions'
+import { playerList } from '../../actions/PlayerActions'
+import { getFormData } from '../../helpers/FormData'
 
 import Container from '../Layouts/Container'
 import { RiTableLine } from 'react-icons/ri'
 import { FaThList } from 'react-icons/fa'
 
-const Guilds = () => {
+const Guilds = ({ playerList, players }) => {
+	React.useEffect(() => {
+		playerList()
+	}, [playerList])
+
+	const submitHandler = (e) => {
+		e.preventDefault()
+		const data = getFormData(e)
+
+		guildCreate(data)
+	}
+
 	return (
 		<Container>
 			<div className="row">
@@ -44,6 +59,36 @@ const Guilds = () => {
 					</div>
 				</div>
 			</div>
+
+			<section>
+				<pre>
+					<form onSubmit={submitHandler}>
+						<input type="text" name="name" placeholder="Guild name" />
+						<br />
+						<select name="ownerid">
+							{players && players.length
+								? players.map((player) => {
+										console.log(player)
+										return (
+											<option key={player.id} value={player.id}>
+												{player.name}
+											</option>
+										)
+								  })
+								: null}
+						</select>
+						<br />
+						<textarea
+							name="description"
+							id="description"
+							cols="30"
+							rows="10"
+						></textarea>
+						<br />
+						<button className="btn btn-primary btn-sm">Teste API</button>
+					</form>
+				</pre>
+			</section>
 
 			{/* Guilds List */}
 			<div className="row js-list-filter" id="js-contacts">
@@ -98,4 +143,11 @@ const Guilds = () => {
 	)
 }
 
-export default Guilds
+const mapStateToProps = (state) => {
+	return {
+		account: state.account.account,
+		players: state.player.player,
+	}
+}
+
+export default connect(mapStateToProps, { playerList })(Guilds)

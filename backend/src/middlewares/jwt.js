@@ -11,6 +11,7 @@ const checkJwt = (req, res, next) => {
 		'/player/characters',
 		`/forum/newThread/${board_id}`,
 		`/forum/post/edit/${id}`,
+		'/guild',
 	]
 
 	const isExcluded = !excludedPaths.find((p) => p.startsWith(path))
