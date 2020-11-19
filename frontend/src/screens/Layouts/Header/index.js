@@ -4,11 +4,40 @@ import { useHistory, useParams } from 'react-router-dom'
 import { playerGetCharacter } from '../../../actions/PlayerActions'
 import { changeMinify, changeMenuOnMobile } from '../../../assets/js/scripts'
 
-const Header = ({ playerGetCharacter }) => {
+import './styles.css'
+
+const Header = ({ playerGetCharacter, id }) => {
 	const history = useHistory()
 	const { name } = useParams()
 	const [searchName, setSearchName] = useState()
 	const [, setError] = useState(false)
+
+	const Header = React.useRef()
+	React.useEffect(() => {
+		if (window.localStorage.getItem('mod-skin-dark')) {
+			Header.current.checked = true
+		} else {
+			Header.current.checked = false
+		}
+	})
+
+	const toggleTheme = () => {
+		document.body.classList.toggle('mod-skin-dark')
+
+		document.body.classList.contains('mod-skin-dark')
+			? localStorage.setItem('mod-skin-dark', true)
+			: localStorage.removeItem('mod-skin-dark')
+	}
+
+	const themeSavedLocalStorage = () => {
+		const getThemeFromLocalStorage = localStorage.getItem('mod-skin-dark')
+
+		getThemeFromLocalStorage
+			? document.body.classList.add('mod-skin-dark')
+			: localStorage.removeItem('mod-skin-dark') &&
+			  document.body.classList.remove('mod-skin-dark')
+	}
+	themeSavedLocalStorage()
 
 	useEffect(() => {
 		if (name !== undefined) {
@@ -53,7 +82,7 @@ const Header = ({ playerGetCharacter }) => {
 					title="Hide Navigation"
 					onClick={() => changeMinify()}
 				>
-					<i className="ni ni-menu"></i>
+					<i className="ni ni-menu text-primary"></i>
 				</span>
 			</div>
 
@@ -75,23 +104,42 @@ const Header = ({ playerGetCharacter }) => {
 					role="search"
 					autoComplete="off"
 				>
-					<br />
-					<div className="input-group input-group-lg mb-3">
-						<input
-							onChange={(e) => setSearchName(e.target.value)}
-							type="text"
-							className="form-control shadow-inset-2"
-							id="filter-icon"
-							placeholder="Search of Character"
-							aria-label="type 2 or more letters"
-						/>
-						<div className="input-group-append">
-							<span className="input-group-text">
-								<i className="fal fa-search"></i>
-							</span>
-						</div>
-					</div>
+					<input
+						onChange={(e) => setSearchName(e.target.value)}
+						type="text"
+						className="form-control shadow-inset-2"
+						id="search-field"
+						placeholder="Search of Character"
+						aria-label="type 2 or more letters"
+						tabIndex="1"
+					/>
 				</form>
+			</div>
+			<div className="ml-auto d-flex">
+				{/* activate app search icon (mobile) */}
+				<div className="hidden-sm-up">
+					<span
+						className="header-icon"
+						data-action="toggle"
+						data-class="mobile-search-on"
+						data-focus="search-field"
+						title="Search"
+					>
+						<i className="fal fa-search" />
+					</span>
+				</div>
+				{/* app settings */}
+				<div className="hidden-md-down">
+					<input
+						className="checkbox"
+						type="checkbox"
+						name="general"
+						id="general"
+						onChange={toggleTheme}
+						ref={Header}
+					/>
+					<label className="for-checkbox" htmlFor="general"></label>
+				</div>
 			</div>
 		</header>
 	)

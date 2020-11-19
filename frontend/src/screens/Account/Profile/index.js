@@ -1,55 +1,54 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import { profileInfo } from '../../../actions/AccountActions'
-import { getFormData } from '../../../helpers/form'
+import { playerList } from '../../../actions/PlayerActions'
+
+import { getFormData } from '../../../helpers/FormData'
 import Container from '../../Layouts/Container'
-import FormGroup from '../../../components/FormGroup'
+import Input from '../../../components/Input'
 
-// import Error from '../../../helpers/error'
+const ProfileInfo = ({ account, profileInfo, playerList }) => {
+	const history = useHistory()
 
-const ProfileInfo = ({ account, profileInfo }) => {
 	React.useEffect(() => {
 		profileInfo()
-	}, [profileInfo])
+		playerList()
+	}, [profileInfo, playerList])
 
 	const submitHandler = (event) => {
 		event.preventDefault()
 		const data = getFormData(event)
 		profileInfo(data)
+
+		history.push('/account/characters')
 	}
 
 	return (
 		<Container>
-			<div id="contentBody" className="col-sm-9">
-				<div className="panel panel-default">
-					<div className="panel-heading">Update Profile Information</div>
-					<div className="panel-body">
-						<form onSubmit={submitHandler}>
-							<FormGroup
-								label="Real Name"
-								name="rlname"
-								type="text"
-								data={account}
-							/>
-							<FormGroup
-								label="Location"
-								name="location"
-								type="text"
-								data={account}
-							/>
+			<div className="panel panel-default">
+				<div className="panel-heading">Update Profile Information</div>
+				<div className="panel-body">
+					<form onSubmit={submitHandler}>
+						<Input label="Real Name" name="rlname" type="text" data={account} />
+						<Input
+							label="Location"
+							name="location"
+							type="text"
+							data={account}
+						/>
 
-							<button type="submit" className="btn btn-primary">
-								Update Profile
+						<button type="submit" className="btn btn-primary mr-3">
+							Update Profile
+						</button>
+						<Link to="/account/characters">
+							<button type="button" className="btn btn-danger btn-sm">
+								Return
 							</button>
-							<Link to="/account/characters">
-								<button type="button" className="btn btn-inverse">
-									Return
-								</button>
-							</Link>
-						</form>
-					</div>
+						</Link>
+					</form>
 				</div>
 			</div>
 		</Container>
@@ -62,4 +61,6 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps, { profileInfo })(ProfileInfo)
+export default connect(mapStateToProps, { profileInfo, playerList })(
+	ProfileInfo
+)

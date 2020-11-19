@@ -1,27 +1,61 @@
 import React, { useEffect } from 'react'
-import { Redirect, Link } from 'react-router-dom'
+import { Redirect, Link, useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { signOut } from '../../../actions/AccountActions'
+import {
+	getProfileAvatar,
+	deleteProfileAvatar,
+} from '../../../actions/AccountActions'
 import { playerList } from '../../../actions/PlayerActions'
-import { convertTimestempToDate } from '../../../helpers/datetime'
-
+import { convertTimestempToDate } from '../../../helpers/DateTime'
+import { closeModalAvatar } from '../../../assets/js/scripts'
+import { toast, ToastContainer } from 'react-toastify'
 import Container from '../../Layouts/Container'
-// import CreateCharacter from './Create/index'
+
+import ProfileAvatar from '../../../assets/img/Profile_Avatar.png'
+import { RiDeleteBin6Line } from 'react-icons/ri'
 import { FiPlus } from 'react-icons/fi'
+
 import './styles.css'
 
-const Characters = ({ players, playerList, signOut, account }) => {
+const Characters = ({
+	players,
+	playerList,
+	getProfileAvatar,
+	signOut,
+	account,
+}) => {
+	const [avatar, setAvatar] = React.useState('')
+	const history = useHistory()
+
 	useEffect(() => {
+		getProfileAvatar().then(({ payload }) => {
+			const newData = payload.data.data
+			setAvatar(newData)
+		})
 		playerList()
-	}, [playerList])
+	}, [playerList, getProfileAvatar])
+
+	if (!avatar) {
+		return null
+	}
 
 	if (!account) {
 		return <Redirect to="/sign-in" />
 	}
 
-	const signOutHandler = (e) => {
-		e.preventDefault()
+	const signOutHandler = (event) => {
+		event.preventDefault()
 		signOut()
+	}
+
+	function handleDeleteAvatar(event) {
+		event.preventDefault()
+		deleteProfileAvatar()
+		closeModalAvatar()
+		toast.success('Your avatar has been deleted..')
+
+		setTimeout(() => history.push('/account/avatar'), 2000)
 	}
 
 	const Account = account[0]?.account
@@ -64,7 +98,7 @@ const Characters = ({ players, playerList, signOut, account }) => {
 									<a
 										className="nav-link active"
 										data-toggle="tab"
-										href="#js_pill_border_icon-1"
+										href="#account-information"
 									>
 										<i className="fal fa-home mr-1"></i>Account Information
 									</a>
@@ -73,7 +107,7 @@ const Characters = ({ players, playerList, signOut, account }) => {
 									<a
 										className="nav-link"
 										data-toggle="tab"
-										href="#js_pill_border_icon-2"
+										href="#account-profile"
 									>
 										<i className="fal fa-user mr-1"></i>Profile
 									</a>
@@ -91,7 +125,7 @@ const Characters = ({ players, playerList, signOut, account }) => {
 							<div className="tab-content py-3">
 								<div
 									className="tab-pane fade active show"
-									id="js_pill_border_icon-1"
+									id="account-information"
 									role="tabpanel"
 								>
 									<div className="panel panel-default">
@@ -140,24 +174,24 @@ const Characters = ({ players, playerList, signOut, account }) => {
 													</tr>
 												</tbody>
 											</table>
-											<div className="demo">
-												<button className="btn btn-primary btn-sm">
+
+											<Link to="/account/password">
+												<button className="btn btn-primary btn-sm mr-3">
 													Change Password
 												</button>
-
-												<button
-													className="btn btn-danger btn-sm"
-													onClick={signOutHandler}
-												>
-													Logout
-												</button>
-											</div>
+											</Link>
+											<button
+												className="btn btn-danger btn-sm"
+												onClick={signOutHandler}
+											>
+												Logout
+											</button>
 										</div>
 									</div>
 								</div>
 								<div
 									className="tab-pane fade"
-									id="js_pill_border_icon-2"
+									id="account-profile"
 									role="tabpanel"
 								>
 									<div className="row">
@@ -186,22 +220,26 @@ const Characters = ({ players, playerList, signOut, account }) => {
 														</tbody>
 													</table>
 
-													<table>
-														<tbody>
-															<tr>
-																<td className="col-md-3">
-																	<a href="/account/profile_info">
-																		<button
-																			className="btn btn-primary btn-sm"
-																			align="left"
-																		>
-																			Update Information
-																		</button>
-																	</a>
-																</td>
-															</tr>
-														</tbody>
-													</table>
+													<span className="col-md-3">
+														<Link to="/account/profile">
+															<button
+																className="btn btn-primary btn-sm"
+																align="left"
+															>
+																Update Information
+															</button>
+														</Link>
+													</span>
+
+													{Account?.profileName !== '' ? null : (
+														<span className="col-md-3 mb-1" align="right">
+															<Link to="/account/profile_name">
+																<button className="btn btn-primary btn-sm">
+																	Set Profile Name
+																</button>
+															</Link>
+														</span>
+													)}
 												</div>
 											</div>
 										</div>
@@ -209,14 +247,118 @@ const Characters = ({ players, playerList, signOut, account }) => {
 											<div className="panel panel-default">
 												<div className="panel-heading">Profile Avatar</div>
 												<div className="panel-body" align="center">
-													{/* <img className="avatar" src="/avatar/10067400.png" /> */}
+													<div className="fc-toolbar fc-header-toolbar">
+														<div className="fc-left">
+															<h2 className="fs-md">
+																{' '}
+																<span className="subheader-title text-truncate text-truncate-lg text-primary">
+																	{Account?.profileName}
+																</span>
+															</h2>
+														</div>
+													</div>
+													{avatar.avatar === '' ? (
+														<img
+															src={ProfileAvatar}
+															alt={ProfileAvatar}
+															style={{
+																backgroundRepeat: 'no-repeat',
+																backgroundPosition: 'center',
+																backgroundSize: 'cover',
+															}}
+														/>
+													) : (
+														<div className="imagem-avatar">
+															<img
+																src={avatar}
+																alt="Avatar"
+																className="profile-image rounded-circle"
+															/>
+															<div
+																className="avatar-delete"
+																data-toggle="modal"
+																data-target=".example-modal-centered-transparent"
+															>
+																<RiDeleteBin6Line size={30} color="#fff" />
+															</div>
+														</div>
+													)}
+
+													<div
+														className="modal fade example-modal-centered-transparent"
+														tabIndex="-1"
+														role="dialog"
+														aria-hidden="true"
+														style={{ display: 'none' }}
+													>
+														<div
+															className="modal-dialog modal-dialog-centered modal-transparent"
+															role="document"
+														>
+															<div className="modal-content">
+																<div className="modal-header">
+																	<h4 className="modal-title text-white">
+																		do you want to delete this avatar?
+																		<small className="m-0 text-white opacity-70">
+																			do you really intend to delete your
+																			avatar? you will delete it from our
+																			database, and you will not be able to
+																			recover it again.
+																		</small>
+																	</h4>
+																	<button
+																		type="button"
+																		className="close text-white"
+																		data-dismiss="modal"
+																		aria-label="Close"
+																	>
+																		<span aria-hidden="true">
+																			<i className="fal fa-times"></i>
+																		</span>
+																	</button>
+																</div>
+
+																<div className="modal-footer">
+																	<button
+																		type="button"
+																		className="btn btn-secondary waves-effect waves-themed"
+																		data-dismiss="modal"
+																	>
+																		Close
+																	</button>
+																	<button
+																		type="button"
+																		className="btn btn-primary waves-effect waves-themed"
+																		onClick={handleDeleteAvatar}
+																	>
+																		Delete
+																	</button>
+																</div>
+															</div>
+														</div>
+													</div>
+
 													<br />
 													<br />
-													<a href="/account/avatar">
-														<button className="btn btn-primary btn-sm">
+
+													{avatar && avatar.length > 0 ? (
+														<button
+															className="btn btn-primary btn-sm disabled"
+															align="center"
+															disabled
+														>
 															Update Avatar
 														</button>
-													</a>
+													) : (
+														<Link to="/account/avatar">
+															<button
+																className="btn btn-primary btn-sm"
+																align="center"
+															>
+																Update Avatar
+															</button>
+														</Link>
+													)}
 												</div>
 											</div>
 										</div>
@@ -276,6 +418,7 @@ const Characters = ({ players, playerList, signOut, account }) => {
 					</div>
 				</div>
 			</div>
+			<ToastContainer />
 		</Container>
 	)
 }
@@ -287,4 +430,8 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps, { playerList, signOut })(Characters)
+export default connect(mapStateToProps, {
+	playerList,
+	signOut,
+	getProfileAvatar,
+})(Characters)

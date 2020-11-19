@@ -71,10 +71,35 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: false,
 			defaultValue: 0,
 		},
+		avatar: {
+			type: DataTypes.STRING,
+			validate: {
+				isString(val) {
+					if (typeof val !== 'string') {
+						throw new sequelize.ValidationError('Avatar must be a string.')
+					}
+				},
+			},
+		},
+		passwordResetToken: {
+			type: DataTypes.STRING,
+			select: false,
+		},
+		passwordResetExpires: {
+			type: DataTypes.DATE,
+			select: false,
+		},
+		profileName: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			defaultValue: '',
+		},
 	})
 
 	account.associate = (models) => {
 		account.hasMany(models.player, { foreignKey: 'account_id' })
+		account.hasMany(models.thread, { foreignKey: 'account_id' })
+		account.hasMany(models.comment, { foreignKey: 'account_id' })
 	}
 
 	account.prototype.toJSON = function () {

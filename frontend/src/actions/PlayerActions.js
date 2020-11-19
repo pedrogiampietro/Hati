@@ -5,7 +5,7 @@ import {
 	apiDelete,
 	apiGetHighscores,
 	apiGetCharacter,
-} from '../helpers/api'
+} from '../helpers/Api'
 
 export const PLAYER_CREATE = 'PLAYER_CREATE'
 export const PLAYER_LIST = 'PLAYER_LIST'

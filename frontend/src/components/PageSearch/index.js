@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Error from '../../helpers/error'
+import Error from '../../helpers/Error'
 
 import Container from '../../screens/Layouts/Container'
 import NotFound from '../../assets/img/page_not.svg'

@@ -5,6 +5,13 @@ import {
 	INIT_ACCOUNT,
 	REFRESH_TOKEN,
 	PROFILE_INFO,
+	GET_PROFILE_AVATAR,
+	POST_PROFILE_AVATAR,
+	DELETE_PROFILE_AVATAR,
+	FORGOT_PASSWORD,
+	RESET_PASSWORD,
+	PROFILE_NAME,
+	CHANGE_PASSWORD,
 } from '../actions/AccountActions'
 import {
 	getAccount,
@@ -17,12 +24,14 @@ import {
 	setPlayerName,
 	getPlayerName,
 	removePlayerName,
-} from '../helpers/account'
+} from '../helpers/Account'
 import { PLAYER_CREATE } from '../actions/PlayerActions'
+import { CREATE_THREAD } from '../actions/ForumActions'
 
 const initialState = {
 	account: null,
 	player: null,
+	forum: null,
 }
 
 export default function (state = initialState, action) {
@@ -32,7 +41,13 @@ export default function (state = initialState, action) {
 		case SIGN_IN:
 		case SIGN_UP:
 		case PLAYER_CREATE:
+		case CREATE_THREAD:
 		case PROFILE_INFO:
+		case CHANGE_PASSWORD:
+		case PROFILE_NAME:
+		case GET_PROFILE_AVATAR:
+		case POST_PROFILE_AVATAR:
+		case DELETE_PROFILE_AVATAR:
 			const response = payload ? payload.data : null
 			const account = response ? response.data : null
 			const metadata = response ? response.metadata : null
@@ -56,6 +71,16 @@ export default function (state = initialState, action) {
 			removeRefreshToken()
 
 			return { ...state, account: null, player: null }
+
+		case FORGOT_PASSWORD:
+		case RESET_PASSWORD: {
+			const response = payload ? payload.data : null
+			const metadata = response ? response.metadata : null
+			const token = metadata ? metadata.token : null
+			if (token) setToken(token)
+
+			return state
+		}
 
 		case INIT_ACCOUNT: {
 			const account = getAccount()

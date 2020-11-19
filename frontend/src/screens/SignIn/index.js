@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getFormData } from '../../helpers/form'
+import { getFormData } from '../../helpers/FormData'
 import { signIn } from '../../actions/AccountActions'
 
 import Container from '../Layouts/Container'
-import Error from '../../helpers/error'
+import Error from '../../helpers/Error'
+
+import { FaSignInAlt } from 'react-icons/fa'
+import { GiPadlock } from 'react-icons/gi'
 
 const SignIn = (props) => {
 	const { signIn, account } = props
@@ -21,7 +24,6 @@ const SignIn = (props) => {
 		const data = getFormData(e)
 		signIn(data).catch((err) => {
 			const { data } = err.response
-			console.log(data)
 			setError(data.message)
 		})
 	}
@@ -84,17 +86,17 @@ const SignIn = (props) => {
 										type="submit"
 										className="btn btn-info btn-block btn-lg waves-effect waves-themed"
 									>
-										<i className="fas fa-sign-in-alt"></i> Login
+										<FaSignInAlt size={20} /> Login
 									</button>
 								</div>
 								<div className="col-lg-6 pl-lg-1 my-2">
-									<Link to="/forgot-password">
+									<Link to="/forgot">
 										{' '}
 										<button
 											id="js-login-btn"
 											className="btn btn-danger btn-block btn-lg waves-effect waves-themed"
 										>
-											<i className="fas fa-lock"></i> Forgot Password
+											<GiPadlock size={20} /> Forgot Password
 										</button>
 									</Link>
 								</div>

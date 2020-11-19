@@ -1,25 +1,78 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom'
 
 import Header from '../Header'
 import Menu from '../Menu'
 import Footer from '../Footer'
+import { GiWolfHowl } from 'react-icons/gi'
 
 import { closeMenuOnMobile } from '../../../assets/js/scripts'
 
 import './styles.css'
 
 const Container = ({ children }) => {
+	const [title, setTitle] = React.useState('')
+	const location = useLocation()
+	// console.log(location)
+
+	React.useEffect(() => {
+		const { pathname } = location
+
+		switch (pathname) {
+			case '/':
+				setTitle('Home')
+				break
+			case '/sign-in':
+				setTitle('Sign In')
+				break
+			case '/sign-up':
+				setTitle('Sign Up')
+				break
+			case '/highscores':
+				setTitle('Highscores')
+				break
+			case '/account/characters':
+				setTitle('Account Managment')
+				break
+			case '/account/profile':
+				setTitle('Profile')
+				break
+			case '/account/avatar':
+				setTitle('Avatar')
+				break
+			case '/account/characters/create':
+				setTitle('Create Character')
+				break
+			case '/forum':
+				setTitle('Forum')
+				break
+			case '/forum/last-news':
+				setTitle('Last News')
+				break
+			case '/forum/discussions':
+				setTitle('Discussions')
+				break
+			case '/forum/bug-report':
+				setTitle('Bug Report')
+				break
+
+			default:
+				setTitle('Hati AAC')
+		}
+	}, [location])
+
 	return (
 		<div className="mod-bg-1">
 			<div className="page-wrapper">
 				<div className="page-inner">
 					<Menu />
+
 					<div className="page-content-wrapper">
 						<Header />
 						<main id="js-page-content" role="main" className="page-content">
 							<div className="subheader">
 								<h1 className="subheader-title">
-									<i className="fal fa-home"></i> Home
+									<GiWolfHowl size={44} color="#886ab5" /> {title}
 								</h1>
 							</div>
 

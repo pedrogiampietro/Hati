@@ -3,9 +3,11 @@ import { connect } from 'react-redux'
 import { useParams, Link, useHistory } from 'react-router-dom'
 import { playerGetCharacter } from '../../actions/PlayerActions'
 import { genders, characterVocations, towns } from '../../config'
-import { convertTimestempToDate } from '../../helpers/datetime'
+import { convertTimestempToDate } from '../../helpers/DateTime'
 import PlayerSkills from '../../components/PlayerSkills'
-import Outfiter from '../../helpers/outfiter'
+import Outfiter from '../../helpers/Outfiter'
+
+import { FaCrosshairs, FaSkullCrossbones, FaTimes } from 'react-icons/fa'
 
 import Container from '../Layouts/Container'
 import './styles.css'
@@ -274,7 +276,7 @@ const Character = ({ playerGetCharacter, ...props }) => {
 																<img src={legs} alt="legs" />
 															</td>
 															<td align="center">
-																<i className="far fa-times-circle"></i>
+																<FaTimes size={20} className="mt-2" />
 															</td>
 														</tr>
 														<tr>
@@ -315,7 +317,6 @@ const Character = ({ playerGetCharacter, ...props }) => {
 										<div className="line text-muted"></div>
 										{playerDeaths && playerDeaths.length
 											? playerDeaths.map((props) => {
-													console.log(props)
 													return (
 														<div key={props.time}>
 															<div className="separator text-muted">
@@ -327,9 +328,12 @@ const Character = ({ playerGetCharacter, ...props }) => {
 															<article className="panel panel-danger">
 																<div className="panel-heading icon">
 																	{props.is_player === 1 ? (
-																		<i className="fas fa-crosshairs"></i>
+																		<FaCrosshairs size={20} className="mt-2" />
 																	) : (
-																		<i className="fas fa-skull-crossbones"></i>
+																		<FaSkullCrossbones
+																			size={20}
+																			className="mt-2"
+																		/>
 																	)}
 																</div>
 

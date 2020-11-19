@@ -2,9 +2,9 @@ import React, { useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { playerList } from '../../actions/PlayerActions'
-import { getAccount } from '../../helpers/account'
-import { getFormData } from '../../helpers/form'
-import { newsCreate } from '../../actions/NewsActions'
+import { getAccount } from '../../helpers/Account'
+import { getFormData } from '../../helpers/FormData'
+import { newsCreate } from '../../actions/ForumActions'
 
 import Menu from '../Layouts/Menu'
 import Header from '../Layouts/Header'
@@ -243,7 +243,7 @@ const mapStateToProps = (state) => {
 	return {
 		account: state.account.account,
 		players: state.player.player,
-		post: state.post.post,
+		forum: state.forum.forum,
 	}
 }
 

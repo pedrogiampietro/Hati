@@ -17,9 +17,8 @@ module.exports = (sequelize, DataTypes) => {
 		account_id: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
-			reference: {
-				model: 'account',
-
+			references: {
+				model: 'accounts',
 				key: 'id',
 			},
 		},
@@ -288,11 +287,20 @@ module.exports = (sequelize, DataTypes) => {
 			allowNull: false,
 			defaultValue: 0,
 		},
+		madphp_signature_bg: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			defaultValue: 0,
+		},
+		madphp_signature_cache: {
+			type: DataTypes.STRING,
+			allowNull: false,
+			defaultValue: 0,
+		},
 	})
 
 	player.associate = (models) => {
 		player.belongsTo(models.account, { foreignKey: 'account_id' })
-		player.hasMany(models.z_forum, { foreignKey: 'id' }) // <- alterar aqui depois.
 		player.hasMany(models.player_deaths, { foreignKey: 'player_id' })
 	}
 

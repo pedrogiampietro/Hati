@@ -1,19 +1,23 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import avatarImg from '../../../assets/img/avatar.png'
+import Logo from '../../../assets/img/logo.png'
 import coverCard from '../../../assets/img/card-backgrounds/cover-2-lg.png'
+
+import { BiGlobe } from 'react-icons/bi'
+import { ImUserPlus } from 'react-icons/im'
+import { FaSignInAlt } from 'react-icons/fa'
+import { GoCloudDownload } from 'react-icons/go'
+import { SiStatuspage } from 'react-icons/si'
+import { GiTrophy, GiCheckedShield, GiBattleGear } from 'react-icons/gi'
+import { AiOutlineMessage, AiOutlineShoppingCart } from 'react-icons/ai'
 
 const Menu = ({ account }) => {
 	return (
 		<aside className="page-sidebar ">
 			<nav id="js-primary-nav" className="primary-nav" role="navigation">
 				<div className="info-card">
-					<img
-						src={avatarImg}
-						className="profile-image rounded-circle"
-						alt="Logo"
-					/>
+					<img src={Logo} className="profile-image rounded-circle" alt="Logo" />
 					<div className="info-card-text">
 						<span className="d-flex align-items-center text-white">
 							<span className="text-truncate text-truncate-sm d-inline-block">
@@ -29,77 +33,43 @@ const Menu = ({ account }) => {
 				<ul id="js-nav-menu" className="nav-menu ">
 					<li>
 						<Link to="/">
-							<i className="fal fa-globe"></i>
-							<span
-								className="nav-link-text"
-								data-i18n="nav.application_intel_analytics_dashboard"
-							>
-								News
-							</span>
+							<BiGlobe size={18} className="mr-2" />
+							<span className="nav-link-text">News</span>
 						</Link>
 					</li>
 
 					<li>
 						<Link to="/sign-up">
-							<i className="fa fa-user-plus"></i>
-							<span
-								className="nav-link-text"
-								data-i18n="nav.application_intel_analytics_dashboard"
-							>
-								Register
-							</span>
+							<ImUserPlus size={18} className="mr-2" />
+							<span className="nav-link-text">Register</span>
 						</Link>
 					</li>
 
 					<li>
 						<Link to="/sign-in">
-							<i className="fal fa-sign-in" aria-hidden="true"></i>
-							<span
-								className="nav-link-text"
-								data-i18n="nav.application_intel_analytics_dashboard"
-							>
+							<FaSignInAlt size={18} className="mr-2" />
+							<span className="nav-link-text">
 								{account ? 'My Account' : 'Login'}
 							</span>
 						</Link>
 					</li>
 
 					<li>
-						<Link to="/download">
-							<i className="fal fa-cloud-download" aria-hidden="true"></i>
-							<span
-								className="nav-link-text"
-								data-i18n="nav.application_intel_analytics_dashboard"
-							>
-								Download
-							</span>
+						<Link to="/downloads">
+							<GoCloudDownload size={18} className="mr-2" />
+							<span className="nav-link-text">Downloads</span>
 						</Link>
 					</li>
 					<li className="nav-title">Community</li>
 					<li>
 						<Link to="/online">
-							<i className="fal fa-chart-pie"></i>
-							<span
-								className="nav-link-text"
-								data-i18n="nav.application_intel_analytics_dashboard"
-							>
-								Online List
-							</span>
-						</Link>
-					</li>
-					<li>
-						<Link to="">
-							<i className="fal fa-bolt" aria-hidden="true"></i>
-							<span
-								className="nav-link-text"
-								data-i18n="nav.application_intel_analytics_dashboard"
-							>
-								Activity
-							</span>
+							<SiStatuspage size={18} className="mr-2" />
+							<span className="nav-link-text">Online List</span>
 						</Link>
 					</li>
 					<li>
 						<Link to="/highscores">
-							<i className="fal fa-trophy" aria-hidden="true"></i>
+							<GiTrophy size={18} className="mr-2" />
 							<span className="nav-link-text" data-i18n="nav.form_stuff">
 								Highscores
 							</span>
@@ -107,48 +77,28 @@ const Menu = ({ account }) => {
 					</li>
 					<li>
 						<Link to="/forum">
-							<i className="fal fa-comments" aria-hidden="true"></i>
-							<span
-								className="nav-link-text"
-								data-i18n="nav.application_intel_analytics_dashboard"
-							>
-								Forum
-							</span>
+							<AiOutlineMessage size={18} className="mr-2" />
+							<span className="nav-link-text">Forum</span>
 						</Link>
 					</li>
 					<li className="nav-title">Guilds</li>
 					<li>
 						<Link to="/guilds">
-							<i className="fal fa-shield-alt"></i>
-							<span
-								className="nav-link-text"
-								data-i18n="nav.application_intel_analytics_dashboard"
-							>
-								Guild List
-							</span>
+							<GiCheckedShield size={18} className="mr-2" />
+							<span className="nav-link-text">Guild List</span>
 						</Link>
 					</li>
 					<li>
 						<Link to="/wars">
-							<i className="fal fa-fire" aria-hidden="true"></i>
-							<span
-								className="nav-link-text"
-								data-i18n="nav.application_intel_analytics_dashboard"
-							>
-								Guild War
-							</span>
+							<GiBattleGear size={18} className="mr-2" />
+							<span className="nav-link-text">Guild War</span>
 						</Link>
 					</li>
 					<li className="nav-title">Market</li>
 					<li>
 						<Link to="/shop">
-							<i className="fal fa-shopping-cart" aria-hidden="true"></i>
-							<span
-								className="nav-link-text"
-								data-i18n="nav.application_intel_analytics_dashboard"
-							>
-								Shop
-							</span>
+							<AiOutlineShoppingCart size={18} className="mr-2" />
+							<span className="nav-link-text">Shop</span>
 						</Link>
 					</li>
 				</ul>

@@ -1,24 +1,37 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { signUp } from '../../actions/AccountActions'
-import { getFormData } from '../../helpers/form'
+import { getFormData } from '../../helpers/FormData'
 
 import Container from '../Layouts/Container'
-// import Error from '../../helpers/error'
 import SignUpBackground from '../../assets/img/backgrounds/pattern-1.svg'
+import { toast, ToastContainer } from 'react-toastify'
 
-const SignUp = (props) => {
-	const { signUp, account } = props
-	// const [error, setError] = useState()
+const SignUp = ({ signUp, account, children }) => {
+	const history = useHistory()
+	const [error, setError] = React.useState()
 
 	const submitHandler = (e) => {
 		e.preventDefault()
 		const data = getFormData(e)
 		signUp(data)
+			.then(({ payload }) => {
+				history.push('/sign-in')
+			})
+			.catch((err) => {
+				const { data } = err.response
 
-		console.log(data)
+				if (Object.entries(data.metadata).length > 0) {
+					Object.keys(data.metadata.error).forEach(function (item) {
+						setError(data.metadata.error[item])
+					})
+				} else {
+					setError(data.message)
+				}
+			})
 	}
+	toast.error(error)
 
 	if (account) {
 		return <Redirect to="/account/characters" />
@@ -67,8 +80,8 @@ const SignUp = (props) => {
 												name="name"
 												className="form-control"
 												placeholder="Enter your account name"
-												required
 											/>
+
 											<div className="invalid-feedback">
 												No, you missed this one.
 											</div>
@@ -81,7 +94,6 @@ const SignUp = (props) => {
 												name="password"
 												className="form-control"
 												placeholder="Enter your password"
-												required
 											/>
 											<div className="invalid-feedback">
 												No, you missed this one.
@@ -98,7 +110,6 @@ const SignUp = (props) => {
 												name="password_confirmation"
 												className="form-control"
 												placeholder="Confirm password"
-												required
 											/>
 
 											<div className="invalid-feedback">
@@ -107,7 +118,7 @@ const SignUp = (props) => {
 										</div>
 									</div>
 									<div className="form-group">
-										<label className="form-label" htmlhtmlhtmlFor="email">
+										<label className="form-label" htmlFor="email">
 											Email will be needed for verification and account recovery
 										</label>
 										<input
@@ -115,7 +126,6 @@ const SignUp = (props) => {
 											name="email"
 											className="form-control"
 											placeholder="Enter your valid e-mail"
-											required
 										/>
 										<div className="invalid-feedback">
 											No, you missed this one.
@@ -130,13 +140,10 @@ const SignUp = (props) => {
 											<input
 												type="checkbox"
 												className="custom-control-input"
-												id="terms"
-												required=""
+												name="isTerms"
+												id="isTerms"
 											/>
-											<label
-												className="custom-control-label"
-												htmlhtmlFor="terms"
-											>
+											<label className="custom-control-label" htmlFor="isTerms">
 												{' '}
 												I agree to terms &amp; conditions
 											</label>
@@ -144,7 +151,7 @@ const SignUp = (props) => {
 												You must agree before proceeding
 											</div>
 										</div>
-										<div className="custom-control custom-checkbox">
+										{/* <div className="custom-control custom-checkbox">
 											<input
 												type="checkbox"
 												className="custom-control-input"
@@ -152,12 +159,12 @@ const SignUp = (props) => {
 											/>
 											<label
 												className="custom-control-label"
-												htmlhtmlFor="newsletter"
+												htmlFor="newsletter"
 											>
 												Sign up for newsletters (dont worry, we won't send so
 												many)
 											</label>
-										</div>
+										</div> */}
 									</div>
 									<div className="row no-gutters">
 										<div className="col-md-4 ml-auto text-right">
@@ -175,7 +182,8 @@ const SignUp = (props) => {
 						</div>
 					</div>
 				</div>
-			</Container>{' '}
+				<ToastContainer />
+			</Container>
 		</>
 	)
 }
