@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { guildCreate, guildList } from '../../actions/GuildActions'
 import { playerList } from '../../actions/PlayerActions'
 import { getFormData } from '../../helpers/FormData'
@@ -116,28 +117,41 @@ const Guilds = ({ playerList, guildList, players }) => {
 						<div className="card border shadow-0 shadow-sm-hover mb-g">
 							<div className="card-body border-faded border-top-0 border-left-0 border-right-0 rounded-top">
 								<div className="d-flex flex-row align-items-center">
-									<span className="status status-success mr-3">
-										<img
-											src={GuildLogoDefault}
-											alt="GuildLogo"
-											className="profile-image-lg rounded-circle d-block"
-											style={{
-												backgroundSize: 'cover',
-											}}
-										/>
-									</span>
+									<img
+										src={GuildLogoDefault}
+										alt="GuildLogo"
+										className="profile-image-lg rounded-circle d-block"
+										style={{
+											backgroundSize: 'cover',
+										}}
+									/>
+
 									<div className="info-card-text flex-1">
-										<span className="fs-xl text-truncate text-truncate-lg text-info">
-											{guilds.name}
-										</span>
+										<Link to="/guilds/1">
+											<span className="fs-xl text-truncate text-truncate-lg text-info">
+												{guilds.name}
+											</span>
+										</Link>
 
 										<span className="text-truncate text-truncate-xl">
 											Leader: {guilds.player.name}
 										</span>
 									</div>
+									<button
+										class="js-expand-btn btn btn-sm btn-default waves-effect waves-themed"
+										type="button"
+										data-toggle="collapse"
+										data-target="#collapseRows"
+										aria-expanded="false"
+										aria-controls="collapseRows"
+									>
+										<span className="collapsed-hidden">+</span>
+										<span className="collapsed-reveal">-</span>
+									</button>
 								</div>
 							</div>
-							<div className="card-body p-0 collapse show">
+
+							<div id="collapseRows" className="card-body p-0 collapse">
 								<div className="p-3">
 									<span className="mt-1 d-block fs-sm fw-400 text-dark">
 										{guilds.description}

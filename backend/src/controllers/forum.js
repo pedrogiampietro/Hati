@@ -138,8 +138,6 @@ router.get('/thread/:board_id/:discussion', async (req, res) => {
 		views: 1,
 	})
 
-	console.log(getDiscussion)
-
 	return res.jsonOK(getDiscussion)
 })
 

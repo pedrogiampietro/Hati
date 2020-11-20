@@ -42,6 +42,16 @@ router.get('/', async (req, res) => {
 	return res.jsonOK(getAllGuilds)
 })
 
+router.get('/:id', async (req, res) => {
+	const { id } = req
+
+	const getOneGuild = await guild.findOne({
+		where: { id },
+	})
+
+	return res.jsonOK(getOneGuild)
+})
+
 //router.delete('/')
 
 module.exports = router
