@@ -10,9 +10,12 @@ import Error from '../../helpers/Error'
 import { FaSignInAlt } from 'react-icons/fa'
 import { GiPadlock } from 'react-icons/gi'
 
+import Button from '../../components/Button'
+
 const SignIn = (props) => {
 	const { signIn, account } = props
 	const [error, setError] = useState()
+	const [loading, setLoading] = React.useState(false)
 
 	if (account) {
 		return <Redirect to="/account/characters" />
@@ -20,11 +23,12 @@ const SignIn = (props) => {
 
 	const submitHandler = (e) => {
 		e.preventDefault()
-
+		setLoading(true)
 		const data = getFormData(e)
 		signIn(data).catch((err) => {
 			const { data } = err.response
 			setError(data.message)
+			setLoading(false)
 		})
 	}
 
@@ -82,12 +86,20 @@ const SignIn = (props) => {
 							<Error error={error} />
 							<div className="row no-gutters">
 								<div className="col-lg-6 pr-lg-1 my-2">
-									<button
+									{/* <button
 										type="submit"
 										className="btn btn-info btn-block btn-lg waves-effect waves-themed"
 									>
-										<FaSignInAlt size={20} /> Login
-									</button>
+
+									</button> */}
+									<Button
+										className="btn btn-info btn-block btn-lg waves-effect waves-themed"
+										type="submit"
+										disabled={loading ? true : false}
+									>
+										<FaSignInAlt size={20} className="mr-2" />
+										{loading ? 'Loading... ' : 'Sign-in'}
+									</Button>
 								</div>
 								<div className="col-lg-6 pl-lg-1 my-2">
 									<Link to="/forgot">

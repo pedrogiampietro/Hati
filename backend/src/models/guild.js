@@ -1,5 +1,3 @@
-const { guild_rank } = require('./guild_rank')
-
 module.exports = (sequelize, DataTypes) => {
 	const guild = sequelize.define('guild', {
 		name: {
@@ -59,7 +57,7 @@ module.exports = (sequelize, DataTypes) => {
 			{ name: 'a Member', level: 1, guild_id: guild.id },
 		]
 
-		for (i = 0; i < teste.length; i++) {
+		for (i = 0; i < addRanks.length; i++) {
 			sequelize.models.guild_rank.create(addRanks[i])
 		}
 	})

@@ -1,4 +1,4 @@
-import { apiGet, apiPost, apiDelete } from '../helpers/Api'
+import { apiGet, apiPost } from '../helpers/Api'
 
 export const GUILD_CREATE = 'GUILD_CREATE'
 export const GUILD_LIST = 'GUILD_LIST'

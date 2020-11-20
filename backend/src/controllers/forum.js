@@ -134,6 +134,12 @@ router.get('/thread/:board_id/:discussion', async (req, res) => {
 		],
 	})
 
+	getDiscussion.increment({
+		views: 1,
+	})
+
+	console.log(getDiscussion)
+
 	return res.jsonOK(getDiscussion)
 })
 

@@ -1,5 +1,5 @@
 const express = require('express')
-const { player, guild } = require('../models')
+const { guild, player } = require('../models')
 const { getMessage } = require('../helpers/messages')
 
 const router = express.Router()
@@ -29,7 +29,18 @@ router.post('/', async (req, res) => {
 	}
 })
 
-// router.get('/')
+router.get('/', async (req, res) => {
+	const getAllGuilds = await guild.findAll({
+		include: [
+			{
+				model: player,
+				attributes: ['name'],
+			},
+		],
+	})
+
+	return res.jsonOK(getAllGuilds)
+})
 
 //router.delete('/')
 
