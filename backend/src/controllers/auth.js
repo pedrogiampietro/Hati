@@ -42,11 +42,10 @@ router.post('/sign-in', accountSignIn, async (req, res) => {
 	const { name, password } = req.body
 	const accounts = await account.findOne({ where: { name } })
 
-	const parsedBody = req.body
-	const encryptedPassword = encrypt(parsedBody.password)
+	const encryptedPassword = encrypt(password)
 
 	const accountFound = await account.findOne({
-		where: { name: parsedBody.name, password: encryptedPassword },
+		where: { name, password: encryptedPassword },
 	})
 
 	if (!accountFound)

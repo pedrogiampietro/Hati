@@ -4,7 +4,8 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "nodemon src/index.js"
+		"start": "nodemon src/index.js",
+		"test": "jest"
 	},
 	"author": "Pedro Giampietro",
 	"license": "ISC",
@@ -21,5 +22,15 @@
 		"nodemailer-express-handlebars": "^4.0.0",
 		"nodemon": "^2.0.4",
 		"sequelize": "^6.3.0"
+	},
+	"jest": {
+		"testEnvironment": "node",
+		"coveragePathIgnorePatterns": [
+			"/node_modules/"
+		]
+	},
+	"devDependencies": {
+		"jest": "^26.6.3",
+		"supertest": "^6.0.1"
 	}
 }
