@@ -112,7 +112,7 @@ const Guilds = ({ playerList, guildList, players }) => {
 
 			{/* Guilds List */}
 			<div className="row">
-				{guild.map((guilds) => (
+				{guild.map((guilds, index) => (
 					<div key={guilds.id} className={className}>
 						<div className="card border shadow-0 shadow-sm-hover mb-g">
 							<div className="card-body border-faded border-top-0 border-left-0 border-right-0 rounded-top">
@@ -126,7 +126,7 @@ const Guilds = ({ playerList, guildList, players }) => {
 										}}
 									/>
 
-									<div className="info-card-text flex-1">
+									<div className="info-card-text flex-1 ml-3">
 										<Link to="/guilds/1">
 											<span className="fs-xl text-truncate text-truncate-lg text-info">
 												{guilds.name}
@@ -138,12 +138,12 @@ const Guilds = ({ playerList, guildList, players }) => {
 										</span>
 									</div>
 									<button
-										class="js-expand-btn btn btn-sm btn-default waves-effect waves-themed"
+										className="js-expand-btn btn btn-sm btn-default waves-effect waves-themed"
 										type="button"
 										data-toggle="collapse"
-										data-target="#collapseRows"
+										data-target={`#collapse${index}`}
 										aria-expanded="false"
-										aria-controls="collapseRows"
+										aria-controls={`#collapse${index}`}
 									>
 										<span className="collapsed-hidden">+</span>
 										<span className="collapsed-reveal">-</span>
@@ -151,7 +151,7 @@ const Guilds = ({ playerList, guildList, players }) => {
 								</div>
 							</div>
 
-							<div id="collapseRows" className="card-body p-0 collapse">
+							<div id={`collapse${index}`} className="card-body p-0 collapse">
 								<div className="p-3">
 									<span className="mt-1 d-block fs-sm fw-400 text-dark">
 										{guilds.description}

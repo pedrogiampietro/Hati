@@ -1,27 +1,26 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { guildShow } from '../../../actions/GuildActions'
+import { guildShow, guildInvite } from '../../../actions/GuildActions'
+import { getFormData } from '../../../helpers/FormData'
 
 import Container from '../../Layouts/Container'
 import GuildLogoDefault from '../../../assets/img/guild_logo_default.png'
 
 import './styles.css'
 
-const GuildList = ({ guildShow }) => {
+const GuildList = ({ guildShow, guildInvite }) => {
 	const { id } = useParams()
 
 	React.useEffect(() => {
-		guildShow()
-	}, [guildShow])
+		guildShow(id)
+	}, [guildShow, id])
 
-	let guildName = []
-	for (let i = 0; i < 40; i++) {
-		guildName.push(
-			<div key={i} className="text">
-				Sa Ownage
-			</div>
-		)
+	const submitHandler = (e) => {
+		e.preventDefault()
+
+		const data = getFormData(e)
+		guildInvite(id, data)
 	}
 
 	return (
@@ -55,13 +54,16 @@ const GuildList = ({ guildShow }) => {
 						</div>
 						<div className="div3">
 							<span className="display-4 d-block l-h-n m-0 fw-500 text-primary">
-								<div id="ui">{guildName}</div>
+								<p className="attempt-1">
+									<em>SA Ownage Team</em>
+								</p>
 							</span>
 						</div>
 					</div>
 
 					<div className="panel-body">
 						<br />
+
 						<ul className="nav nav-pills" role="tablist">
 							<li className="nav-item">
 								<a
@@ -160,6 +162,40 @@ const GuildList = ({ guildShow }) => {
 					</div>
 				</div>
 			</div>
+
+			<form onSubmit={submitHandler}>
+				<div className="container">
+					<div className="row">
+						<div className="col-3 pr-1 mb-3">
+							<input
+								type="text"
+								name="player_id"
+								className="form-control"
+								placeholder="Enter name to invite player."
+							/>
+						</div>
+						<div className="col-3 pr-1 mb-3">
+							<button className="btn btn-sm btn-outline-primary">Invite</button>
+						</div>
+					</div>
+				</div>
+			</form>
+			<ul>
+				<div className="row">
+					<div className="col-1 pr-1 mb-3">
+						{[1, 2, 3, 4, 5, 6, 7].map((players) => (
+							<li key={players}>Player1</li>
+						))}
+					</div>
+					<div className="col-1 mb-3">
+						{[1, 2, 3, 4, 5, 6, 7].map((players) => (
+							<li key={players} style={{ listStyle: 'none', color: 'red' }}>
+								x
+							</li>
+						))}
+					</div>
+				</div>
+			</ul>
 		</Container>
 	)
 }
@@ -171,4 +207,4 @@ const mapStateToProps = (state) => {
 	}
 }
 
-export default connect(mapStateToProps, { guildShow })(GuildList)
+export default connect(mapStateToProps, { guildShow, guildInvite })(GuildList)

@@ -62,9 +62,18 @@ module.exports = (sequelize, DataTypes) => {
 		}
 	})
 
+	guild.addHook('afterCreate', (guild) => {
+		sequelize.models.guild_membership.create({
+			player_id: guild.ownerid,
+			guild_id: guild.id,
+			rank: 3,
+		})
+	})
+
 	guild.associate = (models) => {
 		guild.belongsTo(models.player, { foreignKey: 'ownerid' })
 		guild.hasOne(models.guild_rank, { foreignKey: 'guild_id' })
+		guild.hasMany(models.guild_invites, { foreignKey: 'guild_id' })
 	}
 
 	return guild

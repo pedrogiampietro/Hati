@@ -1,4 +1,9 @@
-import { GUILD_CREATE, GUILD_LIST, GUILD_SHOW } from '../actions/GuildActions'
+import {
+	GUILD_CREATE,
+	GUILD_LIST,
+	GUILD_SHOW,
+	GUILD_INVITE,
+} from '../actions/GuildActions'
 
 const initialState = {
 	guild: null,
@@ -10,7 +15,8 @@ export default function (state = initialState, action) {
 	switch (type) {
 		case GUILD_CREATE:
 		case GUILD_LIST:
-		case GUILD_SHOW: {
+		case GUILD_SHOW:
+		case GUILD_INVITE: {
 			const response = payload ? payload.data : null
 			const guild = response ? response.data : null
 			return { ...state, guild }
