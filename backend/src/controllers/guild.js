@@ -1,5 +1,11 @@
 const express = require('express')
-const { guild, guild_invites, guild_rank, player } = require('../models')
+const {
+	guild,
+	guild_invites,
+	guild_rank,
+	guild_membership,
+	player,
+} = require('../models')
 const { getMessage } = require('../helpers/messages')
 
 const router = express.Router()
@@ -49,13 +55,20 @@ router.get('/:id', async (req, res) => {
 
 	const getOneGuild = await guild.findOne({
 		where: { id },
+		include: [
+			{
+				model: guild_membership,
+				include: [
+					{
+						model: player,
+					},
+				],
+			},
+		],
 	})
 
 	return res.jsonOK(getOneGuild)
 })
-
-/* guild membership */
-// router.get('')
 
 //router.delete('/')
 
@@ -66,7 +79,7 @@ router.post('/:id/invite', async (req, res) => {
 		const { body } = req
 		const { player_id } = body
 
-		// const verifyRank = await 
+		// const verifyRank = await
 
 		const playerExists = await player.findOne({
 			where: { name: player_id },
@@ -90,8 +103,6 @@ router.post('/:id/invite', async (req, res) => {
 	}
 })
 
-router.get('/:id/accept', async (req, res) => {
-
-})
+router.get('/:id/accept', async (req, res) => {})
 
 module.exports = router

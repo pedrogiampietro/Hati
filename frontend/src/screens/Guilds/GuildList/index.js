@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { guildShow, guildInvite } from '../../../actions/GuildActions'
 import { getFormData } from '../../../helpers/FormData'
 
@@ -10,10 +10,15 @@ import GuildLogoDefault from '../../../assets/img/guild_logo_default.png'
 import './styles.css'
 
 const GuildList = ({ guildShow, guildInvite }) => {
+	const [guildList, setGuildList] = React.useState([])
+	const { guild_memberships } = guildList
 	const { id } = useParams()
 
 	React.useEffect(() => {
-		guildShow(id)
+		guildShow(id).then(({ payload }) => {
+			const newData = payload.data.data
+			setGuildList(newData)
+		})
 	}, [guildShow, id])
 
 	const submitHandler = (e) => {
@@ -25,11 +30,11 @@ const GuildList = ({ guildShow, guildInvite }) => {
 
 	return (
 		<Container>
-			<div className="panel panel-default">
+			<div className="panel panel-default col-sm-9 mx-auto">
 				<div className="panel-heading">Overview</div>
 				<div className="panel-body">
 					<div className="parent">
-						<div className="div1 ml-4">
+						<div className="guild-logo ml-4">
 							<div className="d-inline-flex flex-column justify-content-center mr-3">
 								<span className="fw-300 fs-xs d-block opacity-50">
 									<img
@@ -38,24 +43,19 @@ const GuildList = ({ guildShow, guildInvite }) => {
 										alt="GuildLogo"
 									/>
 								</span>
-								<span className="fw-500 fs-xl d-block color-primary-500">
-									4 Members
+								<span className="fw-500 fs-xl d-block color-primary-500 mb-6">
+									{guildList?.guild_memberships?.length} Member
 								</span>
 							</div>
 						</div>
-						<div className="div2 ml-4">
+						<div className="guild-description ml-4">
 							<h2 className="text-primary">Guild Description:</h2>
-							<p>
-								Lorem ipsum dolor sit amet consectetur adipisicing elit.
-								Reiciendis nisi labore, necessitatibus nobis a ab magni maxime
-								exercitationem harum numquam aut officiis est deleniti
-								architecto optio tempore ducimus libero! Dicta.
-							</p>
+							<p>{guildList.description}</p>
 						</div>
-						<div className="div3">
+						<div className="guild-name">
 							<span className="display-4 d-block l-h-n m-0 fw-500 text-primary">
 								<p className="attempt-1">
-									<em>SA Ownage Team</em>
+									<em>{guildList.name}</em>
 								</p>
 							</span>
 						</div>
@@ -84,73 +84,47 @@ const GuildList = ({ guildShow, guildInvite }) => {
 						<hr />
 						<div className="tab-content">
 							<div className="tab-pane active" id="members">
-								<table className="table table-hover table-striped">
+								<table className="table table-bordered">
 									<thead>
 										<tr>
-											<th className="col-md-2">Rank</th>
-											<th className="col-md-1 hidden-xs" />
-											<th className="col-md-3">Player</th>
-											<th className="col-md-3 hidden-xs">
-												Vocation &amp; Level
-											</th>
-											<th className="col-md-1 hidden-xs">Status</th>
-											<th className="col-md-1" />
+											<th>Rank</th>
+											<th />
+											<th>Player</th>
+											<th>Vocation &amp; Level</th>
+											<th>Status</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>the Leader</td>
-											<td className="hidden-xs">
-												<div
-													className="player-outfit"
-													style={{
-														backgroundImage:
-															'url("/outfit/1123_97_0_114_113_3.png")',
-													}}
-													align="right"
-												/>
-											</td>
-											<td>
-												<a
-													className="notranslate"
-													href="/community/player/Stone Cold"
-												>
-													Stone Cold
-												</a>
-											</td>
-											<td className="hidden-xs">Elite Knight (Level 1237)</td>
-											<td className="hidden-xs" align="center">
-												<div className="d-inline-block align-middle status status-success" />
-											</td>
-
-											<td align="right"></td>
-										</tr>
-										<tr>
-											<td>a Member</td>
-											<td className="hidden-xs">
-												<div
-													className="player-outfit"
-													style={{
-														backgroundImage:
-															'url("/outfit/966_85_114_0_0_0.png")',
-													}}
-													align="right"
-												/>
-											</td>
-											<td>
-												<a
-													className="notranslate"
-													href="/community/player/Jaimico"
-												>
-													Jaimico
-												</a>
-											</td>
-											<td className="hidden-xs">Adept Sorcerer (Level 667)</td>
-											<td className="hidden-xs" align="center">
-												<div className="d-inline-block align-middle status status-success" />
-											</td>
-											<td align="right"></td>
-										</tr>
+										{guild_memberships?.map((members) => (
+											<tr key={members.id}>
+												<td>{members.rank}</td>
+												<td className="hidden-xs">
+													<div
+														className="player-outfit"
+														style={{
+															backgroundImage:
+																'url("/outfit/1123_97_0_114_113_3.png")',
+														}}
+														align="right"
+													/>
+												</td>
+												<td>
+													<Link
+														className="notranslate"
+														to={`/character/${members.player.name}`}
+													>
+														{members.player.name}
+													</Link>
+												</td>
+												<td className="hidden-xs">
+													{members.player.vocation} (Level{' '}
+													{members.player.level})
+												</td>
+												<td className="hidden-xs" align="center">
+													<div className="d-inline-block align-middle status status-success" />
+												</td>
+											</tr>
+										))}
 									</tbody>
 								</table>
 							</div>

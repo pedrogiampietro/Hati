@@ -288,6 +288,7 @@ const Characters = ({
 
 													<div
 														className="modal fade example-modal-centered-transparent"
+														id="newCategory"
 														tabIndex="-1"
 														role="dialog"
 														aria-hidden="true"

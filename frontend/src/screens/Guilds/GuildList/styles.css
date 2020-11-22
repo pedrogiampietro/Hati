@@ -6,27 +6,28 @@
 	grid-row-gap: 0px;
 }
 
-.div1 {
+.guild-logo {
 	grid-area: 1 / 1 / 2 / 2;
 }
-.div2 {
+.guild-description {
 	grid-area: 2 / 1 / 3 / 2;
 }
-.div3 {
+.guild-name {
 	grid-area: 1 / 4 / 2 / 5;
 }
-.div4 {
-	grid-area: 2 / 4 / 3 / 5;
-}
 
-/* teste */
+/* nav pills */
 
-.nav-pills {
-	width: 450px;
-}
 .nav-item {
 	width: 50%;
 }
+
+@media (max-width: 576px) {
+	.nav-item {
+		width: 100%;
+	}
+}
+
 .nav-pills .nav-link {
 	font-weight: bold;
 	padding-top: 13px;
