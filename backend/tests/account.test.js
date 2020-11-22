@@ -1,16 +1,20 @@
 const supertest = require('supertest')
 const { getMessage } = require('../src/helpers/messages')
+const db = require('../src/models')
 const app = require('../src/app')
 
 let request
 let server
 
+
 beforeEach((done) => {
-    server = app.listen(4000, () => {
-        request = supertest.agent(server)
-        done()
+    db.sequelize.sync().then(() => {
+        server = app.listen(4000, () => {
+            request = supertest.agent(server)
+            done()
+        })
     })
-  })
+})
 
 afterEach((done) => {
     server.close(done)
