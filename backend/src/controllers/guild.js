@@ -5,14 +5,15 @@ const {
 	guild_rank,
 	guild_membership,
 	player,
+	account,
 } = require('../models')
 const { getMessage } = require('../helpers/messages')
+const { verifyJwt, getTokenFromHeaders } = require('../helpers/jwt')
+const { checkJwt } = require('../middlewares/jwt')
 
 const router = express.Router()
 
-/* forum list */
-
-router.post('/', async (req, res) => {
+router.post('/', checkJwt, async (req, res) => {
 	const { body } = req
 	const { name, ownerid, description } = body
 
@@ -61,6 +62,7 @@ router.get('/:id', async (req, res) => {
 				include: [
 					{
 						model: player,
+						attributes: ['name'],
 					},
 				],
 			},
@@ -73,7 +75,7 @@ router.get('/:id', async (req, res) => {
 //router.delete('/')
 
 /* player invite */
-router.post('/:id/invite', async (req, res) => {
+router.post('/:id/invite', checkJwt, async (req, res) => {
 	try {
 		const { id } = req.params
 		const { body } = req
@@ -103,6 +105,36 @@ router.post('/:id/invite', async (req, res) => {
 	}
 })
 
-router.get('/:id/accept', async (req, res) => {})
+/* accept invite */
+router.get('/:id/accept', checkJwt, async (req, res) => {})
+
+/* get invites */
+router.get('/:id/getInvites', checkJwt, async (req, res) => {
+	try {
+		const { account_id } = req
+		const { id } = req.params
+
+		const players = await player.findAll({
+			where: { account_id: account_id },
+		})
+
+		const getAllInvites = await guild_invites.findAll({
+			where: { id },
+			include: [
+				{
+					model: player,
+					attributes: ['name'],
+				},
+			],
+		})
+
+		console.log(players)
+		console.log(getAllInvites)
+
+		// return res.jsonOK(accounts)
+	} catch (error) {
+		console.log(error)
+	}
+})
 
 module.exports = router

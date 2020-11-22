@@ -23,6 +23,8 @@ const {
 	getTokenFromHeaders,
 } = require('../helpers/jwt')
 
+const { checkJwt } = require('../middlewares/jwt')
+
 // File upload middleware (for profile pictures)
 const storage = multer.diskStorage({
 	destination: 'uploads/',
@@ -94,7 +96,7 @@ router.post('/sign-up', accountSignUp, async (req, res) => {
 	})
 })
 
-router.put('/password', accountChangePassword, async (req, res) => {
+router.put('/password', checkJwt, accountChangePassword, async (req, res) => {
 	const { body } = req
 	const { password } = body
 	const fields = ['password']
@@ -218,7 +220,7 @@ router.post('/reset', async (req, res) => {
 	}
 })
 
-router.put('/profile_info', async (req, res) => {
+router.put('/profile_info', checkJwt, async (req, res) => {
 	const { body } = req
 	const fields = ['rlname', 'location']
 	const token = getTokenFromHeaders(req.headers)
@@ -242,7 +244,7 @@ router.put('/profile_info', async (req, res) => {
 	return res.jsonOK(accounts, getMessage('account.settings.profile_sucess'))
 })
 
-router.post('/profile_name', async (req, res) => {
+router.post('/profile_name', checkJwt, async (req, res) => {
 	const { body } = req
 	const { profileName } = body
 
@@ -285,7 +287,7 @@ router.post('/profile_name', async (req, res) => {
 	}
 })
 
-router.post('/refresh', async (req, res) => {
+router.post('/refresh', checkJwt, async (req, res) => {
 	const token = getTokenFromHeaders(req.headers)
 	if (!token) {
 		return res.jsonUnauthorized(null, getMessage('response.json_invalid_token'))
@@ -316,7 +318,7 @@ router.post('/refresh', async (req, res) => {
 	}
 })
 
-router.post('/avatar', upload.single('avatar'), async (req, res) => {
+router.post('/avatar', checkJwt, upload.single('avatar'), async (req, res) => {
 	try {
 		const token = getTokenFromHeaders(req.headers)
 
@@ -348,7 +350,7 @@ router.post('/avatar', upload.single('avatar'), async (req, res) => {
 	}
 })
 
-router.get('/avatar', async (req, res) => {
+router.get('/avatar', checkJwt, async (req, res) => {
 	try {
 		const token = getTokenFromHeaders(req.headers)
 
@@ -381,7 +383,7 @@ router.get('/avatar', async (req, res) => {
 	}
 })
 
-router.delete('/avatarDelete', async (req, res) => {
+router.delete('/avatarDelete', checkJwt, async (req, res) => {
 	try {
 		const token = getTokenFromHeaders(req.headers)
 

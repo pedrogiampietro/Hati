@@ -3,6 +3,7 @@ import {
 	GUILD_LIST,
 	GUILD_SHOW,
 	GUILD_INVITE,
+	GUILD_GET_INVITES,
 } from '../actions/GuildActions'
 
 const initialState = {
@@ -16,7 +17,8 @@ export default function (state = initialState, action) {
 		case GUILD_CREATE:
 		case GUILD_LIST:
 		case GUILD_SHOW:
-		case GUILD_INVITE: {
+		case GUILD_INVITE:
+		case GUILD_GET_INVITES: {
 			const response = payload ? payload.data : null
 			const guild = response ? response.data : null
 			return { ...state, guild }

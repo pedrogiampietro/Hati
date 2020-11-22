@@ -2,10 +2,11 @@ const express = require('express')
 const { player, player_deaths, account } = require('../models')
 const { createCharacter } = require('../validators/player')
 const { getMessage } = require('../helpers/messages')
+const { checkJwt } = require('../middlewares/jwt')
 
 const router = express.Router()
 
-router.get('/characters', async (req, res) => {
+router.get('/characters', checkJwt, async (req, res) => {
 	const { account_id } = req
 	const players = await player.findAll({
 		where: { account_id: account_id },

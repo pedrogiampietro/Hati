@@ -2,19 +2,20 @@ const express = require('express')
 const { player, account, forumBoard, thread, comment } = require('../models')
 const { getMessage } = require('../helpers/messages')
 const { verifyJwt, getTokenFromHeaders } = require('../helpers/jwt')
+const { checkJwt } = require('../middlewares/jwt')
 
 const router = express.Router()
 
 // z_forum is too messy and confusing to work with, starting to make a 0 forum.
 
 //crud borad.
-router.get('/', async (req, res) => {
+router.get('/', checkJwt, async (req, res) => {
 	const getAllBoards = await forumBoard.findAll()
 
 	return res.jsonOK(getAllBoards)
 })
 
-router.post('/', async (req, res) => {
+router.post('/', checkJwt, async (req, res) => {
 	const { body } = req
 	const { title, description } = body
 
@@ -26,7 +27,7 @@ router.post('/', async (req, res) => {
 	return res.jsonOK(createNewBoard)
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', checkJwt, async (req, res) => {
 	const { id } = req.params
 	try {
 		const deleteBoard = await forumBoard.findByPk(id)
@@ -44,7 +45,7 @@ router.delete('/:id', async (req, res) => {
 })
 
 //crud threads
-router.get('/thread/:board_id', async (req, res) => {
+router.get('/thread/:board_id', checkJwt, async (req, res) => {
 	const { board_id } = req.params
 
 	const getThreads = await thread.findAll({
@@ -71,7 +72,7 @@ router.get('/thread/:board_id', async (req, res) => {
 	return res.jsonOK(getThreads)
 })
 
-router.post('/newThread/:board_id', async (req, res) => {
+router.post('/newThread/:board_id', checkJwt, async (req, res) => {
 	const { account_id, body } = req
 	const { board_id } = req.params
 	const { character_name, title, body_text } = body
@@ -93,7 +94,7 @@ router.post('/newThread/:board_id', async (req, res) => {
 })
 
 //missing delete thread, create later
-router.delete('/thread/:board_id/', async (req, res) => {
+router.delete('/thread/:board_id/', checkJwt, async (req, res) => {
 	const { board_id } = req.params
 	try {
 		const findThreadToDelete = await thread.findByPk(board_id)
@@ -114,7 +115,7 @@ router.delete('/thread/:board_id/', async (req, res) => {
 })
 
 //crud discussion
-router.get('/thread/:board_id/:discussion', async (req, res) => {
+router.get('/thread/:board_id/:discussion', checkJwt, async (req, res) => {
 	const { board_id, discussion } = req.params
 
 	const getDiscussion = await thread.findOne({
@@ -141,7 +142,7 @@ router.get('/thread/:board_id/:discussion', async (req, res) => {
 	return res.jsonOK(getDiscussion)
 })
 
-router.put('/post/edit/:id', async (req, res) => {
+router.put('/post/edit/:id', checkJwt, async (req, res) => {
 	const { account_id, body } = req
 	const { id } = req.params
 	const fields = ['body_text']
@@ -164,7 +165,7 @@ router.put('/post/edit/:id', async (req, res) => {
 //        Get all likes with news.
 //=================================
 
-router.get('/getLikes', async (req, res) => {
+router.get('/getLikes', checkJwt, async (req, res) => {
 	const like = await thread.findAll({
 		attributes: ['likes_count', 'id', 'character_name'],
 	})
@@ -176,7 +177,7 @@ router.get('/getLikes', async (req, res) => {
 //         Add a new like on news;
 //=================================
 
-router.post('/upLike/:id', async (req, res) => {
+router.post('/upLike/:id', checkJwt, async (req, res) => {
 	const { id } = req.params
 	const { name } = req.headers
 
@@ -210,7 +211,7 @@ router.post('/upLike/:id', async (req, res) => {
 //           Dislike on news;
 //=================================
 
-router.post('/disLike/:id', async (req, res) => {
+router.post('/disLike/:id', checkJwt, async (req, res) => {
 	const { id } = req.params
 	const { name } = req.headers
 
@@ -240,62 +241,70 @@ router.post('/disLike/:id', async (req, res) => {
 //          Comments
 //=================================
 
-router.get('/thread/:board_id/:discussion/comments', async (req, res) => {
-	const { discussion } = req.params
+router.get(
+	'/thread/:board_id/:discussion/comments',
+	checkJwt,
+	async (req, res) => {
+		const { discussion } = req.params
 
-	const getComments = await comment.findAll({
-		where: { thread_id: discussion },
-		include: [
-			{
-				model: account,
-				attributes: ['avatar'],
-			},
-		],
-	})
-
-	return res.jsonOK(getComments)
-})
-
-router.post('/thread/:board_id/:discussion/reply', async (req, res) => {
-	const { body } = req
-	const { post_content, character_name } = body
-	const { board_id, discussion } = req.params
-
-	try {
-		const token = getTokenFromHeaders(req.headers)
-
-		if (!token) {
-			return res.jsonUnauthorized(
-				null,
-				getMessage('response.json_invalid_token')
-			)
-		}
-
-		const decoded = verifyJwt(token)
-
-		const accounts = await account.findByPk(decoded.id)
-		if (!accounts)
-			return res.jsonUnauthorized(
-				null,
-				getMessage('response.json_invalid_token')
-			)
-
-		const getDiscussion = await thread.findOne({
-			where: { id: discussion, board_id },
-		})
-		if (!getDiscussion) return res.jsonNotFound(null)
-
-		const createComment = await comment.create({
-			post_content,
-			character_name,
-			account_id: decoded.id,
-			thread_id: Number(board_id),
+		const getComments = await comment.findAll({
+			where: { thread_id: discussion },
+			include: [
+				{
+					model: account,
+					attributes: ['avatar'],
+				},
+			],
 		})
 
-		res.jsonOK(createComment, getMessage('comments added sucessfuly!'))
-	} catch (error) {
-		return res.jsonBadRequest(null, error)
+		return res.jsonOK(getComments)
 	}
-})
+)
+
+router.post(
+	'/thread/:board_id/:discussion/reply',
+	checkJwt,
+	async (req, res) => {
+		const { body } = req
+		const { post_content, character_name } = body
+		const { board_id, discussion } = req.params
+
+		try {
+			const token = getTokenFromHeaders(req.headers)
+
+			if (!token) {
+				return res.jsonUnauthorized(
+					null,
+					getMessage('response.json_invalid_token')
+				)
+			}
+
+			const decoded = verifyJwt(token)
+
+			const accounts = await account.findByPk(decoded.id)
+			if (!accounts)
+				return res.jsonUnauthorized(
+					null,
+					getMessage('response.json_invalid_token')
+				)
+
+			const getDiscussion = await thread.findOne({
+				where: { id: discussion, board_id },
+			})
+			if (!getDiscussion) return res.jsonNotFound(null)
+
+			const createComment = await comment.create({
+				post_content,
+				character_name,
+				account_id: decoded.id,
+				thread_id: Number(board_id),
+			})
+
+			res.jsonOK(createComment, getMessage('comments added sucessfuly!'))
+		} catch (error) {
+			return res.jsonBadRequest(null, error)
+		}
+	}
+)
 
 module.exports = router

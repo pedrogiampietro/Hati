@@ -1,34 +1,20 @@
 const { verifyJwt, getTokenFromHeaders } = require('../helpers/jwt')
 
-const checkJwt = (req, res, next) => {
-	const { url: path } = req
+module.exports = {
+	checkJwt(req, res, next) {
+		const token = getTokenFromHeaders(req.headers)
 
-	const name = req.url
-	const board_id = name.replace('/forum/newThread/', '')
-	const postEdit_id = name.replace('/forum/post/edit/', '')
+		if (!token) {
+			return res.jsonUnauthorized(null, 'Invalid token')
+		}
 
-	const excludedPaths = [
-		'/player/characters',
-		`/forum/newThread/${board_id}`,
-		`/forum/post/edit/${postEdit_id}`,
-	]
+		try {
+			const decoded = verifyJwt(token)
+			req.account_id = decoded.id
+		} catch (err) {
+			return res.status(400).json(err)
+		}
 
-	const isExcluded = !excludedPaths.find((p) => p.startsWith(path))
-	if (isExcluded) return next()
-
-	const token = getTokenFromHeaders(req.headers)
-
-	if (!token) {
-		return res.jsonUnauthorized(null, 'Invalid token')
-	}
-
-	try {
-		const decoded = verifyJwt(token)
-		req.account_id = decoded.id
 		next()
-	} catch (error) {
-		return res.jsonUnauthorized(null, 'Invalid token')
-	}
+	},
 }
-
-module.exports = checkJwt
