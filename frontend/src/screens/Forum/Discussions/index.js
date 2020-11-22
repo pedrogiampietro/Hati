@@ -45,7 +45,6 @@ const Discussions = ({
 			const newData = payload.data.data
 			setEditingPost(newData)
 		})
-
 		forumDiscussion(board_id, discussion)
 			.then(({ payload }) => {
 				const newData = payload.data.data

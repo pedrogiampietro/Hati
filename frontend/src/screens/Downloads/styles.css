@@ -103,8 +103,8 @@
 	top: 0;
 	height: 30px;
 	width: 30px;
-	border-left: 2px solid var(--indigo);
-	border-top: 2px solid var(--indigo);
+	border-left: 2px solid var(--primary);
+	border-top: 2px solid var(--primary);
 	content: '';
 	z-index: -1;
 	-webkit-transition: all, 0.7s;
@@ -117,8 +117,8 @@
 	bottom: 0;
 	height: 30px;
 	width: 30px;
-	border-right: 2px solid var(--indigo);
-	border-bottom: 2px solid var(--indigo);
+	border-right: 2px solid var(--primary);
+	border-bottom: 2px solid var(--primary);
 	content: '';
 	z-index: -1;
 	-webkit-transition: all, 0.7s;

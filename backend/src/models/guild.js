@@ -1,5 +1,3 @@
-const { guild_rank } = require('./guild_rank')
-
 module.exports = (sequelize, DataTypes) => {
 	const guild = sequelize.define('guild', {
 		name: {
@@ -59,14 +57,23 @@ module.exports = (sequelize, DataTypes) => {
 			{ name: 'a Member', level: 1, guild_id: guild.id },
 		]
 
-		for (i = 0; i < teste.length; i++) {
+		for (i = 0; i < addRanks.length; i++) {
 			sequelize.models.guild_rank.create(addRanks[i])
 		}
+	})
+
+	guild.addHook('afterCreate', (guild) => {
+		sequelize.models.guild_membership.create({
+			player_id: guild.ownerid,
+			guild_id: guild.id,
+			rank: 3,
+		})
 	})
 
 	guild.associate = (models) => {
 		guild.belongsTo(models.player, { foreignKey: 'ownerid' })
 		guild.hasOne(models.guild_rank, { foreignKey: 'guild_id' })
+		guild.hasMany(models.guild_invites, { foreignKey: 'guild_id' })
 	}
 
 	return guild

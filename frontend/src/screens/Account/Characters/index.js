@@ -16,6 +16,8 @@ import ProfileAvatar from '../../../assets/img/Profile_Avatar.png'
 import { RiDeleteBin6Line } from 'react-icons/ri'
 import { FiPlus } from 'react-icons/fi'
 
+import { getPlayerName } from '../../../helpers/Account'
+
 import './styles.css'
 
 const Characters = ({
@@ -90,7 +92,7 @@ const Characters = ({
 					</div>
 				</div>
 
-				{Account === undefined ? null : (
+				{getPlayerName() === undefined ? null : (
 					<div className="panel-content">
 						<div className="border px-3 pt-3 pb-0 rounded">
 							<ul className="nav nav-pills" role="tablist">
@@ -363,18 +365,6 @@ const Characters = ({
 											</div>
 										</div>
 									</div>
-								</div>
-								<div
-									className="tab-pane fade"
-									id="js_pill_border_icon-3"
-									role="tabpanel"
-								>
-									Etsy mixtape wayfarers, ethical wes anderson tofu before they
-									sold out mcsweeney's organic lomo retro fanny pack lo-fi
-									farm-to-table readymade. Messenger bag gentrify pitchfork
-									tattooed craft beer, iphone skateboard locavore carles etsy
-									salvia banksy hoodie helvetica. DIY synth PBR banksy irony.
-									Leggings gentrify squid 8-bit cred pitchfork.
 								</div>
 							</div>
 						</div>

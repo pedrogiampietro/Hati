@@ -26,6 +26,7 @@ const Home = ({ forumBoard }) => {
 		forumBoard(1)
 			.then(({ payload }) => {
 				const newData = payload.data.data
+
 				setNewsPost(newData)
 			})
 			.catch((err) => {

@@ -24,6 +24,7 @@ import ResetPassword from './screens/Account/ResetPassword'
 import ChangePassword from './screens/Account/ChangePassword'
 import Downloads from './screens/Downloads'
 import Guilds from './screens/Guilds'
+import GuildList from './screens/Guilds/GuildList'
 
 import PageSearch from './components/PageSearch'
 import ProtectedRoute from './helpers/ProtectedRoute'
@@ -103,6 +104,8 @@ const App = ({ initAccount }) => {
 					<Route exact path="/downloads" component={Downloads} />
 
 					<Route exact path="/guilds" component={Guilds} />
+
+					<Route exact path="/guilds/:id" component={GuildList} />
 
 					<Route exact path="/" component={Home} />
 				</Switch>

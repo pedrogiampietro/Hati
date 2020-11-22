@@ -5,13 +5,12 @@ const checkJwt = (req, res, next) => {
 
 	const name = req.url
 	const board_id = name.replace('/forum/newThread/', '')
-	const id = name.replace('/forum/post/edit/', '')
+	const postEdit_id = name.replace('/forum/post/edit/', '')
 
 	const excludedPaths = [
 		'/player/characters',
 		`/forum/newThread/${board_id}`,
-		`/forum/post/edit/${id}`,
-		'/guild',
+		`/forum/post/edit/${postEdit_id}`,
 	]
 
 	const isExcluded = !excludedPaths.find((p) => p.startsWith(path))
