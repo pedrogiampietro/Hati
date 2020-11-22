@@ -27,8 +27,4 @@ app.get('/', (req, res) => {
 	return res.json('OK')
 })
 
-// (async () => {
-	// await db.sequelize.sync()
-// })()
-
 module.exports = app
