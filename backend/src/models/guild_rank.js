@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
 					model: 'guild',
 					key: 'id',
 				},
+				reference: {
+					model: 'guild_membership',
+					key: 'id',
+				},
 			},
 			name: {
 				type: DataTypes.STRING,
@@ -27,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
 
 	guild_rank.associate = (models) => {
 		guild_rank.belongsTo(models.guild, { foreignKey: 'guild_id' })
-		guild_rank.hasMany(models.guild_membership, { foreignKey: 'rank' })
+		guild_rank.hasMany(models.guild_membership, { foreignKey: 'guild_id' })
 	}
 
 	return guild_rank

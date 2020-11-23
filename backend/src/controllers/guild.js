@@ -54,15 +54,20 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
 	const { id } = req.params
 
+	const getRanks = await guild_rank.findAll({ where: { guild_id: id } })
+
+	// const saveRanks = getRanks.map((ranks) => ranks.name)
+
 	const getOneGuild = await guild.findOne({
 		where: { id },
 		include: [
 			{
 				model: guild_membership,
+
 				include: [
 					{
 						model: player,
-						attributes: ['name'],
+						attributes: ['name', 'level', 'vocation'],
 					},
 				],
 			},
@@ -78,10 +83,21 @@ router.get('/:id', async (req, res) => {
 router.post('/:id/invite', checkJwt, async (req, res) => {
 	try {
 		const { id } = req.params
-		const { body } = req
+		const { account_id, body } = req
 		const { player_id } = body
 
-		// const verifyRank = await
+		const players = await player.findAll({ where: { account_id } })
+		const getPlayerAccounts = players.map((p) => p.id)
+
+		const verifyLeader = await guild.findOne({
+			where: { id, ownerid: getPlayerAccounts },
+		})
+
+		if (!verifyLeader)
+			return res.jsonBadRequest(
+				null,
+				'only leader have permission to invite players.'
+			)
 
 		const playerExists = await player.findOne({
 			where: { name: player_id },
@@ -105,36 +121,35 @@ router.post('/:id/invite', checkJwt, async (req, res) => {
 	}
 })
 
-/* accept invite */
-router.get('/:id/accept', checkJwt, async (req, res) => {})
-
 /* get invites */
 router.get('/:id/getInvites', checkJwt, async (req, res) => {
 	try {
-		const { account_id } = req
 		const { id } = req.params
+		const { account_id } = req
 
 		const players = await player.findAll({
 			where: { account_id: account_id },
 		})
 
+		const getPlayerAccounts = players.map((p) => p.id)
+
 		const getAllInvites = await guild_invites.findAll({
-			where: { id },
+			where: { guild_id: id, player_id: getPlayerAccounts },
 			include: [
 				{
 					model: player,
-					attributes: ['name'],
+					attributes: ['name', 'level', 'vocation'],
 				},
 			],
 		})
 
-		console.log(players)
-		console.log(getAllInvites)
-
-		// return res.jsonOK(accounts)
+		return res.jsonOK(getAllInvites)
 	} catch (error) {
 		console.log(error)
 	}
 })
+
+/* accept invite */
+router.get('/:id/accept', checkJwt, async (req, res) => {})
 
 module.exports = router

@@ -287,7 +287,7 @@ router.post('/profile_name', checkJwt, async (req, res) => {
 	}
 })
 
-router.post('/refresh', checkJwt, async (req, res) => {
+router.post('/refresh', async (req, res) => {
 	const token = getTokenFromHeaders(req.headers)
 	if (!token) {
 		return res.jsonUnauthorized(null, getMessage('response.json_invalid_token'))

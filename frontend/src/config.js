@@ -15,7 +15,7 @@ module.exports = {
 		1: 'Male',
 	},
 
-	groups_ID: {
+	groupsId: {
 		1: 'Player',
 		2: 'Tutor',
 		3: 'Senior Tutor',

@@ -152,7 +152,7 @@ router.get('/:id', async (req, res) => {
 	return res.jsonOK(players)
 })
 
-router.post('/', createCharacter, async (req, res) => {
+router.post('/', checkJwt, createCharacter, async (req, res) => {
 	const { account_id, body } = req
 	const { name, vocation, sex } = body
 

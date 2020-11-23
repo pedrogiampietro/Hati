@@ -10,6 +10,7 @@ import { getFormData } from '../../../helpers/FormData'
 
 import Container from '../../Layouts/Container'
 import GuildLogoDefault from '../../../assets/img/guild_logo_default.png'
+import { FaSignInAlt, FaRegTrashAlt } from 'react-icons/fa'
 
 import './styles.css'
 
@@ -139,17 +140,67 @@ const GuildList = ({ guildShow, guildInvite, guildGetInvites }) => {
 							</div>
 							<div className="tab-pane" id="wars">
 								<br />
-								Cartel is not currently participating in any active war.
+								{guildList.name} is not currently participating in any active
+								war.
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 
+			<div className="panel panel-default col-sm-5 mx-auto">
+				<table className="table table-bordered">
+					<thead>
+						<tr>
+							<th />
+							<th>Player</th>
+							<th>Vocation &amp; Level</th>
+							<th />
+						</tr>
+					</thead>
+					<tbody>
+						{invitedList?.map((invitedList) => (
+							<tr key={invitedList.id}>
+								<td className="hidden-xs">
+									<div
+										className="player-outfit"
+										style={{
+											backgroundImage: 'url("/outfit/1123_97_0_114_113_3.png")',
+										}}
+										align="right"
+									/>
+								</td>
+								<td>
+									<Link
+										className="notranslate"
+										to={`/character/${invitedList.player.name}`}
+									>
+										{invitedList.player.name}
+									</Link>
+								</td>
+								<td className="hidden-xs">
+									{invitedList.player.vocation} (Level{' '}
+									{invitedList.player.level})
+								</td>
+								<td>
+									<div align="center">
+										<span className="btn btn-outline-success btn-sm ml-auto mr-2 flex-shrink-0 waves-effect waves-themed">
+											<FaSignInAlt size={14} />
+										</span>
+										<a className="btn btn-outline-danger btn-sm flex-shrink-0 waves-effect waves-themed">
+											<FaRegTrashAlt size={14} color="#" />
+										</a>
+									</div>
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
 			<form onSubmit={submitHandler}>
-				<div className="container">
+				<div className="d-flex flex-column align-items-center justify-content-center text-center">
 					<div className="row">
-						<div className="col-3 pr-1 mb-3">
+						<div className="col-9 pr-1 mb-3">
 							<input
 								type="text"
 								name="player_id"
@@ -159,17 +210,6 @@ const GuildList = ({ guildShow, guildInvite, guildGetInvites }) => {
 						</div>
 						<div className="col-3 pr-1 mb-3">
 							<button className="btn btn-sm btn-outline-primary">Invite</button>
-						</div>
-						<div className="col-6">
-							<ul>
-								<div className="row">
-									<div className="col-1 pr-1 mb-3">
-										{invitedList.map((players) => (
-											<li key={players}>{players.player.name}</li>
-										))}
-									</div>
-								</div>
-							</ul>
 						</div>
 					</div>
 				</div>

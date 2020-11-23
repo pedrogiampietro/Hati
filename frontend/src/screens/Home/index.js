@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { forumBoard } from '../../actions/ForumActions'
 import { formatDate } from '../../helpers/DateTime'
-import { groups_ID } from '../../config'
+import { groupsId } from '../../config'
 import Container from '../Layouts/Container'
 import LikeDeslikes from '../../components/LikeDeslikes'
 import { getAvatarUrl } from '../../helpers/Api'
@@ -59,7 +59,7 @@ const Home = ({ forumBoard }) => {
 								<h5 className="mb-0 flex-1 text-dark fw-500">
 									{news.character_name}
 									<small className="m-0 l-h-n">
-										{groups_ID[news?.account.players[0].group_id]}
+										{groupsId[news?.account.players[0].group_id]}
 									</small>
 								</h5>
 
