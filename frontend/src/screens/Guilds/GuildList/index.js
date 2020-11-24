@@ -3,8 +3,11 @@ import { connect } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import {
 	guildShow,
+	guildMember,
 	guildInvite,
 	guildGetInvites,
+	guildHasInvite,
+	guildAccept,
 } from '../../../actions/GuildActions'
 import { getFormData } from '../../../helpers/FormData'
 
@@ -14,28 +17,53 @@ import { FaSignInAlt, FaRegTrashAlt } from 'react-icons/fa'
 
 import './styles.css'
 
-const GuildList = ({ guildShow, guildInvite, guildGetInvites }) => {
-	const [guildList, setGuildList] = React.useState([])
+const GuildList = ({
+	guildShow,
+	guildMember,
+	guildInvite,
+	guildGetInvites,
+	guildHasInvite,
+	guildAccept,
+}) => {
+	const [guild, setGuild] = React.useState([])
+	const [member, setMember] = React.useState([])
 	const [invitedList, setInvitedList] = React.useState([])
-	const { guild_memberships } = guildList
+	const [acceptInvite, setAcceptInvite] = React.useState([])
+
 	const { id } = useParams()
 
 	React.useEffect(() => {
 		guildShow(id).then(({ payload }) => {
 			const newData = payload.data.data
-			setGuildList(newData)
+			setGuild(newData)
+
+			guildMember(id).then(({ payload }) => {
+				const newData = payload.data.data
+				setMember(newData)
+			})
+
 			guildGetInvites(id).then(({ payload }) => {
 				const newData = payload.data.data
 				setInvitedList(newData)
 			})
+
+			guildHasInvite(id).then(({ payload }) => {
+				const newData = payload.data.data
+				setAcceptInvite(newData)
+			})
 		})
-	}, [guildShow, guildGetInvites, id])
+	}, [guildShow, guildGetInvites, guildMember, guildHasInvite, id])
 
 	const submitHandler = (e) => {
 		e.preventDefault()
-
 		const data = getFormData(e)
 		guildInvite(id, data)
+	}
+
+	const acceptHandler = (e) => {
+		e.preventDefault(e)
+
+		guildAccept(id)
 	}
 
 	return (
@@ -54,18 +82,18 @@ const GuildList = ({ guildShow, guildInvite, guildGetInvites }) => {
 									/>
 								</span>
 								<span className="fw-500 fs-xl d-block color-primary-500 mb-6">
-									{guildList?.guild_memberships?.length} Member
+									Member
 								</span>
 							</div>
 						</div>
 						<div className="guild-description ml-4">
 							<h2 className="text-primary">Guild Description:</h2>
-							<p>{guildList.description}</p>
+							<p>{guild.description}</p>
 						</div>
 						<div className="guild-name">
 							<span className="display-4 d-block l-h-n m-0 fw-500 text-primary">
 								<p className="attempt-1">
-									<em>{guildList.name}</em>
+									<em>{guild.name}</em>
 								</p>
 							</span>
 						</div>
@@ -105,9 +133,9 @@ const GuildList = ({ guildShow, guildInvite, guildGetInvites }) => {
 										</tr>
 									</thead>
 									<tbody>
-										{guild_memberships?.map((members) => (
+										{member.map((members) => (
 											<tr key={members.id}>
-												<td>{members.rank}</td>
+												<td>{members.name}</td>
 												<td className="hidden-xs">
 													<div
 														className="player-outfit"
@@ -121,14 +149,14 @@ const GuildList = ({ guildShow, guildInvite, guildGetInvites }) => {
 												<td>
 													<Link
 														className="notranslate"
-														to={`/character/${members.player.name}`}
+														to={`/character/${members.guild_memberships[0].player.name}`}
 													>
-														{members.player.name}
+														{members.guild_memberships[0].player.name}
 													</Link>
 												</td>
 												<td className="hidden-xs">
-													{members.player.vocation} (Level{' '}
-													{members.player.level})
+													{members.guild_memberships[0].player.vocation} (Level{' '}
+													{members.guild_memberships[0].player.level})
 												</td>
 												<td className="hidden-xs" align="center">
 													<div className="d-inline-block align-middle status status-success" />
@@ -140,8 +168,7 @@ const GuildList = ({ guildShow, guildInvite, guildGetInvites }) => {
 							</div>
 							<div className="tab-pane" id="wars">
 								<br />
-								{guildList.name} is not currently participating in any active
-								war.
+								{guild.name} is not currently participating in any active war.
 							</div>
 						</div>
 					</div>
@@ -183,14 +210,22 @@ const GuildList = ({ guildShow, guildInvite, guildGetInvites }) => {
 									{invitedList.player.level})
 								</td>
 								<td>
-									<div align="center">
-										<span className="btn btn-outline-success btn-sm ml-auto mr-2 flex-shrink-0 waves-effect waves-themed">
-											<FaSignInAlt size={14} />
-										</span>
-										<a className="btn btn-outline-danger btn-sm flex-shrink-0 waves-effect waves-themed">
+									<form onSubmit={acceptHandler}>
+										<div align="center">
+											{acceptInvite.length > 0 ? (
+												<button
+													type="submit"
+													className="btn btn-outline-success btn-sm ml-auto mr-2 flex-shrink-0 waves-effect waves-themed"
+												>
+													<FaSignInAlt size={14} />
+												</button>
+											) : null}
+
+											{/* <span className="btn btn-outline-danger btn-sm flex-shrink-0 waves-effect waves-themed">
 											<FaRegTrashAlt size={14} color="#" />
-										</a>
-									</div>
+										</span> */}
+										</div>
+									</form>
 								</td>
 							</tr>
 						))}
@@ -227,6 +262,9 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
 	guildShow,
+	guildMember,
 	guildInvite,
 	guildGetInvites,
+	guildHasInvite,
+	guildAccept,
 })(GuildList)

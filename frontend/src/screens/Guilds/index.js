@@ -127,7 +127,7 @@ const Guilds = ({ playerList, guildList, players }) => {
 									/>
 
 									<div className="info-card-text flex-1 ml-3">
-										<Link to="/guilds/1">
+										<Link to={`/guilds/${guilds.id}`}>
 											<span className="fs-xl text-truncate text-truncate-lg text-info">
 												{guilds.name}
 											</span>

@@ -54,27 +54,29 @@ router.get('/', async (req, res) => {
 router.get('/:id', async (req, res) => {
 	const { id } = req.params
 
-	const getRanks = await guild_rank.findAll({ where: { guild_id: id } })
-
-	// const saveRanks = getRanks.map((ranks) => ranks.name)
-
 	const getOneGuild = await guild.findOne({
 		where: { id },
+	})
+
+	return res.jsonOK(getOneGuild)
+})
+
+//get ranks and members
+
+router.get('/:id/members', async (req, res) => {
+	const { id } = req.params
+
+	const getMembers = await guild_membership.findAll({
+		where: { guild_id: id },
 		include: [
 			{
-				model: guild_membership,
-
-				include: [
-					{
-						model: player,
-						attributes: ['name', 'level', 'vocation'],
-					},
-				],
+				model: guild_rank,
+				where: { guild_id: id },
 			},
 		],
 	})
 
-	return res.jsonOK(getOneGuild)
+	return res.jsonOK(getMembers)
 })
 
 //router.delete('/')
@@ -125,6 +127,26 @@ router.post('/:id/invite', checkJwt, async (req, res) => {
 router.get('/:id/getInvites', checkJwt, async (req, res) => {
 	try {
 		const { id } = req.params
+
+		const getAllInvites = await guild_invites.findAll({
+			where: { guild_id: id },
+			include: [
+				{
+					model: player,
+					attributes: ['name', 'level', 'vocation'],
+				},
+			],
+		})
+
+		return res.jsonOK(getAllInvites)
+	} catch (error) {
+		console.log(error)
+	}
+})
+
+router.get('/:id/hasInvite', checkJwt, async (req, res) => {
+	try {
+		const { id } = req.params
 		const { account_id } = req
 
 		const players = await player.findAll({
@@ -149,7 +171,30 @@ router.get('/:id/getInvites', checkJwt, async (req, res) => {
 	}
 })
 
-/* accept invite */
-router.get('/:id/accept', checkJwt, async (req, res) => {})
+router.post('/:id/accept', checkJwt, async (req, res) => {
+	const { id } = req.params
+	const { account_id } = req
+
+	const players = await player.findAll({
+		where: { account_id: account_id },
+	})
+
+	const getPlayerAccounts = players.map((p) => p.id)
+
+	const findInvite = await guild_invites.findAll({
+		where: { guild_id: id, player_id: getPlayerAccounts },
+	})
+
+	if (!findInvite)
+		return res.jsonBadRequest(null, 'dont have character to join guild.')
+
+	const addToGuild = await guild_membership.create({
+		player_id: getPlayerAccounts,
+		guild_id: id,
+		rank: 1,
+	})
+
+	return res.jsonOK(addToGuild)
+})
 
 module.exports = router
