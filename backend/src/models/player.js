@@ -303,6 +303,7 @@ module.exports = (sequelize, DataTypes) => {
 		player.belongsTo(models.account, { foreignKey: 'account_id' })
 		player.hasMany(models.player_deaths, { foreignKey: 'player_id' })
 		player.hasMany(models.guild_invites, { foreignKey: 'player_id' })
+		player.hasMany(models.guild_membership, { foreignKey: 'player_id' })
 	}
 
 	return player

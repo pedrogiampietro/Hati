@@ -72,7 +72,6 @@ module.exports = (sequelize, DataTypes) => {
 
 	guild.associate = (models) => {
 		guild.belongsTo(models.player, { foreignKey: 'ownerid' })
-		guild.hasOne(models.guild_rank, { foreignKey: 'guild_id' })
 		guild.hasMany(models.guild_invites, { foreignKey: 'guild_id' })
 		guild.hasMany(models.guild_membership, { foreignKey: 'guild_id' })
 	}

@@ -15,10 +15,6 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			rank: {
 				type: DataTypes.INTEGER,
-				reference: {
-					model: 'guild_rank',
-					key: 'guild_id',
-				},
 			},
 			nick: {
 				type: DataTypes.STRING,
@@ -32,7 +28,10 @@ module.exports = (sequelize, DataTypes) => {
 	guild_membership.associate = (models) => {
 		guild_membership.belongsTo(models.guild, { foreignKey: 'guild_id' })
 		guild_membership.belongsTo(models.player, { foreignKey: 'player_id' })
-		guild_membership.belongsTo(models.guild_rank, { foreignKey: 'guild_id' })
+		guild_membership.belongsTo(models.guild_rank, {
+			foreignKey: 'guild_id',
+			targetKey: 'guild_id',
+		})
 	}
 
 	return guild_membership

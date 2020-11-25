@@ -29,6 +29,7 @@ const GuildList = ({
 	const [member, setMember] = React.useState([])
 	const [invitedList, setInvitedList] = React.useState([])
 	const [acceptInvite, setAcceptInvite] = React.useState([])
+	const [playerId, setPlayerId] = React.useState(0)
 
 	const { id } = useParams()
 
@@ -63,7 +64,7 @@ const GuildList = ({
 	const acceptHandler = (e) => {
 		e.preventDefault(e)
 
-		guildAccept(id)
+		guildAccept(id, playerId)
 	}
 
 	return (
@@ -133,36 +134,43 @@ const GuildList = ({
 										</tr>
 									</thead>
 									<tbody>
-										{member.map((members) => (
-											<tr key={members.id}>
-												<td>{members.name}</td>
-												<td className="hidden-xs">
-													<div
-														className="player-outfit"
-														style={{
-															backgroundImage:
-																'url("/outfit/1123_97_0_114_113_3.png")',
-														}}
-														align="right"
-													/>
-												</td>
-												<td>
-													<Link
-														className="notranslate"
-														to={`/character/${members.guild_memberships[0].player.name}`}
-													>
-														{members.guild_memberships[0].player.name}
-													</Link>
-												</td>
-												<td className="hidden-xs">
-													{members.guild_memberships[0].player.vocation} (Level{' '}
-													{members.guild_memberships[0].player.level})
-												</td>
-												<td className="hidden-xs" align="center">
-													<div className="d-inline-block align-middle status status-success" />
-												</td>
-											</tr>
-										))}
+										{member.map((members) =>
+											members.rank === members.guild_rank.level ? (
+												<tr key={members.id}>
+													<td>
+														{members.rank === members.guild_rank.level
+															? members.guild_rank.name
+															: null}
+													</td>
+													<td className="hidden-xs">
+														<div
+															className="player-outfit"
+															style={{
+																backgroundImage:
+																	'url("/outfit/1123_97_0_114_113_3.png")',
+															}}
+															align="right"
+														/>
+													</td>
+													<td>
+														<Link
+															className="notranslate"
+															to={`/character/${members.player.name}`}
+														>
+															{members.player.name}
+														</Link>
+													</td>
+													<td className="hidden-xs">
+														{members.player.vocation} (Level{' '}
+														{members.player.level})
+													</td>
+													<td className="hidden-xs" align="center">
+														<div className="d-inline-block align-middle status status-success" />
+													</td>
+													{console.log(members)}
+												</tr>
+											) : null
+										)}
 									</tbody>
 								</table>
 							</div>
@@ -176,46 +184,49 @@ const GuildList = ({
 			</div>
 
 			<div className="panel panel-default col-sm-5 mx-auto">
-				<table className="table table-bordered">
-					<thead>
-						<tr>
-							<th />
-							<th>Player</th>
-							<th>Vocation &amp; Level</th>
-							<th />
-						</tr>
-					</thead>
-					<tbody>
-						{invitedList?.map((invitedList) => (
-							<tr key={invitedList.id}>
-								<td className="hidden-xs">
-									<div
-										className="player-outfit"
-										style={{
-											backgroundImage: 'url("/outfit/1123_97_0_114_113_3.png")',
-										}}
-										align="right"
-									/>
-								</td>
-								<td>
-									<Link
-										className="notranslate"
-										to={`/character/${invitedList.player.name}`}
-									>
-										{invitedList.player.name}
-									</Link>
-								</td>
-								<td className="hidden-xs">
-									{invitedList.player.vocation} (Level{' '}
-									{invitedList.player.level})
-								</td>
-								<td>
-									<form onSubmit={acceptHandler}>
+				<form onSubmit={acceptHandler}>
+					<table className="table table-bordered">
+						<thead>
+							<tr>
+								<th />
+								<th>Player</th>
+								<th>Vocation &amp; Level</th>
+								<th />
+							</tr>
+						</thead>
+						<tbody>
+							{invitedList?.map((invitedList) => (
+								<tr key={invitedList.id}>
+									<td className="hidden-xs">
+										<div
+											className="player-outfit"
+											style={{
+												backgroundImage:
+													'url("/outfit/1123_97_0_114_113_3.png")',
+											}}
+											align="right"
+										/>
+									</td>
+									<td>
+										<Link
+											className="notranslate"
+											to={`/character/${invitedList.player.name}`}
+										>
+											{invitedList.player.name}
+										</Link>
+									</td>
+									<td className="hidden-xs">
+										{invitedList.player.vocation} (Level{' '}
+										{invitedList.player.level})
+									</td>
+									<td>
 										<div align="center">
 											{acceptInvite.length > 0 ? (
 												<button
 													type="submit"
 													className="btn btn-outline-success btn-sm ml-auto mr-2 flex-shrink-0 waves-effect waves-themed"
+													id={invitedList.id}
+													onClick={() => setPlayerId(invitedList.player_id)}
 												>
 													<FaSignInAlt size={14} />
 												</button>
@@ -225,12 +236,12 @@ const GuildList = ({
 											<FaRegTrashAlt size={14} color="#" />
 										</span> */}
 										</div>
-									</form>
-								</td>
-							</tr>
-						))}
-					</tbody>
-				</table>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</form>
 			</div>
 			<form onSubmit={submitHandler}>
 				<div className="d-flex flex-column align-items-center justify-content-center text-center">

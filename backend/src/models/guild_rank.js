@@ -9,10 +9,6 @@ module.exports = (sequelize, DataTypes) => {
 					model: 'guild',
 					key: 'id',
 				},
-				reference: {
-					model: 'guild_membership',
-					key: 'id',
-				},
 			},
 			name: {
 				type: DataTypes.STRING,

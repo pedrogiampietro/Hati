@@ -62,16 +62,22 @@ router.get('/:id', async (req, res) => {
 })
 
 //get ranks and members
-
 router.get('/:id/members', async (req, res) => {
 	const { id } = req.params
 
 	const getMembers = await guild_membership.findAll({
 		where: { guild_id: id },
+
 		include: [
 			{
 				model: guild_rank,
-				where: { guild_id: id },
+				where: {
+					guild_id: id,
+				},
+			},
+			{
+				model: player,
+				attributes: ['name', 'vocation', 'level'],
 			},
 		],
 	})
@@ -172,29 +178,40 @@ router.get('/:id/hasInvite', checkJwt, async (req, res) => {
 })
 
 router.post('/:id/accept', checkJwt, async (req, res) => {
-	const { id } = req.params
-	const { account_id } = req
+	try {
+		const { id } = req.params
+		const { account_id, body } = req
+		const playerId = Object.keys(body)
 
-	const players = await player.findAll({
-		where: { account_id: account_id },
-	})
+		const players = await player.findAll({
+			where: { account_id: account_id },
+		})
 
-	const getPlayerAccounts = players.map((p) => p.id)
+		const getPlayerAccounts = players.map((p) => p.id)
 
-	const findInvite = await guild_invites.findAll({
-		where: { guild_id: id, player_id: getPlayerAccounts },
-	})
+		const findInvite = await guild_invites.findAll({
+			where: { guild_id: id, player_id: getPlayerAccounts },
+		})
 
-	if (!findInvite)
-		return res.jsonBadRequest(null, 'dont have character to join guild.')
+		if (!findInvite)
+			return res.jsonBadRequest(null, 'dont have character to join guild.')
 
-	const addToGuild = await guild_membership.create({
-		player_id: getPlayerAccounts,
-		guild_id: id,
-		rank: 1,
-	})
+		const deleteAfterinvite = await guild_invites.findOne({
+			where: { guild_id: id, player_id: Number(playerId) },
+		})
 
-	return res.jsonOK(addToGuild)
+		deleteAfterinvite.destroy()
+
+		const addToGuild = await guild_membership.create({
+			player_id: Number(playerId),
+			guild_id: id,
+			rank: 1,
+		})
+
+		return res.jsonOK(addToGuild)
+	} catch (error) {
+		console.log(error)
+	}
 })
 
 module.exports = router
