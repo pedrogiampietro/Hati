@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
+
 import {
 	guildShow,
 	guildMember,
@@ -33,7 +34,6 @@ const GuildList = ({
 	const [acceptInvite, setAcceptInvite] = React.useState([])
 	const [playerId, setPlayerId] = React.useState(0)
 	const [postInteraction, setPostInteraction] = React.useState(false)
-	const [accept, setAccept] = React.useState()
 
 	const { id } = useParams()
 
@@ -70,8 +70,6 @@ const GuildList = ({
 		postInteraction,
 	])
 
-	// const accept = acceptInvite.map((n) => n.player.name)
-
 	const submitHandler = (e) => {
 		e.preventDefault()
 		const data = getFormData(e)
@@ -84,8 +82,6 @@ const GuildList = ({
 		guildAccept(id, playerId)
 		interaction()
 	}
-
-	console.log(accept)
 
 	return (
 		<Container>
@@ -218,45 +214,79 @@ const GuildList = ({
 								<th />
 							</tr>
 						</thead>
+
 						<tbody>
-							{invitedList?.map((invitedList) => (
-								<tr key={invitedList.id}>
-									<td>
-										<Link
-											className="notranslate"
-											to={`/character/${invitedList.player.name}`}
-										>
-											{invitedList.player.name}
-										</Link>
-									</td>
-									<td className="hidden-xs">
-										{characterVocations[invitedList.player.vocation]} (Level{' '}
-										{invitedList.player.level})
-									</td>
-
-									{/* {accept === invitedList.player.name
-										? console.log('s')
-										: console.log('n')} */}
-									<td>
-										<div align="center">
-											{acceptInvite.length > 0 ? (
-												<button
-													type="submit"
-													className="btn btn-outline-success btn-sm ml-auto mr-2 flex-shrink-0 waves-effect waves-themed"
-													id={invitedList.id}
-													onClick={() => setPlayerId(invitedList.player_id)}
+							{acceptInvite.length > 0
+								? acceptInvite.map((list) => (
+										<tr key={list.id}>
+											<td>
+												<Link
+													className="notranslate"
+													to={`/character/${list.player.name}`}
 												>
-													<FaSignInAlt size={14} />
-												</button>
-											) : null}
+													{list.player.name}
+												</Link>
+											</td>
+											<td className="hidden-xs">
+												{characterVocations[list.player.vocation]} (Level{' '}
+												{list.player.level})
+											</td>
 
-											{/* <span className="btn btn-outline-danger btn-sm flex-shrink-0 waves-effect waves-themed">
-											<FaRegTrashAlt size={14} color="#" />
-										</span> */}
-										</div>
-									</td>
-								</tr>
-							))}
+											<td>
+												<div align="center">
+													{acceptInvite.length > 0 ? (
+														<button
+															type="submit"
+															className="btn btn-outline-success btn-sm ml-auto mr-2 flex-shrink-0 waves-effect waves-themed"
+															id={list.id}
+															onClick={() => setPlayerId(list.player_id)}
+														>
+															<FaSignInAlt size={14} />
+														</button>
+													) : null}
+
+													{/* <span className="btn btn-outline-danger btn-sm flex-shrink-0 waves-effect waves-themed">
+									<FaRegTrashAlt size={14} color="#" />
+								</span> */}
+												</div>
+											</td>
+										</tr>
+								  ))
+								: invitedList?.map((list) => (
+										<tr key={list.id}>
+											<td>
+												<Link
+													className="notranslate"
+													to={`/character/${list.player.name}`}
+												>
+													{list.player.name}
+												</Link>
+											</td>
+											<td className="hidden-xs">
+												{characterVocations[list.player.vocation]} (Level{' '}
+												{list.player.level})
+											</td>
+
+											<td>
+												<div align="center">
+													{acceptInvite.length > 0 ? (
+														<button
+															type="submit"
+															className="btn btn-outline-success btn-sm ml-auto mr-2 flex-shrink-0 waves-effect waves-themed"
+															id={list.id}
+															onClick={() => setPlayerId(list.player_id)}
+														>
+															<FaSignInAlt size={14} />
+														</button>
+													) : null}
+
+													{/* <span className="btn btn-outline-danger btn-sm flex-shrink-0 waves-effect waves-themed">
+												<FaRegTrashAlt size={14} color="#" />
+											</span> */}
+												</div>
+											</td>
+										</tr>
+								  ))}
 						</tbody>
 					</table>
 				</form>

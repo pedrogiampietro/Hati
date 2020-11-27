@@ -132,6 +132,20 @@ router.post('/:id/invite', checkJwt, async (req, res) => {
 		if (!playerExists)
 			return res.jsonBadRequest(null, getMessage('player.guild_invite'))
 
+		const alreadyMember = await guild_membership.findAll({
+			where: { guild_id: id },
+		})
+
+		if (alreadyMember)
+			return res.jsonBadRequest(null, 'this member already joined this guild.')
+
+		const alreadyInvited = await guild_invites.findAll({
+			where: { guild_id: id },
+		})
+
+		if (alreadyInvited)
+			return res.jsonBadRequest(null, 'this player already invited.')
+
 		const invitePlayer = await guild_invites.create({
 			player_id: playerExists.id,
 			guild_id: id,
@@ -145,7 +159,7 @@ router.post('/:id/invite', checkJwt, async (req, res) => {
 })
 
 /* get invites */
-router.get('/:id/getInvites', checkJwt, async (req, res) => {
+router.get('/:id/getInvites', async (req, res) => {
 	try {
 		const { id } = req.params
 
