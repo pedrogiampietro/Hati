@@ -132,6 +132,12 @@ const GuildList = ({
 									<i className="fal fa-chart-bar mr-1"></i>Active Wars
 								</a>
 							</li>
+							<li className="nav-item">
+								<a className="nav-link" data-toggle="tab" href="#settings">
+									<i className="fal fa-cog text-danger mr-1" />
+									Settings
+								</a>
+							</li>
 						</ul>
 
 						<hr />
@@ -198,6 +204,118 @@ const GuildList = ({
 							<div className="tab-pane" id="wars">
 								<br />
 								{guild.name} is not currently participating in any active war.
+							</div>
+							<div className="tab-pane" id="settings">
+								<div className="panel-container show">
+									<div className="panel-content">
+										<div className="row">
+											<div className="col-auto">
+												<div
+													className="nav flex-column nav-pills"
+													id="v-pills-tab"
+													role="tablist"
+													aria-orientation="vertical"
+												>
+													<a
+														className="nav-link active"
+														id="v-pills-changelogo-tab"
+														data-toggle="pill"
+														href="#v-pills-changelogo"
+														role="tab"
+														aria-controls="v-pills-changelogo"
+														aria-selected="true"
+													>
+														<i className="fal fa-home" />
+														<span className="hidden-sm-down ml-1">
+															{' '}
+															Change Logo
+														</span>
+													</a>
+													<a
+														className="nav-link"
+														id="v-pills-changeguildmotd-tab"
+														data-toggle="pill"
+														href="#v-pills-changeguildmotd"
+														role="tab"
+														aria-controls="v-pills-changeguildmotd"
+														aria-selected="false"
+													>
+														<i className="fal fa-user" />
+														<span className="hidden-sm-down ml-1">
+															{' '}
+															Change Guild Motd
+														</span>
+													</a>
+													<a
+														className="nav-link"
+														id="v-pills-renameguildrank-tab"
+														data-toggle="pill"
+														href="#v-pills-renameguildrank"
+														role="tab"
+														aria-controls="v-pills-renameguildrank"
+														aria-selected="false"
+													>
+														<i className="fal fa-envelope" />
+														<span className="hidden-sm-down ml-1">
+															{' '}
+															Rename Guild Ranks
+														</span>
+													</a>
+													<a
+														className="nav-link"
+														id="v-pills-disband-tab"
+														data-toggle="pill"
+														href="#v-pills-disband"
+														role="tab"
+														aria-controls="v-pills-disband"
+														aria-selected="false"
+													>
+														<i className="fal fa-cog" />
+														<span className="hidden-sm-down ml-1">
+															Disband Guild
+														</span>
+													</a>
+												</div>
+											</div>
+											<div className="col">
+												<div className="tab-content" id="v-pills-tabContent">
+													<div
+														className="tab-pane fade active show"
+														id="v-pills-changelogo"
+														role="tabpanel"
+														aria-labelledby="v-pills-changelogo-tab"
+													>
+														<h3>Change Logo</h3>
+													</div>
+													<div
+														className="tab-pane fade"
+														id="v-pills-changeguildmotd"
+														role="tabpanel"
+														aria-labelledby="v-pills-changeguildmotd-tab"
+													>
+														<h3>Change Guild Motd</h3>
+													</div>
+													<div
+														className="tab-pane fade"
+														id="v-pills-renameguildrank"
+														role="tabpanel"
+														aria-labelledby="v-pills-renameguildrank-tab"
+													>
+														<h3>Rename Guild Rank</h3>
+													</div>
+													<div
+														className="tab-pane fade"
+														id="v-pills-disband"
+														role="tabpanel"
+														aria-labelledby="v-pills-disband-tab"
+													>
+														<h3>Disbang Guild</h3>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
