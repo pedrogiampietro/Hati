@@ -137,8 +137,8 @@ const GuildList = ({
 
 						<hr />
 						<div className="tab-content">
-							<div className="tab-pane active" id="members">
-								<table className="table table-bordered">
+							<div className="tab-pane active table-responsive" id="members">
+								<table className="table table-bordered ">
 									<thead>
 										<tr>
 											<th>Rank</th>

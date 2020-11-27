@@ -129,7 +129,7 @@ const Guilds = ({ playerList, guildList, players }) => {
 							</div>
 
 							<div className="row justify-content-center pb-1">
-								<div className="col-3">
+								<div className="mx-auto">
 									<button className="btn btn-block btn-danger btn-lg mt-3 waves-effect waves-themed">
 										Create Guild
 									</button>

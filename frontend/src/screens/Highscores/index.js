@@ -231,47 +231,51 @@ const Highscores = ({ highscoresList }) => {
 						</div>
 						<div className="panel-container show">
 							<div className="panel-content">
-								<table className="table-highscores">
-									<thead>
-										<tr>
-											<th width="3%">Rank</th>
-											<th width="5%">Outfit</th>
-											<th width="20%">Name</th>
-											<th width="8%">{skillsName}</th>
-											<th width="8%">Vocation</th>
-										</tr>
+								<div className="table-responsive">
+									<table className="table-highscores">
+										<thead>
+											<tr>
+												<th width="3%">Rank</th>
+												<th width="5%">Outfit</th>
+												<th width="20%">Name</th>
+												<th width="8%">{skillsName}</th>
+												<th width="8%">Vocation</th>
+											</tr>
 
-										{playerList.map((props, index) => {
-											const verify =
-												filterSkill === 'level'
-													? props.level
-													: props[filterSkill]
-											return (
-												<tr key={props.id}>
-													<td>{pageInitial * characterPerPage + index + 1}</td>
-													<td>
-														<Outfiter
-															Name={props.name}
-															LookBody={props.lookbody}
-															LookFeet={props.lookfeet}
-															LookHead={props.lookhead}
-															LookLegs={props.looklegs}
-															LookType={props.looktype}
-															LookAddons={props.lookaddons}
-														/>
-													</td>
-													<td>
-														<Link to={`/character/${props.name}`}>
-															{props.name}
-														</Link>
-													</td>
-													<td>{verify}</td>
-													<td>{characterVocations[props.vocation]}</td>
-												</tr>
-											)
-										})}
-									</thead>
-								</table>
+											{playerList.map((props, index) => {
+												const verify =
+													filterSkill === 'level'
+														? props.level
+														: props[filterSkill]
+												return (
+													<tr key={props.id}>
+														<td>
+															{pageInitial * characterPerPage + index + 1}
+														</td>
+														<td>
+															<Outfiter
+																Name={props.name}
+																LookBody={props.lookbody}
+																LookFeet={props.lookfeet}
+																LookHead={props.lookhead}
+																LookLegs={props.looklegs}
+																LookType={props.looktype}
+																LookAddons={props.lookaddons}
+															/>
+														</td>
+														<td>
+															<Link to={`/character/${props.name}`}>
+																{props.name}
+															</Link>
+														</td>
+														<td>{verify}</td>
+														<td>{characterVocations[props.vocation]}</td>
+													</tr>
+												)
+											})}
+										</thead>
+									</table>
+								</div>
 
 								<div className="row justify-content-center pb-5">
 									{' '}
