@@ -278,7 +278,6 @@ const Highscores = ({ highscoresList }) => {
 								</div>
 
 								<div className="row justify-content-center pb-5">
-									{' '}
 									<ul className="pagination my-4">
 										{pageInitial <= 0 ? (
 											<li className="page-item">

@@ -33,12 +33,13 @@ const GuildList = ({
 	const [acceptInvite, setAcceptInvite] = React.useState([])
 	const [playerId, setPlayerId] = React.useState(0)
 	const [postInteraction, setPostInteraction] = React.useState(false)
+	const [accept, setAccept] = React.useState()
+
+	const { id } = useParams()
 
 	function interaction() {
 		setPostInteraction(!postInteraction)
 	}
-
-	const { id } = useParams()
 
 	React.useEffect(() => {
 		guildShow(id).then(({ payload }) => {
@@ -69,6 +70,8 @@ const GuildList = ({
 		postInteraction,
 	])
 
+	// const accept = acceptInvite.map((n) => n.player.name)
+
 	const submitHandler = (e) => {
 		e.preventDefault()
 		const data = getFormData(e)
@@ -81,6 +84,8 @@ const GuildList = ({
 		guildAccept(id, playerId)
 		interaction()
 	}
+
+	console.log(accept)
 
 	return (
 		<Container>
@@ -115,9 +120,7 @@ const GuildList = ({
 						</div>
 					</div>
 
-					<div className="panel-body">
-						<br />
-
+					<div className="panel-body mt-4">
 						<ul className="nav nav-pills" role="tablist">
 							<li className="nav-item">
 								<a
@@ -230,6 +233,10 @@ const GuildList = ({
 										{characterVocations[invitedList.player.vocation]} (Level{' '}
 										{invitedList.player.level})
 									</td>
+
+									{/* {accept === invitedList.player.name
+										? console.log('s')
+										: console.log('n')} */}
 									<td>
 										<div align="center">
 											{acceptInvite.length > 0 ? (

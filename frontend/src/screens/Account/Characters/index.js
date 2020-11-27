@@ -160,19 +160,6 @@ const Characters = ({
 													<tr>
 														<td>Premium Account</td>
 														<td>(Premmium Days: {Account?.premdays})</td>
-														<td align="right">
-															<big>
-																<span
-																	id="coins_refunded_info"
-																	href="#"
-																	rel="popover"
-																	data-placement="top"
-																	data-trigger="hover"
-																>
-																	<i className="fa fa-info"></i>
-																</span>
-															</big>
-														</td>
 													</tr>
 												</tbody>
 											</table>
