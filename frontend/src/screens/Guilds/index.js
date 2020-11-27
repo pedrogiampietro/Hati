@@ -14,6 +14,11 @@ import GuildLogoDefault from '../../assets/img/guild_logo_default.png'
 const Guilds = ({ playerList, guildList, players }) => {
 	const [guild, setGuild] = React.useState([])
 	const [className, setClassName] = React.useState('col-xl-4')
+	const [postInteraction, setPostInteraction] = React.useState(false)
+
+	function interaction() {
+		setPostInteraction(!postInteraction)
+	}
 
 	React.useEffect(() => {
 		playerList()
@@ -21,16 +26,16 @@ const Guilds = ({ playerList, guildList, players }) => {
 			const newData = payload.data.data
 			setGuild(newData)
 		})
-	}, [playerList, guildList])
+	}, [playerList, guildList, postInteraction])
 
 	const submitHandler = (e) => {
 		e.preventDefault()
 		const data = getFormData(e)
 		guildCreate(data)
+		interaction()
 	}
 
 	const clickToRow = () => setClassName('col-xl-12')
-
 	const clickToGrid = () => setClassName('col-xl-4')
 
 	return (
@@ -81,34 +86,59 @@ const Guilds = ({ playerList, guildList, players }) => {
 				</div>
 			</div>
 
-			<section>
-				<pre>
-					<form onSubmit={submitHandler}>
-						<input type="text" name="name" placeholder="Guild name" />
-						<br />
-						<select name="ownerid">
-							{players && players.length
-								? players.map((player) => {
-										return (
-											<option key={player.id} value={player.id}>
-												{player.name}
-											</option>
-										)
-								  })
-								: null}
-						</select>
-						<br />
-						<textarea
-							name="description"
-							id="description"
-							cols="30"
-							rows="10"
-						></textarea>
-						<br />
-						<button className="btn btn-primary btn-sm">Teste API</button>
-					</form>
-				</pre>
-			</section>
+			<div className="text-center mb-3">
+				<form onSubmit={submitHandler}>
+					<div className="col-xl-6 ml-auto mr-auto">
+						<div className="card p-4 rounded-plus bg-faded">
+							<div className="form-group row">
+								<div className="col-6 pr-1">
+									<select className="form-control" name="ownerid">
+										{players && players.length
+											? players.map((player) => {
+													return (
+														<option key={player.id} value={player.id}>
+															{player.name}
+														</option>
+													)
+											  })
+											: null}
+									</select>
+									{/* <div className="invalid-feedback">
+										No, you missed this one.
+									</div> */}
+								</div>
+								<div className="col-6 pl-1">
+									<input
+										className="form-control"
+										type="text"
+										name="name"
+										placeholder="Guild Name"
+										required
+									/>
+								</div>
+							</div>
+							<div className="form-group">
+								<textarea
+									className="form-control"
+									name="description"
+									id="description"
+									placeholder="Description"
+									cols="30"
+									rows="3"
+								></textarea>
+							</div>
+
+							<div className="row justify-content-center pb-1">
+								<div className="col-3">
+									<button className="btn btn-block btn-danger btn-lg mt-3 waves-effect waves-themed">
+										Create Guild
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
 
 			{/* Guilds List */}
 			<div className="row">

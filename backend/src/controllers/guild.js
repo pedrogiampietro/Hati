@@ -5,15 +5,15 @@ const {
 	guild_rank,
 	guild_membership,
 	player,
-	account,
+	players_online,
 } = require('../models')
 const { getMessage } = require('../helpers/messages')
-const { verifyJwt, getTokenFromHeaders } = require('../helpers/jwt')
 const { checkJwt } = require('../middlewares/jwt')
+const { createGuild } = require('../validators/guild')
 
 const router = express.Router()
 
-router.post('/', checkJwt, async (req, res) => {
+router.post('/', checkJwt, createGuild, async (req, res) => {
 	const { body } = req
 	const { name, ownerid, description } = body
 
@@ -22,7 +22,14 @@ router.post('/', checkJwt, async (req, res) => {
 		if (findGuild)
 			return res.jsonBadRequest(
 				null,
-				getMessage('this guild already exists, choose another name.')
+				getMessage('player.createGuild.name_exists')
+			)
+
+		const alreadyHaveGuild = await guild.findOne({ where: { ownerid } })
+		if (alreadyHaveGuild)
+			return res.jsonBadRequest(
+				null,
+				getMessage('player.createGuild.already_owner')
 			)
 
 		const createGuild = await guild.create({
@@ -77,8 +84,19 @@ router.get('/:id/members', async (req, res) => {
 			},
 			{
 				model: player,
-				attributes: ['name', 'vocation', 'level'],
+				attributes: [
+					'name',
+					'vocation',
+					'level',
+					'lookbody',
+					'lookfeet',
+					'lookhead',
+					'looklegs',
+					'looktype',
+					'lookaddons',
+				],
 			},
+			{ model: players_online },
 		],
 	})
 
@@ -104,7 +122,7 @@ router.post('/:id/invite', checkJwt, async (req, res) => {
 		if (!verifyLeader)
 			return res.jsonBadRequest(
 				null,
-				'only leader have permission to invite players.'
+				getMessage('player.guild_invite_permission')
 			)
 
 		const playerExists = await player.findOne({
@@ -112,10 +130,7 @@ router.post('/:id/invite', checkJwt, async (req, res) => {
 		})
 
 		if (!playerExists)
-			return res.jsonBadRequest(
-				null,
-				'player does not exists, please check name.'
-			)
+			return res.jsonBadRequest(null, getMessage('player.guild_invite'))
 
 		const invitePlayer = await guild_invites.create({
 			player_id: playerExists.id,
@@ -194,7 +209,14 @@ router.post('/:id/accept', checkJwt, async (req, res) => {
 		})
 
 		if (!findInvite)
-			return res.jsonBadRequest(null, 'dont have character to join guild.')
+			return res.jsonBadRequest(null, getMessage('player.guild_not_invited'))
+
+		const haveGuild = await guild_membership.findAll({
+			where: { player_id: Number(playerId) },
+		})
+
+		if (haveGuild.length > 0)
+			return res.jsonBadRequest(null, 'this player already have guild.')
 
 		const deleteAfterinvite = await guild_invites.findOne({
 			where: { guild_id: id, player_id: Number(playerId) },

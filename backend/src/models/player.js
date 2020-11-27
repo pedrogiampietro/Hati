@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 			references: {
-				model: 'accounts',
+				model: 'account',
 				key: 'id',
 			},
 		},
@@ -304,6 +304,7 @@ module.exports = (sequelize, DataTypes) => {
 		player.hasMany(models.player_deaths, { foreignKey: 'player_id' })
 		player.hasMany(models.guild_invites, { foreignKey: 'player_id' })
 		player.hasMany(models.guild_membership, { foreignKey: 'player_id' })
+		player.hasMany(models.players_online, { foreignKey: 'player_id' })
 	}
 
 	return player

@@ -56,5 +56,18 @@
 
 	"character.search.success": "Search was successful.",
 	"character.search.name_not_exists": "This name does not exist in our database.",
-	"character.search.name.string.empty": "Name field is required."
+	"character.search.name.string.empty": "Name field is required.",
+
+	"player.createGuild.success": "Guild created successfully.",
+	"player.createGuild.failed": "Invalid guild name.",
+	"player.createGuild.already_owner": "That player belongs to another guild.",
+	"player.createGuild.name_exists": "Guild Name already created.",
+	"player.createGuild.name.string.empty": "Guild Name is required.",
+	"player.createGuild.name.string.name": "Guild Name must be a valid name, only text.",
+	"player.createGuild.name.any.required": "Guild Name is required.",
+	"player.createGuild.name.string.pattern.base": "The name cannot have special characters - @ #! and numbers",
+	"player.createGuild.name.string.min": "The name must have a minimum of 4 letters and a maximum of 21.",
+	"player.guild_invite_permission": "Only leader and vices, have permission to invite players.",
+	"player.guild_invite": "Player does not exists, please check name.",
+	"player.guild_not_invited": "Dont have character to join guild."
 }
