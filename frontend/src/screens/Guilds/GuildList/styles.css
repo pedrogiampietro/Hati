@@ -16,25 +16,6 @@
 	grid-area: 1 / 4 / 2 / 5;
 }
 
-/* nav pills */
-
-/* .nav-item {
-	width: 50%;
-} */
-
-/* .nav-pills .nav-link {
-	font-weight: bold;
-	padding-top: 13px;
-	text-align: center;
-	background: #343436;
-	color: #fff;
-	border-radius: 0px !important;
-}
-.nav-pills .nav-link.active {
-	background: #fff;
-	color: #000;
-} */
-
 @media (max-width: 576px) {
 	.nav-item {
 		width: 100%;

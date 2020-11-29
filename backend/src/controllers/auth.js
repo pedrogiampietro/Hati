@@ -25,18 +25,7 @@ const {
 
 const { checkJwt } = require('../middlewares/jwt')
 
-// File upload middleware (for profile pictures)
-const storage = multer.diskStorage({
-	destination: 'uploads/',
-	filename: (req, file, cb) => {
-		const filename = file.originalname
-		const finalFileName = `${Date.now()}-${filename}`
-
-		cb(null, finalFileName)
-	},
-})
-
-const upload = multer({ storage: storage, limits: { fileSize: 1000000 } })
+const { upload } = require('../middlewares/multer')
 
 const router = express.Router()
 

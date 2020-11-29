@@ -1,4 +1,4 @@
-import { apiGet, apiPost } from '../helpers/Api'
+import { apiGet, apiPost, apiPostAvatar, apiPut } from '../helpers/Api'
 
 export const GUILD_CREATE = 'GUILD_CREATE'
 export const GUILD_LIST = 'GUILD_LIST'
@@ -8,6 +8,12 @@ export const GUILD_INVITE = 'GUILD_INVTE'
 export const GUILD_GET_INVITES = 'GUILD_GET_INVITES'
 export const GUILD_HAS_INVITE = 'GUILD_HAS_INVITE'
 export const GUILD_ACCEPT = 'GUILD_ACCEPT'
+
+export const GET_GUILD_LOGO = 'GET_GUILD_LOGO'
+export const POST_GUILD_LOGO = 'POST_GUILD_LOGO'
+
+export const GUILD_EDIT_DESCRIPTION = 'GUILD_EDIT_DESCRIPTION'
+export const GUILD_EDIT_RANKS = 'GUILD_EDIT_RANKS'
 
 export const guildCreate = (data) => {
 	const payload = apiPost('/guild', data)
@@ -47,4 +53,24 @@ export const guildHasInvite = (id, data) => {
 export const guildAccept = (id, data) => {
 	const payload = apiPost(`/guild/${id}/accept`, data)
 	return { type: GUILD_ACCEPT, payload }
+}
+
+export const getGuildLogo = (id, data) => {
+	const payload = apiGet(`/guild/${id}/logo`, data)
+	return { type: GET_GUILD_LOGO, payload }
+}
+
+export const postGuildLogo = (id, data) => {
+	const payload = apiPostAvatar(`/guild/${id}/logo`, data)
+	return { type: POST_GUILD_LOGO, payload }
+}
+
+export const editGuildDescription = (id, data) => {
+	const payload = apiPut(`/guild/${id}/description`, { ...data })
+	return { type: GUILD_EDIT_DESCRIPTION, payload }
+}
+
+export const editGuildRanks = (id, data) => {
+	const payload = apiPut(`/guild/${id}/ranks`, { ...data })
+	return { type: GUILD_EDIT_RANKS, payload }
 }

@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
-
 import {
 	guildShow,
 	guildMember,
@@ -9,10 +8,16 @@ import {
 	guildGetInvites,
 	guildHasInvite,
 	guildAccept,
+	postGuildLogo,
+	editGuildDescription,
+	editGuildRanks,
 } from '../../../actions/GuildActions'
 import { getFormData } from '../../../helpers/FormData'
+import { getAvatarUrl } from '../../../helpers/Api'
 import { characterVocations } from '../../../config'
 import Outfiter from '../../../helpers/Outfiter'
+import TextArea from '../../../components/TextArea'
+import Input from '../../../components/Input'
 
 import Container from '../../Layouts/Container'
 import GuildLogoDefault from '../../../assets/img/guild_logo_default.png'
@@ -27,24 +32,30 @@ const GuildList = ({
 	guildGetInvites,
 	guildHasInvite,
 	guildAccept,
+	postGuildLogo,
+	editGuildRanks,
+	guild,
 }) => {
-	const [guild, setGuild] = React.useState([])
+	const [currentGuild, setCurrentGuild] = React.useState([])
 	const [member, setMember] = React.useState([])
 	const [invitedList, setInvitedList] = React.useState([])
 	const [acceptInvite, setAcceptInvite] = React.useState([])
 	const [playerId, setPlayerId] = React.useState(0)
 	const [postInteraction, setPostInteraction] = React.useState(false)
-
-	const { id } = useParams()
+	const [image, setImage] = React.useState('')
+	const [imagePreview, setImagePreview] = React.useState('')
+	const [ranks, setRanks] = React.useState([])
 
 	function interaction() {
 		setPostInteraction(!postInteraction)
 	}
 
+	const { id } = useParams()
+
 	React.useEffect(() => {
 		guildShow(id).then(({ payload }) => {
 			const newData = payload.data.data
-			setGuild(newData)
+			setCurrentGuild(newData)
 
 			guildMember(id).then(({ payload }) => {
 				const newData = payload.data.data
@@ -60,12 +71,18 @@ const GuildList = ({
 				const newData = payload.data.data
 				setAcceptInvite(newData)
 			})
+
+			editGuildRanks(id).then(({ payload }) => {
+				const newData = payload.data.data
+				setRanks(newData)
+			})
 		})
 	}, [
 		guildShow,
 		guildGetInvites,
 		guildMember,
 		guildHasInvite,
+		editGuildRanks,
 		id,
 		postInteraction,
 	])
@@ -83,6 +100,36 @@ const GuildList = ({
 		interaction()
 	}
 
+	const handleSelectImages = (e) => {
+		if (!e.target.files) {
+			return
+		}
+
+		const selectedImage = e.target.files[0]
+		setImage(selectedImage)
+		const preview = URL.createObjectURL(selectedImage)
+		setImagePreview(preview)
+	}
+
+	const submitLogoHandler = (e) => {
+		e.preventDefault(e)
+		const formData = new FormData()
+		formData.append('guild_logo', image)
+		postGuildLogo(id, formData)
+	}
+
+	const submitDescriptionHandler = (e) => {
+		e.preventDefault(e)
+		const data = getFormData(e)
+		editGuildDescription(id, data)
+	}
+
+	const submitRanksHandler = (e) => {
+		e.preventDefault(e)
+		const data = getFormData(e)
+		editGuildRanks(id, data)
+	}
+
 	return (
 		<Container>
 			<div className="panel panel-default col-sm-6 mx-auto">
@@ -94,23 +141,31 @@ const GuildList = ({
 								<span className="fw-300 fs-xs d-block opacity-50">
 									<img
 										className="profile-image-lg"
-										src={GuildLogoDefault}
+										src={`${
+											currentGuild.logo_gfx_name === '' ||
+											currentGuild.logo_gfx_name === null
+												? GuildLogoDefault
+												: currentGuild.logo_gfx_name &&
+												  getAvatarUrl(currentGuild.logo_gfx_name)
+										}`}
 										alt="GuildLogo"
 									/>
 								</span>
-								<span className="fw-500 fs-xl d-block color-primary-500 mb-6">
-									Member
+								<span className="fw-500 fs-xl d-block color-primary-500 mb-6 mx-auto">
+									0 Member
 								</span>
 							</div>
 						</div>
 						<div className="guild-description ml-4">
-							<h2 className="text-primary">Guild Description:</h2>
-							<p>{guild.description}</p>
+							<h2 className="text-primary">Guild Description</h2>
+							<p
+								dangerouslySetInnerHTML={{ __html: currentGuild.description }}
+							/>
 						</div>
 						<div className="guild-name">
 							<span className="display-4 d-block l-h-n m-0 fw-500 text-primary">
 								<p className="attempt-1">
-									<em>{guild.name}</em>
+									<em>{currentGuild.name}</em>
 								</p>
 							</span>
 						</div>
@@ -203,7 +258,8 @@ const GuildList = ({
 							</div>
 							<div className="tab-pane" id="wars">
 								<br />
-								{guild.name} is not currently participating in any active war.
+								{currentGuild.name} is not currently participating in any active
+								war.
 							</div>
 							<div className="tab-pane" id="settings">
 								<div className="panel-container show">
@@ -233,17 +289,17 @@ const GuildList = ({
 													</a>
 													<a
 														className="nav-link"
-														id="v-pills-changeguildmotd-tab"
+														id="v-pills-changeguild-description-tab"
 														data-toggle="pill"
-														href="#v-pills-changeguildmotd"
+														href="#v-pills-changeguild-description"
 														role="tab"
-														aria-controls="v-pills-changeguildmotd"
+														aria-controls="v-pills-changeguild-description"
 														aria-selected="false"
 													>
 														<i className="fal fa-user" />
 														<span className="hidden-sm-down ml-1">
 															{' '}
-															Change Guild Motd
+															Change Guild Description
 														</span>
 													</a>
 													<a
@@ -286,14 +342,78 @@ const GuildList = ({
 														aria-labelledby="v-pills-changelogo-tab"
 													>
 														<h3>Change Logo</h3>
+														<div className="row no-gutters">
+															<div className="col-12 col-sm-6 col-md-8">
+																<form onSubmit={submitLogoHandler}>
+																	Here you can change your guild logo by
+																	uploading an image file.
+																	<br />
+																	Logo rules:
+																	<ul>
+																		<li>
+																			The file size can not be bigger than 3 MB.
+																		</li>
+																		<li>
+																			The image dimensions can't be bigger than
+																			128x128.
+																		</li>
+																		<li>
+																			The file format must be either PNG, GIF or
+																			JPEG.
+																		</li>
+																	</ul>
+																	<div className="form-group">
+																		<input
+																			type="file"
+																			name="guild_logo"
+																			accept="image/*"
+																			className="btn btn-primary btn-sm"
+																			onChange={handleSelectImages}
+																		/>
+																	</div>
+																	<button
+																		ctype="submit"
+																		className="btn btn-primary btn-sm"
+																	>
+																		Upload
+																	</button>
+																</form>
+															</div>
+															<div className="mx-auto">
+																<img src={imagePreview} alt="" />
+															</div>
+														</div>
 													</div>
 													<div
 														className="tab-pane fade"
-														id="v-pills-changeguildmotd"
+														id="v-pills-changeguild-description"
 														role="tabpanel"
-														aria-labelledby="v-pills-changeguildmotd-tab"
+														aria-labelledby="v-pills-changeguild-description-tab"
 													>
-														<h3>Change Guild Motd</h3>
+														<h3>Change Guild Description</h3>
+														<div className="text-center mb-3">
+															<form onSubmit={submitDescriptionHandler}>
+																<div className="col-xl-12 ml-auto mr-auto">
+																	<div className="card p-4 rounded-plus bg-faded">
+																		<TextArea
+																			className="form-control"
+																			label="Description"
+																			name="description"
+																			type="text"
+																			data={guild}
+																		/>
+
+																		<div className="row justify-content-center pb-1">
+																			<div className="mx-auto">
+																				<button className="btn btn-block btn-danger btn-lg mt-3 waves-effect waves-themed">
+																					Update
+																				</button>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</form>
+														</div>
 													</div>
 													<div
 														className="tab-pane fade"
@@ -302,6 +422,25 @@ const GuildList = ({
 														aria-labelledby="v-pills-renameguildrank-tab"
 													>
 														<h3>Rename Guild Rank</h3>
+														<div className="card p-4 border-top-left-radius-0 border-top-right-radius-0">
+															<form onSubmit={submitRanksHandler}>
+																{/* {ranks.map((r) => (
+																	<Input
+																		label="Location"
+																		name="location"
+																		type="text"
+																		data={guild}
+																	/>
+																))} */}
+
+																<button
+																	type="submit"
+																	className="btn btn-outline-primary float-right waves-effect waves-themed"
+																>
+																	Change Rank Title
+																</button>
+															</form>
+														</div>
 													</div>
 													<div
 														className="tab-pane fade"
@@ -310,6 +449,13 @@ const GuildList = ({
 														aria-labelledby="v-pills-disband-tab"
 													>
 														<h3>Disbang Guild</h3>
+														<button
+															type="button"
+															className="btn btn-lg btn-outline-danger waves-effect waves-themed"
+														>
+															<span className="fal fa-times mr-1"></span>
+															Delete
+														</button>
 													</div>
 												</div>
 											</div>
@@ -434,6 +580,7 @@ const mapStateToProps = (state) => {
 	return {
 		account: state.account.account,
 		players: state.player.player,
+		guild: state.guild.guild,
 	}
 }
 
@@ -444,4 +591,6 @@ export default connect(mapStateToProps, {
 	guildGetInvites,
 	guildHasInvite,
 	guildAccept,
+	postGuildLogo,
+	editGuildRanks,
 })(GuildList)

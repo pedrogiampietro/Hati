@@ -57,7 +57,7 @@ const ProfileAvatar = () => {
 											onChange={handleSelectImages}
 										/>
 									</div>
-									{image && image.name && image.name.length > 0 ? (
+									{image?.name.length > 0 ? (
 										<button ctype="submit" className="btn btn-primary btn-sm">
 											Upload
 										</button>

@@ -1,15 +1,20 @@
 const express = require('express')
+const fs = require('fs')
+
 const {
 	guild,
 	guild_invites,
 	guild_rank,
 	guild_membership,
-	player,
 	players_online,
+	player,
 } = require('../models')
 const { getMessage } = require('../helpers/messages')
+const { verifyJwt, getTokenFromHeaders } = require('../helpers/jwt')
 const { checkJwt } = require('../middlewares/jwt')
 const { createGuild } = require('../validators/guild')
+
+const { uploadGuildLogo } = require('../middlewares/multer')
 
 const router = express.Router()
 
@@ -68,7 +73,7 @@ router.get('/:id', async (req, res) => {
 	return res.jsonOK(getOneGuild)
 })
 
-//get ranks and members
+/* get ranks and members */
 router.get('/:id/members', async (req, res) => {
 	const { id } = req.params
 
@@ -247,6 +252,123 @@ router.post('/:id/accept', checkJwt, async (req, res) => {
 		return res.jsonOK(addToGuild)
 	} catch (error) {
 		console.log(error)
+	}
+})
+
+/* guild settings */
+router.post(
+	'/:id/logo',
+	checkJwt,
+	uploadGuildLogo.single('guild_logo'),
+	async (req, res) => {
+		try {
+			const { account_id } = req
+			const { id } = req.params
+
+			const findLeader = await player.findAll({
+				where: { account_id: account_id },
+			})
+
+			const idToLeader = findLeader.map((l) => l.id)
+
+			const getGuild = await guild.findOne({
+				where: { id, ownerid: idToLeader },
+			})
+
+			if (!getGuild)
+				return res.jsonUnauthorized(
+					null,
+					getMessage('você não pode alterar pois não é lider dessa guild.')
+				)
+
+			const finalFileName = req.file
+
+			await getGuild.update({
+				guild_logo: fs.readFileSync('uploads/guilds/' + finalFileName.filename),
+				logo_gfx_name: `uploads/guilds/${finalFileName.filename}`,
+			})
+
+			res.jsonOK(getGuild, getMessage('Guild Logo successfully uploaded.'))
+		} catch (error) {
+			console.error(error)
+			return res.jsonBadRequest(null, error)
+		}
+	}
+)
+
+router.put('/:id/description', checkJwt, async (req, res) => {
+	try {
+		const { account_id, body } = req
+		const { id } = req.params
+		const fields = ['description']
+
+		const findLeader = await player.findAll({
+			where: { account_id: account_id },
+		})
+
+		const idToLeader = findLeader.map((l) => l.id)
+
+		const getGuild = await guild.findOne({
+			where: { id, ownerid: idToLeader },
+		})
+
+		if (!getGuild)
+			return res.jsonUnauthorized(
+				null,
+				getMessage('você não pode alterar pois não é lider dessa guild.')
+			)
+
+		fields.map((fieldName) => {
+			const newValue = body[fieldName]
+			if (newValue) getGuild[fieldName] = newValue
+		})
+
+		await getGuild.save()
+
+		res.jsonOK(getGuild, getMessage('account.settings.avatar_success'))
+	} catch (error) {
+		console.error(error)
+		return res.jsonBadRequest(null, error)
+	}
+})
+
+router.put('/:id/ranks', checkJwt, async (req, res) => {
+	try {
+		const { account_id, body } = req
+		const { id } = req.params
+		const fields = ['name']
+
+		const findLeader = await player.findAll({
+			where: { account_id: account_id },
+		})
+
+		const idToLeader = findLeader.map((l) => l.id)
+
+		const getGuild = await guild.findOne({
+			where: { id, ownerid: idToLeader },
+		})
+
+		if (!getGuild)
+			return res.jsonUnauthorized(
+				null,
+				getMessage('você não pode alterar pois não é lider dessa guild.')
+			)
+
+		const getRanks = await guild_rank.findAll({
+			where: { guild_id: id },
+		})
+
+		fields.map((fieldName) => {
+			const newValue = body[fieldName]
+			if (newValue) getRanks[fieldName] = newValue
+		})
+
+		// await getRanks.save()
+
+		res.jsonOK(getRanks, 'guild ranks altered successfully')
+	} catch (error) {
+		console.error(error)
+		return res.jsonBadRequest(null, error)
 	}
 })
 
