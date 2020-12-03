@@ -1,47 +1,51 @@
 module.exports = (sequelize, DataTypes) => {
-	const thread = sequelize.define('thread', {
-		title: {
-			type: DataTypes.STRING,
-			allowNull: false,
-		},
-		character_name: {
-			type: DataTypes.STRING,
-			allowNull: false,
-		},
-		body_text: {
-			type: DataTypes.TEXT('long'),
-			allowNull: false,
-		},
-		views: {
-			type: DataTypes.STRING,
-			defaultValue: '',
-			allowNull: false,
-		},
-		board_id: {
-			type: DataTypes.INTEGER,
-			allowNull: false,
-			references: { model: 'forumBoards', key: 'id' },
-			onUpdate: 'CASCADE',
-			onDelete: 'CASCADE',
-		},
-		account_id: {
-			type: DataTypes.INTEGER,
-			allowNull: false,
-			references: { model: 'accounts', key: 'id' },
-			onUpdate: 'CASCADE',
-			onDelete: 'CASCADE',
-		},
-		likes_count: {
-			type: DataTypes.JSON,
-			defaultValue: [],
-		},
-	})
+  const threads = sequelize.define(
+    'threads',
+    {
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      character_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      body_text: {
+        type: DataTypes.TEXT('long'),
+        allowNull: false,
+      },
+      views: {
+        type: DataTypes.STRING,
+        defaultValue: '',
+        allowNull: false,
+      },
+      board_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: { model: 'forum_board', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+      account_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: { model: 'accounts', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
+      likes_count: {
+        type: DataTypes.JSON,
+        defaultValue: [],
+      },
+    },
+    { freezeTableName: true }
+  )
 
-	thread.associate = (models) => {
-		thread.belongsTo(models.forumBoard, { foreignKey: 'board_id' })
-		thread.belongsTo(models.account, { foreignKey: 'account_id' })
-		thread.hasMany(models.comment, { foreignKey: 'thread_id' })
-	}
+  threads.associate = (models) => {
+    threads.belongsTo(models.forum_board, { foreignKey: 'board_id' })
+    threads.belongsTo(models.accounts, { foreignKey: 'account_id' })
+    threads.hasMany(models.comments, { foreignKey: 'thread_id' })
+  }
 
-	return thread
+  return threads
 }

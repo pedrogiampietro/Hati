@@ -2,12 +2,12 @@ const express = require('express')
 const fs = require('fs')
 
 const {
-	guild,
-	guild_invites,
-	guild_rank,
-	guild_membership,
-	players_online,
-	player,
+  guilds,
+  guild_invites,
+  guild_ranks,
+  guild_membership,
+  players_online,
+  players,
 } = require('../models')
 const { getMessage } = require('../helpers/messages')
 const { verifyJwt, getTokenFromHeaders } = require('../helpers/jwt')
@@ -19,357 +19,357 @@ const { uploadGuildLogo } = require('../middlewares/multer')
 const router = express.Router()
 
 router.post('/', checkJwt, createGuild, async (req, res) => {
-	const { body } = req
-	const { name, ownerid, description } = body
+  const { body } = req
+  const { name, ownerid, description } = body
 
-	try {
-		const findGuild = await guild.findOne({ where: { name } })
-		if (findGuild)
-			return res.jsonBadRequest(
-				null,
-				getMessage('player.createGuild.name_exists')
-			)
+  try {
+    const findGuild = await guilds.findOne({ where: { name } })
+    if (findGuild)
+      return res.jsonBadRequest(
+        null,
+        getMessage('player.createGuild.name_exists')
+      )
 
-		const alreadyHaveGuild = await guild.findOne({ where: { ownerid } })
-		if (alreadyHaveGuild)
-			return res.jsonBadRequest(
-				null,
-				getMessage('player.createGuild.already_owner')
-			)
+    const alreadyHaveGuild = await guilds.findOne({ where: { ownerid } })
+    if (alreadyHaveGuild)
+      return res.jsonBadRequest(
+        null,
+        getMessage('player.createGuild.already_owner')
+      )
 
-		const createGuild = await guild.create({
-			name,
-			ownerid,
-			description,
-			creationdata: Date.now(),
-		})
+    const createGuild = await guilds.create({
+      name,
+      ownerid,
+      description,
+      creationdata: Date.now(),
+    })
 
-		return res.jsonOK(createGuild)
-	} catch (error) {
-		console.log(error)
-	}
+    return res.jsonOK(createGuild)
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 router.get('/', async (req, res) => {
-	const getAllGuilds = await guild.findAll({
-		include: [
-			{
-				model: player,
-				attributes: ['name'],
-			},
-		],
-	})
+  const getAllGuilds = await guilds.findAll({
+    include: [
+      {
+        model: players,
+        attributes: ['name'],
+      },
+    ],
+  })
 
-	return res.jsonOK(getAllGuilds)
+  return res.jsonOK(getAllGuilds)
 })
 
 router.get('/:id', async (req, res) => {
-	const { id } = req.params
+  const { id } = req.params
 
-	const getOneGuild = await guild.findOne({
-		where: { id },
-	})
+  const getOneGuild = await guilds.findOne({
+    where: { id },
+  })
 
-	return res.jsonOK(getOneGuild)
+  return res.jsonOK(getOneGuild)
 })
 
 /* get ranks and members */
 router.get('/:id/members', async (req, res) => {
-	const { id } = req.params
+  const { id } = req.params
 
-	const getMembers = await guild_membership.findAll({
-		where: { guild_id: id },
+  const getMembers = await guild_membership.findAll({
+    where: { guild_id: id },
 
-		include: [
-			{
-				model: guild_rank,
-				where: {
-					guild_id: id,
-				},
-			},
-			{
-				model: player,
-				attributes: [
-					'name',
-					'vocation',
-					'level',
-					'lookbody',
-					'lookfeet',
-					'lookhead',
-					'looklegs',
-					'looktype',
-					'lookaddons',
-				],
-			},
-			{ model: players_online },
-		],
-	})
+    include: [
+      {
+        model: guild_ranks,
+        where: {
+          guild_id: id,
+        },
+      },
+      {
+        model: players,
+        attributes: [
+          'name',
+          'vocation',
+          'level',
+          'lookbody',
+          'lookfeet',
+          'lookhead',
+          'looklegs',
+          'looktype',
+          'lookaddons',
+        ],
+      },
+      { model: players_online },
+    ],
+  })
 
-	return res.jsonOK(getMembers)
+  return res.jsonOK(getMembers)
 })
 
 //router.delete('/')
 
 /* player invite */
 router.post('/:id/invite', checkJwt, async (req, res) => {
-	try {
-		const { id } = req.params
-		const { account_id, body } = req
-		const { player_id } = body
+  try {
+    const { id } = req.params
+    const { account_id, body } = req
+    const { player_id } = body
 
-		const players = await player.findAll({ where: { account_id } })
-		const getPlayerAccounts = players.map((p) => p.id)
+    const getPlayerToInvite = await players.findAll({ where: { account_id } })
+    const getPlayerAccounts = getPlayerToInvite.map((p) => p.id)
 
-		const verifyLeader = await guild.findOne({
-			where: { id, ownerid: getPlayerAccounts },
-		})
+    const verifyLeader = await guilds.findOne({
+      where: { id, ownerid: getPlayerAccounts },
+    })
 
-		if (!verifyLeader)
-			return res.jsonBadRequest(
-				null,
-				getMessage('player.guild_invite_permission')
-			)
+    if (!verifyLeader)
+      return res.jsonBadRequest(
+        null,
+        getMessage('player.guild_invite_permission')
+      )
 
-		const playerExists = await player.findOne({
-			where: { name: player_id },
-		})
+    const playerExists = await players.findOne({
+      where: { name: player_id },
+    })
 
-		if (!playerExists)
-			return res.jsonBadRequest(null, getMessage('player.guild_invite'))
+    if (!playerExists)
+      return res.jsonBadRequest(null, getMessage('player.guild_invite'))
 
-		const alreadyMember = await guild_membership.findAll({
-			where: { guild_id: id },
-		})
+    const alreadyMember = await guild_membership.findAll({
+      where: { guild_id: id },
+    })
 
-		if (alreadyMember)
-			return res.jsonBadRequest(null, 'this member already joined this guild.')
+    if (alreadyMember)
+      return res.jsonBadRequest(null, 'this member already joined this guild.')
 
-		const alreadyInvited = await guild_invites.findAll({
-			where: { guild_id: id },
-		})
+    const alreadyInvited = await guild_invites.findAll({
+      where: { guild_id: id },
+    })
 
-		if (alreadyInvited)
-			return res.jsonBadRequest(null, 'this player already invited.')
+    if (alreadyInvited)
+      return res.jsonBadRequest(null, 'this player already invited.')
 
-		const invitePlayer = await guild_invites.create({
-			player_id: playerExists.id,
-			guild_id: id,
-			date: Date.now(),
-		})
+    const invitePlayer = await guild_invites.create({
+      player_id: playerExists.id,
+      guild_id: id,
+      date: Date.now(),
+    })
 
-		return res.jsonOK(invitePlayer)
-	} catch (error) {
-		console.log(error)
-	}
+    return res.jsonOK(invitePlayer)
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 /* get invites */
 router.get('/:id/getInvites', async (req, res) => {
-	try {
-		const { id } = req.params
+  try {
+    const { id } = req.params
 
-		const getAllInvites = await guild_invites.findAll({
-			where: { guild_id: id },
-			include: [
-				{
-					model: player,
-					attributes: ['name', 'level', 'vocation'],
-				},
-			],
-		})
+    const getAllInvites = await guild_invites.findAll({
+      where: { guild_id: id },
+      include: [
+        {
+          model: players,
+          attributes: ['name', 'level', 'vocation'],
+        },
+      ],
+    })
 
-		return res.jsonOK(getAllInvites)
-	} catch (error) {
-		console.log(error)
-	}
+    return res.jsonOK(getAllInvites)
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 router.get('/:id/hasInvite', checkJwt, async (req, res) => {
-	try {
-		const { id } = req.params
-		const { account_id } = req
+  try {
+    const { id } = req.params
+    const { account_id } = req
 
-		const players = await player.findAll({
-			where: { account_id: account_id },
-		})
+    const getPlayerHasInvite = await players.findAll({
+      where: { account_id: account_id },
+    })
 
-		const getPlayerAccounts = players.map((p) => p.id)
+    const getPlayerAccounts = getPlayerHasInvite.map((p) => p.id)
 
-		const getAllInvites = await guild_invites.findAll({
-			where: { guild_id: id, player_id: getPlayerAccounts },
-			include: [
-				{
-					model: player,
-					attributes: ['name', 'level', 'vocation'],
-				},
-			],
-		})
+    const getAllInvites = await guild_invites.findAll({
+      where: { guild_id: id, player_id: getPlayerAccounts },
+      include: [
+        {
+          model: players,
+          attributes: ['name', 'level', 'vocation'],
+        },
+      ],
+    })
 
-		return res.jsonOK(getAllInvites)
-	} catch (error) {
-		console.log(error)
-	}
+    return res.jsonOK(getAllInvites)
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 router.post('/:id/accept', checkJwt, async (req, res) => {
-	try {
-		const { id } = req.params
-		const { account_id, body } = req
-		const playerId = Object.keys(body)
+  try {
+    const { id } = req.params
+    const { account_id, body } = req
+    const playerId = Object.keys(body)
 
-		const players = await player.findAll({
-			where: { account_id: account_id },
-		})
+    const playersToAccept = await players.findAll({
+      where: { account_id: account_id },
+    })
 
-		const getPlayerAccounts = players.map((p) => p.id)
+    const getPlayerAccounts = playersToAccept.map((p) => p.id)
 
-		const findInvite = await guild_invites.findAll({
-			where: { guild_id: id, player_id: getPlayerAccounts },
-		})
+    const findInvite = await guild_invites.findAll({
+      where: { guild_id: id, player_id: getPlayerAccounts },
+    })
 
-		if (!findInvite)
-			return res.jsonBadRequest(null, getMessage('player.guild_not_invited'))
+    if (!findInvite)
+      return res.jsonBadRequest(null, getMessage('player.guild_not_invited'))
 
-		const haveGuild = await guild_membership.findAll({
-			where: { player_id: Number(playerId) },
-		})
+    const haveGuild = await guild_membership.findAll({
+      where: { player_id: Number(playerId) },
+    })
 
-		if (haveGuild.length > 0)
-			return res.jsonBadRequest(null, 'this player already have guild.')
+    if (haveGuild.length > 0)
+      return res.jsonBadRequest(null, 'this player already have guild.')
 
-		const deleteAfterinvite = await guild_invites.findOne({
-			where: { guild_id: id, player_id: Number(playerId) },
-		})
+    const deleteAfterinvite = await guild_invites.findOne({
+      where: { guild_id: id, player_id: Number(playerId) },
+    })
 
-		deleteAfterinvite.destroy()
+    deleteAfterinvite.destroy()
 
-		const addToGuild = await guild_membership.create({
-			player_id: Number(playerId),
-			guild_id: id,
-			rank: 1,
-		})
+    const addToGuild = await guild_membership.create({
+      player_id: Number(playerId),
+      guild_id: id,
+      rank: 1,
+    })
 
-		return res.jsonOK(addToGuild)
-	} catch (error) {
-		console.log(error)
-	}
+    return res.jsonOK(addToGuild)
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 /* guild settings */
 router.post(
-	'/:id/logo',
-	checkJwt,
-	uploadGuildLogo.single('guild_logo'),
-	async (req, res) => {
-		try {
-			const { account_id } = req
-			const { id } = req.params
+  '/:id/logo',
+  checkJwt,
+  uploadGuildLogo.single('guild_logo'),
+  async (req, res) => {
+    try {
+      const { account_id } = req
+      const { id } = req.params
 
-			const findLeader = await player.findAll({
-				where: { account_id: account_id },
-			})
+      const findLeader = await players.findAll({
+        where: { account_id: account_id },
+      })
 
-			const idToLeader = findLeader.map((l) => l.id)
+      const idToLeader = findLeader.map((l) => l.id)
 
-			const getGuild = await guild.findOne({
-				where: { id, ownerid: idToLeader },
-			})
+      const getGuild = await guilds.findOne({
+        where: { id, ownerid: idToLeader },
+      })
 
-			if (!getGuild)
-				return res.jsonUnauthorized(
-					null,
-					getMessage('você não pode alterar pois não é lider dessa guild.')
-				)
+      if (!getGuild)
+        return res.jsonUnauthorized(
+          null,
+          getMessage('você não pode alterar pois não é lider dessa guild.')
+        )
 
-			const finalFileName = req.file
+      const finalFileName = req.file
 
-			await getGuild.update({
-				guild_logo: fs.readFileSync('uploads/guilds/' + finalFileName.filename),
-				logo_gfx_name: `uploads/guilds/${finalFileName.filename}`,
-			})
+      await getGuild.update({
+        guild_logo: fs.readFileSync('uploads/guilds/' + finalFileName.filename),
+        logo_gfx_name: `uploads/guilds/${finalFileName.filename}`,
+      })
 
-			res.jsonOK(getGuild, getMessage('Guild Logo successfully uploaded.'))
-		} catch (error) {
-			console.error(error)
-			return res.jsonBadRequest(null, error)
-		}
-	}
+      res.jsonOK(getGuild, getMessage('Guild Logo successfully uploaded.'))
+    } catch (error) {
+      console.error(error)
+      return res.jsonBadRequest(null, error)
+    }
+  }
 )
 
 router.put('/:id/description', checkJwt, async (req, res) => {
-	try {
-		const { account_id, body } = req
-		const { id } = req.params
-		const fields = ['description']
+  try {
+    const { account_id, body } = req
+    const { id } = req.params
+    const fields = ['description']
 
-		const findLeader = await player.findAll({
-			where: { account_id: account_id },
-		})
+    const findLeader = await players.findAll({
+      where: { account_id: account_id },
+    })
 
-		const idToLeader = findLeader.map((l) => l.id)
+    const idToLeader = findLeader.map((l) => l.id)
 
-		const getGuild = await guild.findOne({
-			where: { id, ownerid: idToLeader },
-		})
+    const getGuild = await guilds.findOne({
+      where: { id, ownerid: idToLeader },
+    })
 
-		if (!getGuild)
-			return res.jsonUnauthorized(
-				null,
-				getMessage('você não pode alterar pois não é lider dessa guild.')
-			)
+    if (!getGuild)
+      return res.jsonUnauthorized(
+        null,
+        getMessage('você não pode alterar pois não é lider dessa guild.')
+      )
 
-		fields.map((fieldName) => {
-			const newValue = body[fieldName]
-			if (newValue) getGuild[fieldName] = newValue
-		})
+    fields.map((fieldName) => {
+      const newValue = body[fieldName]
+      if (newValue) getGuild[fieldName] = newValue
+    })
 
-		await getGuild.save()
+    await getGuild.save()
 
-		res.jsonOK(getGuild, getMessage('account.settings.avatar_success'))
-	} catch (error) {
-		console.error(error)
-		return res.jsonBadRequest(null, error)
-	}
+    res.jsonOK(getGuild, getMessage('account.settings.avatar_success'))
+  } catch (error) {
+    console.error(error)
+    return res.jsonBadRequest(null, error)
+  }
 })
 
 router.put('/:id/ranks', checkJwt, async (req, res) => {
-	try {
-		const { account_id, body } = req
-		const { id } = req.params
-		const fields = ['name']
+  try {
+    const { account_id, body } = req
+    const { id } = req.params
+    const fields = ['name']
 
-		const findLeader = await player.findAll({
-			where: { account_id: account_id },
-		})
+    const findLeader = await players.findAll({
+      where: { account_id: account_id },
+    })
 
-		const idToLeader = findLeader.map((l) => l.id)
+    const idToLeader = findLeader.map((l) => l.id)
 
-		const getGuild = await guild.findOne({
-			where: { id, ownerid: idToLeader },
-		})
+    const getGuild = await guilds.findOne({
+      where: { id, ownerid: idToLeader },
+    })
 
-		if (!getGuild)
-			return res.jsonUnauthorized(
-				null,
-				getMessage('você não pode alterar pois não é lider dessa guild.')
-			)
+    if (!getGuild)
+      return res.jsonUnauthorized(
+        null,
+        getMessage('você não pode alterar pois não é lider dessa guild.')
+      )
 
-		const getRanks = await guild_rank.findAll({
-			where: { guild_id: id },
-		})
+    const getRanks = await guild_ranks.findAll({
+      where: { guild_id: id },
+    })
 
-		fields.map((fieldName) => {
-			const newValue = body[fieldName]
-			if (newValue) getRanks[fieldName] = newValue
-		})
+    fields.map((fieldName) => {
+      const newValue = body[fieldName]
+      if (newValue) getRanks[fieldName] = newValue
+    })
 
-		// await getRanks.save()
+    // await getRanks.save()
 
-		res.jsonOK(getRanks, 'guild ranks altered successfully')
-	} catch (error) {
-		console.error(error)
-		return res.jsonBadRequest(null, error)
-	}
+    res.jsonOK(getRanks, 'guild ranks altered successfully')
+  } catch (error) {
+    console.error(error)
+    return res.jsonBadRequest(null, error)
+  }
 })
 
 module.exports = router

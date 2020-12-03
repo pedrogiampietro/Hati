@@ -1,30 +1,34 @@
 module.exports = (sequelize, DataTypes) => {
-	const forumBoard = sequelize.define('forumBoard', {
-		title: {
-			type: DataTypes.STRING,
-			allowNull: false,
-			defaultValue: '',
-		},
-		description: {
-			type: DataTypes.STRING,
-			allowNull: false,
-			defaultValue: '',
-		},
-		topics: {
-			type: DataTypes.INTEGER,
-			allowNull: false,
-			defaultValue: 0,
-		},
-		posts: {
-			type: DataTypes.INTEGER,
-			allowNull: false,
-			defaultValue: 0,
-		},
-	})
+  const forum_board = sequelize.define(
+    'forum_board',
+    {
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: '',
+      },
+      description: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: '',
+      },
+      topics: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+      },
+      posts: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+      },
+    },
+    { freezeTableName: true }
+  )
 
-	forumBoard.associate = (models) => {
-		forumBoard.hasMany(models.thread, { foreignKey: 'board_id' })
-	}
+  forum_board.associate = (models) => {
+    forum_board.hasMany(models.threads, { foreignKey: 'board_id' })
+  }
 
-	return forumBoard
+  return forum_board
 }
