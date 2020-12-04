@@ -335,8 +335,10 @@ router.put('/:id/description', checkJwt, async (req, res) => {
 router.put('/:id/ranks', checkJwt, async (req, res) => {
   try {
     const { account_id, body } = req
+    const { editLeader, editVice, editMember } = body
     const { id } = req.params
-    const fields = ['name']
+
+    console.log(body)
 
     const findLeader = await players.findAll({
       where: { account_id: account_id },
@@ -354,16 +356,13 @@ router.put('/:id/ranks', checkJwt, async (req, res) => {
         getMessage('você não pode alterar pois não é lider dessa guild.')
       )
 
-    const getRanks = await guild_ranks.findAll({
+    const getRanks = await guild_ranks.findOne({
       where: { guild_id: id },
     })
 
-    fields.map((fieldName) => {
-      const newValue = body[fieldName]
-      if (newValue) getRanks[fieldName] = newValue
-    })
+    // await getRanks.update({
 
-    // await getRanks.save()
+    // })
 
     res.jsonOK(getRanks, 'guild ranks altered successfully')
   } catch (error) {

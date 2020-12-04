@@ -1,40 +1,40 @@
 .parent {
-	display: grid;
-	grid-template-columns: repeat(5, 1fr);
-	grid-template-rows: repeat(1, 1fr);
-	grid-column-gap: 0px;
-	grid-row-gap: 0px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
 }
 
 .guild-logo {
-	grid-area: 1 / 1 / 2 / 2;
+  grid-area: 1 / 1 / 2 / 2;
 }
 .guild-description {
-	grid-area: 2 / 1 / 3 / 2;
+  grid-area: 2 / 1 / 3 / 2;
 }
 .guild-name {
-	grid-area: 1 / 4 / 2 / 5;
+  grid-area: 1 / 4 / 2 / 5;
 }
 
 @media (max-width: 576px) {
-	.nav-item {
-		width: 100%;
-	}
+  .nav-item {
+    width: 100%;
+  }
 }
 /* font guild name */
 
 .attempt-1 {
-	font-size: 2rem;
+  font-size: 2rem;
 }
 .attempt-1 em {
-	font-style: normal;
-	padding: 0.1em 0.3em;
-	border-radius: 0.2em;
-	position: relative;
-	background: white;
-	background: linear-gradient(to right, #574577, #525186);
-	color: #bdafd1;
-	transform: skewX(-10deg);
-	display: inline-block;
-	top: 10rem;
+  font-style: normal;
+  padding: 0.1em 0.3em;
+  border-radius: 0.2em;
+  position: relative;
+  background: white;
+  background: linear-gradient(to right, #574577, #525186);
+  color: #bdafd1;
+  transform: skewX(-10deg);
+  display: inline-block;
+  top: 10rem;
 }
