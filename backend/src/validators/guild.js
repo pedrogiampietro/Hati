@@ -1,4 +1,5 @@
 const Joi = require('@hapi/joi')
+const { defaultOptions } = './default'
 const { getValidatorError } = require('../helpers/validator')
 
 const rules = {
@@ -9,15 +10,17 @@ const rules = {
 		.required(),
 }
 
-const options = { abortEarly: false }
-
-const createGuild = (req, res, next) => {
-	const { name } = req.body
+const createGuildValidator = (params) => {
+	const { name } = params
 	const schema = Joi.object({
 		name: rules.name,
 	})
 
-	const { error } = schema.validate({ name }, options)
+	return schema.validate({ name }, defaultOptions)
+}
+
+const validateCreateGuild = (req, res, next) => {
+	const { error } = createGuildValidator(req.body)
 
 	if (error) {
 		const messages = getValidatorError(error, 'player.createGuild')
@@ -27,4 +30,4 @@ const createGuild = (req, res, next) => {
 	next()
 }
 
-module.exports = { createGuild }
+module.exports = { validateCreateGuild, createGuildValidator }

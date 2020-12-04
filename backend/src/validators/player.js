@@ -1,4 +1,5 @@
 const Joi = require('@hapi/joi')
+const { defaultOptions } = './default'
 const { getValidatorError } = require('../helpers/validator')
 
 const rules = {
@@ -9,15 +10,17 @@ const rules = {
 		.required(),
 }
 
-const options = { abortEarly: false }
-
-const createCharacter = (req, res, next) => {
-	const { name } = req.body
+const createCharacterValidator = (params) => {
+	const { name } = params
 	const schema = Joi.object({
 		name: rules.name,
 	})
 
-	const { error } = schema.validate({ name }, options)
+	return schema.validate({ name }, defaultOptions)
+}
+
+const validateCreateCharacter = (req, res, next) => {
+	const { error } = createCharacterValidator(req.body)
 
 	if (error) {
 		const messages = getValidatorError(error, 'player.createcharacter')
@@ -27,4 +30,4 @@ const createCharacter = (req, res, next) => {
 	next()
 }
 
-module.exports = { createCharacter }
+module.exports = { validateCreateCharacter, createCharacterValidator }

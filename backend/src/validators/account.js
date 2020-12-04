@@ -1,31 +1,32 @@
 const Joi = require('@hapi/joi')
+const { defaultOptions } = './default'
 const { getValidatorError } = require('../helpers/validator')
 
 const rules = {
 	name: Joi.string().alphanum().min(6).max(30).required(),
-	password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
+	password: Joi.string().alphanum().min(3).max(30).required(),
 	password_confirmation: Joi.string().valid(Joi.ref('password')).required(),
 	email: Joi.string().email().required(),
 	characterName: Joi.string()
 		.alphanum()
 		.min(5)
 		.max(21)
-		.valid('My Hati', 'Your Hati')
-		.insensitive()
 		.prefs({ convert: true })
 		.required(),
 }
 
-const options = { abortEarly: false }
-
-const accountSignIn = (req, res, next) => {
-	const { name, password } = req.body
+const accountSignInValidator = (params) => {
+	const { name, password } = params
 	const schema = Joi.object({
 		name: rules.name,
 		password: rules.password,
 	})
 
-	const { error } = schema.validate({ name, password }, options)
+	return schema.validate({ name, password }, defaultOptions)
+}
+
+const validateAccountSignIn = (req, res, next) => {
+	const { error } = accountSignInValidator(req.body)
 
 	if (error) {
 		const messages = getValidatorError(error, 'account.signin')
@@ -35,8 +36,8 @@ const accountSignIn = (req, res, next) => {
 	next()
 }
 
-const accountSignUp = (req, res, next) => {
-	const { name, password, password_confirmation, email } = req.body
+const accountSignUpValidator = (params) => {
+	const { name, password, password_confirmation, email } = params
 	const schema = Joi.object({
 		name: rules.name,
 		password: rules.password,
@@ -44,10 +45,11 @@ const accountSignUp = (req, res, next) => {
 		email: rules.email,
 	})
 
-	const { error } = schema.validate(
-		{ name, password, password_confirmation, email },
-		options
-	)
+	return schema.validate({ name, password, password_confirmation, email }, defaultOptions)
+}
+
+const validateAccountSignUp = (req, res, next) => {
+	const { error } = accountSignUpValidator(req.body)
 
 	if (error) {
 		const messages = getValidatorError(error, 'account.signup')
@@ -57,17 +59,21 @@ const accountSignUp = (req, res, next) => {
 	next()
 }
 
-const accountChangePassword = (req, res, next) => {
-	const { password, password_confirmation } = req.body
+const accountChangePasswordValidator = (params) => {
+	const { password, password_confirmation } = params
 	const schema = Joi.object({
 		password: rules.password,
 		password_confirmation: rules.password_confirmation,
 	})
 
-	const { error } = schema.validate(
+	return schema.validate(
 		{ password, password_confirmation },
-		options
+		defaultOptions
 	)
+}
+
+const validateAccountChangePassword = (req, res, next) => {
+	const { error } = accountChangePasswordValidator(req.body)
 
 	if (error) {
 		const messages = getValidatorError(error, 'account.signup')
@@ -77,13 +83,17 @@ const accountChangePassword = (req, res, next) => {
 	next()
 }
 
-const createCharacter = (req, res, next) => {
-	const { name } = req.body
+const createCharacterValidator = (params) => {
+	const { name } = params
 	const schema = Joi.object({
 		name: rules.characterName,
 	})
 
-	const { error } = schema.validate({ name }, options)
+	return schema.validate({ name }, defaultOptions)
+}
+
+const validateCreateCharacter = (req, res, next) => {
+	const { error } = createCharacterValidator(req.body)
 
 	if (error) {
 		const messages = getValidatorError(error, null)
@@ -94,8 +104,15 @@ const createCharacter = (req, res, next) => {
 }
 
 module.exports = {
-	accountSignUp,
-	accountSignIn,
-	createCharacter,
-	accountChangePassword,
+	validateAccountSignUp,
+	accountSignUpValidator,
+
+	validateAccountSignIn,
+	accountSignInValidator,
+
+	validateCreateCharacter,
+	createCharacterValidator,
+
+	validateAccountChangePassword,
+	accountChangePasswordValidator,
 }

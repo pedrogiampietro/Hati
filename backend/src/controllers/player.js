@@ -1,6 +1,6 @@
 const express = require('express')
 const { players, player_deaths, accounts } = require('../models')
-const { createCharacter } = require('../validators/player')
+const { validateCreateCharacter } = require('../validators/player')
 const { getMessage } = require('../helpers/messages')
 const { checkJwt } = require('../middlewares/jwt')
 
@@ -152,7 +152,7 @@ router.get('/:id', async (req, res) => {
   return res.jsonOK(getCharacterAccount)
 })
 
-router.post('/', checkJwt, createCharacter, async (req, res) => {
+router.post('/', checkJwt, validateCreateCharacter, async (req, res) => {
   const { account_id, body } = req
   const { name, vocation, sex } = body
 
