@@ -9,9 +9,9 @@ const mailer = require('../services/mailer')
 
 const { accounts } = require('../models')
 const {
-  accountSignUp,
-  accountSignIn,
-  accountChangePassword,
+  validateAccountSignUp,
+  validateAccountSignIn,
+  validateAccountChangePassword,
 } = require('../validators/account')
 const { getMessage } = require('../helpers/messages')
 const {
@@ -28,7 +28,7 @@ const { upload } = require('../middlewares/multer')
 
 const router = express.Router()
 
-router.post('/sign-in', accountSignIn, async (req, res) => {
+router.post('/sign-in', validateAccountSignIn, async (req, res) => {
   const { name, password } = req.body
   const findAccount = await accounts.findOne({ where: { name } })
 
@@ -53,7 +53,7 @@ router.post('/sign-in', accountSignIn, async (req, res) => {
   })
 })
 
-router.post('/sign-up', accountSignUp, async (req, res) => {
+router.post('/sign-up', validateAccountSignUp, async (req, res) => {
   const { name, password, email } = req.body
 
   const hash = crypto.createHash('sha1').update(password).digest('hex')
@@ -84,7 +84,7 @@ router.post('/sign-up', accountSignUp, async (req, res) => {
   })
 })
 
-router.put('/password', checkJwt, accountChangePassword, async (req, res) => {
+router.put('/password', checkJwt, validateAccountChangePassword, async (req, res) => {
   const { body } = req
   const { password } = body
   const fields = ['password']
