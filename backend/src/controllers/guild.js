@@ -12,13 +12,13 @@ const {
 const { getMessage } = require('../helpers/messages')
 const { verifyJwt, getTokenFromHeaders } = require('../helpers/jwt')
 const { checkJwt } = require('../middlewares/jwt')
-const { createGuild } = require('../validators/guild')
+const { validateCreateGuild } = require('../validators/guild')
 
 const { uploadGuildLogo } = require('../middlewares/multer')
 
 const router = express.Router()
 
-router.post('/', checkJwt, createGuild, async (req, res) => {
+router.post('/', checkJwt, validateCreateGuild, async (req, res) => {
   const { body } = req
   const { name, ownerid, description } = body
 
