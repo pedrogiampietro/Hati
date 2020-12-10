@@ -335,16 +335,13 @@ router.put('/:id/description', checkJwt, async (req, res) => {
 router.put('/:id/ranks', checkJwt, async (req, res) => {
   try {
     const { account_id, body } = req
-    const { editLeader, editVice, editMember } = body
     const { id } = req.params
-
-    console.log(body)
 
     const findLeader = await players.findAll({
       where: { account_id: account_id },
     })
 
-    const idToLeader = findLeader.map((l) => l.id)
+    const idToLeader = findLeader.map((leader) => leader.id)
 
     const getGuild = await guilds.findOne({
       where: { id, ownerid: idToLeader },
@@ -356,13 +353,18 @@ router.put('/:id/ranks', checkJwt, async (req, res) => {
         getMessage('você não pode alterar pois não é lider dessa guild.')
       )
 
-    const getRanks = await guild_ranks.findOne({
+    const ranks = Object.entries(body)
+    const destructionRanks = ranks.map((i) => i[1]) // aqui ele me retorna 3 vindo do front-end.
+
+    const getRanks = await guild_ranks.findAll({
       where: { guild_id: id },
     })
 
-    // await getRanks.update({
-
-    // })
+    await Promise.all(
+      destructionRanks.map((entry) =>
+        guild_ranks.update({ name: entry.name }, { where: { id: entry.id } })
+      )
+    )
 
     res.jsonOK(getRanks, 'guild ranks altered successfully')
   } catch (error) {

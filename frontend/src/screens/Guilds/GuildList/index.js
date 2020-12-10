@@ -12,10 +12,12 @@ import {
   editGuildDescription,
   editGuildRanks,
 } from '../../../actions/GuildActions'
+
+import { playerList } from '../../../actions/PlayerActions'
+
 import { getFormData } from '../../../helpers/FormData'
 import { getAvatarUrl } from '../../../helpers/Api'
 import { characterVocations } from '../../../config'
-import Outfiter from '../../../helpers/Outfiter'
 
 import Container from '../../Layouts/Container'
 import GuildLogoDefault from '../../../assets/img/guild_logo_default.png'
@@ -33,6 +35,7 @@ const GuildList = ({
   postGuildLogo,
   editGuildRanks,
   guild,
+  playerList,
 }) => {
   const [currentGuild, setCurrentGuild] = React.useState([])
   const [member, setMember] = React.useState([])
@@ -42,6 +45,7 @@ const GuildList = ({
   const [postInteraction, setPostInteraction] = React.useState(false)
   const [image, setImage] = React.useState('')
   const [imagePreview, setImagePreview] = React.useState('')
+  const [getPlayerInAccount, setGetPlayerInAccount] = React.useState([])
 
   const [getRanks, setGetRanks] = React.useState([])
   const [editLeader, setEditLeader] = React.useState('')
@@ -55,6 +59,10 @@ const GuildList = ({
   const { id } = useParams()
 
   React.useEffect(() => {
+    playerList().then(({ payload }) => {
+      const newData = payload.data.data
+      setGetPlayerInAccount(newData)
+    })
     guildShow(id).then(({ payload }) => {
       const newData = payload.data.data
       setCurrentGuild(newData)
@@ -77,13 +85,14 @@ const GuildList = ({
       setGetRanks(newData)
     })
   }, [
+    id,
     guildShow,
     guildGetInvites,
     guildMember,
     guildHasInvite,
     editGuildRanks,
-    id,
     postInteraction,
+    playerList,
   ])
 
   const submitHandler = (e) => {
@@ -126,16 +135,21 @@ const GuildList = ({
   const submitRanksHandler = (e) => {
     e.preventDefault(e)
 
-    const data = {
-      editLeader,
-      editVice,
-      editMember,
-    }
+    const addRanks = [
+      { name: editLeader || getRanks[0].name, level: 3, id: getRanks[0].id },
+      { name: editVice || getRanks[1].name, level: 2, id: getRanks[1].id },
+      { name: editMember || getRanks[2].name, level: 1, id: getRanks[2].id },
+    ]
 
-    // formData.append('name', editMember || getRanks[2]?.name)
-
-    editGuildRanks(id, data)
+    editGuildRanks(id, addRanks)
   }
+
+  const getPlayer = getPlayerInAccount.map((h) => h.id)
+  const verifyRanks = member.map((g) => g.player_id)
+
+  const settings = getPlayer.filter((arr1Item) =>
+    verifyRanks.includes(arr1Item)
+  )
 
   return (
     <Container>
@@ -194,12 +208,14 @@ const GuildList = ({
                   <i className="fal fa-chart-bar mr-1"></i>Active Wars
                 </a>
               </li>
-              <li className="nav-item">
-                <a className="nav-link" data-toggle="tab" href="#settings">
-                  <i className="fal fa-cog text-danger mr-1" />
-                  Settings
-                </a>
-              </li>
+              {settings.length > 0 ? (
+                <li className="nav-item">
+                  <a className="nav-link" data-toggle="tab" href="#settings">
+                    <i className="fal fa-cog text-danger mr-1" />
+                    Settings
+                  </a>
+                </li>
+              ) : null}
             </ul>
 
             <hr />
@@ -228,29 +244,22 @@ const GuildList = ({
                             <div
                               className={`${
                                 members.players_online === null
-                                  ? `d-inline-block align-middle status status-danger mr-3`
-                                  : `d-inline-block align-middle status status-success mr-3`
+                                  ? `d-inline-block align-middle status status-danger pr-3`
+                                  : `d-inline-block align-middle status status-success pr-3`
                               }`}
                             >
-                              <Outfiter
-                                Name={members.name}
-                                LookBody={members.player.lookbody}
-                                LookFeet={members.player.lookfeet}
-                                LookHead={members.player.lookhead}
-                                LookLegs={members.player.looklegs}
-                                LookType={members.player.looktype}
-                                LookAddons={members.lookaddons}
-                              />
-                            </div>
-                            <div className="info-card-text flex-1">
-                              <h2 className="fs-xl text-truncate text-truncate-lg text-primary">
-                                <Link to={`/character/${members.player.name}`}>
-                                  {members.player.name}{' '}
-                                  <span className="fw-300">
-                                    <i>(Rei do Gesior)</i>
-                                  </span>
-                                </Link>
-                              </h2>
+                              <div className="info-card-text flex-1">
+                                <h2 className="fs-xl text-truncate text-truncate-lg text-primary">
+                                  <Link
+                                    to={`/character/${members.player.name}`}
+                                  >
+                                    {members.player.name}{' '}
+                                    <span className="fw-300">
+                                      <i>(Rei do Gesior)</i>
+                                    </span>
+                                  </Link>
+                                </h2>
+                              </div>
                             </div>
                           </td>
                           <td className="hidden-xs">
@@ -431,51 +440,62 @@ const GuildList = ({
                             <h3>Rename Guild Rank</h3>
                             <div className="card p-4 border-top-left-radius-0 border-top-right-radius-0">
                               <form onSubmit={submitRanksHandler}>
-                                {/* <div className="form-group">
-                                  <input
-                                    className="form-control"
-                                    type="text"
-                                    name="name"
-                                    placeholder={getRanks[0]?.name}
-                                    onChange={(e) =>
-                                      setEditLeader(e.target.value)
-                                    }
-                                    required
-                                  />
-                                </div>
+                                <section className="py-5 header">
+                                  <div className="container py-4">
+                                    <div className="row">
+                                      <div className="col-md-auto center">
+                                        <div className="form-group">
+                                          <input
+                                            className="form-control"
+                                            type="text"
+                                            name="name"
+                                            defaultValue={getRanks[0]?.name}
+                                            onChange={(e) =>
+                                              setEditLeader(e.target.value)
+                                            }
+                                            required
+                                          />
+                                        </div>
 
-                                <div className="form-group">
-                                  <input
-                                    className="form-control"
-                                    type="text"
-                                    name="name"
-                                    placeholder={getRanks[1]?.name}
-                                    onChange={(e) =>
-                                      setEditVice(e.target.value)
-                                    }
-                                    required
-                                  />
-                                </div>
+                                        <div className="form-group">
+                                          <input
+                                            className="form-control"
+                                            type="text"
+                                            name="name"
+                                            defaultValue={getRanks[1]?.name}
+                                            onChange={(e) =>
+                                              setEditVice(e.target.value)
+                                            }
+                                            required
+                                          />
+                                        </div>
 
-                                <div className="form-group">
-                                  <input
-                                    className="form-control"
-                                    type="text"
-                                    name="name"
-                                    placeholder={getRanks[2]?.name}
-                                    onChange={(e) =>
-                                      setEditMember(e.target.value)
-                                    }
-                                    required
-                                  />
-                                </div> */}
-
-                                <button
-                                  type="submit"
-                                  className="btn btn-outline-primary float-right waves-effect waves-themed"
-                                >
-                                  Change Rank Title
-                                </button>
+                                        <div className="form-group">
+                                          <input
+                                            className="form-control"
+                                            type="text"
+                                            name="name"
+                                            defaultValue={getRanks[2]?.name}
+                                            onChange={(e) =>
+                                              editMember.length <= 0
+                                                ? setEditMember(
+                                                    getRanks[2]?.name
+                                                  )
+                                                : setEditMember(e.target.value)
+                                            }
+                                            required
+                                          />
+                                        </div>
+                                        <button
+                                          type="submit"
+                                          className="btn btn-outline-primary waves-effect waves-themed col-lg-12"
+                                        >
+                                          Change Rank Title
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </section>
                               </form>
                             </div>
                           </div>
@@ -630,4 +650,5 @@ export default connect(mapStateToProps, {
   guildAccept,
   postGuildLogo,
   editGuildRanks,
+  playerList,
 })(GuildList)
