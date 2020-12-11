@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useHistory } from 'react-router-dom'
 import {
   guildShow,
   guildMember,
@@ -11,6 +11,8 @@ import {
   postGuildLogo,
   editGuildDescription,
   editGuildRanks,
+  setGuildToRemove,
+  guildRemove,
 } from '../../../actions/GuildActions'
 
 import { playerList } from '../../../actions/PlayerActions'
@@ -34,6 +36,9 @@ const GuildList = ({
   guildAccept,
   postGuildLogo,
   editGuildRanks,
+  setGuildToRemove,
+  guildToRemove,
+  guildRemove,
   guild,
   playerList,
 }) => {
@@ -52,11 +57,12 @@ const GuildList = ({
   const [editVice, setEditVice] = React.useState('')
   const [editMember, setEditMember] = React.useState('')
 
+  const history = useHistory()
+  const { id } = useParams()
+
   function interaction() {
     setPostInteraction(!postInteraction)
   }
-
-  const { id } = useParams()
 
   React.useEffect(() => {
     playerList().then(({ payload }) => {
@@ -150,6 +156,15 @@ const GuildList = ({
   const settings = getPlayer.filter((arr1Item) =>
     verifyRanks.includes(arr1Item)
   )
+
+  const deleteClick = (e) => setGuildToRemove(currentGuild)
+  const cancelDelete = (e) => setGuildToRemove(null)
+  const confirmDelete = async (e) => {
+    if (guildToRemove) {
+      await guildRemove(guildToRemove)
+      history.push('/guilds')
+    }
+  }
 
   return (
     <Container>
@@ -509,6 +524,7 @@ const GuildList = ({
                             <button
                               type="button"
                               className="btn btn-lg btn-outline-danger waves-effect waves-themed col-12"
+                              onClick={deleteClick}
                             >
                               <span className="fal fa-times mr-1"></span>
                               Delete
@@ -524,6 +540,21 @@ const GuildList = ({
           </div>
         </div>
       </div>
+      {guildToRemove ? (
+        <div className="alert alert-danger rounded shadow-bold col-xl-6 ml-auto mr-auto pl-3 pr-3">
+          <h4 className="alert-heading">Delete Confirmation!</h4>
+          <p>Are you sure you want to delete, this action cannot be undone.</p>
+          <hr />
+          <div className="d-flex justify-content-between">
+            <button className="btn btn-outline-dark" onClick={cancelDelete}>
+              Cancel
+            </button>
+            <button className="btn btn-outline-danger" onClick={confirmDelete}>
+              Delete
+            </button>
+          </div>
+        </div>
+      ) : null}
 
       <div className="col-sm-5 mx-auto">
         <form onSubmit={acceptHandler}>
@@ -638,6 +669,7 @@ const mapStateToProps = (state) => {
     account: state.account.account,
     players: state.player.player,
     guild: state.guild.guild,
+    guildToRemove: state.guild.guildToRemove,
   }
 }
 
@@ -650,5 +682,7 @@ export default connect(mapStateToProps, {
   guildAccept,
   postGuildLogo,
   editGuildRanks,
+  setGuildToRemove,
+  guildRemove,
   playerList,
 })(GuildList)

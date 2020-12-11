@@ -354,7 +354,7 @@ router.put('/:id/ranks', checkJwt, async (req, res) => {
       )
 
     const ranks = Object.entries(body)
-    const destructionRanks = ranks.map((i) => i[1]) // aqui ele me retorna 3 vindo do front-end.
+    const destructionRanks = ranks.map((i) => i[1])
 
     const getRanks = await guild_ranks.findAll({
       where: { guild_id: id },
@@ -370,6 +370,33 @@ router.put('/:id/ranks', checkJwt, async (req, res) => {
   } catch (error) {
     console.error(error)
     return res.jsonBadRequest(null, error)
+  }
+})
+
+router.delete('/:id/disband', checkJwt, async (req, res) => {
+  const { id } = req.params
+  try {
+    const getRanks = await guild_ranks.findAll({
+      where: { guild_id: id },
+    })
+
+    const deleteGuild = await guilds.findByPk(id)
+
+    if (!deleteGuild) {
+      return res.jsonBadRequest(null, 'not possible delete board, try again.')
+    } else {
+      await Promise.all(
+        getRanks.map((guild) =>
+          guild_ranks.destroy({ where: { guild_id: guild.guild_id } })
+        )
+      )
+      await deleteGuild.destroy()
+
+      res.jsonOK(deleteGuild)
+    }
+  } catch (error) {
+    // return res.jsonBadRequest(null, error)
+    console.log(error)
   }
 })
 
