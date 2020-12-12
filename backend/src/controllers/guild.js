@@ -118,46 +118,64 @@ router.post('/:id/invite', checkJwt, async (req, res) => {
     const { player_id } = body
 
     const getPlayerToInvite = await players.findAll({ where: { account_id } })
-    const getPlayerAccounts = getPlayerToInvite.map((p) => p.id)
+    const getPlayerAccounts = getPlayerToInvite.map((p) => p)
 
-    const verifyLeader = await guilds.findOne({
-      where: { id, ownerid: getPlayerAccounts },
+    const getRanks = await guild_ranks.findAll({ where: { guild_id: id } })
+    const idViceLeader = getRanks.map((getVice) => getVice.level)
+
+    const getViceLeader = await guild_membership.findAll({
+      where: { guild_id: id },
     })
+    const checkVice = getViceLeader.map((getPermission) => getPermission)
 
-    if (!verifyLeader)
+    const alreadyInvited = getViceLeader.map((teste) => teste.player_id)
+
+    getPlayerAccounts.sort()
+    checkVice.sort()
+
+    if (
+      getPlayerAccounts[0].id == checkVice[0].player_id &&
+      checkVice[0].rank >= 2
+    ) {
+      const playerExists = await players.findOne({
+        where: { name: player_id },
+      })
+
+      const getPlayerId = Object.values(playerExists)
+
+      if (!playerExists)
+        return res.jsonBadRequest(null, getMessage('player.guild_invite'))
+
+      const alreadyMember = await guild_membership.findAll({
+        where: { guild_id: id, player_id: getPlayerId[0].id },
+      })
+
+      if (alreadyMember.length >= 1)
+        return res.jsonBadRequest(
+          null,
+          'this member already joined this guild.'
+        )
+
+      const alreadyInvited = await guild_invites.findAll({
+        where: { guild_id: id, player_id: getPlayerId[0].id },
+      })
+
+      if (alreadyInvited.length >= 1)
+        return res.jsonBadRequest(null, 'this player already invited.')
+
+      const invitePlayer = await guild_invites.create({
+        player_id: playerExists.id,
+        guild_id: id,
+        date: Date.now(),
+      })
+
+      return res.jsonOK(invitePlayer)
+    } else {
       return res.jsonBadRequest(
         null,
         getMessage('player.guild_invite_permission')
       )
-
-    const playerExists = await players.findOne({
-      where: { name: player_id },
-    })
-
-    if (!playerExists)
-      return res.jsonBadRequest(null, getMessage('player.guild_invite'))
-
-    const alreadyMember = await guild_membership.findAll({
-      where: { guild_id: id },
-    })
-
-    if (alreadyMember)
-      return res.jsonBadRequest(null, 'this member already joined this guild.')
-
-    const alreadyInvited = await guild_invites.findAll({
-      where: { guild_id: id },
-    })
-
-    if (alreadyInvited)
-      return res.jsonBadRequest(null, 'this player already invited.')
-
-    const invitePlayer = await guild_invites.create({
-      player_id: playerExists.id,
-      guild_id: id,
-      date: Date.now(),
-    })
-
-    return res.jsonOK(invitePlayer)
+    }
   } catch (error) {
     console.log(error)
   }
