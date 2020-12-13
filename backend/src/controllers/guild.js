@@ -1,5 +1,4 @@
 const express = require('express')
-const fs = require('fs')
 
 const {
   guilds,
@@ -10,7 +9,6 @@ const {
   players,
 } = require('../models')
 const { getMessage } = require('../helpers/messages')
-const { verifyJwt, getTokenFromHeaders } = require('../helpers/jwt')
 const { checkJwt } = require('../middlewares/jwt')
 const { validateCreateGuild } = require('../validators/guild')
 
@@ -302,7 +300,7 @@ router.post(
       const finalFileName = req.file
 
       await getGuild.update({
-        guild_logo: fs.readFileSync('uploads/guilds/' + finalFileName.filename),
+        // guild_logo: fs.readFileSync('uploads/guilds/' + finalFileName.filename),
         logo_gfx_name: `uploads/guilds/${finalFileName.filename}`,
       })
 

@@ -16,9 +16,8 @@ import {
 } from '../../../actions/GuildActions'
 
 import { playerList } from '../../../actions/PlayerActions'
-
-import { getFormData } from '../../../helpers/FormData'
 import { getAvatarUrl } from '../../../helpers/Api'
+import { getFormData } from '../../../helpers/FormData'
 import { characterVocations } from '../../../config'
 
 import Container from '../../Layouts/Container'
@@ -168,24 +167,26 @@ const GuildList = ({
 
   return (
     <Container>
-      <div className="panel panel-default col-sm-6 mx-auto">
+      <div className="panel panel-default mx-auto">
         <div className="panel-heading">Overview</div>
         <div className="panel-body">
           <div className="parent">
             <div className="guild-logo ml-4">
               <div className="d-inline-flex flex-column justify-content-center mr-3">
                 <span className="fw-300 fs-xs d-block opacity-50">
-                  <img
-                    className="profile-image-lg"
-                    src={`${
-                      currentGuild.logo_gfx_name === '' ||
-                      currentGuild.logo_gfx_name === null
-                        ? GuildLogoDefault
-                        : currentGuild.logo_gfx_name &&
-                          getAvatarUrl(currentGuild.logo_gfx_name)
-                    }`}
-                    alt="GuildLogo"
-                  />
+                  {currentGuild.logo_gfx_name === undefined ? null : (
+                    <img
+                      className="profile-image-lg"
+                      src={`${
+                        currentGuild.logo_gfx_name === '' ||
+                        currentGuild.logo_gfx_name === null
+                          ? GuildLogoDefault
+                          : currentGuild.logo_gfx_name &&
+                            getAvatarUrl(currentGuild.logo_gfx_name)
+                      }`}
+                      alt="GuildLogo"
+                    />
+                  )}
                 </span>
                 <span className="fw-500 fs-xl d-block color-primary-500 mb-6 mx-auto">
                   0 Member

@@ -1,19 +1,28 @@
 const express = require('express')
-const { players_online, player } = require('../models')
+const {
+  players_online,
+  players,
+  guild_membership,
+  guilds,
+} = require('../models')
 
 const router = express.Router()
 
 router.get('/', async (req, res) => {
-	const getOnline = await players_online.findAndCountAll({
-		include: [
-			{
-				model: player,
-				attributes: ['name', 'level', 'vocation'],
-			},
-		],
-	})
+  const getOnline = await players_online.findAndCountAll({
+    include: [
+      {
+        model: players,
+        attributes: ['name', 'level', 'vocation'],
+      },
+      {
+        model: guild_membership,
+        include: [{ model: guilds }],
+      },
+    ],
+  })
 
-	return res.jsonOK(getOnline)
+  return res.jsonOK(getOnline)
 })
 
 module.exports = router
