@@ -493,7 +493,7 @@ const GuildList = ({
                                             name="name"
                                             defaultValue={getRanks[2]?.name}
                                             onChange={(e) =>
-                                              editMember.length <= 0
+                                              editMember?.length <= 0
                                                 ? setEditMember(
                                                     getRanks[2]?.name
                                                   )
