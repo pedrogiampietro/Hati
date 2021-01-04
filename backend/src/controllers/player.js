@@ -1,5 +1,6 @@
 const express = require('express')
-const { players, player_deaths, accounts } = require('../models')
+const db = require('../models')
+
 const { validateCreateCharacter } = require('../validators/player')
 const { getMessage } = require('../helpers/messages')
 const { checkJwt } = require('../middlewares/jwt')
@@ -8,12 +9,12 @@ const router = express.Router()
 
 router.get('/characters', checkJwt, async (req, res) => {
   const { account_id } = req
-  const allPlayersInAccount = await players.findAll({
+  const allPlayersInAccount = await db.cacher.model('players').findAll({
     where: { account_id: account_id },
 
     include: [
       {
-        model: accounts,
+        model: db.accounts,
         attributes: [
           'name',
           'email',
@@ -38,7 +39,7 @@ router.get('/character/:name', async (req, res) => {
   const { name } = req.params
   const limit = 5
 
-  const searchCharacter = await players.findAndCountAll({
+  const searchCharacter = await db.cacher.model('players').findAndCountAll({
     where: {
       name,
     },
@@ -75,7 +76,7 @@ router.get('/character/:name', async (req, res) => {
 
     include: [
       {
-        model: player_deaths,
+        model: db.player_deaths,
         limit,
         order: [
           ['time', 'DESC'],
@@ -114,7 +115,7 @@ router.get('/highscores', async (req, res) => {
   const offset = Number(pageSize) * limit
 
   if (vocation === 'all') {
-    highscoresPlayer = await players.findAll({
+    highscoresPlayer = await db.cacher.model('players').findAll({
       limit,
       offset: offset,
 
@@ -124,7 +125,7 @@ router.get('/highscores', async (req, res) => {
       ],
     })
   } else {
-    highscoresPlayer = await players.findAll({
+    highscoresPlayer = await db.cacher.model('players').findAll({
       where: {
         vocation: filterVocation,
       },
@@ -144,7 +145,7 @@ router.get('/highscores', async (req, res) => {
 router.get('/:id', async (req, res) => {
   const { account_id } = req
   const { id } = req.params
-  const getCharacterAccount = await players.findOne({
+  const getCharacterAccount = await db.players.findOne({
     where: { id: id, account_id: account_id },
   })
   if (!getCharacterAccount) return res.jsonNotFound(null)
@@ -156,14 +157,14 @@ router.post('/', checkJwt, validateCreateCharacter, async (req, res) => {
   const { account_id, body } = req
   const { name, vocation, sex } = body
 
-  const findCharacter = await players.findOne({ where: { name } })
+  const findCharacter = await db.players.findOne({ where: { name } })
   if (findCharacter)
     return res.jsonBadRequest(
       null,
       getMessage('player.createcharacter.name_exists')
     )
 
-  const createCharacter = await players.create({
+  const createCharacter = await db.players.create({
     name,
     account_id,
     vocation,
@@ -183,7 +184,7 @@ router.put('/:id', async (req, res) => {
 
   const fields = ['name'] //['name', 'comments', 'outfits', 'items']
 
-  const editAccountInformation = await players.findOne({
+  const editAccountInformation = await db.players.findOne({
     where: { id: id, account_id: account_id },
   })
   if (!editAccountInformation) return res.jsonNotFound(null)
@@ -200,7 +201,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   const { account_id } = req
   const { id } = req.params
-  const deleteCharacter = await players.findOne({
+  const deleteCharacter = await db.players.findOne({
     where: { id: id, account_id: account_id },
   })
   if (!deleteCharacter) return res.jsonNotFound(null)

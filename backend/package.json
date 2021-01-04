@@ -21,7 +21,9 @@
 		"nodemailer": "^6.4.14",
 		"nodemailer-express-handlebars": "^4.0.0",
 		"nodemon": "^2.0.4",
-		"sequelize": "^6.3.0"
+		"redis": "^3.0.2",
+		"sequelize": "^6.3.0",
+		"sequelize-redis-cache": "^2.0.1"
 	},
 	"jest": {
 		"testEnvironment": "node",
