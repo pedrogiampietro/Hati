@@ -26,6 +26,7 @@ import Downloads from './screens/Downloads'
 import Guilds from './screens/Guilds'
 import GuildList from './screens/Guilds/GuildList'
 import Online from './screens/Online'
+import Shop from './screens/Shop'
 
 import PageSearch from './components/PageSearch'
 import ProtectedRoute from './helpers/ProtectedRoute'
@@ -109,6 +110,8 @@ const App = ({ initAccount }) => {
           <Route exact path="/guilds/:id" component={GuildList} />
 
           <Route exact path="/online" component={Online} />
+
+          <Route exact path="/shop" component={Shop} />
 
           <Route exact path="/" component={Home} />
         </Switch>
