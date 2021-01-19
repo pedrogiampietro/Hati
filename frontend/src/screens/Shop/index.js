@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { getShopList } from '../../actions/ShopActions'
 import {
   AiOutlineHeart,
   AiOutlineSearch,
@@ -11,7 +12,21 @@ import {
 import Container from '../Layouts/Container'
 import './styles.css'
 
-const Shop = () => {
+const Shop = ({ getShopList }) => {
+  const [shopList, setShopList] = React.useState([])
+
+  React.useEffect(() => {
+    getShopList()
+      .then(({ payload }) => {
+        const newData = payload.data.data
+        setShopList(newData)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [getShopList])
+
+  console.log(shopList)
   return (
     <Container>
       <div className="sch-product-grid">
@@ -105,4 +120,4 @@ const mapStateToProps = (state) => {
   return {}
 }
 
-export default connect(mapStateToProps, {})(Shop)
+export default connect(mapStateToProps, { getShopList })(Shop)

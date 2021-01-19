@@ -28,6 +28,8 @@ import GuildList from './screens/Guilds/GuildList'
 import Online from './screens/Online'
 import Shop from './screens/Shop'
 
+import SidebarBag from './components/SidebarBag'
+
 import PageSearch from './components/PageSearch'
 import ProtectedRoute from './helpers/ProtectedRoute'
 
@@ -116,6 +118,7 @@ const App = ({ initAccount }) => {
           <Route exact path="/" component={Home} />
         </Switch>
       </BrowserRouter>
+      <SidebarBag />
     </>
   )
 }
