@@ -1,6 +1,6 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { Link, useParams, useHistory } from 'react-router-dom'
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import {
   guildShow,
   guildMember,
@@ -13,18 +13,21 @@ import {
   editGuildRanks,
   setGuildToRemove,
   guildRemove,
-} from '../../../actions/GuildActions'
+} from '../../../actions/GuildActions';
 
-import { playerList } from '../../../actions/PlayerActions'
-import { getAvatarUrl } from '../../../helpers/Api'
-import { getFormData } from '../../../helpers/FormData'
-import { characterVocations } from '../../../config'
+import { playerList } from '../../../actions/PlayerActions';
+import { getAvatarUrl } from '../../../helpers/Api';
+import { getFormData } from '../../../helpers/FormData';
+import { characterVocations } from '../../../config';
 
-import Container from '../../Layouts/Container'
-import GuildLogoDefault from '../../../assets/img/guild_logo_default.png'
-import { FaSignInAlt, FaRegTrashAlt } from 'react-icons/fa'
+import Container from '../../Layouts/Container';
+import GuildLogoDefault from '../../../assets/img/guild_logo_default.png';
+import { FaSignInAlt, FaRegTrashAlt } from 'react-icons/fa';
 
-import './styles.css'
+import './styles.css';
+import GuildRank from './GuildRank';
+import ChangeLogo from './ChangeLogo';
+import GuildDescription from './GuildDescription';
 
 const GuildList = ({
   guildShow,
@@ -41,54 +44,54 @@ const GuildList = ({
   guild,
   playerList,
 }) => {
-  const [currentGuild, setCurrentGuild] = React.useState([])
-  const [member, setMember] = React.useState([])
-  const [invitedList, setInvitedList] = React.useState([])
-  const [acceptInvite, setAcceptInvite] = React.useState([])
-  const [playerId, setPlayerId] = React.useState(0)
-  const [postInteraction, setPostInteraction] = React.useState(false)
-  const [image, setImage] = React.useState('')
-  const [imagePreview, setImagePreview] = React.useState('')
-  const [getPlayerInAccount, setGetPlayerInAccount] = React.useState([])
+  const [currentGuild, setCurrentGuild] = React.useState([]);
+  const [member, setMember] = React.useState([]);
+  const [invitedList, setInvitedList] = React.useState([]);
+  const [acceptInvite, setAcceptInvite] = React.useState([]);
+  const [playerId, setPlayerId] = React.useState(0);
+  const [postInteraction, setPostInteraction] = React.useState(false);
+  const [image, setImage] = React.useState('');
+  const [imagePreview, setImagePreview] = React.useState('');
+  const [getPlayerInAccount, setGetPlayerInAccount] = React.useState([]);
 
-  const [getRanks, setGetRanks] = React.useState([])
-  const [editLeader, setEditLeader] = React.useState('')
-  const [editVice, setEditVice] = React.useState('')
-  const [editMember, setEditMember] = React.useState('')
+  const [getRanks, setGetRanks] = React.useState([]);
+  const [editLeader, setEditLeader] = React.useState('');
+  const [editVice, setEditVice] = React.useState('');
+  const [editMember, setEditMember] = React.useState('');
 
-  const history = useHistory()
-  const { id } = useParams()
+  const history = useHistory();
+  const { id } = useParams();
 
   function interaction() {
-    setPostInteraction(!postInteraction)
+    setPostInteraction(!postInteraction);
   }
 
   React.useEffect(() => {
     playerList().then(({ payload }) => {
-      const newData = payload.data.data
-      setGetPlayerInAccount(newData)
-    })
+      const newData = payload.data.data;
+      setGetPlayerInAccount(newData);
+    });
     guildShow(id).then(({ payload }) => {
-      const newData = payload.data.data
-      setCurrentGuild(newData)
-    })
+      const newData = payload.data.data;
+      setCurrentGuild(newData);
+    });
     guildMember(id).then(({ payload }) => {
-      const newData = payload.data.data
-      setMember(newData)
-    })
+      const newData = payload.data.data;
+      setMember(newData);
+    });
     guildGetInvites(id).then(({ payload }) => {
-      const newData = payload.data.data
-      setInvitedList(newData)
-    })
+      const newData = payload.data.data;
+      setInvitedList(newData);
+    });
 
     guildHasInvite(id).then(({ payload }) => {
-      const newData = payload.data.data
-      setAcceptInvite(newData)
-    })
+      const newData = payload.data.data;
+      setAcceptInvite(newData);
+    });
     editGuildRanks(id).then(({ payload }) => {
-      const newData = payload.data.data
-      setGetRanks(newData)
-    })
+      const newData = payload.data.data;
+      setGetRanks(newData);
+    });
   }, [
     id,
     guildShow,
@@ -98,72 +101,72 @@ const GuildList = ({
     editGuildRanks,
     postInteraction,
     playerList,
-  ])
+  ]);
 
   const submitHandler = (e) => {
-    e.preventDefault()
-    const data = getFormData(e)
-    guildInvite(id, data)
-    interaction()
-  }
+    e.preventDefault();
+    const data = getFormData(e);
+    guildInvite(id, data);
+    interaction();
+  };
 
   const acceptHandler = (e) => {
-    e.preventDefault(e)
-    guildAccept(id, playerId)
-    interaction()
-  }
+    e.preventDefault(e);
+    guildAccept(id, playerId);
+    interaction();
+  };
 
   const handleSelectImages = (e) => {
     if (!e.target.files) {
-      return
+      return;
     }
 
-    const selectedImage = e.target.files[0]
-    setImage(selectedImage)
-    const preview = URL.createObjectURL(selectedImage)
-    setImagePreview(preview)
-  }
+    const selectedImage = e.target.files[0];
+    setImage(selectedImage);
+    const preview = URL.createObjectURL(selectedImage);
+    setImagePreview(preview);
+  };
 
   const submitLogoHandler = (e) => {
-    e.preventDefault(e)
-    const formData = new FormData()
-    formData.append('guild_logo', image)
-    postGuildLogo(id, formData)
-  }
+    e.preventDefault(e);
+    const formData = new FormData();
+    formData.append('guild_logo', image);
+    postGuildLogo(id, formData);
+  };
 
   const submitDescriptionHandler = (e) => {
-    e.preventDefault(e)
-    const data = getFormData(e)
-    editGuildDescription(id, data)
-  }
+    e.preventDefault(e);
+    const data = getFormData(e);
+    editGuildDescription(id, data);
+  };
 
   const submitRanksHandler = (e) => {
-    e.preventDefault(e)
+    e.preventDefault(e);
 
     const addRanks = [
       { name: editLeader || getRanks[0].name, level: 3, id: getRanks[0].id },
       { name: editVice || getRanks[1].name, level: 2, id: getRanks[1].id },
       { name: editMember || getRanks[2].name, level: 1, id: getRanks[2].id },
-    ]
+    ];
 
-    editGuildRanks(id, addRanks)
-  }
+    editGuildRanks(id, addRanks);
+  };
 
-  const getPlayer = getPlayerInAccount.map((h) => h.id)
-  const verifyRanks = member.map((g) => g.player_id)
+  const getPlayer = getPlayerInAccount.map((h) => h.id);
+  const verifyRanks = member.map((g) => g.player_id);
 
   const settings = getPlayer.filter((arr1Item) =>
     verifyRanks.includes(arr1Item)
-  )
+  );
 
-  const deleteClick = (e) => setGuildToRemove(currentGuild)
-  const cancelDelete = (e) => setGuildToRemove(null)
+  const deleteClick = (e) => setGuildToRemove(currentGuild);
+  const cancelDelete = (e) => setGuildToRemove(null);
   const confirmDelete = async (e) => {
     if (guildToRemove) {
-      await guildRemove(guildToRemove)
-      history.push('/guilds')
+      await guildRemove(guildToRemove);
+      history.push('/guilds');
     }
-  }
+  };
 
   return (
     <Container>
@@ -373,48 +376,12 @@ const GuildList = ({
                             role="tabpanel"
                             aria-labelledby="v-pills-changelogo-tab"
                           >
-                            <h3>Change Logo</h3>
-                            <div className="row no-gutters">
-                              <div className="col-12 col-sm-6 col-md-8">
-                                <form onSubmit={submitLogoHandler}>
-                                  Here you can change your guild logo by
-                                  uploading an image file.
-                                  <br />
-                                  Logo rules:
-                                  <ul>
-                                    <li>
-                                      The file size can not be bigger than 3 MB.
-                                    </li>
-                                    <li>
-                                      The image dimensions can't be bigger than
-                                      128x128.
-                                    </li>
-                                    <li>
-                                      The file format must be either PNG, GIF or
-                                      JPEG.
-                                    </li>
-                                  </ul>
-                                  <div className="form-group">
-                                    <input
-                                      type="file"
-                                      name="guild_logo"
-                                      accept="image/*"
-                                      className="btn btn-primary btn-sm"
-                                      onChange={handleSelectImages}
-                                    />
-                                  </div>
-                                  <button
-                                    ctype="submit"
-                                    className="btn btn-primary btn-sm"
-                                  >
-                                    Upload
-                                  </button>
-                                </form>
-                              </div>
-                              <div className="mx-auto">
-                                <img src={imagePreview} alt="" />
-                              </div>
-                            </div>
+                            <ChangeLogo
+                              submitLogoHandler={submitLogoHandler}
+                              handleSelectImages={handleSelectImages}
+                              imagePreview={imagePreview}
+                              GuildLogoDefault={GuildLogoDefault}
+                            />
                           </div>
                           <div
                             className="tab-pane fade"
@@ -422,30 +389,12 @@ const GuildList = ({
                             role="tabpanel"
                             aria-labelledby="v-pills-changeguild-description-tab"
                           >
-                            <h3>Change Guild Description</h3>
-                            <div className="text-center mb-3">
-                              <form onSubmit={submitDescriptionHandler}>
-                                <div className="col-xl-12 ml-auto mr-auto">
-                                  <div className="card p-4 rounded-plus bg-faded">
-                                    <textarea
-                                      className="form-control"
-                                      name="description"
-                                      cols="30"
-                                      rows="10"
-                                      data={guild}
-                                    ></textarea>
-
-                                    <div className="row justify-content-center pb-1">
-                                      <div className="mx-auto">
-                                        <button className="btn btn-block btn-danger btn-lg mt-3 waves-effect waves-themed">
-                                          Update
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </form>
-                            </div>
+                            <GuildDescription
+                              submitDescriptionHandler={
+                                submitDescriptionHandler
+                              }
+                              guild={guild}
+                            />
                           </div>
                           <div
                             className="tab-pane fade"
@@ -453,67 +402,14 @@ const GuildList = ({
                             role="tabpanel"
                             aria-labelledby="v-pills-renameguildrank-tab"
                           >
-                            <h3>Rename Guild Rank</h3>
-                            <div className="card p-4 border-top-left-radius-0 border-top-right-radius-0">
-                              <form onSubmit={submitRanksHandler}>
-                                <section className="py-5 header">
-                                  <div className="container py-4">
-                                    <div className="row">
-                                      <div className="col-md-auto center">
-                                        <div className="form-group">
-                                          <input
-                                            className="form-control"
-                                            type="text"
-                                            name="name"
-                                            defaultValue={getRanks[0]?.name}
-                                            onChange={(e) =>
-                                              setEditLeader(e.target.value)
-                                            }
-                                            required
-                                          />
-                                        </div>
-
-                                        <div className="form-group">
-                                          <input
-                                            className="form-control"
-                                            type="text"
-                                            name="name"
-                                            defaultValue={getRanks[1]?.name}
-                                            onChange={(e) =>
-                                              setEditVice(e.target.value)
-                                            }
-                                            required
-                                          />
-                                        </div>
-
-                                        <div className="form-group">
-                                          <input
-                                            className="form-control"
-                                            type="text"
-                                            name="name"
-                                            defaultValue={getRanks[2]?.name}
-                                            onChange={(e) =>
-                                              editMember?.length <= 0
-                                                ? setEditMember(
-                                                    getRanks[2]?.name
-                                                  )
-                                                : setEditMember(e.target.value)
-                                            }
-                                            required
-                                          />
-                                        </div>
-                                        <button
-                                          type="submit"
-                                          className="btn btn-outline-primary waves-effect waves-themed col-lg-12"
-                                        >
-                                          Change Rank Title
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </section>
-                              </form>
-                            </div>
+                            <GuildRank
+                              submitRanksHandler={submitRanksHandler}
+                              getRanks={getRanks}
+                              setEditLeader={setEditLeader}
+                              setEditVice={setEditVice}
+                              editMember={editMember}
+                              setEditMember={setEditMember}
+                            />
                           </div>
                           <div
                             className="tab-pane fade"
@@ -662,8 +558,8 @@ const GuildList = ({
         </div>
       </form>
     </Container>
-  )
-}
+  );
+};
 
 const mapStateToProps = (state) => {
   return {
@@ -671,8 +567,8 @@ const mapStateToProps = (state) => {
     players: state.player.player,
     guild: state.guild.guild,
     guildToRemove: state.guild.guildToRemove,
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps, {
   guildShow,
@@ -686,4 +582,4 @@ export default connect(mapStateToProps, {
   setGuildToRemove,
   guildRemove,
   playerList,
-})(GuildList)
+})(GuildList);
