@@ -1,70 +1,70 @@
-import React, { useState, useEffect } from 'react'
-import { connect } from 'react-redux'
-import { useHistory, useParams } from 'react-router-dom'
-import { playerGetCharacter } from '../../../actions/PlayerActions'
-import { changeMinify, changeMenuOnMobile } from '../../../assets/js/scripts'
-import { AiOutlineShoppingCart } from 'react-icons/ai'
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
+import { playerGetCharacter } from '../../../actions/PlayerActions';
+import { changeMinify, changeMenuOnMobile } from '../../../assets/js/scripts';
+import { AiOutlineShoppingCart } from 'react-icons/ai';
 
-import './styles.css'
+import './styles.css';
 
 const Header = ({ playerGetCharacter, hideCart }) => {
-  const history = useHistory()
-  const { name } = useParams()
-  const [searchName, setSearchName] = useState()
-  const [, setError] = useState(false)
+  const history = useHistory();
+  const { name } = useParams();
+  const [searchName, setSearchName] = useState();
+  const [, setError] = useState(false);
 
-  const Header = React.useRef()
+  const Header = React.useRef();
   React.useEffect(() => {
     if (window.localStorage.getItem('mod-skin-dark')) {
-      Header.current.checked = true
+      Header.current.checked = true;
     } else {
-      Header.current.checked = false
+      Header.current.checked = false;
     }
-  })
+  });
 
   const openDrawer = () => {
-    const event = new CustomEvent('openCart')
-    window.dispatchEvent(event)
-  }
+    const event = new CustomEvent('openCart');
+    window.dispatchEvent(event);
+  };
 
   const toggleTheme = () => {
-    document.body.classList.toggle('mod-skin-dark')
+    document.body.classList.toggle('mod-skin-dark');
 
     document.body.classList.contains('mod-skin-dark')
       ? localStorage.setItem('mod-skin-dark', true)
-      : localStorage.removeItem('mod-skin-dark')
-  }
+      : localStorage.removeItem('mod-skin-dark');
+  };
 
   const themeSavedLocalStorage = () => {
-    const getThemeFromLocalStorage = localStorage.getItem('mod-skin-dark')
+    const getThemeFromLocalStorage = localStorage.getItem('mod-skin-dark');
 
     getThemeFromLocalStorage
       ? document.body.classList.add('mod-skin-dark')
       : localStorage.removeItem('mod-skin-dark') &&
-        document.body.classList.remove('mod-skin-dark')
-  }
-  themeSavedLocalStorage()
+        document.body.classList.remove('mod-skin-dark');
+  };
+  themeSavedLocalStorage();
 
   useEffect(() => {
     if (name !== undefined) {
       playerGetCharacter(name)
         .then(({ payload }) => {
           /* data players */
-          const dataPlayers = payload.data
-          setSearchName(dataPlayers)
+          const dataPlayers = payload.data;
+          setSearchName(dataPlayers);
         })
         .catch((err) => {
-          const { data } = err.response
-          setError(data.message)
-        })
+          const { data } = err.response;
+          setError(data.message);
+        });
     }
-  }, [name, playerGetCharacter])
+  }, [name, playerGetCharacter]);
 
   const submitHandle = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    history.push(`/character/${searchName}`)
-  }
+    history.push(`/character/${searchName}`);
+  };
 
   return (
     <header className="page-header" role="banner">
@@ -149,19 +149,23 @@ const Header = ({ playerGetCharacter, hideCart }) => {
       </div>
 
       {!hideCart && (
-        <span onClick={() => openDrawer()}>
-          <AiOutlineShoppingCart size={24} className="ml-3" />
-          (2) Itens
+        <span
+          className="header-icon"
+          title="You got 11 notifications"
+          onClick={() => openDrawer()}
+        >
+          <AiOutlineShoppingCart size={26} />
+          <span className="badge badge-icon">11</span>
         </span>
       )}
     </header>
-  )
-}
+  );
+};
 
 const mapStateToProps = (state) => {
   return {
     players: state.player.player,
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps, { playerGetCharacter })(Header)
+export default connect(mapStateToProps, { playerGetCharacter })(Header);

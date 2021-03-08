@@ -92,7 +92,7 @@
 .sch-product-grid .sch-rating li.disable {
   color: #ddd;
 }
-.sch-product-grid .sch-review p {
+.sch-product-grid .sch-quantity p {
   color: #7b7b7c;
   line-height: 30px;
   margin-bottom: 0;
@@ -446,7 +446,7 @@
 .sch-product-list .sch-rating li.disable {
   color: #ddd;
 }
-.sch-product-list .sch-review p {
+.sch-product-list .sch-quantity p {
   color: #7b7b7c;
   line-height: 30px;
   margin-bottom: 0;

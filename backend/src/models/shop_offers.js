@@ -32,11 +32,11 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     { freezeTableName: true, timestamps: false }
-  )
+  );
 
   //   shop_offers.associate = (models) => {
   //     shop_offers.belongsTo(models.players, { foreignKey: 'player_id' })
   //   }
 
-  return shop_offers
-}
+  return shop_offers;
+};
