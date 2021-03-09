@@ -1,4 +1,8 @@
-import { SHOP_LIST, SHOP_TOGGLE_CART_PRODUCT } from '../actions/ShopActions';
+import {
+  SHOP_LIST,
+  SHOP_TOGGLE_CART_PRODUCT,
+  SHOP_BUYNOW_CART,
+} from '../actions/ShopActions';
 
 const initialState = {
   shop: null,
@@ -8,10 +12,13 @@ const initialState = {
 
 export default function (state = initialState, action) {
   const { type, payload, product } = action;
+
   switch (type) {
-    case SHOP_LIST: {
+    case SHOP_LIST:
+    case SHOP_BUYNOW_CART: {
       const response = payload ? payload.data : null;
       const shop = response ? response.data : null;
+
       return { ...state, shop };
     }
 

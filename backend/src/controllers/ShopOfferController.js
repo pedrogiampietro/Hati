@@ -1,10 +1,10 @@
-const express = require('express')
-const { shop_offers } = require('../models')
+const express = require('express');
+const { shop_offers, accounts } = require('../models');
 
-const { getMessage } = require('../helpers/messages')
-const { checkJwt } = require('../middlewares/jwt')
+const { getMessage } = require('../helpers/messages');
+const { checkJwt } = require('../middlewares/jwt');
 
-const router = express.Router()
+const router = express.Router();
 
 router.post('/', async (req, res) => {
   const {
@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
     shop_amount,
     itemid,
     coins,
-  } = req.body
+  } = req.body;
 
   const addProduct = await shop_offers.create({
     shop_title,
@@ -25,41 +25,41 @@ router.post('/', async (req, res) => {
     shop_amount,
     itemid,
     coins,
-  })
+  });
 
-  return res.jsonOK(addProduct)
-})
+  return res.jsonOK(addProduct);
+});
 
 router.get('/', async (req, res) => {
-  const getOffers = await shop_offers.findAndCountAll({})
+  const getOffers = await shop_offers.findAndCountAll({});
 
-  return res.jsonOK(getOffers)
-})
+  return res.jsonOK(getOffers);
+});
 
 router.get('/:id', async (req, res) => {
-  const { id } = req.params
+  const { id } = req.params;
 
   try {
     const getOffer = await shop_offers.findOne({
       where: { id: id },
-    })
+    });
 
     if (!getOffer) {
       return res.jsonBadRequest(
         null,
         'this id does not exist, check and try again.'
-      )
+      );
     } else {
-      res.jsonOK(getOffer)
+      res.jsonOK(getOffer);
     }
   } catch (error) {
-    return res.jsonBadRequest(null, error)
+    return res.jsonBadRequest(null, error);
   }
-})
+});
 
 router.put('/', checkJwt, async (req, res) => {
-  const { body } = req
-  const { id } = req.params
+  const { body } = req;
+  const { id } = req.params;
   const fields = [
     'coins',
     'itemid',
@@ -68,37 +68,61 @@ router.put('/', checkJwt, async (req, res) => {
     'shop_title',
     'shop_description',
     'shop_image',
-  ]
+  ];
 
   const getOffer = await shop_offers.findOne({
     where: { id: id },
-  })
-  if (!getOffer) return res.jsonNotFound(null)
+  });
+  if (!getOffer) return res.jsonNotFound(null);
 
   fields.map((fieldName) => {
-    const newValue = body[fieldName]
-    if (newValue) getOffer[fieldName] = newValue
-  })
+    const newValue = body[fieldName];
+    if (newValue) getOffer[fieldName] = newValue;
+  });
 
-  await getOffer.save()
-  return res.jsonOK(getOffer, getMessage('Offer edited sucessfuly!'))
-})
+  await getOffer.save();
+  return res.jsonOK(getOffer, getMessage('Offer edited sucessfuly!'));
+});
 
 router.delete('/:id', checkJwt, async (req, res) => {
-  const { id } = req.params
+  const { id } = req.params;
   try {
-    const deleteOffer = await shop_offers.findByPk(id)
+    const deleteOffer = await shop_offers.findByPk(id);
 
     if (!deleteOffer) {
-      return res.jsonBadRequest(null, 'not possible delete board, try again.')
+      return res.jsonBadRequest(null, 'not possible delete offer, try again.');
     } else {
-      await deleteOffer.destroy()
+      await deleteOffer.destroy();
 
-      res.jsonOK(deleteOffer)
+      res.jsonOK(deleteOffer);
     }
   } catch (error) {
-    return res.jsonBadRequest(null, error)
+    return res.jsonBadRequest(null, error);
   }
-})
+});
 
-module.exports = router
+router.put('/buynow', checkJwt, async (req, res) => {
+  try {
+    const { body, account_id } = req;
+    const { coins } = body;
+
+    const getAccount = await accounts.findByPk(account_id);
+
+    if (!getAccount) {
+      return res.jsonBadRequest(null, 'invalid token, please log in again.');
+    }
+
+    await getAccount.update({
+      coins: coins,
+    });
+
+    res.jsonOK(
+      getAccount,
+      getMessage('your purchase was successful, check your inventory')
+    );
+  } catch (error) {
+    return res.jsonBadRequest(null, error);
+  }
+});
+
+module.exports = router;

@@ -1,13 +1,20 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import Dock from 'react-dock';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+
+import { buyNowCart } from '../../actions/ShopActions';
 import ProductList from '../../components/Product/List';
 import './styles.css';
 
 const SidebarBag = ({}) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   const { cart } = useSelector((state) => state.shop);
+  const { account } = useSelector((state) => state.account);
   const [opened, setOpened] = React.useState(false);
-  const total = cart.reduce((total, product) => {
+  const totalCart = cart.reduce((total, product) => {
     return total + product.coins;
   }, 0);
 
@@ -16,6 +23,24 @@ const SidebarBag = ({}) => {
       setOpened(true);
     });
   }, []);
+
+  const accountCoins = account?.[0].account?.coins;
+  console.log('AccountCoins', accountCoins);
+
+  const leftover = accountCoins >= totalCart ? accountCoins - totalCart : null;
+
+  const handleBuyNow = (event) => {
+    event.preventDefault();
+
+    dispatch(buyNowCart({ coins: leftover }))
+      .then(() => {
+        history.push('/account/characters');
+        setOpened(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <Dock
@@ -37,9 +62,12 @@ const SidebarBag = ({}) => {
         <div className="row align-items-end footer">
           <div className="col-12 d-flex justify-content-between align-items-center">
             <b className="d-inline-block">Total</b>
-            <h3 className="d-inline-block">{total} Coins</h3>
+            <h3 className="d-inline-block">{totalCart} Coins</h3>
           </div>
-          <button className="btn btn-block btn-lg btn-primary rounded-0 h-50 align-items-center">
+          <button
+            className="btn btn-block btn-lg btn-primary rounded-0 h-50 align-items-center"
+            onClick={handleBuyNow}
+          >
             Finalizar Compra
           </button>
         </div>

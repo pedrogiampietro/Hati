@@ -1,24 +1,25 @@
-import React, { useEffect } from 'react'
-import { Redirect, Link, useHistory } from 'react-router-dom'
-import { connect } from 'react-redux'
-import { signOut } from '../../../actions/AccountActions'
+import React, { useEffect } from 'react';
+import { Redirect, Link, useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { signOut } from '../../../actions/AccountActions';
 import {
   getProfileAvatar,
   deleteProfileAvatar,
-} from '../../../actions/AccountActions'
-import { playerList } from '../../../actions/PlayerActions'
-import { convertTimestempToDate } from '../../../helpers/DateTime'
-import { closeModalAvatar } from '../../../assets/js/scripts'
-import { toast, ToastContainer } from 'react-toastify'
-import Container from '../../Layouts/Container'
+} from '../../../actions/AccountActions';
+import { playerList } from '../../../actions/PlayerActions';
+import { convertTimestempToDate } from '../../../helpers/DateTime';
+import { closeModalAvatar } from '../../../assets/js/scripts';
+import { toast, ToastContainer } from 'react-toastify';
+import Container from '../../Layouts/Container';
 
-import ProfileAvatar from '../../../assets/img/Profile_Avatar.png'
-import { RiDeleteBin6Line } from 'react-icons/ri'
-import { FiPlus } from 'react-icons/fi'
+import ProfileAvatar from '../../../assets/img/Profile_Avatar.png';
+import { RiDeleteBin6Line } from 'react-icons/ri';
+import { FiPlus } from 'react-icons/fi';
 
-import { getPlayerName } from '../../../helpers/Account'
+import { getPlayerName } from '../../../helpers/Account';
 
-import './styles.css'
+import './styles.css';
+import Inventory from '../Inventory';
 
 const Characters = ({
   players,
@@ -27,54 +28,54 @@ const Characters = ({
   signOut,
   account,
 }) => {
-  const [avatar, setAvatar] = React.useState('')
-  const history = useHistory()
+  const [avatar, setAvatar] = React.useState('');
+  const history = useHistory();
 
   useEffect(() => {
     getProfileAvatar().then(({ payload }) => {
-      const newData = payload.data.data
-      setAvatar(newData)
-    })
-    playerList()
-  }, [playerList, getProfileAvatar])
+      const newData = payload.data.data;
+      setAvatar(newData);
+    });
+    playerList();
+  }, [playerList, getProfileAvatar]);
 
   if (!avatar) {
-    return null
+    return null;
   }
 
   if (!account) {
-    return <Redirect to='/sign-in' />
+    return <Redirect to="/sign-in" />;
   }
 
   const signOutHandler = (event) => {
-    event.preventDefault()
-    signOut()
-  }
+    event.preventDefault();
+    signOut();
+  };
 
   function handleDeleteAvatar(event) {
-    event.preventDefault()
-    deleteProfileAvatar()
-    closeModalAvatar()
-    toast.success('Your avatar has been deleted..')
+    event.preventDefault();
+    deleteProfileAvatar();
+    closeModalAvatar();
+    toast.success('Your avatar has been deleted..');
 
-    setTimeout(() => history.push('/account/avatar'), 2000)
+    setTimeout(() => history.push('/account/avatar'), 2000);
   }
 
-  const Account = account[0]?.account
+  const Account = account[0]?.account;
 
   return (
     <Container>
-      <div id='contentBody' className='col-sm-9'>
-        <div className='panel panel-danger'>
-          <div className='panel-heading '>Recovery Key</div>
+      <div id="contentBody" className="col-sm-9">
+        <div className="panel panel-danger">
+          <div className="panel-heading ">Recovery Key</div>
 
           <button
-            className='btn btn-danger btn-sm align-self-end'
+            className="btn btn-danger btn-sm align-self-end"
             onClick={signOutHandler}
           >
             Logout
           </button>
-          <div className='panel-body'>
+          <div className="panel-body">
             <strong>
               You do not have a recovery key. It is recommended that you
               generate one.
@@ -84,8 +85,8 @@ const Characters = ({
             </strong>
             <br />
             <br />
-            <Link to='/account/key'>
-              <button className='btn btn-success btn-sm'>
+            <Link to="/account/key">
+              <button className="btn btn-success btn-sm">
                 Generate Recovery Key
               </button>
             </Link>
@@ -93,47 +94,47 @@ const Characters = ({
         </div>
 
         {getPlayerName() === undefined ? null : (
-          <div className='panel-content'>
-            <div className='border px-3 pt-3 pb-0 rounded'>
-              <ul className='nav nav-pills' role='tablist'>
-                <li className='nav-item'>
+          <div className="panel-content">
+            <div className="border px-3 pt-3 pb-0 rounded">
+              <ul className="nav nav-pills" role="tablist">
+                <li className="nav-item">
                   <a
-                    className='nav-link active'
-                    data-toggle='tab'
-                    href='#account-information'
+                    className="nav-link active"
+                    data-toggle="tab"
+                    href="#account-information"
                   >
-                    <i className='fal fa-home mr-1'></i>Account Information
+                    <i className="fal fa-home mr-1"></i>Account Information
                   </a>
                 </li>
-                <li className='nav-item'>
+                <li className="nav-item">
                   <a
-                    className='nav-link'
-                    data-toggle='tab'
-                    href='#account-profile'
+                    className="nav-link"
+                    data-toggle="tab"
+                    href="#account-profile"
                   >
-                    <i className='fal fa-user mr-1'></i>Profile
+                    <i className="fal fa-user mr-1"></i>Profile
                   </a>
                 </li>
-                {/* <li className="nav-item">
-						<a
-							className="nav-link"
-							data-toggle="tab"
-							href="#js_pill_border_icon-3"
-						>
-							<i className="fal fa-clock mr-1"></i>Configurations
-						</a>
-					</li> */}
+                <li className="nav-item">
+                  <a
+                    className="nav-link"
+                    data-toggle="tab"
+                    href="#account-inventory"
+                  >
+                    <i className="fal fa-user mr-1"></i>Inventory
+                  </a>
+                </li>
               </ul>
-              <div className='tab-content py-3'>
+              <div className="tab-content py-3">
                 <div
-                  className='tab-pane fade active show'
-                  id='account-information'
-                  role='tabpanel'
+                  className="tab-pane fade active show"
+                  id="account-information"
+                  role="tabpanel"
                 >
-                  <div className='panel panel-default'>
-                    <div className='panel-heading'>Account Information</div>
-                    <div className='panel-body'>
-                      <table className='table table-striped table-hover table-fixed'>
+                  <div className="panel panel-default">
+                    <div className="panel-heading">Account Information</div>
+                    <div className="panel-body">
+                      <table className="table table-striped table-hover table-fixed">
                         <tbody>
                           <tr>
                             <td>Name</td>
@@ -147,14 +148,14 @@ const Characters = ({
                           </tr>
                           <tr>
                             <td>Created</td>
-                            <td className='col-md-9'>
+                            <td className="col-md-9">
                               {convertTimestempToDate(Account?.creation)}
                             </td>
                             <td></td>
                           </tr>
                           <tr>
-                            <td className='col-md-2 notranslate'>Hati Coins</td>
-                            <td>0</td>
+                            <td className="col-md-2 notranslate">Hati Coins</td>
+                            <td>{Account?.coins}</td>
                             <td></td>
                           </tr>
                           <tr>
@@ -164,13 +165,13 @@ const Characters = ({
                         </tbody>
                       </table>
 
-                      <Link to='/account/password'>
-                        <button className='btn btn-primary btn-sm mr-3'>
+                      <Link to="/account/password">
+                        <button className="btn btn-primary btn-sm mr-3">
                           Change Password
                         </button>
                       </Link>
                       <button
-                        className='btn btn-danger btn-sm'
+                        className="btn btn-danger btn-sm"
                         onClick={signOutHandler}
                       >
                         Logout
@@ -179,26 +180,26 @@ const Characters = ({
                   </div>
                 </div>
                 <div
-                  className='tab-pane fade'
-                  id='account-profile'
-                  role='tabpanel'
+                  className="tab-pane fade"
+                  id="account-profile"
+                  role="tabpanel"
                 >
-                  <div className='row'>
-                    <div className='col-md-6'>
-                      <div className='panel panel-default'>
-                        <div className='panel-heading'>Profile Information</div>
-                        <div className='panel-body'>
-                          <table className='table table-striped table-hover table-fixed'>
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="panel panel-default">
+                        <div className="panel-heading">Profile Information</div>
+                        <div className="panel-body">
+                          <table className="table table-striped table-hover table-fixed">
                             <tbody>
                               <tr>
                                 <td>Real Name:</td>
-                                <td className='col-md-4 notranslate'>
+                                <td className="col-md-4 notranslate">
                                   {Account?.rlname}
                                 </td>
                               </tr>
                               <tr>
                                 <td>Location:</td>
-                                <td className='col-md-4'>
+                                <td className="col-md-4">
                                   {Account?.location}
                                 </td>
                               </tr>
@@ -209,11 +210,11 @@ const Characters = ({
                             </tbody>
                           </table>
 
-                          <span className='col-md-3'>
-                            <Link to='/account/profile'>
+                          <span className="col-md-3">
+                            <Link to="/account/profile">
                               <button
-                                className='btn btn-primary btn-sm'
-                                align='left'
+                                className="btn btn-primary btn-sm"
+                                align="left"
                               >
                                 Update Information
                               </button>
@@ -221,9 +222,9 @@ const Characters = ({
                           </span>
 
                           {Account?.profileName !== '' ? null : (
-                            <span className='col-md-3 mb-1' align='right'>
-                              <Link to='/account/profile_name'>
-                                <button className='btn btn-primary btn-sm'>
+                            <span className="col-md-3 mb-1" align="right">
+                              <Link to="/account/profile_name">
+                                <button className="btn btn-primary btn-sm">
                                   Set Profile Name
                                 </button>
                               </Link>
@@ -232,15 +233,15 @@ const Characters = ({
                         </div>
                       </div>
                     </div>
-                    <div className='col-md-6'>
-                      <div className='panel panel-default'>
-                        <div className='panel-heading'>Profile Avatar</div>
-                        <div className='panel-body' align='center'>
-                          <div className='fc-toolbar fc-header-toolbar'>
-                            <div className='fc-left'>
-                              <h2 className='fs-md'>
+                    <div className="col-md-6">
+                      <div className="panel panel-default">
+                        <div className="panel-heading">Profile Avatar</div>
+                        <div className="panel-body" align="center">
+                          <div className="fc-toolbar fc-header-toolbar">
+                            <div className="fc-left">
+                              <h2 className="fs-md">
                                 {' '}
-                                <span className='subheader-title text-truncate text-truncate-lg text-primary'>
+                                <span className="subheader-title text-truncate text-truncate-lg text-primary">
                                   {Account?.profileName}
                                 </span>
                               </h2>
@@ -257,39 +258,39 @@ const Characters = ({
                               }}
                             />
                           ) : (
-                            <div className='imagem-avatar'>
+                            <div className="imagem-avatar">
                               <img
                                 src={avatar}
-                                alt='Avatar'
-                                className='profile-image rounded-circle'
+                                alt="Avatar"
+                                className="profile-image rounded-circle"
                               />
                               <div
-                                className='avatar-delete'
-                                data-toggle='modal'
-                                data-target='.example-modal-centered-transparent'
+                                className="avatar-delete"
+                                data-toggle="modal"
+                                data-target=".example-modal-centered-transparent"
                               >
-                                <RiDeleteBin6Line size={30} color='#fff' />
+                                <RiDeleteBin6Line size={30} color="#fff" />
                               </div>
                             </div>
                           )}
 
                           <div
-                            className='modal fade example-modal-centered-transparent'
-                            id='newCategory'
-                            tabIndex='-1'
-                            role='dialog'
-                            aria-hidden='true'
+                            className="modal fade example-modal-centered-transparent"
+                            id="newCategory"
+                            tabIndex="-1"
+                            role="dialog"
+                            aria-hidden="true"
                             style={{ display: 'none' }}
                           >
                             <div
-                              className='modal-dialog modal-dialog-centered modal-transparent'
-                              role='document'
+                              className="modal-dialog modal-dialog-centered modal-transparent"
+                              role="document"
                             >
-                              <div className='modal-content'>
-                                <div className='modal-header'>
-                                  <h4 className='modal-title text-white'>
+                              <div className="modal-content">
+                                <div className="modal-header">
+                                  <h4 className="modal-title text-white">
                                     do you want to delete this avatar?
-                                    <small className='m-0 text-white opacity-70'>
+                                    <small className="m-0 text-white opacity-70">
                                       do you really intend to delete your
                                       avatar? you will delete it from our
                                       database, and you will not be able to
@@ -297,28 +298,28 @@ const Characters = ({
                                     </small>
                                   </h4>
                                   <button
-                                    type='button'
-                                    className='close text-white'
-                                    data-dismiss='modal'
-                                    aria-label='Close'
+                                    type="button"
+                                    className="close text-white"
+                                    data-dismiss="modal"
+                                    aria-label="Close"
                                   >
-                                    <span aria-hidden='true'>
-                                      <i className='fal fa-times'></i>
+                                    <span aria-hidden="true">
+                                      <i className="fal fa-times"></i>
                                     </span>
                                   </button>
                                 </div>
 
-                                <div className='modal-footer'>
+                                <div className="modal-footer">
                                   <button
-                                    type='button'
-                                    className='btn btn-secondary waves-effect waves-themed'
-                                    data-dismiss='modal'
+                                    type="button"
+                                    className="btn btn-secondary waves-effect waves-themed"
+                                    data-dismiss="modal"
                                   >
                                     Close
                                   </button>
                                   <button
-                                    type='button'
-                                    className='btn btn-primary waves-effect waves-themed'
+                                    type="button"
+                                    className="btn btn-primary waves-effect waves-themed"
                                     onClick={handleDeleteAvatar}
                                   >
                                     Delete
@@ -333,17 +334,17 @@ const Characters = ({
 
                           {avatar && avatar?.length > 0 ? (
                             <button
-                              className='btn btn-primary btn-sm disabled'
-                              align='center'
+                              className="btn btn-primary btn-sm disabled"
+                              align="center"
                               disabled
                             >
                               Update Avatar
                             </button>
                           ) : (
-                            <Link to='/account/avatar'>
+                            <Link to="/account/avatar">
                               <button
-                                className='btn btn-primary btn-sm'
-                                align='center'
+                                className="btn btn-primary btn-sm"
+                                align="center"
                               >
                                 Update Avatar
                               </button>
@@ -354,41 +355,49 @@ const Characters = ({
                     </div>
                   </div>
                 </div>
+
+                <div
+                  className="tab-pane fade"
+                  id="account-inventory"
+                  role="tabpanel"
+                >
+                  <Inventory />
+                </div>
               </div>
             </div>
           </div>
         )}
 
         <br />
-        <div className='panel panel-default'>
-          <div className='panel-heading'>Characters</div>
+        <div className="panel panel-default">
+          <div className="panel-heading">Characters</div>
 
-          <div className='panel-body hidden-md hidden-lg'>
-            <div className='character-container'>
+          <div className="panel-body hidden-md hidden-lg">
+            <div className="character-container">
               {players && players.length
                 ? players.map((player) => {
                     return (
-                      <div key={player.id} className='new-character'>
+                      <div key={player.id} className="new-character">
                         <Link to={`/character/${player.name}`}>
                           <span
-                            className='profile-image rounded-circle d-block m-auto'
+                            className="profile-image rounded-circle d-block m-auto"
                             style={{
                               backgroundImage: `url("https://www.tibiawiki.com.br/images/e/e4/Outfit_Citizen_Male.gif")`,
                               backgroundSize: 'cover',
                             }}
                           ></span>
-                          <span className='d-block text-truncate text-muted fs-xs mt-1'>
+                          <span className="d-block text-truncate text-muted fs-xs mt-1">
                             {player.name}
                           </span>
                         </Link>
                       </div>
-                    )
+                    );
                   })
                 : null}
               {players?.length < 5 && (
-                <Link to='/account/characters/create'>
-                  <span className='new-character'>
-                    <FiPlus size={24} color='#886ab5' />
+                <Link to="/account/characters/create">
+                  <span className="new-character">
+                    <FiPlus size={24} color="#886ab5" />
                   </span>
                 </Link>
               )}
@@ -398,18 +407,18 @@ const Characters = ({
       </div>
       <ToastContainer />
     </Container>
-  )
-}
+  );
+};
 
 const mapStateToProps = (state) => {
   return {
     account: state.account.account,
     players: state.player.player,
-  }
-}
+  };
+};
 
 export default connect(mapStateToProps, {
   playerList,
   signOut,
   getProfileAvatar,
-})(Characters)
+})(Characters);

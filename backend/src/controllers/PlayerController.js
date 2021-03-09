@@ -26,6 +26,7 @@ router.get('/characters', checkJwt, async (req, res) => {
           'avatar',
           'profileName',
           'page_access',
+          'coins',
         ],
       },
     ],

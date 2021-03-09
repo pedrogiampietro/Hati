@@ -12,7 +12,7 @@ import {
   RESET_PASSWORD,
   PROFILE_NAME,
   CHANGE_PASSWORD,
-} from '../actions/AccountActions'
+} from '../actions/AccountActions';
 import {
   getAccount,
   setAccount,
@@ -24,18 +24,18 @@ import {
   setPlayerName,
   getPlayerName,
   removePlayerName,
-} from '../helpers/Account'
-import { PLAYER_CREATE } from '../actions/PlayerActions'
-import { CREATE_THREAD } from '../actions/ForumActions'
+} from '../helpers/Account';
+import { PLAYER_CREATE } from '../actions/PlayerActions';
+import { CREATE_THREAD } from '../actions/ForumActions';
 
 const initialState = {
   account: null,
   player: null,
   forum: null,
-}
+};
 
 export default function (state = initialState, action) {
-  const { type, payload } = action
+  const { type, payload } = action;
 
   switch (type) {
     case SIGN_IN:
@@ -48,57 +48,57 @@ export default function (state = initialState, action) {
     case GET_PROFILE_AVATAR:
     case POST_PROFILE_AVATAR:
     case DELETE_PROFILE_AVATAR:
-      const response = payload ? payload.data : null
-      const account = response ? response.data : null
-      const metadata = response ? response.metadata : null
+      const response = payload ? payload.data : null;
+      const account = response ? response.data : null;
+      const metadata = response ? response.metadata : null;
 
-      const player = response ? response?.data?.[0]?.name : null
+      const player = response ? response?.data?.[0]?.name : null;
 
-      const token = metadata ? metadata.token : null
-      const refreshToken = metadata ? metadata.refreshToken : null
+      const token = metadata ? metadata.token : null;
+      const refreshToken = metadata ? metadata.refreshToken : null;
 
-      if (account) setAccount(account)
-      if (player) setPlayerName(player)
-      if (token) setToken(token)
-      if (refreshToken) setRefreshToken(refreshToken)
+      if (account) setAccount(account);
+      if (player) setPlayerName(player);
+      if (token) setToken(token);
+      if (refreshToken) setRefreshToken(refreshToken);
 
-      return { ...state, account, player }
+      return { ...state, account, player };
 
     case SIGN_OUT:
-      removeAccount()
-      removePlayerName()
-      removeToken()
-      removeRefreshToken()
+      removeAccount();
+      removePlayerName();
+      removeToken();
+      removeRefreshToken();
 
-      return { ...state, account: null, player: null }
+      return { ...state, account: null, player: null };
 
     case FORGOT_PASSWORD:
     case RESET_PASSWORD: {
-      const response = payload ? payload.data : null
-      const metadata = response ? response.metadata : null
-      const token = metadata ? metadata.token : null
-      if (token) setToken(token)
+      const response = payload ? payload.data : null;
+      const metadata = response ? response.metadata : null;
+      const token = metadata ? metadata.token : null;
+      if (token) setToken(token);
 
-      return state
+      return state;
     }
 
     case INIT_ACCOUNT: {
-      const account = getAccount()
-      const player = getPlayerName()
+      const account = getAccount();
+      const player = getPlayerName();
 
-      return { ...state, account, player }
+      return { ...state, account, player };
     }
 
     case REFRESH_TOKEN: {
-      const response = payload ? payload.data : null
-      const metadata = response ? response.metadata : null
+      const response = payload ? payload.data : null;
+      const metadata = response ? response.metadata : null;
 
-      const token = metadata ? metadata.token : null
-      if (token) setToken(token)
-      return state
+      const token = metadata ? metadata.token : null;
+      if (token) setToken(token);
+      return state;
     }
 
     default:
-      return state
+      return state;
   }
 }

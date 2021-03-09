@@ -12,6 +12,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    coins: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     secret: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -76,7 +80,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isString(val) {
           if (typeof val !== 'string') {
-            throw new sequelize.ValidationError('Avatar must be a string.')
+            throw new sequelize.ValidationError('Avatar must be a string.');
           }
         },
       },
@@ -94,19 +98,19 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: '',
     },
-  })
+  });
 
   accounts.associate = (models) => {
-    accounts.hasMany(models.players, { foreignKey: 'account_id' })
-    accounts.hasMany(models.threads, { foreignKey: 'account_id' })
-    accounts.hasMany(models.comments, { foreignKey: 'account_id' })
-  }
+    accounts.hasMany(models.players, { foreignKey: 'account_id' });
+    accounts.hasMany(models.threads, { foreignKey: 'account_id' });
+    accounts.hasMany(models.comments, { foreignKey: 'account_id' });
+  };
 
   accounts.prototype.toJSON = function () {
-    const values = { ...this.get() }
-    delete values.password
-    return values
-  }
+    const values = { ...this.get() };
+    delete values.password;
+    return values;
+  };
 
-  return accounts
-}
+  return accounts;
+};
