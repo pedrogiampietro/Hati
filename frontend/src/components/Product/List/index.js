@@ -1,30 +1,38 @@
-import React from 'react'
-import './styles.css'
-const ProductList = () => {
+import React from 'react';
+import { useDispatch } from 'react-redux';
+
+import { toggleCartProduct } from '../../../actions/ShopActions';
+import './styles.css';
+
+const ProductList = ({ product }) => {
+  const dispatch = useDispatch();
+
   return (
     <div className="product-list col-12">
       <div className="row">
         <div className="col-3">
-          <img
-            src="https://www.tibiawiki.com.br/images/2/2e/Plate_Armor.gif"
-            alt=""
-            className="img-fluid"
-          />
+          <img src={product.shop_image} alt="" className="img-fluid" />
         </div>
         <div className="col-6">
           <h6>
-            <label className="badge badge-primary">R$ 30,00</label>
+            <label className="badge badge-primary">{product.coins}</label>
           </h6>
           <small>
-            <b>Nome do Produto</b>
+            <b>{product.shop_title}</b>
           </small>
+          <p>{product.shop_description}</p>
         </div>
         <div className="col-3">
-          <button className="btn btn-secondary rounded">-</button>
+          <button
+            onClick={() => dispatch(toggleCartProduct(product))}
+            className="btn btn-secondary rounded"
+          >
+            -
+          </button>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductList
+export default ProductList;

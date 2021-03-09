@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import { playerGetCharacter } from '../../../actions/PlayerActions';
 import { changeMinify, changeMenuOnMobile } from '../../../assets/js/scripts';
@@ -9,6 +9,7 @@ import './styles.css';
 
 const Header = ({ playerGetCharacter, hideCart }) => {
   const history = useHistory();
+  const { cart } = useSelector((state) => state.shop);
   const { name } = useParams();
   const [searchName, setSearchName] = useState();
   const [, setError] = useState(false);
@@ -151,11 +152,11 @@ const Header = ({ playerGetCharacter, hideCart }) => {
       {!hideCart && (
         <span
           className="header-icon"
-          title="You got 11 notifications"
+          title={`You got ${cart.length} product`}
           onClick={() => openDrawer()}
         >
           <AiOutlineShoppingCart size={26} />
-          <span className="badge badge-icon">11</span>
+          <span className="badge badge-icon">{cart.length}</span>
         </span>
       )}
     </header>
