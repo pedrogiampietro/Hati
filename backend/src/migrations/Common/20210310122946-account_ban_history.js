@@ -1,21 +1,50 @@
 'use strict';
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    /**
-     * Add altering commands here.
-     *
-     * Example:
-     * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
-     */
-  },
+  up: (queryInterface, Sequelize) =>
+    queryInterface
+      .createTable('account_ban_history', {
+        account_id: {
+          allowNull: false,
+          type: Sequelize.INTEGER,
+          primaryKey: true,
+          onDelete: 'CASCADE',
+          onUpdate: 'CASCADE',
+          references: {
+            model: 'accounts',
+            key: 'id',
+          },
+        },
+        reason: {
+          allowNull: false,
+          type: Sequelize.STRING,
+        },
+        banned_at: {
+          allowNull: false,
+          type: Sequelize.BIGINT,
+        },
+        expires_at: {
+          allowNull: false,
+          type: Sequelize.BIGINT,
+        },
+        banned_by: {
+          allowNull: false,
+          type: Sequelize.INTEGER,
+          onDelete: 'CASCADE',
+          onUpdate: 'CASCADE',
+          references: {
+            model: 'players',
+            key: 'id',
+          },
+        },
+      })
+      .then(() =>
+        queryInterface.addIndex('account_ban_history', [
+          'account_id',
+          'banned_by',
+        ])
+      ),
 
-  down: async (queryInterface, Sequelize) => {
-    /**
-     * Add reverting commands here.
-     *
-     * Example:
-     * await queryInterface.dropTable('users');
-     */
-  }
+  down: (queryInterface, Sequelize) =>
+    queryInterface.dropTable('account_ban_history'),
 };
