@@ -24,7 +24,7 @@ const SidebarBag = ({}) => {
     });
   }, []);
 
-  const accountCoins = account?.[0].account?.coins;
+  const accountCoins = account?.[0]?.account?.coins;
   console.log('AccountCoins', accountCoins);
 
   const leftover = accountCoins >= totalCart ? accountCoins - totalCart : null;

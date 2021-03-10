@@ -11,32 +11,32 @@ main.loading {
   pointer-events: none;
 }
 @media (max-width: 900px) {
-  main {
+  #main-inventory {
     text-align: center;
   }
 }
-main > * {
+#main-inventory > * {
   margin: 0 15%;
   position: relative;
   z-index: 1;
 }
 @media (max-width: 1600px) {
-  main > * {
+  #main-inventory > * {
     margin: 0 10%;
   }
 }
 @media (max-width: 1200px) {
-  main > * {
+  #main-inventory > * {
     margin: 0 5%;
   }
 }
 @media (max-width: 1000px) {
-  main > * {
+  #main-inventory > * {
     margin: 0 5%;
   }
 }
 @media (max-width: 600px) {
-  main > * {
+  #main-inventory > * {
     margin: 0 0%;
   }
 }

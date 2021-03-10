@@ -4,7 +4,7 @@ import './styles.css';
 
 const Inventory = () => {
   return (
-    <main>
+    <main id="main-inventory">
       <section id="inventory-window">
         <div>
           <ul className="filters">
