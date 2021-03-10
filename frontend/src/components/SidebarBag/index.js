@@ -24,15 +24,10 @@ const SidebarBag = ({}) => {
     });
   }, []);
 
-  const accountCoins = account?.[0]?.account?.coins;
-  console.log('AccountCoins', accountCoins);
-
-  const leftover = accountCoins >= totalCart ? accountCoins - totalCart : null;
-
   const handleBuyNow = (event) => {
     event.preventDefault();
 
-    dispatch(buyNowCart({ coins: leftover }))
+    dispatch(buyNowCart({ totalCoins: totalCart, closedCart: cart }))
       .then(() => {
         history.push('/account/characters');
         setOpened(false);

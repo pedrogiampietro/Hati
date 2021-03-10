@@ -1,5 +1,5 @@
 const express = require('express');
-const { shop_offers, accounts } = require('../models');
+const { shop_offers, shop_inventories, accounts } = require('../models');
 
 const { getMessage } = require('../helpers/messages');
 const { checkJwt } = require('../middlewares/jwt');
@@ -102,26 +102,56 @@ router.delete('/:id', checkJwt, async (req, res) => {
 });
 
 router.put('/buynow', checkJwt, async (req, res) => {
+  const { body, account_id } = req;
+  const { closedCart, totalCoins } = body;
+
+  const getAccount = await accounts.findByPk(account_id);
+
+  if (!getAccount) {
+    return res.jsonBadRequest(null, 'invalid token, please log in again.');
+  }
+
   try {
-    const { body, account_id } = req;
-    const { coins } = body;
+    let newArray = [];
 
-    const getAccount = await accounts.findByPk(account_id);
+    if (getAccount.coins >= totalCoins) {
+      await getAccount.update({
+        coins: getAccount.coins - totalCoins,
+      }),
+      
+        await Promise.all(
+          (newArray = closedCart.map(
+            ({
+              itemid,
+              shop_amount,
+              shop_title,
+              item_description,
+              shop_image,
+            }) =>
+              shop_inventories.create({
+                account_id,
+                itemid,
+                item_amount: shop_amount,
+                item_title: shop_title,
+                item_description: item_description,
+                item_image: shop_image,
+              })
+          ))
+        );
 
-    if (!getAccount) {
-      return res.jsonBadRequest(null, 'invalid token, please log in again.');
+      return res.jsonOK(
+        getAccount,
+        getMessage('your purchase was successful, check your inventory')
+      );
+    } else {
+      console.log(
+        'você não tem coins suficiente para realizar essa compra, faça uma recarga e tente novamente.'
+      );
+      return;
     }
-
-    await getAccount.update({
-      coins: coins,
-    });
-
-    res.jsonOK(
-      getAccount,
-      getMessage('your purchase was successful, check your inventory')
-    );
   } catch (error) {
-    return res.jsonBadRequest(null, error);
+    console.error(error);
+    return res.jsonBadRequest('to caindo aqui', error);
   }
 });
 

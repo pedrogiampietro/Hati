@@ -1,4 +1,4 @@
-main {
+#main-inventory {
   /* background-color: #001920; */
   overflow-x: hidden;
   width: 100%;
@@ -7,7 +7,7 @@ main {
   background-repeat: no-repeat;
   background-size: 100% auto;
 }
-main.loading {
+#main-inventory.loading {
   pointer-events: none;
 }
 @media (max-width: 900px) {
@@ -40,10 +40,10 @@ main.loading {
     margin: 0 0%;
   }
 }
-main > img {
+#main-inventory > img {
   margin: 0;
 }
-main > header {
+#main-inventory > header {
   position: relative;
   padding-top: 250px;
   display: flex;
@@ -51,45 +51,45 @@ main > header {
   margin-bottom: 80px;
   z-index: 90;
 }
-main > header img {
+#main-inventory > header img {
   width: 70px;
   height: auto;
 }
-main > header div {
+#main-inventory > header div {
   margin-left: 10px;
 }
-main > header div h1 {
+#main-inventory > header div h1 {
   font-size: 3.6rem;
   line-height: 3.6rem;
   margin-bottom: 5px;
 }
-main > header div h1 strong {
+#main-inventory > header div h1 strong {
   color: #c390d3;
 }
-main > header div p {
+#main-inventory > header div p {
   font-size: 0.9rem;
   line-height: 1.4rem;
   color: #fff;
   margin: 0;
 }
-main > section {
+#main-inventory > section {
   position: relative;
   display: inline-block;
   border: 1px solid #a49def;
   border-radius: 10px;
   box-shadow: 0 0 20px #0a0a0a;
-  background: #7a1573;
+  background: #525087;
   padding: 50px 3vw;
   margin-bottom: 100px;
   text-align: left;
 }
-main > section > div:nth-child(1) {
+#main-inventory > section > div:nth-child(1) {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   padding: 10px;
 }
-main > section > div:nth-child(2) {
+#main-inventory > section > div:nth-child(2) {
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -102,10 +102,10 @@ main > section > div:nth-child(2) {
     flex-direction: column;
   }
 }
-main > section > div:nth-child(2) > * {
+#main-inventory > section > div:nth-child(2) > * {
   padding-top: 5px;
 }
-main > section button.swap-items {
+#main-inventory > section button.swap-items {
   position: absolute;
   display: block;
   width: 60px;
@@ -122,44 +122,44 @@ main > section button.swap-items {
   opacity: 0;
   pointer-events: none;
 }
-main > section button.swap-items.show {
+#main-inventory > section button.swap-items.show {
   z-index: 10;
 }
-main > section button.swap-items:hover {
+#main-inventory > section button.swap-items:hover {
   background-position: 60% center;
 }
-main > section button.swap-items.show {
+#main-inventory > section button.swap-items.show {
   opacity: 1;
   pointer-events: all;
 }
-main > section button.swap-items.inventory-back {
+#main-inventory > section button.swap-items.inventory-back {
   left: 40px;
   transform: translateY(-50%) rotate(180deg);
 }
-main > section button.swap-items.inventory-next {
+#main-inventory > section button.swap-items.inventory-next {
   right: 40px;
   transform: translateY(-50%);
 }
-main > section div.info {
+#main-inventory > section div.info {
 }
 @media (max-width: 450px) {
-  main > section button.swap-items.inventory-back {
+  #main-inventory > section button.swap-items.inventory-back {
     left: -30px;
   }
-  main > section button.swap-items.inventory-next {
+  #main-inventory > section button.swap-items.inventory-next {
     right: -30px;
   }
 }
 @media (min-width: 451px) and (max-width: 600px) {
-  main > section button.swap-items.inventory-back {
+  #main-inventory > section button.swap-items.inventory-back {
     left: 0;
   }
-  main > section button.swap-items.inventory-next {
+  #main-inventory > section button.swap-items.inventory-next {
     right: 0;
   }
 }
 @media (max-width: 600px) {
-  main > section button.swap-items {
+  #main-inventory > section button.swap-items {
     width: 50px;
     height: 50px;
   }
@@ -169,17 +169,17 @@ main > section div.info {
     width: 100%;
   }
 }
-main > section div.info p {
+#main-inventory > section div.info p {
   margin-bottom: 5px;
   font-size: 0.8rem;
   line-height: 0.8rem;
   text-align: right;
   color: #fff;
 }
-main > section div.info p strong {
+#main-inventory > section div.info p strong {
   color: #c390d3;
 }
-main > section ul.filters li {
+#main-inventory > section ul.filters li {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -187,7 +187,7 @@ main > section ul.filters li {
   color: #fff;
   cursor: pointer;
 }
-main > section ul.filters li span {
+#main-inventory > section ul.filters li span {
   position: relative;
   margin-left: 5px;
   width: 20px;
@@ -201,17 +201,17 @@ main > section ul.filters li span {
   justify-content: center;
 }
 @media (max-width: 1200px) {
-  main > section ul.filters li span {
+  #main-inventory > section ul.filters li span {
     position: absolute;
     top: -10px;
     right: -5px;
   }
 }
-main > section ul.filters li.active {
+#main-inventory > section ul.filters li.active {
   color: #ffb400;
   cursor: default;
 }
-main > section ul.filters li:before {
+#main-inventory > section ul.filters li:before {
   content: '';
   width: 30px;
   height: 30px;
@@ -221,59 +221,59 @@ main > section ul.filters li:before {
   background-position-y: 0;
 }
 @media (max-width: 1200px) {
-  main > section ul.filters li:before {
+  #main-inventory > section ul.filters li:before {
     width: 45px;
     height: 45px;
   }
 }
-main > section ul.filters li.active:before {
+#main-inventory > section ul.filters li.active:before {
   background-position-y: 100%;
 }
-main > section ul.filters li.todos:before {
+#main-inventory > section ul.filters li.todos:before {
   background-position-x: 0;
 }
-main > section ul.filters li.resgatados:before {
+#main-inventory > section ul.filters li.resgatados:before {
   background-position-x: 25%;
 }
-main > section ul.filters li.fechados:before {
+#main-inventory > section ul.filters li.fechados:before {
   background-position-x: 50%;
 }
-main > section ul.filters li.pendentes:before {
+#main-inventory > section ul.filters li.pendentes:before {
   background-position-x: 75%;
 }
 @media (max-width: 1200px) {
-  main > section ul.filters li div {
+  #main-inventory > section ul.filters li div {
     display: none;
   }
 }
-main > section div.inventory-items-container {
+#main-inventory > section div.inventory-items-container {
   position: relative;
   width: 700px;
   padding-bottom: 20px;
   margin: 0 auto;
 }
 @media (max-width: 1400px) {
-  main > section div.inventory-items-container {
+  #main-inventory > section div.inventory-items-container {
     width: 560px;
   }
 }
 @media (max-width: 1400px) {
-  main > section div.inventory-items-container {
+  #main-inventory > section div.inventory-items-container {
     width: 560px;
   }
 }
 @media (max-width: 1100px) {
-  main > section div.inventory-items-container {
+  #main-inventory > section div.inventory-items-container {
     width: 420px;
   }
 }
 @media (max-width: 900px) {
-  main > section div.inventory-items-container {
+  #main-inventory > section div.inventory-items-container {
     width: 560px;
   }
 }
 @media (max-width: 600px) {
-  main > section div.inventory-items-container {
+  #main-inventory > section div.inventory-items-container {
     width: 420px;
   }
 }
@@ -293,7 +293,7 @@ div.inventory-items-container::-webkit-scrollbar-thumb {
 div.inventory-items-container::-webkit-scrollbar-thumb:hover {
   background: #ffb400;
 }
-main > section ul.inventory-items {
+#main-inventory > section ul.inventory-items {
   position: relative;
   width: 100%;
   height: auto;
@@ -301,7 +301,7 @@ main > section ul.inventory-items {
   background-repeat: repeat;
   background-size: 140px;
 }
-main > section ul.inventory-items li {
+#main-inventory > section ul.inventory-items li {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -317,7 +317,7 @@ main > section ul.inventory-items li {
   opacity: 0;
   transition: all 0.3s;
 }
-main > section ul.inventory-items li:before {
+#main-inventory > section ul.inventory-items li:before {
   content: '';
   position: absolute;
   width: 140px;
@@ -329,23 +329,23 @@ main > section ul.inventory-items li:before {
   opacity: 0;
   transition: all 0.1s;
 }
-main > section ul.inventory-items.render li:before {
+#main-inventory > section ul.inventory-items.render li:before {
   opacity: 1;
   transition: all 0.5s;
 }
-main > section ul.inventory-items.resgatados li.Delivered {
+#main-inventory > section ul.inventory-items.resgatados li.Delivered {
   width: 140px;
   height: 140px;
   opacity: 1;
   overflow: initial;
 }
-main > section ul.inventory-items.pendentes li.Pending {
+#main-inventory > section ul.inventory-items.pendentes li.Pending {
   width: 140px;
   height: 140px;
   opacity: 1;
   overflow: initial;
 }
-main > section ul.inventory-items li.Pending:after {
+#main-inventory > section ul.inventory-items li.Pending:after {
   content: '';
   position: absolute;
   width: 140px;
@@ -355,15 +355,15 @@ main > section ul.inventory-items li.Pending:after {
   /* background-image: url(../images/inventory/item-pending-light.png); */
   background-size: 140px;
 }
-main > section ul.inventory-items.pendentes li.Pending .gamebox {
+#main-inventory > section ul.inventory-items.pendentes li.Pending .gamebox {
 }
-main > section ul.inventory-items.fechados li.New {
+#main-inventory > section ul.inventory-items.fechados li.New {
   width: 140px;
   height: 140px;
   opacity: 1;
   overflow: initial;
 }
-main > section ul.inventory-items li.New:after {
+#main-inventory > section ul.inventory-items li.New:after {
   content: '';
   position: absolute;
   width: 140px;
@@ -373,7 +373,7 @@ main > section ul.inventory-items li.New:after {
   /* background-image: url(../images/inventory/item-new-light.png); */
   background-size: 140px;
 }
-main > section ul.inventory-items li.selected:after {
+#main-inventory > section ul.inventory-items li.selected:after {
   content: '';
   position: absolute;
   width: 140px;
@@ -383,7 +383,7 @@ main > section ul.inventory-items li.selected:after {
   background-image: url(../../../assets/img/inventory/item-selected-light.png);
   background-size: 140px;
 }
-main > section ul.inventory-items li h2 {
+#main-inventory > section ul.inventory-items li h2 {
   font-size: 0.6rem;
   line-height: 0.7rem;
   position: absolute;
@@ -399,11 +399,11 @@ main > section ul.inventory-items li h2 {
   transition: all 0.3s;
   opacity: 0;
 }
-main > section ul.inventory-items li:hover h2 {
+#main-inventory > section ul.inventory-items li:hover h2 {
   opacity: 1;
   text-shadow: 0 0 10px #000;
 }
-main > section ul.inventory-items li.selected h2 {
+#main-inventory > section ul.inventory-items li.selected h2 {
   opacity: 0;
 }
 ul.inventory-items li div.new-quantity,
@@ -481,7 +481,7 @@ ul.inventory-items li:hover .gamebox .card.opened {
 @media (min-width: 899px) {
 }
 @media (max-width: 899px) {
-  main #selected:before {
+  #main-inventory#selected:before {
     content: '';
     display: block;
     position: fixed;
@@ -615,7 +615,7 @@ main.loading #selected .gamebox > .card {
   padding-right: 15px;
   border-radius: 10px;
 }
-main #selected .keys-list:after {
+#main-inventory#selected .keys-list:after {
   content: '';
   position: absolute;
   display: flex;
@@ -1229,7 +1229,7 @@ main.loading #selected .keys-list:after {
   position: relative;
 }
 @media (min-width: 900px) {
-  main > header div {
+  #main-inventory > header div {
     max-width: 40vw;
   }
   .boxclose {
@@ -1320,16 +1320,16 @@ main.loading #selected .keys-list:after {
     -webkit-animation: circle-creation 1s forwards;
     animation: circle-creation 1s forwards;
   }
-  main > header {
+  #main-inventory > header {
     padding-top: 150px;
     flex-direction: column;
     align-items: center;
     margin-bottom: 40px;
   }
-  main > header div h1 {
+  #main-inventory > header div h1 {
     text-align: center;
   }
-  main > header img {
+  #main-inventory > header img {
     width: 100px;
   }
 }

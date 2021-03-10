@@ -10,8 +10,8 @@ import ProfileName from './screens/Account/ProfileName';
 import ProfileAvatar from './screens/Account/ProfileAvatar';
 import SignUp from './screens/SignUp';
 import Dashboard from './screens/Dashboard';
-import AccountCharacters from './screens/Account/Characters';
-import AccountCharactersCreate from './screens/Account/Characters/Create';
+import MyAccount from './screens/Account/MyAccount';
+import AccountCharactersCreate from './screens/Account/MyAccount/Create';
 import Highscores from './screens/Highscores';
 import Character from './screens/Character';
 import Forum from './screens/Forum';
@@ -90,7 +90,7 @@ const App = ({ initAccount }) => {
           <Route
             exact
             path="/account/characters"
-            component={AccountCharacters}
+            component={MyAccount}
           />
           <Route exact path="/highscores" component={Highscores} />
           <Route exact path="/character/:name" component={Character} />

@@ -21,7 +21,7 @@ import { getPlayerName } from '../../../helpers/Account';
 import './styles.css';
 import Inventory from '../Inventory';
 
-const Characters = ({
+const MyAccount = ({
   players,
   playerList,
   getProfileAvatar,
@@ -421,4 +421,4 @@ export default connect(mapStateToProps, {
   playerList,
   signOut,
   getProfileAvatar,
-})(Characters);
+})(MyAccount);
