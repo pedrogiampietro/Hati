@@ -6,6 +6,7 @@ import forumReducer from './reducers/ForumReducer';
 import guildReducer from './reducers/GuildReducer';
 import onlineReducer from './reducers/OnlineReducer';
 import shopReducer from './reducers/ShopReducer';
+import inventoryReducer from './reducers/InventoryReducer';
 
 const reducers = combineReducers({
   account: accountReducer,
@@ -14,6 +15,7 @@ const reducers = combineReducers({
   guild: guildReducer,
   online: onlineReducer,
   shop: shopReducer,
+  inventory: inventoryReducer,
 });
 
 const store = createStore(reducers, applyMiddleware(ReduxPromise));

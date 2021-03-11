@@ -1,8 +1,39 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { getInventory } from '../../../actions/InventoryActions';
 
 import './styles.css';
 
-const Inventory = () => {
+const Inventory = ({ getInventory }) => {
+  const [inventory, setInventory] = React.useState([]);
+
+  React.useEffect(() => {
+    getInventory().then(({ payload }) => {
+      const newData = payload.data.data;
+      setInventory(newData);
+    });
+  }, []);
+
+  let newInventory = [];
+  let total = 1;
+  for (let i = 0; i < inventory.length; i++) {
+    if (
+      i < inventory.length - 1 &&
+      inventory[i].itemid == inventory[i + 1].itemid
+    ) {
+      total++;
+    } else {
+      newInventory.push({
+        id: inventory[i].id,
+        itemid: inventory[i].itemid,
+        item_title: inventory[i].item_title,
+        item_image: inventory[i].item_image,
+        total: total,
+      });
+      total = 1;
+    }
+  }
+
   return (
     <main id="main-inventory">
       <section id="inventory-window">
@@ -10,7 +41,7 @@ const Inventory = () => {
           <ul className="filters">
             <li className="todos active">
               <div>Todos</div>
-              <span>28</span>
+              <span>{inventory.length}</span>
             </li>
             <li className="resgatados">
               <div>Resgatados</div>
@@ -29,34 +60,32 @@ const Inventory = () => {
         <div>
           <div className="inventory-items-container ">
             <ul className="inventory-items render resgatados fechados pendentes">
-              <li
-                data-url="#"
-                data-product={11315}
-                onclick="renderPartialFromAjax(this)"
-                className="Delivered"
-                // selected
-              >
-                <h2 className="text-white">
-                  Free Fire - 85 Diamantes + 10% de Bônus
-                </h2>
-                <div className="gamebox">
-                  <div className="card opened">
-                    <div className="left" />
-                    <div className="right" />
-                    <div className="top" />
-                    <div className="bottom" />
-                    <div className="front" />
-                    <div className="game">
-                      <img
-                        src="https://www.tibiawiki.com.br/images/2/2e/Plate_Armor.gif"
-                        className="game-cover"
-                      />
+              {newInventory.map((inventory) => (
+                <li
+                  className="Delivered"
+                  key={inventory.id}
+                  // selected
+                >
+                  <h2 className="text-white">{inventory.item_title}</h2>
+                  <div className="gamebox">
+                    <div className="card opened">
+                      <div className="left" />
+                      <div className="right" />
+                      <div className="top" />
+                      <div className="bottom" />
+                      <div className="front" />
+                      <div className="game">
+                        <img
+                          src={inventory.item_image}
+                          className="game-cover"
+                        />
+                      </div>
+                      <div className="back" />
                     </div>
-                    <div className="back" />
                   </div>
-                </div>
-                <div className="current-quantity">1</div>
-              </li>
+                  <div className="current-quantity">{inventory.total}</div>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
@@ -66,4 +95,8 @@ const Inventory = () => {
   );
 };
 
-export default Inventory;
+const mapStateToProps = (state) => {
+  return {};
+};
+
+export default connect(mapStateToProps, { getInventory })(Inventory);

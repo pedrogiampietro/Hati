@@ -12,7 +12,6 @@ const SidebarBag = ({}) => {
   const history = useHistory();
 
   const { cart } = useSelector((state) => state.shop);
-  const { account } = useSelector((state) => state.account);
   const [opened, setOpened] = React.useState(false);
   const totalCart = cart.reduce((total, product) => {
     return total + product.coins;
@@ -31,6 +30,7 @@ const SidebarBag = ({}) => {
       .then(() => {
         history.push('/account/characters');
         setOpened(false);
+        cart.splice(0, cart.length);
       })
       .catch((err) => {
         console.log(err);

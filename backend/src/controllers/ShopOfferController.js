@@ -108,19 +108,16 @@ router.put('/buynow', checkJwt, async (req, res) => {
   const getAccount = await accounts.findByPk(account_id);
 
   if (!getAccount) {
-    return res.jsonBadRequest(null, 'invalid token, please log in again.');
+    return res.jsonBadRequest(null, getMessage('response.json_invalid_token'));
   }
 
   try {
-    let newArray = [];
-
     if (getAccount.coins >= totalCoins) {
       await getAccount.update({
         coins: getAccount.coins - totalCoins,
       }),
-      
         await Promise.all(
-          (newArray = closedCart.map(
+          closedCart.map(
             ({
               itemid,
               shop_amount,
@@ -136,22 +133,15 @@ router.put('/buynow', checkJwt, async (req, res) => {
                 item_description: item_description,
                 item_image: shop_image,
               })
-          ))
+          )
         );
 
-      return res.jsonOK(
-        getAccount,
-        getMessage('your purchase was successful, check your inventory')
-      );
+      return res.jsonOK(closedCart, getMessage('shop.buy_success'));
     } else {
-      console.log(
-        'você não tem coins suficiente para realizar essa compra, faça uma recarga e tente novamente.'
-      );
-      return;
+      return res.jsonBadRequest(null, getMessage('shop.buy_nocoins'));
     }
   } catch (error) {
     console.error(error);
-    return res.jsonBadRequest('to caindo aqui', error);
   }
 });
 
