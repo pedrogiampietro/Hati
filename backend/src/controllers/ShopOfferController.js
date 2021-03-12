@@ -3,32 +3,39 @@ const { shop_offers, shop_inventories, accounts } = require('../models');
 
 const { getMessage } = require('../helpers/messages');
 const { checkJwt } = require('../middlewares/jwt');
+const { uploadShoppingImage } = require('../middlewares/multer');
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
-  const {
-    shop_title,
-    shop_description,
-    shop_image,
-    shop_type,
-    shop_amount,
-    itemid,
-    coins,
-  } = req.body;
+router.post(
+  '/',
+  checkJwt,
+  uploadShoppingImage.single('shop_image'),
+  async (req, res) => {
+    const {
+      shop_title,
+      shop_description,
+      shop_type,
+      shop_amount,
+      itemid,
+      coins,
+    } = req.body;
 
-  const addProduct = await shop_offers.create({
-    shop_title,
-    shop_description,
-    shop_image,
-    shop_type,
-    shop_amount,
-    itemid,
-    coins,
-  });
+    const finalFileName = req.file;
 
-  return res.jsonOK(addProduct);
-});
+    const addProduct = await shop_offers.create({
+      shop_title,
+      shop_description,
+      shop_image: `uploads/shop/${finalFileName.filename}`,
+      shop_type,
+      shop_amount,
+      itemid,
+      coins,
+    });
+
+    return res.jsonOK(addProduct);
+  }
+);
 
 router.get('/', async (req, res) => {
   const getOffers = await shop_offers.findAndCountAll({});

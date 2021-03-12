@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleCartProduct } from '../../../actions/ShopActions';
+import { getAvatarUrl } from '../../../helpers/Api';
 import { AiOutlineHeart, AiOutlineSearch, AiOutlineEye } from 'react-icons/ai';
 import { MdAddShoppingCart, MdRemoveShoppingCart } from 'react-icons/md';
 
@@ -17,7 +18,7 @@ const ProductCard = ({ shopList }) => {
           <div className="sch-hovereffect">
             <img
               className="img-responsive"
-              src={product.shop_image}
+              src={getAvatarUrl(product.shop_image)}
               alt="Item"
             />
             <div className="sch-overlay">

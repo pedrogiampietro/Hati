@@ -1,5 +1,6 @@
 import {
   SHOP_LIST,
+  SHOP_ADD,
   SHOP_TOGGLE_CART_PRODUCT,
   SHOP_BUYNOW_CART,
 } from '../actions/ShopActions';
@@ -15,6 +16,7 @@ export default function (state = initialState, action) {
 
   switch (type) {
     case SHOP_LIST:
+    case SHOP_ADD:
     case SHOP_BUYNOW_CART: {
       const response = payload ? payload.data : null;
       const shop = response ? response.data : null;

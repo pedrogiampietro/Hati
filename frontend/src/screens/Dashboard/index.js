@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { playerList } from '../../actions/PlayerActions';
+import { getShopList } from '../../actions/ShopActions';
 import { getAccount } from '../../helpers/Account';
 import { getFormData } from '../../helpers/FormData';
 import { newsCreate } from '../../actions/ForumActions';
@@ -11,11 +12,31 @@ import Header from '../Layouts/Header';
 import Footer from '../Layouts/Footer';
 
 import './styles.css';
+import Shopping from './Shopping';
 
-const Dashboard = ({ playerList, newsCreate, account, players }) => {
-  useEffect(() => {
+const Dashboard = ({
+  playerList,
+  getShopList,
+  newsCreate,
+  account,
+  players,
+}) => {
+  const [shopList, setShopList] = React.useState([]);
+
+  React.useEffect(() => {
     playerList();
   }, [playerList]);
+
+  React.useEffect(() => {
+    getShopList()
+      .then(({ payload }) => {
+        const newData = payload.data.data.rows;
+        setShopList(newData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [getShopList]);
 
   if (!getAccount()[0]?.group_id) {
     return <Redirect to="/sign-in" />;
@@ -32,8 +53,6 @@ const Dashboard = ({ playerList, newsCreate, account, players }) => {
 
     newsCreate(data);
   };
-
-  console.log(players);
 
   return (
     <div className="page-wrapper">
@@ -260,7 +279,7 @@ const Dashboard = ({ playerList, newsCreate, account, players }) => {
                 <div className="panel panel-default">
                   <div className="panel-heading">Shopping</div>
                   <div className="panel-body">
-                    <h1>Shopping</h1>
+                    <Shopping shopList={shopList} />
                   </div>
                 </div>
               </div>
@@ -282,4 +301,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { playerList, newsCreate })(Dashboard);
+export default connect(mapStateToProps, {
+  playerList,
+  getShopList,
+  newsCreate,
+})(Dashboard);

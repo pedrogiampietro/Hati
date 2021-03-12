@@ -150,7 +150,9 @@
   overflow: hidden;
   top: 0;
   left: 0;
+  cursor: pointer;
 }
+
 .sch-product-grid .sch-hovereffect:hover .sch-overlay::before {
   background: rgba(0, 0, 0, 0.4);
   content: '';
@@ -257,7 +259,8 @@
   display: flex;
 }
 .sch-product-grid .sch-hovereffect p span {
-  color: #fff;
+  /* color: #fff; */
+  color: var(--pink);
 }
 .sch-product-grid .sch-hovereffect p span:hover,
 .sch-product-grid .sch-hovereffect p span:focus {
