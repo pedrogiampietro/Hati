@@ -259,7 +259,6 @@
   display: flex;
 }
 .sch-product-grid .sch-hovereffect p span {
-  /* color: #fff; */
   color: var(--pink);
 }
 .sch-product-grid .sch-hovereffect p span:hover,

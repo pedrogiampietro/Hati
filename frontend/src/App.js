@@ -27,6 +27,7 @@ import Guilds from './screens/Guilds';
 import GuildList from './screens/Guilds/GuildList';
 import Online from './screens/Online';
 import Shop from './screens/Shop';
+import BuyCoins from './screens/BuyCoins';
 
 import SidebarBag from './components/SidebarBag';
 
@@ -87,11 +88,7 @@ const App = ({ initAccount }) => {
           />
           {/* Finaly Protected Routes */}
 
-          <Route
-            exact
-            path="/account/characters"
-            component={MyAccount}
-          />
+          <Route exact path="/account/characters" component={MyAccount} />
           <Route exact path="/highscores" component={Highscores} />
           <Route exact path="/character/:name" component={Character} />
           <Route exact path="/PageSearch" component={PageSearch} />
@@ -114,6 +111,7 @@ const App = ({ initAccount }) => {
           <Route exact path="/online" component={Online} />
 
           <Route exact path="/shop" component={Shop} />
+          <Route exact path="/buycoins" component={BuyCoins} />
 
           <Route exact path="/" component={Home} />
         </Switch>

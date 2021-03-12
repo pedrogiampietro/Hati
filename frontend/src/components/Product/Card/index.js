@@ -16,11 +16,13 @@ const ProductCard = ({ shopList }) => {
         <div className="sch-product-image">
           {/* Start Product Effect*/}
           <div className="sch-hovereffect">
-            <img
-              className="img-responsive"
-              src={getAvatarUrl(product.shop_image)}
-              alt="Item"
-            />
+            {product.shop_image ? (
+              <img
+                className="img-responsive"
+                src={getAvatarUrl(product.shop_image)}
+                alt="Item"
+              />
+            ) : null}
             <div className="sch-overlay">
               <p className="set1">
                 <span>
@@ -59,7 +61,7 @@ const ProductCard = ({ shopList }) => {
         <div className="sch-product-content">
           {/* Start Product Price*/}
           <div className="sch-price">
-            <span className="sch-price-new">{product.coins}</span>
+            <span className="sch-price-new">{product.coins} Coins</span>
             {/* <span className="sch-price-old">20/span> */}
           </div>
           {/* End Product Price*/}
