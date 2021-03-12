@@ -21,7 +21,6 @@ const ProductCard = ({ shopList }) => {
               alt="Item"
             />
             <div className="sch-overlay">
-              <h2 />
               <p className="set1">
                 <span>
                   <AiOutlineSearch size={24} className="mr-4" />

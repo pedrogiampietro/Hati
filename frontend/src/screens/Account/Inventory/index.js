@@ -12,14 +12,14 @@ const Inventory = ({ getInventory }) => {
       const newData = payload.data.data;
       setInventory(newData);
     });
-  }, []);
+  }, [getInventory]);
 
   let newInventory = [];
   let total = 1;
   for (let i = 0; i < inventory.length; i++) {
     if (
       i < inventory.length - 1 &&
-      inventory[i].itemid == inventory[i + 1].itemid
+      inventory[i].itemid === inventory[i + 1].itemid
     ) {
       total++;
     } else {
@@ -78,6 +78,7 @@ const Inventory = ({ getInventory }) => {
                         <img
                           src={inventory.item_image}
                           className="game-cover"
+                          alt="ItemImage"
                         />
                       </div>
                       <div className="back" />

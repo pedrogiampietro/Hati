@@ -22,7 +22,8 @@ import { characterVocations } from '../../../config';
 
 import Container from '../../Layouts/Container';
 import GuildLogoDefault from '../../../assets/img/guild_logo_default.png';
-import { FaSignInAlt, FaRegTrashAlt } from 'react-icons/fa';
+import { FaSignInAlt } from 'react-icons/fa';
+// FaRegTrashAlt
 
 import './styles.css';
 import GuildRank from './GuildRank';
@@ -493,10 +494,6 @@ const GuildList = ({
                               <FaSignInAlt size={14} />
                             </button>
                           ) : null}
-
-                          {/* <span className="btn btn-outline-danger btn-sm flex-shrink-0 waves-effect waves-themed">
-									<FaRegTrashAlt size={14} color="#" />
-								</span> */}
                         </div>
                       </td>
                     </tr>
@@ -528,10 +525,6 @@ const GuildList = ({
                               <FaSignInAlt size={14} />
                             </button>
                           ) : null}
-
-                          {/* <span className="btn btn-outline-danger btn-sm flex-shrink-0 waves-effect waves-themed">
-												<FaRegTrashAlt size={14} color="#" />
-											</span> */}
                         </div>
                       </td>
                     </tr>
