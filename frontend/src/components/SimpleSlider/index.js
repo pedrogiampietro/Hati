@@ -5,7 +5,7 @@ const SimpleSlider = ({ setWallet }) => {
 
   React.useEffect(() => {
     setWallet(coins * 10);
-  }, [coins]);
+  }, [coins, setWallet]);
 
   return (
     <div className="pricing">

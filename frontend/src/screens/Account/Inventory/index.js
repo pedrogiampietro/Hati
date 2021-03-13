@@ -6,6 +6,7 @@ import './styles.css';
 
 const Inventory = ({ getInventory }) => {
   const [inventory, setInventory] = React.useState([]);
+  const [currentAccordionIndex, setCurrentAccordionIndex] = React.useState(0);
 
   React.useEffect(() => {
     getInventory().then(({ payload }) => {
@@ -34,6 +35,10 @@ const Inventory = ({ getInventory }) => {
     }
   }
 
+  const openAccordion = (id = 0) => setCurrentAccordionIndex(id);
+
+  console.log(currentAccordionIndex);
+
   return (
     <main id="main-inventory">
       <section id="inventory-window">
@@ -60,10 +65,14 @@ const Inventory = ({ getInventory }) => {
         <div>
           <div className="inventory-items-container ">
             <ul className="inventory-items render resgatados fechados pendentes">
-              {newInventory.map((inventory) => (
+              {newInventory.map((inventory, index) => (
                 <li
-                  className="Delivered"
+                  id={inventory.id}
+                  className={`Delivered ${
+                    currentAccordionIndex === inventory.id ? 'selected' : ''
+                  }`}
                   key={inventory.id}
+                  onClick={() => openAccordion(inventory.id)}
                   // selected
                 >
                   <h2 className="text-white">{inventory.item_title}</h2>

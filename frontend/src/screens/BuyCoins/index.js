@@ -10,7 +10,85 @@ const BuyCoins = () => {
   const { account } = useSelector((state) => state.account);
   const Account = account?.[0]?.account;
 
+  // State variables, to store the values ​​of the inputs.
+  const [numResid, setNumResid] = React.useState('');
+  const [costumerNome, setCostumerNome] = React.useState('');
+  const [nomeCartao, setNomeCartao] = React.useState('');
+  const [numeroCartao, setNumeroCartao] = React.useState('');
+  const [cvv, setCvv] = React.useState('');
+  const [dataExpiracao, setDataExpiracao] = React.useState('');
+  const [numeroTel, setNumeroTel] = React.useState('');
+  const [cpf, setCpf] = React.useState('');
+  const [referencia, setRef] = React.useState('');
+  const [logradouro, setLogradouro] = React.useState('');
+  const [bairro, setBairro] = React.useState('');
+  const [localidade, setLocalidade] = React.useState('');
+  const [endereco, setEndereco] = React.useState('');
+  const [uf, setUf] = React.useState('');
+  const [cep, setCep] = React.useState('');
+  const [ruaNum, setRuaNum] = React.useState(0);
+  const [pagamento, setPagamento] = React.useState([]);
+
   const [wallet, setWallet] = React.useState();
+
+  //Create Costumer
+  const costumer = {
+    external_id: '#3311',
+    name: costumerNome,
+    type: 'individual',
+    country: 'br',
+    email: Account?.email,
+    documents: [
+      {
+        type: 'cpf',
+        number: cpf,
+      },
+    ],
+    phone_numbers: [`+55${numeroTel}`, '+5511888889999'],
+    birthday: '1965-01-01',
+  };
+
+  //Criando adress para usar em billing e shipping
+  const adress = {
+    country: 'br',
+    state: uf,
+    city: localidade,
+    neighborhood: bairro,
+    street: logradouro,
+    street_number: ruaNum,
+    zipcode: cep,
+  };
+
+  //Criando o shipping
+  const shipping = {
+    name: 'Shipping Reeves',
+    fee: 1000,
+    delivery_date: '2000-12-21',
+    expedited: true,
+    address: adress,
+  };
+
+  //Criando o billing
+  const billing = {
+    name: 'Billing Moss',
+    address: adress,
+  };
+
+  //Criando um array com os itens no template do pagarme
+  // const meusItems = items.map((e) => {
+  //   let preco = e.preco;
+  //   let precoSemPonto = preco + '';
+  //   precoSemPonto = precoSemPonto.replace('.', '');
+  //   precoSemPonto = parseInt(precoSemPonto);
+
+  //   return {
+  //     id: `rb${e.id_produto}`,
+  //     title: e.produto,
+  //     unit_price: precoSemPonto,
+  //     quantity: e.quantidade,
+  //     tangible: true,
+  //   };
+  // });
 
   return (
     <Container>
