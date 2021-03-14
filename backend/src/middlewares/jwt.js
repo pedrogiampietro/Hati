@@ -5,7 +5,7 @@ module.exports = {
     const token = getTokenFromHeaders(req.headers);
 
     if (!token) {
-      return res.jsonUnauthorized(null, 'Invalid token');
+      return res.jsonUnauthorized(null, 'response.json_invalid_token');
     }
 
     try {

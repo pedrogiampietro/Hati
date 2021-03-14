@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     coins: {
       type: DataTypes.INTEGER,
       allowNull: false,
+      defaultValue: 0,
     },
     secret: {
       type: DataTypes.STRING,

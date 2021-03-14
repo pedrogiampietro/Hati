@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Redirect, Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { signOut } from '../../../actions/AccountActions';
+import { signOut, getAccount } from '../../../actions/AccountActions';
 import {
   getProfileAvatar,
   deleteProfileAvatar,
@@ -25,23 +25,25 @@ const MyAccount = ({
   players,
   playerList,
   getProfileAvatar,
+  getAccount,
   signOut,
   account,
 }) => {
   const [avatar, setAvatar] = React.useState('');
+  const [myAccount, setMyAccount] = React.useState([]);
   const history = useHistory();
 
-  useEffect(() => {
-    getProfileAvatar().then(({ payload }) => {
-      const newData = payload.data.data;
-      setAvatar(newData);
-    });
-    playerList();
-  }, [playerList, getProfileAvatar]);
-
-  if (!avatar) {
-    return null;
-  }
+  // useEffect(() => {
+  //   playerList();
+  //   getProfileAvatar().then(({ payload }) => {
+  //     const newData = payload.data.data;
+  //     setAvatar(newData);
+  //   });
+  //   getAccount().then(({ payload }) => {
+  //     const newData = payload.data.data;
+  //     setMyAccount(newData);
+  //   });
+  // }, [playerList, getProfileAvatar, getAccount]);
 
   if (!account) {
     return <Redirect to="/sign-in" />;
@@ -60,8 +62,6 @@ const MyAccount = ({
 
     setTimeout(() => history.push('/account/avatar'), 2000);
   }
-
-  const Account = account[0]?.account;
 
   return (
     <Container>
@@ -138,29 +138,29 @@ const MyAccount = ({
                         <tbody>
                           <tr>
                             <td>Name</td>
-                            <td>{Account?.name}</td>
+                            <td>{myAccount.name}</td>
                             <td></td>
                           </tr>
                           <tr>
                             <td>E-mail Address</td>
-                            <td>{Account?.email}</td>
+                            <td>{myAccount.email}</td>
                             <td></td>
                           </tr>
                           <tr>
                             <td>Created</td>
                             <td className="col-md-9">
-                              {convertTimestempToDate(Account?.creation)}
+                              {convertTimestempToDate(myAccount.creation)}
                             </td>
                             <td></td>
                           </tr>
                           <tr>
                             <td className="col-md-2 notranslate">Hati Coins</td>
-                            <td>{Account?.coins}</td>
+                            <td>{myAccount.coins}</td>
                             <td></td>
                           </tr>
                           <tr>
                             <td>Premium Account</td>
-                            <td>(Premmium Days: {Account?.premdays})</td>
+                            <td>(Premmium Days: {myAccount.premdays})</td>
                           </tr>
                         </tbody>
                       </table>
@@ -194,13 +194,13 @@ const MyAccount = ({
                               <tr>
                                 <td>Real Name:</td>
                                 <td className="col-md-4 notranslate">
-                                  {Account?.rlname}
+                                  {myAccount.rlname}
                                 </td>
                               </tr>
                               <tr>
                                 <td>Location:</td>
                                 <td className="col-md-4">
-                                  {Account?.location}
+                                  {myAccount.location}
                                 </td>
                               </tr>
                               {/* <tr>
@@ -221,7 +221,7 @@ const MyAccount = ({
                             </Link>
                           </span>
 
-                          {Account?.profileName !== '' ? null : (
+                          {myAccount.profileName !== '' ? null : (
                             <span className="col-md-3 mb-1" align="right">
                               <Link to="/account/profile_name">
                                 <button className="btn btn-primary btn-sm">
@@ -242,12 +242,12 @@ const MyAccount = ({
                               <h2 className="fs-md">
                                 {' '}
                                 <span className="subheader-title text-truncate text-truncate-lg text-primary">
-                                  {Account?.profileName}
+                                  {myAccount.profileName}
                                 </span>
                               </h2>
                             </div>
                           </div>
-                          {avatar.avatar === '' ? (
+                          {myAccount.avatar === '' ? (
                             <img
                               src={ProfileAvatar}
                               alt={ProfileAvatar}
@@ -421,4 +421,5 @@ export default connect(mapStateToProps, {
   playerList,
   signOut,
   getProfileAvatar,
+  getAccount,
 })(MyAccount);
