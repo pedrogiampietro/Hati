@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Redirect, Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signOut, getAccount } from '../../../actions/AccountActions';
@@ -33,17 +33,28 @@ const MyAccount = ({
   const [myAccount, setMyAccount] = React.useState([]);
   const history = useHistory();
 
-  // useEffect(() => {
-  //   playerList();
-  //   getProfileAvatar().then(({ payload }) => {
-  //     const newData = payload.data.data;
-  //     setAvatar(newData);
-  //   });
-  //   getAccount().then(({ payload }) => {
-  //     const newData = payload.data.data;
-  //     setMyAccount(newData);
-  //   });
-  // }, [playerList, getProfileAvatar, getAccount]);
+  React.useEffect(() => {
+    playerList();
+    getProfileAvatar().then(({ payload }) => {
+      const newData = payload.data.data;
+      setAvatar(newData);
+    });
+    getAccount().then(({ payload }) => {
+      const newData = payload.data.data;
+      setMyAccount(newData);
+    });
+  }, [playerList, getProfileAvatar, getAccount]);
+
+  React.useEffect(() => {
+    getAccount().then(({ payload }) => {
+      const newData = payload.data.data;
+      setMyAccount(newData);
+    });
+  }, [getAccount]);
+
+  if (!avatar) {
+    return null;
+  }
 
   if (!account) {
     return <Redirect to="/sign-in" />;

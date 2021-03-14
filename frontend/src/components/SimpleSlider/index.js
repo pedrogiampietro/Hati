@@ -1,8 +1,6 @@
 import React from 'react';
 
-const SimpleSlider = ({ setWallet }) => {
-  const [coins, setCoins] = React.useState(0);
-
+const SimpleSlider = ({ setWallet, coins, setCoins }) => {
   React.useEffect(() => {
     setWallet(coins * 10);
   }, [coins, setWallet]);

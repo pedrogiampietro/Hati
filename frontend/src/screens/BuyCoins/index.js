@@ -8,36 +8,33 @@ import './styles.css';
 
 const BuyCoins = () => {
   const { account } = useSelector((state) => state.account);
-  const Account = account?.[0]?.account;
 
   // State variables, to store the values ​​of the inputs.
-  const [numResid, setNumResid] = React.useState('');
   const [costumerNome, setCostumerNome] = React.useState('');
-  const [nomeCartao, setNomeCartao] = React.useState('');
-  const [numeroCartao, setNumeroCartao] = React.useState('');
-  const [cvv, setCvv] = React.useState('');
-  const [dataExpiracao, setDataExpiracao] = React.useState('');
-  const [numeroTel, setNumeroTel] = React.useState('');
   const [cpf, setCpf] = React.useState('');
-  const [referencia, setRef] = React.useState('');
-  const [logradouro, setLogradouro] = React.useState('');
-  const [bairro, setBairro] = React.useState('');
-  const [localidade, setLocalidade] = React.useState('');
-  const [endereco, setEndereco] = React.useState('');
-  const [uf, setUf] = React.useState('');
   const [cep, setCep] = React.useState('');
+  const [cidade, setCidade] = React.useState('');
+  const [numeroTel, setNumeroTel] = React.useState('');
   const [ruaNum, setRuaNum] = React.useState(0);
-  const [pagamento, setPagamento] = React.useState([]);
+  const [bairro, setBairro] = React.useState('');
+  const [uf, setUf] = React.useState('');
 
+  const [numeroCartao, setNumeroCartao] = React.useState('');
+  const [nomeCartao, setNomeCartao] = React.useState('');
+  const [dataExpiracao, setDataExpiracao] = React.useState('');
+  const [cvv, setCvv] = React.useState('');
+
+  const [pagamento, setPagamento] = React.useState([]);
+  const [coins, setCoins] = React.useState(0);
   const [wallet, setWallet] = React.useState();
 
   //Create Costumer
   const costumer = {
-    external_id: '#3311',
+    external_id: account?.id,
     name: costumerNome,
     type: 'individual',
     country: 'br',
-    email: Account?.email,
+    email: account?.email,
     documents: [
       {
         type: 'cpf',
@@ -52,9 +49,9 @@ const BuyCoins = () => {
   const adress = {
     country: 'br',
     state: uf,
-    city: localidade,
+    city: cidade,
     neighborhood: bairro,
-    street: logradouro,
+    street: cidade,
     street_number: ruaNum,
     zipcode: cep,
   };
@@ -74,21 +71,38 @@ const BuyCoins = () => {
     address: adress,
   };
 
-  //Criando um array com os itens no template do pagarme
-  // const meusItems = items.map((e) => {
-  //   let preco = e.preco;
-  //   let precoSemPonto = preco + '';
-  //   precoSemPonto = precoSemPonto.replace('.', '');
-  //   precoSemPonto = parseInt(precoSemPonto);
+  // Criando um array com os itens no template do pagarme
+  const finallyCart = {
+    id: account?.id,
+    title: `${coins} Tibia coins`,
+    unit_price: wallet,
+    quantity: coins,
+    tangible: true,
+  };
 
-  //   return {
-  //     id: `rb${e.id_produto}`,
-  //     title: e.produto,
-  //     unit_price: precoSemPonto,
-  //     quantity: e.quantidade,
-  //     tangible: true,
-  //   };
-  // });
+  // Enviar os dados para o backend
+  async function handleMakePurchasing() {
+    try {
+      const response = {
+        amount: wallet,
+        card_number: numeroCartao,
+        card_cvv: cvv,
+        card_expiration_date: dataExpiracao,
+        card_holder_name: nomeCartao,
+        customer: costumer,
+        billing: billing,
+        shipping: shipping,
+        items: finallyCart,
+      };
+
+      alert(response.status);
+
+      return setPagamento(response);
+    } catch (error) {
+      console.log(error);
+      alert(error);
+    }
+  }
 
   return (
     <Container>
@@ -98,18 +112,31 @@ const BuyCoins = () => {
             <div className="col-6">
               <span className="section-title">Dados Pessoais</span>
               <div className="row mb-3">
-                <div className="col-12 mb-3">
+                <div className="col-12">
                   <input
                     type="text"
                     placeholder="Nome Completo"
                     className="form-control form-control-lg"
+                    onChange={(e) => setCostumerNome(e.target.value)}
                   />
                 </div>
-                <div className="col-12">
+              </div>
+
+              <div className="row mb-3">
+                <div className="col-6">
+                  <input
+                    type="text"
+                    placeholder="CPF"
+                    className="form-control form-control-lg"
+                    onChange={(e) => setCpf(e.target.value)}
+                  />
+                </div>
+                <div className="col-6 pl-0">
                   <input
                     type="text"
                     placeholder="CEP"
                     className="form-control form-control-lg"
+                    onChange={(e) => setCep(e.target.value)}
                   />
                 </div>
               </div>
@@ -119,13 +146,15 @@ const BuyCoins = () => {
                     type="text"
                     placeholder="Cidade"
                     className="form-control form-control-lg"
+                    onChange={(e) => setCidade(e.target.value)}
                   />
                 </div>
                 <div className="col-6 pl-0">
                   <input
                     type="text"
-                    placeholder="Logradouro"
+                    placeholder="Número Telefone"
                     className="form-control form-control-lg"
+                    onChange={(e) => setNumeroTel(e.target.value)}
                   />
                 </div>
               </div>
@@ -135,6 +164,7 @@ const BuyCoins = () => {
                     type="number"
                     placeholder="Numero"
                     className="form-control form-control-lg"
+                    onChange={(e) => setRuaNum(e.target.value)}
                   />
                 </div>
                 <div className="col-5 pl-0">
@@ -142,6 +172,7 @@ const BuyCoins = () => {
                     type="text"
                     placeholder="Bairro"
                     className="form-control form-control-lg"
+                    onChange={(e) => setBairro(e.target.value)}
                   />
                 </div>
                 <div className="col-2 pl-0">
@@ -149,6 +180,7 @@ const BuyCoins = () => {
                     type="text"
                     placeholder="UF"
                     className="form-control form-control-lg"
+                    onChange={(e) => setUf(e.target.value)}
                   />
                 </div>
               </div>
@@ -160,6 +192,7 @@ const BuyCoins = () => {
                     type="text"
                     placeholder="Número do Cartão"
                     className="form-control form-control-lg"
+                    onChange={(e) => setNumeroCartao(e.target.value)}
                   />
                 </div>
                 <div className="col-6">
@@ -167,6 +200,7 @@ const BuyCoins = () => {
                     type="text"
                     placeholder="Nome do titular"
                     className="form-control form-control-lg"
+                    onChange={(e) => setNomeCartao(e.target.value)}
                   />
                 </div>
               </div>
@@ -176,6 +210,7 @@ const BuyCoins = () => {
                     type="text"
                     placeholder="Validade"
                     className="form-control form-control-lg"
+                    onChange={(e) => setDataExpiracao(e.target.value)}
                   />
                 </div>
                 <div className="col-6 pl-0">
@@ -183,18 +218,10 @@ const BuyCoins = () => {
                     type="text"
                     placeholder="CVV"
                     className="form-control form-control-lg"
+                    onChange={(e) => setCvv(e.target.value)}
                   />
                 </div>
               </div>
-              {/* <div className="row mb-3">
-              <div className="col-6 pl-0" >
-                <input
-                  type="text"
-                  placeholder="CPF/CNPJ do titular"
-                  className="form-control form-control-lg"
-                />
-              </div>
-            </div> */}
               <div className="row mt-4">
                 <div className="col-12 mb-4 d-flex justify-content-between align-items-center total">
                   <b>Total:</b>
@@ -204,6 +231,7 @@ const BuyCoins = () => {
                   <button
                     type="button"
                     className="btn btn-block btn-lg btn-primary w-100"
+                    onClick={() => handleMakePurchasing()}
                   >
                     Finalizar Compra
                   </button>
@@ -244,7 +272,11 @@ const BuyCoins = () => {
                 </div>
                 <div className="form-group">
                   <h1>Quantity</h1>
-                  <SimpleSlider setWallet={setWallet} />
+                  <SimpleSlider
+                    setWallet={setWallet}
+                    coins={coins}
+                    setCoins={setCoins}
+                  />
                 </div>
                 <div className="alert alert-info">
                   <i className="fa fa-info-circle" /> Your purchase with us is
