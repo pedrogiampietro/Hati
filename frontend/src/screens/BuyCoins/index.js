@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { makePagarmePurchasing } from '../../actions/PagarmeActions';
 import Container from '../Layouts/Container';
 import SimpleSlider from '../../components/SimpleSlider';
 import { formatPrice } from '../../helpers/FormatPrice';
@@ -30,7 +31,7 @@ const BuyCoins = () => {
 
   //Create Costumer
   const costumer = {
-    external_id: account?.id,
+    external_id: String(account?.id),
     name: costumerNome,
     type: 'individual',
     country: 'br',
@@ -72,37 +73,32 @@ const BuyCoins = () => {
   };
 
   // Criando um array com os itens no template do pagarme
-  const finallyCart = {
-    id: account?.id,
-    title: `${coins} Tibia coins`,
-    unit_price: wallet,
-    quantity: coins,
-    tangible: true,
-  };
+  const finallyCart = [
+    {
+      id: String(account?.id),
+      title: `${coins} Tibia coins`,
+      unit_price: wallet,
+      quantity: coins,
+      tangible: true,
+    },
+  ];
 
   // Enviar os dados para o backend
-  async function handleMakePurchasing() {
-    try {
-      const response = {
-        amount: wallet,
-        card_number: numeroCartao,
-        card_cvv: cvv,
-        card_expiration_date: dataExpiracao,
-        card_holder_name: nomeCartao,
-        customer: costumer,
-        billing: billing,
-        shipping: shipping,
-        items: finallyCart,
-      };
+  const handleMakePurchasing = (event) => {
+    const response = {
+      amount: wallet,
+      card_number: numeroCartao,
+      card_cvv: cvv,
+      card_expiration_date: dataExpiracao,
+      card_holder_name: nomeCartao,
+      customer: costumer,
+      billing: billing,
+      shipping: shipping,
+      items: finallyCart,
+    };
 
-      alert(response.status);
-
-      return setPagamento(response);
-    } catch (error) {
-      console.log(error);
-      alert(error);
-    }
-  }
+    makePagarmePurchasing(response);
+  };
 
   return (
     <Container>
@@ -229,7 +225,7 @@ const BuyCoins = () => {
                 </div>
                 <div className="col-12">
                   <button
-                    type="button"
+                    type="submit"
                     className="btn btn-block btn-lg btn-primary w-100"
                     onClick={() => handleMakePurchasing()}
                   >

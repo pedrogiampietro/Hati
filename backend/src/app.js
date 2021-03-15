@@ -8,6 +8,8 @@ const guildController = require('./controllers/GuildController');
 const onlineController = require('./controllers/OnlineController');
 const shopOfferController = require('./controllers/ShopOfferController');
 const inventoryController = require('./controllers/InventoryController');
+const pagarmeController = require('./controllers/PagarmeController');
+const postBackController = require('./controllers/PostBackController');
 const response = require('./middlewares/response');
 const path = require('path');
 
@@ -26,6 +28,8 @@ app.use('/guild', guildController);
 app.use('/online', onlineController);
 app.use('/shop', shopOfferController);
 app.use('/inventory', inventoryController);
+app.use('/pagarme', pagarmeController);
+app.use('/postback', postBackController);
 
 app.get('/', (req, res) => {
   return res.json('OK');

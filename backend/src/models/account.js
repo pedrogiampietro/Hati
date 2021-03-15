@@ -104,6 +104,7 @@ module.exports = (sequelize, DataTypes) => {
   accounts.associate = (models) => {
     accounts.hasMany(models.players, { foreignKey: 'account_id' });
     accounts.hasMany(models.shop_inventories, { foreignKey: 'account_id' });
+    accounts.hasMany(models.shop_orders, { foreignKey: 'account_id' });
     accounts.hasMany(models.threads, { foreignKey: 'account_id' });
     accounts.hasMany(models.comments, { foreignKey: 'account_id' });
   };
