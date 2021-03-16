@@ -44,6 +44,8 @@ router.post('/creditcard', checkJwt, async (req, res) => {
     items,
   } = body;
 
+  console.log(body);
+
   pagarme.client
     .connect({ api_key: process.env.PAGARME_API_KEY_TEST })
     .then((client) =>
@@ -65,6 +67,8 @@ router.post('/creditcard', checkJwt, async (req, res) => {
         account_id: Number(transaction.customer.external_id),
         address: `${transaction.shipping.address.neighborhood} - ${transaction.shipping.address.street} - ${transaction.shipping.address.street_number}`,
         status: transaction.status,
+        payment_method: transaction.payment_method,
+        paid_value: transaction.paid_amount,
       });
 
       return res.json({ transaction: transaction });
