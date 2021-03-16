@@ -25,7 +25,6 @@ const BuyCoins = () => {
   const [dataExpiracao, setDataExpiracao] = React.useState('');
   const [cvv, setCvv] = React.useState('');
 
-  const [pagamento, setPagamento] = React.useState([]);
   const [coins, setCoins] = React.useState(0);
   const [wallet, setWallet] = React.useState();
 

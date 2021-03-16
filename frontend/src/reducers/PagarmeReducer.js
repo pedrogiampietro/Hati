@@ -1,13 +1,11 @@
-import {
-  PAGARME_PURCHASING,
-} from '../actions/PagarmeActions';
+import { PAGARME_PURCHASING } from '../actions/PagarmeActions';
 
 const initialState = {
   pagarme: [],
 };
 
 export default function (state = initialState, action) {
-  const { type, payload, product } = action;
+  const { type, payload } = action;
 
   switch (type) {
     case PAGARME_PURCHASING: {
@@ -16,7 +14,6 @@ export default function (state = initialState, action) {
 
       return { ...state, pagarme };
     }
-
 
     default:
       return state;
