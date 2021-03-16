@@ -98,7 +98,7 @@
   margin-bottom: 35px;
 }
 @media (max-width: 1400px) {
-  main>section>div: nth-child(2) {
+  main > section > div:nth-child(2) {
     flex-direction: column;
   }
 }
