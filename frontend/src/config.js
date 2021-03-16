@@ -10,69 +10,78 @@
  */
 
 module.exports = {
-	genders: {
-		0: 'Female',
-		1: 'Male',
-	},
+  serverConnection: {
+    developer: {
+      base_URL: 'http://localhost:3001',
+    },
+    production: {
+      base_URL: 'http://167.114.82.192',
+    },
+  },
 
-	groupsId: {
-		1: 'Player',
-		2: 'Tutor',
-		3: 'Senior Tutor',
-		4: 'GameMaster',
-		5: 'Community Manager',
-		6: 'Administator',
-	},
+  genders: {
+    0: 'Female',
+    1: 'Male',
+  },
 
-	createVocations: [
-		// { vocation_id: '0', name: 'Rook' }, -> comment or uncomment to use the desired vocations in creating account
-		{ vocation_id: '1', name: 'Sorcerer' },
-		{ vocation_id: '2', name: 'Druid' },
-		{ vocation_id: '3', name: 'Paladin' },
-		{ vocation_id: '4', name: 'Knight' },
-	],
+  groupsId: {
+    1: 'Player',
+    2: 'Tutor',
+    3: 'Senior Tutor',
+    4: 'GameMaster',
+    5: 'Community Manager',
+    6: 'Administator',
+  },
 
-	characterVocations: {
-		0: 'No Vocation',
-		1: 'Sorcerer',
-		2: 'Druid',
-		3: 'Paladin',
-		4: 'Knight',
-		5: 'Master Sorcerer',
-		6: 'Elder Druid',
-		7: 'Royal Paladin',
-		8: 'Elite Knight',
-	},
+  createVocations: [
+    // { vocation_id: '0', name: 'Rook' }, -> comment or uncomment to use the desired vocations in creating account
+    { vocation_id: '1', name: 'Sorcerer' },
+    { vocation_id: '2', name: 'Druid' },
+    { vocation_id: '3', name: 'Paladin' },
+    { vocation_id: '4', name: 'Knight' },
+  ],
 
-	towns: {
-		1: `Ab'dendriel`,
-		2: 'Carlin',
-		3: 'Kazordoon',
-		4: 'Thais',
-		5: 'Venore',
-		6: 'Ankrahmun',
-		7: 'Edron',
-		8: 'Farmine',
-		9: 'Darashia',
-		10: 'Liberty Bay',
-		11: 'Port Hope',
-		12: 'Svargrond',
-		13: 'Yalahar',
-		14: 'Gray Beach',
-		15: 'Krailos',
-		16: 'Rathleton',
-		17: 'Roshamuul',
-	},
+  characterVocations: {
+    0: 'No Vocation',
+    1: 'Sorcerer',
+    2: 'Druid',
+    3: 'Paladin',
+    4: 'Knight',
+    5: 'Master Sorcerer',
+    6: 'Elder Druid',
+    7: 'Royal Paladin',
+    8: 'Elite Knight',
+  },
 
-	listSkills: [
-		{ type: 'level', name: 'Level' },
-		{ type: 'maglevel', name: 'Magic Level' },
-		{ type: 'skill_fist', name: 'First Fighting' },
-		{ type: 'skill_axe', name: 'Axe Fighting' },
-		{ type: 'skill_club', name: 'Club Fighting' },
-		{ type: 'skill_sword', name: 'Sword Fighting' },
-		{ type: 'skill_dist', name: 'Distance Fighting' },
-		{ type: 'skill_shielding', name: 'Shield Fighting' },
-		{ type: 'skill_fishing', name: 'Fishing' },
-	],
-}
+  towns: {
+    1: `Ab'dendriel`,
+    2: 'Carlin',
+    3: 'Kazordoon',
+    4: 'Thais',
+    5: 'Venore',
+    6: 'Ankrahmun',
+    7: 'Edron',
+    8: 'Farmine',
+    9: 'Darashia',
+    10: 'Liberty Bay',
+    11: 'Port Hope',
+    12: 'Svargrond',
+    13: 'Yalahar',
+    14: 'Gray Beach',
+    15: 'Krailos',
+    16: 'Rathleton',
+    17: 'Roshamuul',
+  },
+
+  listSkills: [
+    { type: 'level', name: 'Level' },
+    { type: 'maglevel', name: 'Magic Level' },
+    { type: 'skill_fist', name: 'First Fighting' },
+    { type: 'skill_axe', name: 'Axe Fighting' },
+    { type: 'skill_club', name: 'Club Fighting' },
+    { type: 'skill_sword', name: 'Sword Fighting' },
+    { type: 'skill_dist', name: 'Distance Fighting' },
+    { type: 'skill_shielding', name: 'Shield Fighting' },
+    { type: 'skill_fishing', name: 'Fishing' },
+  ],
+};
