@@ -1,13 +1,13 @@
 import axios from 'axios';
-import { getToken, getRefreshToken, getPlayerName } from '../Account';
 import { serverConnection } from '../../config';
+import { getToken, getRefreshToken, getPlayerName } from '../Account';
 
 export const getApiUrl = (path) => {
-  return serverConnection.developer.base_URL + path;
+  return serverConnection.production.base_URL + path;
 };
 
 export const getAvatarUrl = (path) => {
-  return `${serverConnection.developer.base_URL}/${path}`;
+  return `${serverConnection.production.base_URL}/${path}`;
 };
 
 export const getHeaders = () => {
