@@ -191,7 +191,7 @@ const BuyCoins = () => {
                     onChange={(e) => setNumeroCartao(e.target.value)}
                   />
                 </div>
-                <div className="col-6">
+                <div className="col-6 pl-0">
                   <input
                     type="text"
                     placeholder="Nome do titular"
@@ -219,10 +219,6 @@ const BuyCoins = () => {
                 </div>
               </div>
               <div className="row mt-4">
-                <div className="col-12 mb-4 d-flex justify-content-between align-items-center total">
-                  <b>Total:</b>
-                  {/* <h3>R$ {total.toFixed(2)}</h3> */}
-                </div>
                 <div className="col-12">
                   <button
                     type="submit"
