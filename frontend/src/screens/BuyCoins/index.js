@@ -4,6 +4,7 @@ import { makePagarmePurchasing } from '../../actions/PagarmeActions';
 import Container from '../Layouts/Container';
 import SimpleSlider from '../../components/SimpleSlider';
 import { formatPrice } from '../../helpers/FormatPrice';
+import MaskedInput from '../../components/TextMaskCustom';
 
 import './styles.css';
 
@@ -53,7 +54,7 @@ const BuyCoins = () => {
     neighborhood: bairro,
     street: cidade,
     street_number: ruaNum,
-    zipcode: cep,
+    zipcode: cep.replace('-', ''),
   };
 
   //Criando o shipping
@@ -127,10 +128,11 @@ const BuyCoins = () => {
                   />
                 </div>
                 <div className="col-6 pl-0">
-                  <input
-                    type="text"
-                    placeholder="CEP"
+                  <MaskedInput
+                    mask={[/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]}
                     className="form-control form-control-lg"
+                    placeholder="CEP"
+                    guide={false}
                     onChange={(e) => setCep(e.target.value)}
                   />
                 </div>
@@ -183,10 +185,31 @@ const BuyCoins = () => {
               <span className="section-title">Dados de Pagamento</span>
               <div className="row mb-3">
                 <div className="col-6">
-                  <input
-                    type="text"
-                    placeholder="Número do Cartão"
+                  <MaskedInput
+                    mask={[
+                      /\d/,
+                      /\d/,
+                      /\d/,
+                      /\d/,
+                      ' ',
+                      /\d/,
+                      /\d/,
+                      /\d/,
+                      /\d/,
+                      ' ',
+                      /\d/,
+                      /\d/,
+                      /\d/,
+                      /\d/,
+                      ' ',
+                      /\d/,
+                      /\d/,
+                      /\d/,
+                      /\d/,
+                    ]}
                     className="form-control form-control-lg"
+                    placeholder="Número do Cartão"
+                    guide={false}
                     onChange={(e) => setNumeroCartao(e.target.value)}
                   />
                 </div>
@@ -201,18 +224,20 @@ const BuyCoins = () => {
               </div>
               <div className="row mb-3">
                 <div className="col-6">
-                  <input
-                    type="text"
-                    placeholder="Validade"
+                  <MaskedInput
+                    mask={[/[0-1]/, /\d/, /\d/, /\d/]}
                     className="form-control form-control-lg"
+                    placeholder="Validade"
+                    guide={false}
                     onChange={(e) => setDataExpiracao(e.target.value)}
                   />
                 </div>
                 <div className="col-6 pl-0">
-                  <input
-                    type="text"
-                    placeholder="CVV"
+                  <MaskedInput
+                    mask={[/\d/, /\d/, /\d/]}
                     className="form-control form-control-lg"
+                    placeholder="CVV"
+                    guide={false}
                     onChange={(e) => setCvv(e.target.value)}
                   />
                 </div>
