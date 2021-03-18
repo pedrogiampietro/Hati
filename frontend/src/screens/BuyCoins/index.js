@@ -1,19 +1,19 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { makePagarmePurchasing } from '../../actions/PagarmeActions';
-import Container from '../Layouts/Container';
+import { PurchaseCoinsModal } from '../../components/PurchaseCoinsModal';
 import SimpleSlider from '../../components/SimpleSlider';
-import { formatPrice } from '../../helpers/FormatPrice';
 import MaskedInput from '../../components/TextMaskCustom';
 import Error from '../../helpers/Error';
-import { PurchaseCoinsModal } from '../../components/PurchaseCoinsModal';
-import { BuyShoppingModal } from '../../components/BuyShoppingModal';
-
+import { formatPrice } from '../../helpers/FormatPrice';
+import Container from '../Layouts/Container';
 import './styles.css';
 
 const BuyCoins = () => {
   const { account } = useSelector((state) => state.account);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   // State variables, to store the values ​​of the inputs.
   const [costumerNome, setCostumerNome] = React.useState('');
@@ -33,6 +33,7 @@ const BuyCoins = () => {
   const [coins, setCoins] = React.useState(0);
   const [wallet, setWallet] = React.useState();
   const [error, setError] = React.useState('');
+  const [isShoppingModalOpen, setIsShoppingModalOpen] = React.useState(false);
 
   //Create Costumer
   const costumer = {
@@ -102,11 +103,21 @@ const BuyCoins = () => {
       items: finallyCart,
     };
 
-    dispatch(makePagarmePurchasing(response)).catch((err) => {
-      const { data } = err.response.data;
-      const newError = data.map((error) => error.parameter_name);
-      setError(newError);
-    });
+    dispatch(makePagarmePurchasing(response))
+      .then(() => {
+        setTimeout(
+          () => [
+            history.push('/account/characters'),
+            setIsShoppingModalOpen(false),
+          ],
+          1000
+        );
+      })
+      .catch((err) => {
+        const { data } = err.response.data;
+        const newError = data.map((error) => error.parameter_name);
+        setError(newError);
+      });
   };
 
   return (
@@ -324,7 +335,7 @@ const BuyCoins = () => {
                   safe!
                 </div>
               </div>
-              {/* <PurchaseCoinsModal /> */}
+              {isShoppingModalOpen && <PurchaseCoinsModal />}
             </div>
           </div>
         </div>
