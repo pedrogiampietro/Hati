@@ -6,6 +6,8 @@ import SimpleSlider from '../../components/SimpleSlider';
 import { formatPrice } from '../../helpers/FormatPrice';
 import MaskedInput from '../../components/TextMaskCustom';
 import Error from '../../helpers/Error';
+import { PurchaseCoinsModal } from '../../components/PurchaseCoinsModal';
+import { BuyShoppingModal } from '../../components/BuyShoppingModal';
 
 import './styles.css';
 
@@ -322,6 +324,7 @@ const BuyCoins = () => {
                   safe!
                 </div>
               </div>
+              {/* <PurchaseCoinsModal /> */}
             </div>
           </div>
         </div>
