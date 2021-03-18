@@ -15,7 +15,7 @@ module.exports = {
       base_URL: 'http://localhost:3001',
     },
     production: {
-      base_URL: 'http://167.114.82.192:3001',
+      base_URL: 'https://hatiaac.tk',
     },
   },
 
