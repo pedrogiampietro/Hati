@@ -26,8 +26,6 @@ const SidebarBag = () => {
     });
   }, []);
 
-  const accountCoins = account?.[0]?.account?.coins;
-
   const handleBuyNow = (event) => {
     event.preventDefault();
 
@@ -72,7 +70,7 @@ const SidebarBag = () => {
               <b className="d-inline-block">Total</b>
               <h3 className="d-inline-block">{totalCart} Coins</h3>
             </div>
-            {accountCoins >= totalCart && totalCart > 0 ? (
+            {account?.coins >= totalCart && totalCart > 0 ? (
               <button
                 className="btn btn-block btn-lg btn-primary rounded-0 h-50 align-items-center"
                 onClick={handleBuyNow}
@@ -81,8 +79,9 @@ const SidebarBag = () => {
               </button>
             ) : (
               <Link
-                to="/buycons"
+                to="/buycoins"
                 className="btn btn-block btn-lg btn-primary rounded-0 h-50 align-items-center"
+                onClick={() => setOpened(false)}
               >
                 Buy Coins
               </Link>

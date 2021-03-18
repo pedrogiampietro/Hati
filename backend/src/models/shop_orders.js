@@ -10,6 +10,18 @@ module.exports = (sequelize, DataTypes) => {
           key: 'id',
         },
       },
+      transaction_id: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      transaction_title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      payment_method: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       address: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -27,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
       },
     },
-    { freezeTableName: true, timestamps: false }
+    { freezeTableName: true }
   );
 
   shop_orders.associate = (models) => {

@@ -1,25 +1,24 @@
 import React from 'react';
-import { Redirect, Link, useHistory } from 'react-router-dom';
+import { FiPlus } from 'react-icons/fi';
+import { RiDeleteBin6Line } from 'react-icons/ri';
 import { connect } from 'react-redux';
-import { signOut, getAccount } from '../../../actions/AccountActions';
+import { Link, Redirect, useHistory } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
 import {
-  getProfileAvatar,
   deleteProfileAvatar,
+  getAccount,
+  getProfileAvatar,
+  signOut,
 } from '../../../actions/AccountActions';
 import { playerList } from '../../../actions/PlayerActions';
-import { convertTimestempToDate } from '../../../helpers/DateTime';
-import { closeModalAvatar } from '../../../assets/js/scripts';
-import { toast, ToastContainer } from 'react-toastify';
-import Container from '../../Layouts/Container';
-
 import ProfileAvatar from '../../../assets/img/Profile_Avatar.png';
-import { RiDeleteBin6Line } from 'react-icons/ri';
-import { FiPlus } from 'react-icons/fi';
-
+import { closeModalAvatar } from '../../../assets/js/scripts';
 import { getPlayerName } from '../../../helpers/Account';
-
-import './styles.css';
+import { convertTimestempToDate } from '../../../helpers/DateTime';
+import Container from '../../Layouts/Container';
 import Inventory from '../Inventory';
+import PaymentHistory from '../PaymentHistory';
+import './styles.css';
 
 const MyAccount = ({
   players,
@@ -133,6 +132,15 @@ const MyAccount = ({
                     href="#account-inventory"
                   >
                     <i className="fal fa-user mr-1"></i>Inventory
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    className="nav-link"
+                    data-toggle="tab"
+                    href="#account-paymenthistory"
+                  >
+                    <i className="fal fa-credit-card mr-1"></i>Payments History
                   </a>
                 </li>
               </ul>
@@ -373,6 +381,14 @@ const MyAccount = ({
                   role="tabpanel"
                 >
                   <Inventory />
+                </div>
+
+                <div
+                  className="tab-pane fade"
+                  id="account-paymenthistory"
+                  role="tabpanel"
+                >
+                  <PaymentHistory />
                 </div>
               </div>
             </div>

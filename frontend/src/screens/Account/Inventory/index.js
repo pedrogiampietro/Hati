@@ -37,8 +37,6 @@ const Inventory = ({ getInventory }) => {
 
   const openAccordion = (id = 0) => setCurrentAccordionIndex(id);
 
-  console.log(currentAccordionIndex);
-
   return (
     <main id="main-inventory">
       <section id="inventory-window">
@@ -50,7 +48,7 @@ const Inventory = ({ getInventory }) => {
             </li>
             <li className="resgatados">
               <div>Resgatados</div>
-              <span>28</span>
+              <span>0</span>
             </li>
             <li className="fechados">
               <div>Fechados</div>

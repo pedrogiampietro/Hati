@@ -9,7 +9,6 @@
 		"axios": "^0.21.1",
 		"bootstrap": "^4.5.0",
 		"bundle": "^2.1.0",
-		"formik": "^2.2.6",
 		"jodit-react": "^1.0.66",
 		"jquery": "^3.5.1",
 		"rc-slider": "^9.7.1",
@@ -27,8 +26,7 @@
 		"react-toastify": "^6.0.9",
 		"redux": "^4.0.5",
 		"redux-promise": "^0.6.0",
-		"universal-cookie": "^4.0.3",
-		"yup": "^0.32.9"
+		"universal-cookie": "^4.0.3"
 	},
 	"scripts": {
 		"start": "react-scripts start",

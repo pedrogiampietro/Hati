@@ -11,6 +11,7 @@
   "account.signin.name.string.empty": "Name field is required.",
   "account.signin.name.string.name": "Name field must be valid",
   "account.signin.password.string.empty": "Password field is required.",
+  "account.signin.name.string.min": "You are trying to have a much smaller account than the one allowed.",
   "account.signin.password.string.pattern.base": "Password must be 3 to 30 characters long.",
   "account.signin.name.any.required": "Name required.",
 

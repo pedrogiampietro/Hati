@@ -10,6 +10,8 @@ const shopOfferController = require('./controllers/ShopOfferController');
 const inventoryController = require('./controllers/InventoryController');
 const pagarmeController = require('./controllers/PagarmeController');
 const postBackController = require('./controllers/PostBackController');
+const paymentHistoryController = require('./controllers/PaymentHistoryController');
+
 const response = require('./middlewares/response');
 const path = require('path');
 
@@ -30,6 +32,7 @@ app.use('/shop', shopOfferController);
 app.use('/inventory', inventoryController);
 app.use('/pagarme', pagarmeController);
 app.use('/postback', postBackController);
+app.use('/paymentHistory', paymentHistoryController);
 
 app.get('/', (req, res) => {
   return res.json('OK');

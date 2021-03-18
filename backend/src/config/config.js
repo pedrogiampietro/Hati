@@ -26,7 +26,7 @@ module.exports = {
   mailer: {
     host: 'smtp.gmail.com',
     port: 587,
-    user: 'hatiaac@gmail.com',
-    pass: 'hati123456',
+    user: process.env.MAILER_USER,
+    pass: process.env.MAILER_PASS,
   },
 };
