@@ -73,6 +73,8 @@ router.post('/creditcard', checkJwt, async (req, res) => {
         payment_method: transaction.payment_method,
         paid_value: transaction.paid_amount,
         transaction_id: transactionID,
+        transaction_title: transaction.items[0].title,
+        payment_method: transaction.payment_method,
       });
       return res.json({ transaction: transaction });
     })

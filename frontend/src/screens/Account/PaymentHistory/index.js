@@ -40,6 +40,9 @@ const PaymentHistory = () => {
                 Offer Title
               </th>
               <th tabIndex={0} rowSpan={1} colSpan={1}>
+                Method
+              </th>
+              <th tabIndex={0} rowSpan={1} colSpan={1}>
                 Status
               </th>
             </tr>
@@ -50,16 +53,28 @@ const PaymentHistory = () => {
                 <td className="dtr-control sorting_1" tabIndex={0}>
                   {payment.id}
                 </td>
-                {console.log(payment)}
                 <td>
-                  <span className="fs-lg text-dark">250 Tibia Coins</span>
+                  <span className="fs-lg text-dark">
+                    {payment.transaction_title}
+                  </span>
                   <br />
-                  <small className="text-muted">Created 18.08.2019</small>
+                  <small className="text-muted">
+                    Created {payment.createdAt}
+                  </small>
+                </td>
+                <td>
+                  <span className="fs-lg text-dark">
+                    {payment.payment_method}
+                  </span>
                 </td>
                 <td>
                   <span className="badge badge-primary badge-pill">
                     {payment.status}
                   </span>
+                  <br />
+                  <small className="text-muted">
+                    Updated {payment.updatedAt}
+                  </small>
                 </td>
               </tr>
             ))}
