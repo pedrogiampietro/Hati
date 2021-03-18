@@ -10,6 +10,10 @@ module.exports = (sequelize, DataTypes) => {
           key: 'id',
         },
       },
+      transaction_id: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       address: {
         type: DataTypes.STRING,
         allowNull: false,

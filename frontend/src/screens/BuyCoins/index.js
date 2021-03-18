@@ -1,15 +1,17 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { makePagarmePurchasing } from '../../actions/PagarmeActions';
 import Container from '../Layouts/Container';
 import SimpleSlider from '../../components/SimpleSlider';
 import { formatPrice } from '../../helpers/FormatPrice';
 import MaskedInput from '../../components/TextMaskCustom';
+import Error from '../../helpers/Error';
 
 import './styles.css';
 
 const BuyCoins = () => {
   const { account } = useSelector((state) => state.account);
+  const dispatch = useDispatch();
 
   // State variables, to store the values ​​of the inputs.
   const [costumerNome, setCostumerNome] = React.useState('');
@@ -28,6 +30,7 @@ const BuyCoins = () => {
 
   const [coins, setCoins] = React.useState(0);
   const [wallet, setWallet] = React.useState();
+  const [error, setError] = React.useState('');
 
   //Create Costumer
   const costumer = {
@@ -42,7 +45,7 @@ const BuyCoins = () => {
         number: cpf,
       },
     ],
-    phone_numbers: [`+55${numeroTel}`, '+5511888889999'],
+    phone_numbers: [`+55${numeroTel.replace(/[^\d]+/g, '')}`, '+5511888889999'],
     birthday: '1965-01-01',
   };
 
@@ -97,7 +100,11 @@ const BuyCoins = () => {
       items: finallyCart,
     };
 
-    makePagarmePurchasing(response);
+    dispatch(makePagarmePurchasing(response)).catch((err) => {
+      const { data } = err.response.data;
+      const newError = data.map((error) => error.parameter_name);
+      setError(newError);
+    });
   };
 
   return (
@@ -147,10 +154,27 @@ const BuyCoins = () => {
                   />
                 </div>
                 <div className="col-6 pl-0">
-                  <input
-                    type="text"
-                    placeholder="Número Telefone"
+                  <MaskedInput
+                    mask={[
+                      '(',
+                      /[1-9]/,
+                      /\d/,
+                      ')',
+                      ' ',
+                      /\d/,
+                      /\d/,
+                      /\d/,
+                      /\d/,
+                      /\d/,
+                      '-',
+                      /\d/,
+                      /\d/,
+                      /\d/,
+                      /\d/,
+                    ]}
                     className="form-control form-control-lg"
+                    placeholder="Número Telefone"
+                    guide={false}
                     onChange={(e) => setNumeroTel(e.target.value)}
                   />
                 </div>
@@ -244,6 +268,7 @@ const BuyCoins = () => {
               </div>
               <div className="row mt-4">
                 <div className="col-12">
+                  <Error error={error} />
                   <button
                     type="submit"
                     className="btn btn-block btn-lg btn-primary w-100"
@@ -274,16 +299,14 @@ const BuyCoins = () => {
                 <hr />
                 <h3>Opções disponíveis</h3>
                 <div className="form-group required">
-                  <label className="control-label" htmlFor="input-option431">
-                    Nome do personagem para receber os Tibia Coins{' '}
+                  <label className="control-label" htmlFor="sendtocharacter">
+                    Nome do personagem para receber os Tibia Coins
                   </label>
                   <input
                     type="text"
-                    name="option[431]"
-                    defaultValue
-                    placeholder="Nome do personagem para receber os Tibia Coins                    "
-                    id="input-option431"
+                    id="sendtocharacter"
                     className="form-control"
+                    disabled
                   />
                 </div>
                 <div className="form-group">

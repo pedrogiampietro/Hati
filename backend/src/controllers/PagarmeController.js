@@ -1,5 +1,6 @@
 const express = require('express');
 const pagarme = require('pagarme');
+const { v4: uuidv4 } = require('uuid');
 
 const { shop_orders } = require('../models');
 
@@ -30,7 +31,9 @@ router.get('/total', async (req, res) => {
 });
 
 router.post('/creditcard', checkJwt, async (req, res) => {
-  const { body } = req;
+  const transactionID = uuidv4();
+
+  const { body, account_id } = req;
   const {
     amount,
     card_holder_name,
@@ -44,7 +47,7 @@ router.post('/creditcard', checkJwt, async (req, res) => {
     items,
   } = body;
 
-  console.log(body);
+  customer.external_id = transactionID;
 
   pagarme.client
     .connect({ api_key: process.env.PAGARME_API_KEY_TEST })
@@ -63,19 +66,19 @@ router.post('/creditcard', checkJwt, async (req, res) => {
       })
     )
     .then((transaction) => {
-      const addToOrders = shop_orders.create({
-        account_id: Number(transaction.customer.external_id),
+      shop_orders.create({
+        account_id: account_id,
         address: `${transaction.shipping.address.neighborhood} - ${transaction.shipping.address.street} - ${transaction.shipping.address.street_number}`,
         status: transaction.status,
         payment_method: transaction.payment_method,
         paid_value: transaction.paid_amount,
+        transaction_id: transactionID,
       });
-
       return res.json({ transaction: transaction });
     })
     .catch((err) => {
       console.log(err.response.errors);
-      // console.log(err);
+      return res.jsonBadRequest(err.response.errors);
     });
 });
 

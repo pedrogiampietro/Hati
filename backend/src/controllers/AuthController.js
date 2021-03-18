@@ -376,7 +376,7 @@ router.get('/avatar', checkJwt, async (req, res) => {
     const { avatar } = findAccount;
 
     if (avatar !== '') {
-      const URL_AVATAR = `http://localhost:3001/${avatar}`;
+      const URL_AVATAR = `${process.env.SERVER_URL}/${avatar}`;
       res.jsonOK(URL_AVATAR);
     } else {
       res.jsonOK(findAccount);
