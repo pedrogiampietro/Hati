@@ -14,6 +14,7 @@ router.post('/pagarme-card', async (req, res) => {
     'transaction[customer][external_id]': transactionCustomerExternalId,
     'transaction[paid_amount]': transactionCustomerPaidAmount,
     'transaction[items][0][quantity]': transactionItemQuantity,
+    'transaction[items][0][id]': transactionItemAccountID,
     current_status,
   } = body;
 
@@ -35,6 +36,10 @@ router.post('/pagarme-card', async (req, res) => {
         getMessage('response.json_invalid_token')
       );
 
+    const findAccount = await accounts.findOne({
+      where: { id: transactionCustomerExternalId },
+    });
+
     switch (current_status) {
       case 'paid':
         // fazer logica de pagamento aceito;
@@ -44,7 +49,7 @@ router.post('/pagarme-card', async (req, res) => {
         });
 
         const findAccount = await accounts.findOne({
-          where: { id: account_id },
+          where: { id: transactionItemAccountID },
         });
 
         if (!findAccount)
@@ -53,7 +58,7 @@ router.post('/pagarme-card', async (req, res) => {
             getMessage('response.json_invalid_token')
           );
 
-        getDiscussion.increment({
+        findAccount.increment({
           coins: transactionItemQuantity,
         });
 
