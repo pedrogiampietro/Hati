@@ -1,42 +1,45 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { guildCreate, guildList } from '../../actions/GuildActions'
-import { playerList } from '../../actions/PlayerActions'
-import { getFormData } from '../../helpers/FormData'
+import React from 'react';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { guildCreate, guildList } from '../../actions/GuildActions';
+import { playerList } from '../../actions/PlayerActions';
+import { getFormData } from '../../helpers/FormData';
+import { getAvatarUrl } from '../../helpers/Api';
 
-import Container from '../Layouts/Container'
-import { RiTableLine } from 'react-icons/ri'
-import { FaThList } from 'react-icons/fa'
+import Container from '../Layouts/Container';
+import { RiTableLine } from 'react-icons/ri';
+import { FaThList } from 'react-icons/fa';
 
-import GuildLogoDefault from '../../assets/img/guild_logo_default.png'
+import GuildLogoDefault from '../../assets/img/guild_logo_default.png';
 
 const Guilds = ({ playerList, guildList, players }) => {
-  const [guild, setGuild] = React.useState([])
-  const [className, setClassName] = React.useState('col-xl-4')
-  const [postInteraction, setPostInteraction] = React.useState(false)
+  const [guild, setGuild] = React.useState([]);
+  const [className, setClassName] = React.useState('col-xl-4');
+  const [postInteraction, setPostInteraction] = React.useState(false);
 
   function interaction() {
-    setPostInteraction(!postInteraction)
+    setPostInteraction(!postInteraction);
   }
 
   React.useEffect(() => {
-    playerList()
+    playerList();
     guildList().then(({ payload }) => {
-      const newData = payload.data.data
-      setGuild(newData)
-    })
-  }, [playerList, guildList, postInteraction])
+      const newData = payload.data.data;
+      setGuild(newData);
+    });
+  }, [playerList, guildList, postInteraction]);
 
   const submitHandler = async (e) => {
-    e.preventDefault()
-    const data = getFormData(e)
-    guildCreate(data)
-    interaction()
-  }
+    e.preventDefault();
+    const data = getFormData(e);
+    guildCreate(data);
+    interaction();
+  };
 
-  const clickToRow = () => setClassName('col-xl-12')
-  const clickToGrid = () => setClassName('col-xl-4')
+  const clickToRow = () => setClassName('col-xl-12');
+  const clickToGrid = () => setClassName('col-xl-4');
+
+  console.log(guild);
 
   return (
     <Container>
@@ -99,7 +102,7 @@ const Guilds = ({ playerList, guildList, players }) => {
                             <option key={player.id} value={player.id}>
                               {player.name}
                             </option>
-                          )
+                          );
                         })
                       : null}
                   </select>
@@ -148,7 +151,11 @@ const Guilds = ({ playerList, guildList, players }) => {
               <div className="card-body border-faded border-top-0 border-left-0 border-right-0 rounded-top">
                 <div className="d-flex flex-row align-items-center">
                   <img
-                    src={GuildLogoDefault}
+                    src={
+                      guilds.logo_gfx_name
+                        ? getAvatarUrl(guilds.logo_gfx_name)
+                        : GuildLogoDefault
+                    }
                     alt="GuildLogo"
                     className="profile-image-lg rounded-circle d-block"
                     style={{
@@ -193,14 +200,14 @@ const Guilds = ({ playerList, guildList, players }) => {
         ))}
       </div>
     </Container>
-  )
-}
+  );
+};
 
 const mapStateToProps = (state) => {
   return {
     account: state.account.account,
     players: state.player.player,
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps, { playerList, guildList })(Guilds)
+export default connect(mapStateToProps, { playerList, guildList })(Guilds);
