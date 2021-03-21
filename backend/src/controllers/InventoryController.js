@@ -8,17 +8,31 @@ const router = express.Router();
 
 router.get('/', checkJwt, async (req, res) => {
   const { account_id } = req;
+  const { inventoryStatus } = req.query;
 
-  const getInventory = await shop_inventories.findAll({
-    where: { account_id: account_id },
-    order: [['itemid', 'ASC']],
-  });
+  console.log(req.query);
+
+  let getInventory;
+  let filterStatus = inventoryStatus;
+
+  if (inventoryStatus === 'all') {
+    getInventory = await shop_inventories.findAll({
+      where: { account_id: account_id },
+      order: [['itemid', 'ASC']],
+    });
+  } else {
+    getInventory = await shop_inventories.findAll({
+      where: { account_id: account_id, status: filterStatus },
+      order: [['itemid', 'ASC']],
+    });
+  }
 
   return res.jsonOK(getInventory);
 });
 
 router.post('/sendItem', checkJwt, async (req, res) => {
   const { body } = req;
+
   const {
     name,
     inventoryItem: { id, itemid, item_amount, status, sended_to },
@@ -40,7 +54,7 @@ router.post('/sendItem', checkJwt, async (req, res) => {
     status: 'delivered',
   });
 
-  console.log(getItemOnInventory);
+  return res.jsonOK(getItemOnInventory);
 });
 
 module.exports = router;

@@ -212,8 +212,7 @@
   }
 }
 #main-inventory > section ul.filters li.active {
-  color: #ffb400;
-  cursor: default;
+  cursor: pointer;
 }
 #main-inventory > section ul.filters li:before {
   content: '';

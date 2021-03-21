@@ -16,12 +16,10 @@ const InventoryModal = ({ setIsInventoryModalOpen, arrInventory }) => {
 
   const getNameCharacter = async () => {
     if (!name) return;
-    dispatch(sendItemToCharacter({ name, inventoryItem }))
-      .then(() => {})
-      .catch((err) => {
-        const { data } = err.response;
-        setError(data.message);
-      });
+    dispatch(sendItemToCharacter({ name, inventoryItem })).catch((err) => {
+      const { data } = err.response;
+      setError(data.message);
+    });
   };
 
   const sendToCharacter = async (character) => {

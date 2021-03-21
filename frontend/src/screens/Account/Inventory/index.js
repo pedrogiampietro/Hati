@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getInventory } from '../../../actions/InventoryActions';
 import InventoryModal from '../../../components/InventoryModal';
@@ -10,18 +11,20 @@ const Inventory = ({ getInventory }) => {
   const [currentAccordionIndex, setCurrentAccordionIndex] = React.useState(0);
   const [isInventoryModalOpen, setIsInventoryModalOpen] = React.useState(false);
   const [inventoryItemID, setInventoryItemID] = React.useState();
+  const [filterStatus, setFilterStatus] = React.useState('all');
 
   React.useEffect(() => {
-    getInventory().then(({ payload }) => {
+    if (filterStatus === '') return;
+    getInventory({ inventoryStatus: filterStatus }).then(({ payload }) => {
       const newData = payload.data.data;
       setInventory(newData);
     });
-  }, [getInventory]);
+  }, [getInventory, filterStatus]);
 
   let newInventory = [];
   let total = 1;
 
-  for (let i = 0; i < inventory.length; i++) {
+  for (let i = 0; i < inventory?.length; i++) {
     if (
       i < inventory.length - 1 &&
       inventory[i].itemid === inventory[i + 1].itemid
@@ -39,7 +42,7 @@ const Inventory = ({ getInventory }) => {
     }
   }
 
-  const arrInventory = inventory.filter(
+  const arrInventory = inventory?.filter(
     (items) => items.itemid === inventoryItemID
   );
 
@@ -49,23 +52,43 @@ const Inventory = ({ getInventory }) => {
     setIsInventoryModalOpen(true);
   };
 
+  function onValueChangeVocation(event) {
+    const options = event.target.id;
+    setFilterStatus(options);
+  }
+
   return (
     <>
       <main id="main-inventory">
         <section id="inventory-window">
           <div>
-            <ul className="filters">
-              <li className="todos active">
-                <div>All</div>
-                <span>{inventory.length}</span>
+            <ul
+              className="nav nav-pills filters"
+              role="tablist"
+              onClick={onValueChangeVocation}
+            >
+              <li className="nav-item active">
+                <Link to="#" className="nav-link" data-toggle="tab" id="all">
+                  <i className="fal fa-globe mr-1" aria-hidden="true" />
+                  All
+                </Link>
               </li>
-              <li className="open">
-                <div>Open</div>
-                <span>0</span>
+              <li className="nav-item">
+                <Link to="#" className="nav-link" data-toggle="tab" id="open">
+                  <i className="fal fa-paper-plane mr-1" aria-hidden="true" />
+                  Open
+                </Link>
               </li>
-              <li className="delivered">
-                <div>Delivered</div>
-                <span>0</span>
+              <li className="nav-item">
+                <Link
+                  to="#"
+                  className="nav-link"
+                  data-toggle="tab"
+                  id="delivered"
+                >
+                  <i className="fal fa-check-circle mr-1" aria-hidden="true" />
+                  Delivered
+                </Link>
               </li>
             </ul>
           </div>
