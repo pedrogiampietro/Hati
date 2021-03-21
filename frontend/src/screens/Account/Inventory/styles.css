@@ -74,7 +74,9 @@
 }
 #main-inventory > section {
   position: relative;
+  /* remover */
   display: inline-block;
+  /* caso queira expandir o inventario */
   border: 1px solid #a49def;
   border-radius: 10px;
   box-shadow: 0 0 20px #0a0a0a;
@@ -83,6 +85,7 @@
   margin-bottom: 100px;
   text-align: left;
 }
+
 #main-inventory > section > div:nth-child(1) {
   display: flex;
   align-items: flex-start;
@@ -179,6 +182,7 @@
 #main-inventory > section div.info p strong {
   color: #c390d3;
 }
+
 #main-inventory > section ul.filters li {
   position: relative;
   display: inline-flex;
@@ -208,8 +212,7 @@
   }
 }
 #main-inventory > section ul.filters li.active {
-  color: #ffb400;
-  cursor: default;
+  cursor: pointer;
 }
 #main-inventory > section ul.filters li:before {
   content: '';
@@ -269,6 +272,9 @@
 @media (max-width: 900px) {
   #main-inventory > section div.inventory-items-container {
     width: 560px;
+  }
+  #main-inventory {
+    width: 60%;
   }
 }
 @media (max-width: 600px) {
@@ -443,7 +449,7 @@ ul.inventory-items li:hover .gamebox .card.opened {
   min-width: 300px;
   left: calc(36% + 700px);
   bottom: 50%;
-  transform: translate(-50%, 50%);
+  /* transform: translate(50%, 50%); */
   margin: 0;
   box-sizing: border-box;
   z-index: 90;
@@ -488,7 +494,7 @@ ul.inventory-items li:hover .gamebox .card.opened {
     height: 200vh;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%);
+    /* transform: translate(-50%, -50%); */
     background-color: #001d25de;
     opacity: 0;
     visibility: hidden;
@@ -522,8 +528,9 @@ ul.inventory-items li:hover .gamebox .card.opened {
   }
 }
 #selected .gamebox {
-  height: 200px;
+  height: 120px;
   margin: 0 auto;
+  transform: scale(0.7);
   z-index: -1;
 }
 @keyframes gamebox-surge {
@@ -674,8 +681,8 @@ main.loading #selected .keys-list:after {
   cursor: pointer;
 }
 #selected .keys-list > li.selected {
-  background-color: #03282f;
-  border: solid 1px #0d3840;
+  background-color: #322447;
+  border: solid 1px #fc68f8;
   max-height: 620px;
   z-index: 1;
   cursor: initial;
@@ -1245,7 +1252,7 @@ main.loading #selected .keys-list:after {
     box-sizing: border-box;
     z-index: 100;
     visibility: hidden;
-    transform: translate(-50%, -50%);
+    /* transform: translate(-50%, -50%); */
     transition: all 0.3s;
   }
   #selected.visible:before {

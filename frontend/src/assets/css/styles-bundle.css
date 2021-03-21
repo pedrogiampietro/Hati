@@ -3198,6 +3198,9 @@ fieldset:disabled a.btn {
   background-color: #886ab5;
   border-color: #886ab5;
 }
+
+
+
 .btn-outline-primary:focus,
 .btn-outline-primary.focus {
   -webkit-box-shadow: 0 0 0 0.2rem rgba(136, 106, 181, 0.5);
