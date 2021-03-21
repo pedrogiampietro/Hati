@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getInventory } from '../../../actions/InventoryActions';
+import { getImageUrl } from '../../../helpers/Api';
 import InventoryModal from '../../../components/InventoryModal';
 
 import './styles.css';
@@ -114,7 +115,7 @@ const Inventory = ({ getInventory }) => {
                         <div className="front" />
                         <div className="game">
                           <img
-                            src={inventory.item_image}
+                            src={getImageUrl(inventory.item_image)}
                             className="game-cover"
                             alt="ItemImage"
                           />

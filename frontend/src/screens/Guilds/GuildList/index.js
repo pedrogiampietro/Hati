@@ -16,7 +16,7 @@ import {
 } from '../../../actions/GuildActions';
 
 import { playerList } from '../../../actions/PlayerActions';
-import { getAvatarUrl } from '../../../helpers/Api';
+import { getImageUrl } from '../../../helpers/Api';
 import { getFormData } from '../../../helpers/FormData';
 import { characterVocations } from '../../../config';
 
@@ -186,7 +186,7 @@ const GuildList = ({
                         currentGuild.logo_gfx_name === null
                           ? GuildLogoDefault
                           : currentGuild.logo_gfx_name &&
-                            getAvatarUrl(currentGuild.logo_gfx_name)
+                            getImageUrl(currentGuild.logo_gfx_name)
                       }`}
                       alt="GuildLogo"
                     />

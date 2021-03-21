@@ -7,7 +7,7 @@ import {
   getComments,
   editPost,
 } from '../../../actions/ForumActions';
-import { getAvatarUrl } from '../../../helpers/Api';
+import { getImageUrl } from '../../../helpers/Api';
 
 import { formatDate } from '../../../helpers/DateTime';
 import { getFormData } from '../../../helpers/FormData';
@@ -120,7 +120,7 @@ const Discussions = ({
                   <br />
                   {account?.avatar ? (
                     <img
-                      src={getAvatarUrl(discussionPost.account.avatar)}
+                      src={getImageUrl(discussionPost.account.avatar)}
                       className="profile-image rounded-circle"
                       alt=""
                     />
@@ -197,7 +197,7 @@ const Discussions = ({
                       <br />
                       {comment?.account?.avatar ? (
                         <img
-                          src={getAvatarUrl(comment.account.avatar)}
+                          src={getImageUrl(comment.account.avatar)}
                           className="profile-image rounded-circle"
                           alt=""
                         />

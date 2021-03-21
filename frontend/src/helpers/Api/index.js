@@ -6,7 +6,7 @@ export const getApiUrl = (path) => {
   return serverConnection.production.base_URL + path;
 };
 
-export const getAvatarUrl = (path) => {
+export const getImageUrl = (path) => {
   return `${serverConnection.production.base_URL}/${path}`;
 };
 

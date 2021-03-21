@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleCartProduct } from '../../../actions/ShopActions';
-import { getAvatarUrl } from '../../../helpers/Api';
+import { getImageUrl } from '../../../helpers/Api';
 import { AiOutlineHeart, AiOutlineSearch, AiOutlineEye } from 'react-icons/ai';
 import { MdAddShoppingCart, MdRemoveShoppingCart } from 'react-icons/md';
 
@@ -19,7 +19,7 @@ const ProductCard = ({ shopList }) => {
             {product.shop_image ? (
               <img
                 className="img-responsive"
-                src={getAvatarUrl(product.shop_image)}
+                src={getImageUrl(product.shop_image)}
                 alt="Item"
               />
             ) : null}

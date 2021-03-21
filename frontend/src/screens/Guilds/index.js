@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { guildCreate, guildList } from '../../actions/GuildActions';
 import { playerList } from '../../actions/PlayerActions';
 import { getFormData } from '../../helpers/FormData';
-import { getAvatarUrl } from '../../helpers/Api';
+import { getImageUrl } from '../../helpers/Api';
 
 import Container from '../Layouts/Container';
 import { RiTableLine } from 'react-icons/ri';
@@ -153,7 +153,7 @@ const Guilds = ({ playerList, guildList, players }) => {
                   <img
                     src={
                       guilds.logo_gfx_name
-                        ? getAvatarUrl(guilds.logo_gfx_name)
+                        ? getImageUrl(guilds.logo_gfx_name)
                         : GuildLogoDefault
                     }
                     alt="GuildLogo"
