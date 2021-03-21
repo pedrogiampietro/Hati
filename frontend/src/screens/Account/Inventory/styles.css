@@ -16,7 +16,7 @@
   }
 }
 #main-inventory > * {
-  /* margin: 0 15%; */
+  margin: 0 15%;
   position: relative;
   z-index: 1;
 }
@@ -74,7 +74,9 @@
 }
 #main-inventory > section {
   position: relative;
+  /* remover */
   display: inline-block;
+  /* caso queira expandir o inventario */
   border: 1px solid #a49def;
   border-radius: 10px;
   box-shadow: 0 0 20px #0a0a0a;
@@ -83,6 +85,7 @@
   margin-bottom: 100px;
   text-align: left;
 }
+
 #main-inventory > section > div:nth-child(1) {
   display: flex;
   align-items: flex-start;
@@ -179,6 +182,7 @@
 #main-inventory > section div.info p strong {
   color: #c390d3;
 }
+
 #main-inventory > section ul.filters li {
   position: relative;
   display: inline-flex;

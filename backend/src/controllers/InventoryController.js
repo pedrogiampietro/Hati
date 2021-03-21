@@ -17,4 +17,30 @@ router.get('/', checkJwt, async (req, res) => {
   return res.jsonOK(getInventory);
 });
 
+router.post('/sendItem', checkJwt, async (req, res) => {
+  const { body } = req;
+  const {
+    name,
+    inventoryItem: { id, itemid, item_amount, status, sended_to },
+  } = body;
+
+  console.log(name, itemid, item_amount, status);
+
+  // logically to send the item to the character
+
+  const getItemOnInventory = await shop_inventories.findOne({
+    where: { id: id },
+  });
+
+  if (!getItemOnInventory)
+    return jsonNotFound(null, getMessage('This item not exists.'));
+
+  getItemOnInventory.update({
+    sended_to: name,
+    status: 'delivered',
+  });
+
+  console.log(getItemOnInventory);
+});
+
 module.exports = router;

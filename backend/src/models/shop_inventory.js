@@ -28,6 +28,15 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    sended_to: {
+      type: DataTypes.STRING,
+      defaultValue: '',
+    },
+    status: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      defaultValue: 'open',
+    },
   });
 
   shop_inventories.associate = (models) => {

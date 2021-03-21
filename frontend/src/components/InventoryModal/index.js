@@ -1,31 +1,36 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { playerGetCharacter } from '../../actions/PlayerActions';
+import { sendItemToCharacter } from '../../actions/InventoryActions';
 import CloseModal from '../../assets/img/close.svg';
 import { formatDate } from '../../helpers/DateTime';
 import { RiSendPlaneLine } from 'react-icons/ri';
+
 import './styles.css';
 
-export function InventoryModal({ setIsInventoryModalOpen, arrInventory }) {
+const InventoryModal = ({ setIsInventoryModalOpen, arrInventory }) => {
   const dispatch = useDispatch();
 
   const [name, setName] = React.useState('');
-  const [data, setData] = React.useState([]);
+  const [inventoryItem, setInventoryItem] = React.useState(0);
+  const [error, setError] = React.useState('');
 
-  const getNameCharacter = () => {
-    dispatch(playerGetCharacter(name)).then(({ payload }) => {
-      const newData = payload.data.data.rows;
-      setData(newData);
-    });
+  const getNameCharacter = async () => {
+    if (!name) return;
+    dispatch(sendItemToCharacter({ name, inventoryItem }))
+      .then(() => {})
+      .catch((err) => {
+        const { data } = err.response;
+        setError(data.message);
+      });
+  };
+
+  const sendToCharacter = async (character) => {
+    setInventoryItem(character);
   };
 
   return (
     <div className="overlay">
-      <aside
-        id="selected"
-        data-load-url="~/assets/images/loading.gif"
-        className="visible"
-      >
+      <aside id="selected" className="visible">
         <div className="container before-mobile">
           <div className="menu">
             <div className="bar" />
@@ -53,34 +58,56 @@ export function InventoryModal({ setIsInventoryModalOpen, arrInventory }) {
                     </p>
                     <p>{formatDate(items.createdAt)}</p>
                   </div>
+
                   <span
+                    className="badge badge-primary"
                     style={{
                       fontWeight: 'bold',
                       marginBottom: '10px',
+                      fontSize: '16px',
                       color: 'white',
                     }}
                   >
-                    {data[0]?.name}
+                    {items.sended_to}
+                    {items.id === inventoryItem.id ? name : null}
                   </span>
                 </div>
-                <div className="row">
-                  <div className="col">
-                    <input
-                      className="form-control"
-                      type="text"
-                      placeholder="Character Name"
-                      onChange={(e) => setName(e.target.value)}
-                    />
+
+                {items.sended_to ? (
+                  <div className="alert alert-danger mb-0" role="alert">
+                    Enviado para {items.sended_to} no dia{' '}
+                    {formatDate(items.updatedAt)}
                   </div>
-                  <div>
-                    <button
-                      className="btn btn-primary"
-                      onClick={getNameCharacter}
-                    >
-                      <RiSendPlaneLine size={14} />
-                    </button>
-                  </div>
-                </div>
+                ) : (
+                  <input
+                    className="form-control"
+                    type="text"
+                    placeholder="Character Name"
+                    onChange={(e) => setName(e.target.value)}
+                    onClick={() => sendToCharacter(items)}
+                  />
+                )}
+
+                <span
+                  style={{
+                    fontWeight: 'bold',
+                    marginBottom: '10px',
+                    color: 'white',
+                    padding: '10px',
+                  }}
+                >
+                  {error}
+                </span>
+
+                {items.sended_to ? null : (
+                  <button
+                    className="btn-primary form-control"
+                    onClick={getNameCharacter}
+                  >
+                    Send Item
+                    <RiSendPlaneLine className="ml-1" size={14} />
+                  </button>
+                )}
               </li>
             ))}
           </ul>
@@ -95,4 +122,6 @@ export function InventoryModal({ setIsInventoryModalOpen, arrInventory }) {
       </button>
     </div>
   );
-}
+};
+
+export default InventoryModal;

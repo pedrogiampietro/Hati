@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { getInventory } from '../../../actions/InventoryActions';
-import { InventoryModal } from '../../../components/InventoryModal';
+import InventoryModal from '../../../components/InventoryModal';
 
 import './styles.css';
 
@@ -56,19 +56,15 @@ const Inventory = ({ getInventory }) => {
           <div>
             <ul className="filters">
               <li className="todos active">
-                <div>Todos</div>
+                <div>All</div>
                 <span>{inventory.length}</span>
               </li>
-              <li className="resgatados">
-                <div>Resgatados</div>
+              <li className="open">
+                <div>Open</div>
                 <span>0</span>
               </li>
-              <li className="fechados">
-                <div>Fechados</div>
-                <span>0</span>
-              </li>
-              <li className="pendentes">
-                <div>Pendentes</div>
+              <li className="delivered">
+                <div>Delivered</div>
                 <span>0</span>
               </li>
             </ul>
