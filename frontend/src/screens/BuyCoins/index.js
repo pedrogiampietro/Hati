@@ -8,6 +8,7 @@ import MaskedInput from '../../components/TextMaskCustom';
 import Error from '../../helpers/Error';
 import { formatPrice } from '../../helpers/FormatPrice';
 import Container from '../Layouts/Container';
+import styles from './ButtonPix.module.css';
 import './styles.css';
 
 const BuyCoins = () => {
@@ -219,76 +220,139 @@ const BuyCoins = () => {
                 </div>
               </div>
 
-              <span className="section-title">Dados de Pagamento</span>
-              <div className="row mb-3">
-                <div className="col-6">
-                  <MaskedInput
-                    mask={[
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                      ' ',
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                      ' ',
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                      ' ',
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                    ]}
-                    className="form-control form-control-lg"
-                    placeholder="Número do Cartão"
-                    guide={false}
-                    onChange={(e) => setNumeroCartao(e.target.value)}
-                  />
-                </div>
-                <div className="col-6 pl-0">
-                  <input
-                    type="text"
-                    placeholder="Nome do titular"
-                    className="form-control form-control-lg"
-                    onChange={(e) => setNomeCartao(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div className="row mb-3">
-                <div className="col-6">
-                  <MaskedInput
-                    mask={[/[0-1]/, /\d/, /\d/, /\d/]}
-                    className="form-control form-control-lg"
-                    placeholder="Validade"
-                    guide={false}
-                    onChange={(e) => setDataExpiracao(e.target.value)}
-                  />
-                </div>
-                <div className="col-6 pl-0">
-                  <MaskedInput
-                    mask={[/\d/, /\d/, /\d/]}
-                    className="form-control form-control-lg"
-                    placeholder="CVV"
-                    guide={false}
-                    onChange={(e) => setCvv(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div className="row mt-4">
-                <div className="col-12">
-                  <Error error={error} />
-                  <button
-                    type="submit"
-                    className="btn btn-block btn-lg btn-primary w-100"
-                    onClick={() => handleMakePurchasing()}
+              <ul className="nav nav-pills" role="tablist">
+                <li className="nav-item">
+                  <a
+                    className="nav-link"
+                    data-toggle="tab"
+                    href="#payment-pagarme"
                   >
-                    Finalizar Compra
-                  </button>
+                    <i className="fal fa-credit-card mr-1"></i>Pagarme
+                    Credit-Card
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" data-toggle="tab" href="#payment-pix">
+                    <i className="fal fa-exchange mr-1"></i>Pix
+                  </a>
+                </li>
+              </ul>
+
+              <span className="section-title">Dados de Pagamento</span>
+              <div className="tab-content py-3">
+                <div
+                  className="tab-pane fade"
+                  id="payment-pagarme"
+                  role="tabpanel"
+                >
+                  <div className="row mb-3">
+                    <div className="col-6">
+                      <MaskedInput
+                        mask={[
+                          /\d/,
+                          /\d/,
+                          /\d/,
+                          /\d/,
+                          ' ',
+                          /\d/,
+                          /\d/,
+                          /\d/,
+                          /\d/,
+                          ' ',
+                          /\d/,
+                          /\d/,
+                          /\d/,
+                          /\d/,
+                          ' ',
+                          /\d/,
+                          /\d/,
+                          /\d/,
+                          /\d/,
+                        ]}
+                        className="form-control form-control-lg"
+                        placeholder="Número do Cartão"
+                        guide={false}
+                        onChange={(e) => setNumeroCartao(e.target.value)}
+                      />
+                    </div>
+                    <div className="col-6 pl-0">
+                      <input
+                        type="text"
+                        placeholder="Nome do titular"
+                        className="form-control form-control-lg"
+                        onChange={(e) => setNomeCartao(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="row mb-3">
+                    <div className="col-6">
+                      <MaskedInput
+                        mask={[/[0-1]/, /\d/, /\d/, /\d/]}
+                        className="form-control form-control-lg"
+                        placeholder="Validade"
+                        guide={false}
+                        onChange={(e) => setDataExpiracao(e.target.value)}
+                      />
+                    </div>
+                    <div className="col-6 pl-0">
+                      <MaskedInput
+                        mask={[/\d/, /\d/, /\d/]}
+                        className="form-control form-control-lg"
+                        placeholder="CVV"
+                        guide={false}
+                        onChange={(e) => setCvv(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="row mt-4">
+                    <div className="col-12">
+                      <Error error={error} />
+                      <button
+                        type="submit"
+                        className="btn btn-block btn-lg btn-primary w-100"
+                        onClick={() => handleMakePurchasing()}
+                      >
+                        Finalizar Compra
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div className="tab-pane fade" id="payment-pix" role="tabpanel">
+                  <div className={styles.container}>
+                    <div className={styles.leftSide}>
+                      <div className={styles.card}>
+                        <div className={styles.cardLine}></div>
+                        <div className={styles.buttons}></div>
+                      </div>
+                      <div className={styles.post}>
+                        <div className={styles.postLine}></div>
+                        <div className={styles.screen}>
+                          <div className={styles.dollar}>$</div>
+                        </div>
+                        <div className={styles.numbers}></div>
+                        <div className={styles.numbersLine2}></div>
+                      </div>
+                    </div>
+                    <div className={styles.rightSide}>
+                      <div className={styles.new}>Gerate PIX</div>
+
+                      <svg
+                        className={styles.arrow}
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="512"
+                        height="512"
+                        viewBox="0 0 451.846 451.847"
+                      >
+                        <path
+                          d="M345.441 248.292L151.154 442.573c-12.359 12.365-32.397 12.365-44.75 0-12.354-12.354-12.354-32.391 0-44.744L278.318 225.92 106.409 54.017c-12.354-12.359-12.354-32.394 0-44.748 12.354-12.359 32.391-12.359 44.75 0l194.287 194.284c6.177 6.18 9.262 14.271 9.262 22.366 0 8.099-3.091 16.196-9.267 22.373z"
+                          data-original="#000000"
+                          className="active-path"
+                          data-old_color="#000000"
+                          fill="#cfcfcf"
+                        />
+                      </svg>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

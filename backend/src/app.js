@@ -11,6 +11,7 @@ const inventoryController = require('./controllers/InventoryController');
 const pagarmeController = require('./controllers/PagarmeController');
 const postBackController = require('./controllers/PostBackController');
 const paymentHistoryController = require('./controllers/PaymentHistoryController');
+const PixGerenciaNetController = require('./controllers/PixGerenciaNetController');
 
 const response = require('./middlewares/response');
 const path = require('path');
@@ -33,6 +34,7 @@ app.use('/inventory', inventoryController);
 app.use('/pagarme', pagarmeController);
 app.use('/postback', postBackController);
 app.use('/paymentHistory', paymentHistoryController);
+app.use('/pix', PixGerenciaNetController);
 
 app.get('/', (req, res) => {
   return res.json('OK');

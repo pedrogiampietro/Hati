@@ -71,9 +71,9 @@ const Shopping = ({ shopList }) => {
                     </div>
                     <p className="card-text">{description}</p>
                   </div>
-                  <div class="container">
-                    <div class="row">
-                      <div class="col">
+                  <div className="container">
+                    <div className="row">
+                      <div className="col">
                         {' '}
                         <input
                           type="text"
@@ -82,7 +82,7 @@ const Shopping = ({ shopList }) => {
                           onChange={(e) => setTitle(e.target.value)}
                         />
                       </div>
-                      <div class="col">
+                      <div className="col">
                         {' '}
                         <input
                           type="text"
@@ -99,8 +99,8 @@ const Shopping = ({ shopList }) => {
                           onChange={(e) => setAmount(e.target.value)}
                         />
                       </div>
-                      <div class="w-100"></div>
-                      <div class="col">
+                      <div className="w-100"></div>
+                      <div className="col">
                         {' '}
                         <input
                           type="text"
@@ -109,7 +109,7 @@ const Shopping = ({ shopList }) => {
                           onChange={(e) => setPrice(e.target.value)}
                         />
                       </div>
-                      <div class="col">
+                      <div className="col">
                         {' '}
                         <input
                           type="text"

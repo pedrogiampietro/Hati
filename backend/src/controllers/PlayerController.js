@@ -1,5 +1,5 @@
 const express = require('express');
-const { players, player_deaths, accounts } = require('../models');
+const { players, player_deaths, accounts, player_items } = require('../models');
 const { validateCreateCharacter } = require('../validators/player');
 const { getMessage } = require('../helpers/messages');
 const { checkJwt } = require('../middlewares/jwt');
@@ -75,6 +75,7 @@ router.get('/character/:name', async (req, res) => {
     ],
 
     include: [
+      { model: player_items },
       {
         model: player_deaths,
         limit,
@@ -94,6 +95,8 @@ router.get('/character/:name', async (req, res) => {
       },
     ],
   });
+
+  console.log(searchCharacter.rows);
 
   if (searchCharacter.count === 0) {
     return res.jsonBadRequest(

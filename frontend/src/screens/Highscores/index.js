@@ -228,7 +228,7 @@ const Highscores = ({ highscoresList }) => {
                 ></button>
               </div>
             </div>
-            <div className="panel-container show">
+            <div className="panel-container">
               <div className="panel-content">
                 <div className="table-responsive">
                   <table className="table-highscores">
@@ -257,7 +257,7 @@ const Highscores = ({ highscoresList }) => {
                               </Link>
                             </td>
                             <td>
-                              <span class="badge opacity-50 p-1 width-6 bg-primary border-primary text-white">
+                              <span className="badge opacity-50 p-1 width-6 bg-primary border-primary text-white">
                                 {skill}
                               </span>
                             </td>
