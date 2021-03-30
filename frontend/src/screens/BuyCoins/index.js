@@ -37,7 +37,7 @@ const BuyCoins = () => {
   const [wallet, setWallet] = React.useState();
   const [error, setError] = React.useState('');
   const [isShoppingModalOpen, setIsShoppingModalOpen] = React.useState(false);
-  const [pixButtonActive, setPixButtonActive] = React.useState('');
+  const [pixButtonActive] = React.useState('');
   const [qrCode, setQrCode] = React.useState('');
 
   //Create Costumer
