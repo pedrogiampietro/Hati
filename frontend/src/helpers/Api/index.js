@@ -3,11 +3,11 @@ import { serverConnection } from '../../config';
 import { getToken, getRefreshToken, getPlayerName } from '../Account';
 
 export const getApiUrl = (path) => {
-  return serverConnection.developer.base_URL + path;
+  return serverConnection.production.base_URL + path;
 };
 
 export const getImageUrl = (path) => {
-  return `${serverConnection.developer.base_URL}/${path}`;
+  return `${serverConnection.production.base_URL}/${path}`;
 };
 
 export const getHeaders = () => {
