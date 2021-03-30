@@ -72,7 +72,7 @@ const CreateThread = ({ forumNewThread, playerList, interaction }) => {
 								type="button"
 								className="btn btn-outline-danger waves-effect waves-themed"
 								data-action="toggle"
-								data-class="d-flex"
+								data-className="d-flex"
 								data-target="#panel-compose"
 							>
 								Cancel

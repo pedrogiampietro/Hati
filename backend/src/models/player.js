@@ -301,15 +301,16 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     { freezeTableName: true }
-  )
+  );
 
   players.associate = (models) => {
-    players.belongsTo(models.accounts, { foreignKey: 'account_id' })
-    players.hasMany(models.player_deaths, { foreignKey: 'player_id' })
-    players.hasMany(models.guild_invites, { foreignKey: 'player_id' })
-    players.hasMany(models.guild_membership, { foreignKey: 'player_id' })
-    players.hasMany(models.players_online, { foreignKey: 'player_id' })
-  }
+    players.belongsTo(models.accounts, { foreignKey: 'account_id' });
+    players.hasMany(models.player_items, { foreignKey: 'player_id' });
+    players.hasMany(models.player_deaths, { foreignKey: 'player_id' });
+    players.hasMany(models.guild_invites, { foreignKey: 'player_id' });
+    players.hasMany(models.guild_membership, { foreignKey: 'player_id' });
+    players.hasMany(models.players_online, { foreignKey: 'player_id' });
+  };
 
-  return players
-}
+  return players;
+};

@@ -62,7 +62,6 @@ export const apiGet = async (path, params = {}) => {
   const url = getApiUrl(path);
   const options = {
     headers: getHeaders(),
-    params: params,
   };
 
   return await axios.get(url, options);
@@ -124,4 +123,14 @@ export const apiPostAvatar = (path, data = {}) => {
   };
 
   return axios.post(url, data, options);
+};
+
+export const apiGetInventory = async (path, params = {}) => {
+  const url = getApiUrl(path);
+  const options = {
+    headers: getHeaders(),
+    params: params,
+  };
+
+  return await axios.get(url, options);
 };
