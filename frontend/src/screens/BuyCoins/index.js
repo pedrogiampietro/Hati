@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { getGenerateQrc } from '../../actions/PixGerenciaActions';
 import { makePagarmePurchasing } from '../../actions/PagarmeActions';
 import { PurchaseCoinsModal } from '../../components/PurchaseCoinsModal';
 import SimpleSlider from '../../components/SimpleSlider';
@@ -13,6 +14,7 @@ import './styles.css';
 
 const BuyCoins = () => {
   const { account } = useSelector((state) => state.account);
+
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -35,6 +37,8 @@ const BuyCoins = () => {
   const [wallet, setWallet] = React.useState();
   const [error, setError] = React.useState('');
   const [isShoppingModalOpen, setIsShoppingModalOpen] = React.useState(false);
+  const [pixButtonActive, setPixButtonActive] = React.useState('');
+  const [qrCode, setQrCode] = React.useState('');
 
   //Create Costumer
   const costumer = {
@@ -91,7 +95,7 @@ const BuyCoins = () => {
   ];
 
   // Enviar os dados para o backend
-  const handleMakePurchasing = (event) => {
+  const handleMakePurchasing = () => {
     const response = {
       amount: wallet,
       card_number: numeroCartao,
@@ -119,6 +123,19 @@ const BuyCoins = () => {
         const newError = data.map((error) => error.parameter_name);
         setError(newError);
       });
+  };
+
+  const handleGerateQRCode = () => {
+    dispatch(
+      getGenerateQrc({
+        totalAmountPayable: formatPrice(wallet),
+        requestor: account?.id,
+        descriptionOfCharge: `${coins} Tibia coins`,
+      })
+    ).then(({ payload }) => {
+      const newData = payload.data?.data?.qrcodeImage;
+      setQrCode(newData);
+    });
   };
 
   return (
@@ -318,41 +335,52 @@ const BuyCoins = () => {
                   </div>
                 </div>
                 <div className="tab-pane fade" id="payment-pix" role="tabpanel">
-                  <div className={styles.container}>
-                    <div className={styles.leftSide}>
-                      <div className={styles.card}>
-                        <div className={styles.cardLine}></div>
-                        <div className={styles.buttons}></div>
-                      </div>
-                      <div className={styles.post}>
-                        <div className={styles.postLine}></div>
-                        <div className={styles.screen}>
-                          <div className={styles.dollar}>$</div>
-                        </div>
-                        <div className={styles.numbers}></div>
-                        <div className={styles.numbersLine2}></div>
-                      </div>
-                    </div>
-                    <div className={styles.rightSide}>
-                      <div className={styles.new}>Gerate PIX</div>
-
-                      <svg
-                        className={styles.arrow}
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="512"
-                        height="512"
-                        viewBox="0 0 451.846 451.847"
+                  {qrCode ? (
+                    <img src={qrCode} alt="" />
+                  ) : (
+                    <div
+                      className={`${styles.container} ${
+                        pixButtonActive ? pixButtonActive : ''
+                      }`}
+                    >
+                      <div
+                        className={styles.leftSide}
+                        onClick={() => handleGerateQRCode()}
                       >
-                        <path
-                          d="M345.441 248.292L151.154 442.573c-12.359 12.365-32.397 12.365-44.75 0-12.354-12.354-12.354-32.391 0-44.744L278.318 225.92 106.409 54.017c-12.354-12.359-12.354-32.394 0-44.748 12.354-12.359 32.391-12.359 44.75 0l194.287 194.284c6.177 6.18 9.262 14.271 9.262 22.366 0 8.099-3.091 16.196-9.267 22.373z"
-                          data-original="#000000"
-                          className="active-path"
-                          data-old_color="#000000"
-                          fill="#cfcfcf"
-                        />
-                      </svg>
+                        <div className={styles.card}>
+                          <div className={styles.cardLine}></div>
+                          <div className={styles.buttons}></div>
+                        </div>
+                        <div className={styles.post}>
+                          <div className={styles.postLine}></div>
+                          <div className={styles.screen}>
+                            <div className={styles.dollar}>$</div>
+                          </div>
+                          <div className={styles.numbers}></div>
+                          <div className={styles.numbersLine2}></div>
+                        </div>
+                      </div>
+                      <div className={styles.rightSide}>
+                        <div className={styles.new}>Gerate PIX</div>
+
+                        <svg
+                          className={styles.arrow}
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="512"
+                          height="512"
+                          viewBox="0 0 451.846 451.847"
+                        >
+                          <path
+                            d="M345.441 248.292L151.154 442.573c-12.359 12.365-32.397 12.365-44.75 0-12.354-12.354-12.354-32.391 0-44.744L278.318 225.92 106.409 54.017c-12.354-12.359-12.354-32.394 0-44.748 12.354-12.359 32.391-12.359 44.75 0l194.287 194.284c6.177 6.18 9.262 14.271 9.262 22.366 0 8.099-3.091 16.196-9.267 22.373z"
+                            data-original="#000000"
+                            className="active-path"
+                            data-old_color="#000000"
+                            fill="#cfcfcf"
+                          />
+                        </svg>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
             </div>

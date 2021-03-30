@@ -3,11 +3,11 @@ import { serverConnection } from '../../config';
 import { getToken, getRefreshToken, getPlayerName } from '../Account';
 
 export const getApiUrl = (path) => {
-  return serverConnection.production.base_URL + path;
+  return serverConnection.developer.base_URL + path;
 };
 
 export const getImageUrl = (path) => {
-  return `${serverConnection.production.base_URL}/${path}`;
+  return `${serverConnection.developer.base_URL}/${path}`;
 };
 
 export const getHeaders = () => {
@@ -62,7 +62,6 @@ export const apiGet = async (path, params = {}) => {
   const url = getApiUrl(path);
   const options = {
     headers: getHeaders(),
-    params: params,
   };
 
   return await axios.get(url, options);
@@ -124,4 +123,14 @@ export const apiPostAvatar = (path, data = {}) => {
   };
 
   return axios.post(url, data, options);
+};
+
+export const apiGetInventory = async (path, params = {}) => {
+  const url = getApiUrl(path);
+  const options = {
+    headers: getHeaders(),
+    params: params,
+  };
+
+  return await axios.get(url, options);
 };

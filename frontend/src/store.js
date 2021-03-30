@@ -8,7 +8,8 @@ import onlineReducer from './reducers/OnlineReducer';
 import shopReducer from './reducers/ShopReducer';
 import inventoryReducer from './reducers/InventoryReducer';
 import pagarmeReducer from './reducers/PagarmeReducer';
-import paymentHistory from './reducers/PaymentHistoryReducer';
+import paymentHistoryReducer from './reducers/PaymentHistoryReducer';
+import pixGerenciaReducer from './reducers/PixGerenciaReducer';
 
 const reducers = combineReducers({
   account: accountReducer,
@@ -19,7 +20,8 @@ const reducers = combineReducers({
   shop: shopReducer,
   inventory: inventoryReducer,
   pagarme: pagarmeReducer,
-  paymentHistory: paymentHistory,
+  paymentHistory: paymentHistoryReducer,
+  pixGerencia: pixGerenciaReducer,
 });
 
 const store = createStore(reducers, applyMiddleware(ReduxPromise));

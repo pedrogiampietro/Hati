@@ -236,3 +236,15 @@
     transform: translateY(0);
   }
 }
+
+@media (min-width: 768px) {
+  .container {
+    background-color: #fff;
+    display: flex;
+    width: 340px;
+    height: 120px;
+    position: relative;
+    border-radius: 6px;
+    transition: 0.3s ease-in-out;
+  }
+}
