@@ -11,6 +11,9 @@ const reqGNAlready = GNRequest({
 
 router.post('/', checkJwt, async (req, res) => {
   const { body } = req;
+
+  if (!body) return;
+
   let { totalAmountPayable, requestor, descriptionOfCharge } = body;
 
   const treatingValue = totalAmountPayable.slice(3).replace(',', '.');
