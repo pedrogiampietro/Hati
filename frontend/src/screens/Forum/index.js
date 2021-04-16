@@ -23,6 +23,7 @@ const Forum = ({
 }) => {
   const { account } = useSelector((state) => state.account);
   const [categoryLists, setCategoryLists] = React.useState([]);
+
   const [postInteraction, setPostInteraction] = React.useState(false);
 
   function interaction() {
