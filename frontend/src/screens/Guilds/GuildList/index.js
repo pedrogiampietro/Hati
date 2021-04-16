@@ -1,34 +1,33 @@
 import React from 'react';
+import { FaSignInAlt, FaRegTrashAlt } from 'react-icons/fa';
 import { connect } from 'react-redux';
-import { Link, useParams, useHistory } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import {
-  guildShow,
-  guildMember,
-  guildInvite,
-  guildGetInvites,
-  guildHasInvite,
-  guildAccept,
-  postGuildLogo,
   editGuildDescription,
   editGuildRanks,
-  setGuildToRemove,
+  guildAccept,
+  guildGetInvites,
+  guildHasInvite,
+  guildInvite,
+  guildMember,
   guildRemove,
+  guildShow,
+  postGuildLogo,
+  setGuildToRemove,
 } from '../../../actions/GuildActions';
 
 import { playerList } from '../../../actions/PlayerActions';
+import GuildLogoDefault from '../../../assets/img/guild_logo_default.png';
+import { characterVocations } from '../../../config';
 import { getImageUrl } from '../../../helpers/Api';
 import { getFormData } from '../../../helpers/FormData';
-import { characterVocations } from '../../../config';
 
 import Container from '../../Layouts/Container';
-import GuildLogoDefault from '../../../assets/img/guild_logo_default.png';
-import { FaSignInAlt } from 'react-icons/fa';
-// FaRegTrashAlt
-
-import './styles.css';
-import GuildRank from './GuildRank';
 import ChangeLogo from './ChangeLogo';
 import GuildDescription from './GuildDescription';
+import GuildRank from './GuildRank';
+
+import './styles.css';
 
 const GuildList = ({
   guildShow,
@@ -153,8 +152,8 @@ const GuildList = ({
     editGuildRanks(id, addRanks);
   };
 
-  const getPlayer = getPlayerInAccount.map((h) => h.id);
-  const verifyRanks = member.map((g) => g.player_id);
+  const getPlayer = getPlayerInAccount.map((player) => player.id);
+  const verifyRanks = member.map((member) => member.player_id);
 
   const settings = getPlayer.filter((arr1Item) =>
     verifyRanks.includes(arr1Item)
@@ -461,7 +460,7 @@ const GuildList = ({
               <tr>
                 <th>Player</th>
                 <th>Vocation &amp; Level</th>
-                <th />
+                <th>Action</th>
               </tr>
             </thead>
 
@@ -524,6 +523,9 @@ const GuildList = ({
                             >
                               <FaSignInAlt size={14} />
                             </button>
+                          ) : null}
+                          {settings.length > 0 ? (
+                            <FaRegTrashAlt size={14} />
                           ) : null}
                         </div>
                       </td>

@@ -4,7 +4,7 @@ import { useParams, Link, useHistory } from 'react-router-dom';
 import { playerGetCharacter } from '../../actions/PlayerActions';
 import { genders, characterVocations, towns } from '../../config';
 import { convertTimestempToDate } from '../../helpers/DateTime';
-import PlayerSkills from '../../components/PlayerSkills';
+
 import Outfiter from '../../helpers/Outfiter';
 
 import { FaCrosshairs, FaSkullCrossbones, FaTimes } from 'react-icons/fa';
@@ -37,8 +37,7 @@ const Character = ({ playerGetCharacter, ...props }) => {
   const boots = 'https://www.tibiawiki.com.br/images/9/94/Leather_Boots.gif';
   const shield = 'https://www.tibiawiki.com.br/images/5/58/Dwarven_Shield.gif';
   const melee = 'https://www.tibiawiki.com.br/images/2/26/Mace.gif';
-  const amulet =
-    'https://www.tibiawiki.com.br/images/3/3e/Crystal_Necklace.gif';
+  const amulet = 'https://www.tibiawiki.com.br/images/3/3e/Crystal_Necklace.gif';
   const ring = 'https://www.tibiawiki.com.br/images/a/a0/Crystal_Ring.gif';
   const backpack = 'https://www.tibiawiki.com.br/images/9/9a/Backpack.gif';
 
@@ -58,15 +57,14 @@ const Character = ({ playerGetCharacter, ...props }) => {
       });
   }, [name, history, playerGetCharacter]);
 
+  const meleeArray = [characterPage.skill_axe, characterPage.skill_club, characterPage.skill_sword];
+  const newMeleeSkill = Math.max(...meleeArray);
+
   return (
     <Container>
       <div className="row">
         <div className="col-lg-6 col-xl-3 order-lg-1 order-xl-1">
-          <div
-            id="c_1"
-            className="card border shadow-0 mb-g shadow-sm-hover"
-            data-filter-tags="oliver kopyov"
-          >
+          <div id="c_1" className="card border shadow-0 mb-g shadow-sm-hover" data-filter-tags="oliver kopyov">
             <div className="card-body border-faded border-top-0 border-left-0 border-right-0 rounded-top">
               <div className="d-flex flex-row align-items-center">
                 <span className="status status-success mr-3">
@@ -83,15 +81,10 @@ const Character = ({ playerGetCharacter, ...props }) => {
                   </span>
                 </span>
                 <div className="info-card-text flex-1">
-                  <span
-                    className="fs-xl text-truncate text-truncate-lg text-primary"
-                    aria-expanded="false"
-                  >
+                  <span className="fs-xl text-truncate text-truncate-lg text-primary" aria-expanded="false">
                     {characterPage.name}
                   </span>
-                  <span className="text-truncate text-truncate-xl">
-                    Leader of Mata Rindo
-                  </span>
+                  <span className="text-truncate text-truncate-xl">Leader of Mata Rindo</span>
                 </div>
               </div>
             </div>
@@ -100,10 +93,7 @@ const Character = ({ playerGetCharacter, ...props }) => {
                 <tbody>
                   <tr>
                     <td>
-                      <span
-                        className="fs-xl text-truncate text-truncate-lg text-primary"
-                        aria-expanded="false"
-                      >
+                      <span className="fs-xl text-truncate text-truncate-lg text-primary" aria-expanded="false">
                         Sex:
                       </span>
                     </td>
@@ -111,10 +101,7 @@ const Character = ({ playerGetCharacter, ...props }) => {
                   </tr>
                   <tr>
                     <td>
-                      <span
-                        className="fs-xl text-truncate text-truncate-lg text-primary"
-                        aria-expanded="false"
-                      >
+                      <span className="fs-xl text-truncate text-truncate-lg text-primary" aria-expanded="false">
                         Level:
                       </span>
                     </td>
@@ -122,10 +109,7 @@ const Character = ({ playerGetCharacter, ...props }) => {
                   </tr>
                   <tr>
                     <td>
-                      <span
-                        className="fs-xl text-truncate text-truncate-lg text-primary"
-                        aria-expanded="false"
-                      >
+                      <span className="fs-xl text-truncate text-truncate-lg text-primary" aria-expanded="false">
                         Vocation:
                       </span>
                     </td>
@@ -133,10 +117,7 @@ const Character = ({ playerGetCharacter, ...props }) => {
                   </tr>
                   <tr>
                     <td>
-                      <span
-                        className="fs-xl text-truncate text-truncate-lg text-primary"
-                        aria-expanded="false"
-                      >
+                      <span className="fs-xl text-truncate text-truncate-lg text-primary" aria-expanded="false">
                         Last Login:
                       </span>
                     </td>
@@ -145,10 +126,7 @@ const Character = ({ playerGetCharacter, ...props }) => {
 
                   <tr>
                     <td>
-                      <span
-                        className="fs-xl text-truncate text-truncate-lg text-primary"
-                        aria-expanded="false"
-                      >
+                      <span className="fs-xl text-truncate text-truncate-lg text-primary" aria-expanded="false">
                         Resident:
                       </span>
                     </td>
@@ -161,9 +139,7 @@ const Character = ({ playerGetCharacter, ...props }) => {
                   <div className="text-center py-3">
                     <h5 className="mb-0 fw-700">
                       31
-                      <small className="mb-0 fs-xl text-truncate text-truncate-lg text-primary">
-                        Premium Account
-                      </small>
+                      <small className="mb-0 fs-xl text-truncate text-truncate-lg text-primary">Premium Account</small>
                     </h5>
                   </div>
                 </div>
@@ -171,221 +147,8 @@ const Character = ({ playerGetCharacter, ...props }) => {
                   <div className="text-center py-3">
                     <h5 className="mb-0 fw-700">
                       371
-                      <small className="mb-0 fs-xl text-truncate text-truncate-lg text-primary">
-                        Crown Token
-                      </small>
+                      <small className="mb-0 fs-xl text-truncate text-truncate-lg text-primary">Crown Token</small>
                     </h5>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="col-lg-12 col-xl-6 order-lg-3 order-xl-2">
-          <div className="card mb-g">
-            <div className="card-body py-0 px-4 border-faded border-right-0 border-bottom-0 border-left-0">
-              <div className="d-flex flex-column align-items-center">
-                <div className="row justify-content-md-center">
-                  <br />
-                  <div className="col-lg">
-                    <div className="panel panel-default">
-                      <div className="panel-heading">Statistics</div>
-                      <div className="panel-body panel-player-extra">
-                        <div align="center">Health</div>
-                        <div className="progress">
-                          <div
-                            className="progress-bar progress-bar-striped bg-primary progress-bar-animated"
-                            aria-valuemin="0"
-                            aria-valuemax="100"
-                            role="progressbar"
-                            style={{
-                              width:
-                                (characterPage.health /
-                                  characterPage.healthmax) *
-                                  100 +
-                                '%',
-                            }}
-                          >
-                            <span>
-                              {characterPage.health} / {characterPage.healthmax}
-                            </span>
-                          </div>
-                        </div>
-                        <div align="center">Mana</div>
-                        <div className="progress">
-                          <div
-                            className="progress-bar progress-bar-striped bg-info progress-bar-animated"
-                            role="progressbar"
-                            style={{
-                              width:
-                                (characterPage.mana / characterPage.manamax) *
-                                  100 +
-                                '%',
-                            }}
-                          >
-                            <span>
-                              {characterPage.mana} / {characterPage.manamax}
-                            </span>
-                          </div>
-                        </div>
-                        <div align="center">Soul</div>
-                        <div className="progress">
-                          <div
-                            className="progress-bar progress-bar-striped bg-warning"
-                            role="progressbar"
-                            style={{
-                              width: (characterPage.soul / 200) * 100 + '%',
-                            }}
-                          >
-                            <span>{characterPage.soul} / 200</span>
-                          </div>
-                        </div>
-                        <div align="center">Stamina</div>
-                        <div className="progress">
-                          <div
-                            className="progress-bar progress-bar-success"
-                            role="progressbar"
-                            style={{ width: '0%' }}
-                          >
-                            <span>{characterPage.stamina}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg">
-                    <div className="panel panel-default">
-                      <div className="panel-heading">Equipment</div>
-                      <div className="panel-body panel-player-extra">
-                        <table className="table table-striped table-hover table-fixed">
-                          <tbody>
-                            <tr>
-                              <td align="center">
-                                <img src={amulet} alt="amulet" />
-                              </td>
-                              <td align="center">
-                                <img src={helmet} alt="helmet" />
-                              </td>
-                              <td align="center">
-                                <img src={backpack} alt="backpack" />
-                              </td>
-                            </tr>
-                            <tr>
-                              <td align="center">
-                                <img src={melee} alt="melee" />
-                              </td>
-                              <td align="center">
-                                <img src={armor} alt="armor" />
-                              </td>
-                              <td align="center">
-                                <img src={shield} alt="shield" />
-                              </td>
-                            </tr>
-                            <tr>
-                              <td align="center">
-                                <img src={ring} alt="ring" />
-                              </td>
-                              <td align="center">
-                                <img src={legs} alt="legs" />
-                              </td>
-                              <td align="center">
-                                <FaTimes size={20} className="mt-2" />
-                              </td>
-                            </tr>
-                            <tr>
-                              <td align="center">Soul: {characterPage.soul}</td>
-                              <td align="center">
-                                <img src={boots} alt="boots" />
-                              </td>
-                              <td align="center">Cap: {characterPage.cap}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                  <PlayerSkills
-                    skillMagic={characterPage.maglevel}
-                    skillFist={characterPage.skill_fist}
-                    skillSword={characterPage.skill_sword}
-                    skillAxe={characterPage.skill_axe}
-                    skillClub={characterPage.skill_club}
-                    skillDist={characterPage.skill_dist}
-                    skillShielding={characterPage.skill_shielding}
-                    skillFishing={characterPage.skill_fishing}
-                  />
-                </div>
-
-                <div className="container">
-                  <div className="page-header" style={{ padding: '50px 2rem' }}>
-                    <h2>
-                      Death List{' '}
-                      <small>
-                        track the death of your
-                        <code>enemy!</code>.
-                      </small>
-                    </h2>
-                  </div>
-                  <div className="timeline">
-                    <div className="line text-muted"></div>
-                    {playerDeaths && playerDeaths.length
-                      ? playerDeaths.map((props) => {
-                          return (
-                            <div key={props.time}>
-                              <article className="panel panel-danger">
-                                <div className="panel-heading icon">
-                                  {props.is_player === 1 ? (
-                                    <FaCrosshairs size={20} className="mt-2" />
-                                  ) : (
-                                    <FaSkullCrossbones
-                                      size={20}
-                                      className="mt-2"
-                                    />
-                                  )}
-                                </div>
-
-                                <div className="panel-heading">
-                                  <h2 className="panel-title">
-                                    {props.is_player === 1 ? 'Fragged' : 'Died'}{' '}
-                                    <div className="text-muted float-right">
-                                      <time>
-                                        {convertTimestempToDate(props.time)}
-                                      </time>
-                                    </div>
-                                  </h2>
-                                </div>
-
-                                <div className="panel-body">
-                                  <strong>Died</strong> at level {props.level}.{' '}
-                                  {props.unjustified === 1 ? (
-                                    <span className="badge badge-danger">
-                                      unjustified
-                                    </span>
-                                  ) : null}
-                                  <br />
-                                  <br />
-                                  <code>
-                                    {props.mostdamage_by !== props.killed_by
-                                      ? props.mostdamage_by
-                                      : null}
-                                  </code>{' '}
-                                  {props.mostdamage_by !== props.killed_by ? (
-                                    <>
-                                      {' '}
-                                      <span className="badge badge-primary">
-                                        most damage
-                                      </span>
-                                      <br />
-                                      <br />
-                                    </>
-                                  ) : null}
-                                  <code>{props.killed_by}</code>
-                                </div>
-                              </article>
-                            </div>
-                          );
-                        })
-                      : null}
                   </div>
                 </div>
               </div>
@@ -477,6 +240,204 @@ const Character = ({ playerGetCharacter, ...props }) => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div className="row">
+        <br />
+        <div className="col-md-4">
+          <div className="panel panel-default">
+            <div className="panel-heading">Statistics</div>
+            <div className="panel-body panel-player-extra">
+              <div align="center">Health</div>
+              <div className="progress">
+                <div
+                  className="progress-bar progress-bar-striped bg-primary progress-bar-animated"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  role="progressbar"
+                  style={{
+                    width: (characterPage.health / characterPage.healthmax) * 100 + '%',
+                  }}
+                >
+                  <span>
+                    {characterPage.health} / {characterPage.healthmax}
+                  </span>
+                </div>
+              </div>
+              <div align="center">Mana</div>
+              <div className="progress">
+                <div
+                  className="progress-bar progress-bar-striped bg-info progress-bar-animated"
+                  role="progressbar"
+                  style={{
+                    width: (characterPage.mana / characterPage.manamax) * 100 + '%',
+                  }}
+                >
+                  <span>
+                    {characterPage.mana} / {characterPage.manamax}
+                  </span>
+                </div>
+              </div>
+              <div align="center">Soul</div>
+              <div className="progress">
+                <div
+                  className="progress-bar progress-bar-striped bg-warning"
+                  role="progressbar"
+                  style={{
+                    width: (characterPage.soul / 200) * 100 + '%',
+                  }}
+                >
+                  <span>{characterPage.soul} / 200</span>
+                </div>
+              </div>
+              <div align="center">Stamina</div>
+              <div className="progress">
+                <div className="progress-bar progress-bar-success" role="progressbar" style={{ width: '0%' }}>
+                  <span>{characterPage.stamina}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="panel panel-default">
+            <div className="panel-heading">Equipment</div>
+            <div className="panel-body panel-player-extra">
+              <table className="table table-striped table-hover table-fixed">
+                <tbody>
+                  <tr>
+                    <td align="center">
+                      <img src={amulet} alt="amulet" />
+                    </td>
+                    <td align="center">
+                      <img src={helmet} alt="helmet" />
+                    </td>
+                    <td align="center">
+                      <img src={backpack} alt="backpack" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="center">
+                      <img src={melee} alt="melee" />
+                    </td>
+                    <td align="center">
+                      <img src={armor} alt="armor" />
+                    </td>
+                    <td align="center">
+                      <img src={shield} alt="shield" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="center">
+                      <img src={ring} alt="ring" />
+                    </td>
+                    <td align="center">
+                      <img src={legs} alt="legs" />
+                    </td>
+                    <td align="center">
+                      <FaTimes size={20} className="mt-2" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td align="center">Soul: {characterPage.soul}</td>
+                    <td align="center">
+                      <img src={boots} alt="boots" />
+                    </td>
+                    <td align="center">Cap: {characterPage.cap}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4">
+          <div className="panel panel-default">
+            <div className="panel-heading">Skills</div>
+            <div className="panel-body panel-player-extra">
+              <table className="table table-striped table-hover table-fixed">
+                <tbody>
+                  <tr>
+                    <td className="left">Magic Level</td>
+                    <td className="right">{characterPage.maglevel}</td>
+                  </tr>
+                  <tr>
+                    <td className="left">Melee</td>
+                    <td className="right">{newMeleeSkill ? newMeleeSkill : null}</td>
+                  </tr>
+                  <tr>
+                    <td className="left">Distance</td>
+                    <td className="right">{characterPage.skill_dist}</td>
+                  </tr>
+                  <tr>
+                    <td className="left">Shielding</td>
+                    <td className="right">{characterPage.skill_shielding}</td>
+                  </tr>
+                  <tr>
+                    <td className="left">Fishing</td>
+                    <td className="right">{characterPage.skill_fishing}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div className="container">
+          <div className="page-header" style={{ padding: '50px 2rem' }}>
+            <h2>
+              Death List{' '}
+              <small>
+                track the death of your
+                <code>enemy!</code>.
+              </small>
+            </h2>
+          </div>
+          <div className="timeline">
+            <div className="line text-muted"></div>
+            {playerDeaths && playerDeaths.length
+              ? playerDeaths.map((props) => {
+                  return (
+                    <div key={props.time}>
+                      <article className="panel panel-danger">
+                        <div className="panel-heading icon">
+                          {props.is_player === 1 ? (
+                            <FaCrosshairs size={20} className="mt-2" />
+                          ) : (
+                            <FaSkullCrossbones size={20} className="mt-2" />
+                          )}
+                        </div>
+
+                        <div className="panel-heading">
+                          <h2 className="panel-title">
+                            {props.is_player === 1 ? 'Fragged' : 'Died'}{' '}
+                            <div className="text-muted float-right">
+                              <time>{convertTimestempToDate(props.time)}</time>
+                            </div>
+                          </h2>
+                        </div>
+
+                        <div className="panel-body">
+                          <strong>Died</strong> at level {props.level}.{' '}
+                          {props.unjustified === 1 ? <span className="badge badge-danger">unjustified</span> : null}
+                          <br />
+                          <br />
+                          <code>{props.mostdamage_by !== props.killed_by ? props.mostdamage_by : null}</code>{' '}
+                          {props.mostdamage_by !== props.killed_by ? (
+                            <>
+                              {' '}
+                              <span className="badge badge-primary">most damage</span>
+                              <br />
+                              <br />
+                            </>
+                          ) : null}
+                          <code>{props.killed_by}</code>
+                        </div>
+                      </article>
+                    </div>
+                  );
+                })
+              : null}
           </div>
         </div>
       </div>

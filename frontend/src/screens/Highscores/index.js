@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
-import { highscoresList } from '../../actions/PlayerActions'
-import { listSkills, characterVocations } from '../../config'
-import Container from '../Layouts/Container'
-import './styles.css'
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { highscoresList } from '../../actions/PlayerActions';
+import { listSkills, characterVocations } from '../../config';
+import Container from '../Layouts/Container';
+import './styles.css';
 
 const Highscores = ({ highscoresList }) => {
-  const [playerList, setPlayerList] = useState([])
-  const [filterVocation, setFilterVocation] = useState('all')
-  const [filterSkill, setFilterSkill] = useState('level')
-  const [skillsName, setSkillsName] = useState('Level')
-  const [pageInitial, setPageInitial] = useState(0)
-  const [characterPerPage] = useState(10)
+  const [playerList, setPlayerList] = useState([]);
+  const [filterVocation, setFilterVocation] = useState('all');
+  const [filterSkill, setFilterSkill] = useState('level');
+  const [skillsName, setSkillsName] = useState('Level');
+  const [pageInitial, setPageInitial] = useState(0);
+  const [characterPerPage] = useState(10);
 
   useEffect(() => {
     highscoresList({
@@ -21,36 +21,36 @@ const Highscores = ({ highscoresList }) => {
       page: pageInitial,
     })
       .then(({ payload }) => {
-        const newData = payload.data.data
-        setPlayerList(newData)
+        const newData = payload.data.data;
+        setPlayerList(newData);
       })
       .catch((err) => {
-        alert('os players não foram carregados.')
-        console.log(err)
-      })
-  }, [highscoresList, filterVocation, filterSkill, pageInitial])
+        alert('os players não foram carregados.');
+        console.log(err);
+      });
+  }, [highscoresList, filterVocation, filterSkill, pageInitial]);
 
   function onValueChangeVocation(e) {
-    const options = e.target.value
-    setFilterVocation(options)
+    const options = e.target.value;
+    setFilterVocation(options);
   }
 
   function onValueChangeSkill(e) {
-    const options = e.target.value
+    const options = e.target.value;
 
     listSkills.forEach(({ type, name }) => {
       if (type === options) {
-        setSkillsName(name)
+        setSkillsName(name);
       }
-    })
+    });
 
-    setFilterSkill(options)
+    setFilterSkill(options);
   }
 
   return (
     <Container>
       <div className="row">
-        <div className="col-xl-6">
+        <div className="col">
           <div id="panel-1" className="panel">
             <div className="panel-hdr">
               <h2>Filter Skills</h2>
@@ -81,10 +81,7 @@ const Highscores = ({ highscoresList }) => {
             <div className="panel-container show">
               <div className="panel-content">
                 <form>
-                  <select
-                    className="form-control"
-                    onChange={onValueChangeVocation}
-                  >
+                  <select className="form-control" onChange={onValueChangeVocation}>
                     <option value="all">All vocations</option>
                     <option value="0">Rooker</option>
                     <option value="1">Sorcerer</option>
@@ -107,57 +104,27 @@ const Highscores = ({ highscoresList }) => {
                     </div>
 
                     <div className="funkyradio-primary">
-                      <input
-                        type="radio"
-                        name="radio"
-                        id="dist"
-                        value="skill_dist"
-                        onChange={onValueChangeSkill}
-                      />
+                      <input type="radio" name="radio" id="dist" value="skill_dist" onChange={onValueChangeSkill} />
                       <label htmlFor="dist">Distance</label>
                     </div>
 
                     <div className="funkyradio-primary">
-                      <input
-                        type="radio"
-                        name="radio"
-                        id="magic"
-                        value="maglevel"
-                        onChange={onValueChangeSkill}
-                      />
+                      <input type="radio" name="radio" id="magic" value="maglevel" onChange={onValueChangeSkill} />
                       <label htmlFor="magic">Magic Level</label>
                     </div>
 
                     <div className="funkyradio-primary">
-                      <input
-                        type="radio"
-                        name="radio"
-                        id="sword"
-                        value="skill_sword"
-                        onChange={onValueChangeSkill}
-                      />
+                      <input type="radio" name="radio" id="sword" value="skill_sword" onChange={onValueChangeSkill} />
                       <label htmlFor="sword">Sword Fighting</label>
                     </div>
 
                     <div className="funkyradio-primary">
-                      <input
-                        type="radio"
-                        name="radio"
-                        id="axe"
-                        value="skill_axe"
-                        onChange={onValueChangeSkill}
-                      />
+                      <input type="radio" name="radio" id="axe" value="skill_axe" onChange={onValueChangeSkill} />
                       <label htmlFor="axe">Axe Fighting</label>
                     </div>
 
                     <div className="funkyradio-primary">
-                      <input
-                        type="radio"
-                        name="radio"
-                        id="club"
-                        value="skill_club"
-                        onChange={onValueChangeSkill}
-                      />
+                      <input type="radio" name="radio" id="club" value="skill_club" onChange={onValueChangeSkill} />
                       <label htmlFor="club">Club Fighting</label>
                     </div>
 
@@ -173,13 +140,7 @@ const Highscores = ({ highscoresList }) => {
                     </div>
 
                     <div className="funkyradio-primary">
-                      <input
-                        type="radio"
-                        name="radio"
-                        id="fist"
-                        value="skill_fist"
-                        onChange={onValueChangeSkill}
-                      />
+                      <input type="radio" name="radio" id="fist" value="skill_fist" onChange={onValueChangeSkill} />
                       <label htmlFor="fist">Fist Fighting</label>
                     </div>
 
@@ -200,7 +161,7 @@ const Highscores = ({ highscoresList }) => {
           </div>
         </div>
 
-        <div className="col-xl-6">
+        <div className="col">
           <div id="panel-2" className="panel">
             <div className="panel-hdr">
               <h2>Highscores</h2>
@@ -241,20 +202,13 @@ const Highscores = ({ highscoresList }) => {
                       </tr>
 
                       {playerList.map((props, index) => {
-                        const skill =
-                          filterSkill === 'level'
-                            ? props.level
-                            : props[filterSkill]
+                        const skill = filterSkill === 'level' ? props.level : props[filterSkill];
                         return (
                           <tr key={props.id}>
-                            <td>
-                              {pageInitial * characterPerPage + index + 1}
-                            </td>
+                            <td>{pageInitial * characterPerPage + index + 1}</td>
 
                             <td>
-                              <Link to={`/character/${props.name}`}>
-                                {props.name}
-                              </Link>
+                              <Link to={`/character/${props.name}`}>{props.name}</Link>
                             </td>
                             <td>
                               <span className="badge opacity-50 p-1 width-6 bg-primary border-primary text-white">
@@ -264,7 +218,7 @@ const Highscores = ({ highscoresList }) => {
 
                             <td>{characterVocations[props.vocation]}</td>
                           </tr>
-                        )
+                        );
                       })}
                     </thead>
                   </table>
@@ -297,21 +251,13 @@ const Highscores = ({ highscoresList }) => {
 
                     {playerList.length >= 10 ? (
                       <li className="page-item">
-                        <button
-                          className="page-link"
-                          aria-label="Next"
-                          onClick={() => setPageInitial(pageInitial + 1)}
-                        >
+                        <button className="page-link" aria-label="Next" onClick={() => setPageInitial(pageInitial + 1)}>
                           &#8250;
                         </button>
                       </li>
                     ) : (
                       <li className="page-item">
-                        <button
-                          className="page-link disabled"
-                          disabled
-                          onClick={() => setPageInitial(pageInitial + 1)}
-                        >
+                        <button className="page-link disabled" disabled onClick={() => setPageInitial(pageInitial + 1)}>
                           &#8250;
                         </button>
                       </li>
@@ -324,13 +270,13 @@ const Highscores = ({ highscoresList }) => {
         </div>
       </div>
     </Container>
-  )
-}
+  );
+};
 
 const mapStateToProps = (state) => {
   return {
     players: state.player.player,
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps, { highscoresList })(Highscores)
+export default connect(mapStateToProps, { highscoresList })(Highscores);
