@@ -10,8 +10,6 @@ router.get('/', checkJwt, async (req, res) => {
   const { account_id } = req;
   const { inventoryStatus } = req.query;
 
-  console.log(req.query);
-
   let getInventory;
   let filterStatus = inventoryStatus;
 
@@ -38,16 +36,13 @@ router.post('/sendItem', checkJwt, async (req, res) => {
     inventoryItem: { id, itemid, item_amount, status, sended_to },
   } = body;
 
-  console.log(name, itemid, item_amount, status);
-
   // logically to send the item to the character
 
   const getItemOnInventory = await shop_inventories.findOne({
     where: { id: id },
   });
 
-  if (!getItemOnInventory)
-    return jsonNotFound(null, getMessage('This item not exists.'));
+  if (!getItemOnInventory) return jsonNotFound(null, getMessage('This item not exists.'));
 
   getItemOnInventory.update({
     sended_to: name,

@@ -1,11 +1,5 @@
 const express = require('express');
-const {
-  players,
-  accounts,
-  forum_board,
-  threads,
-  comments,
-} = require('../models');
+const { players, accounts, forum_board, threads, comments } = require('../models');
 const { getMessage } = require('../helpers/messages');
 const { verifyJwt, getTokenFromHeaders } = require('../helpers/jwt');
 const { checkJwt } = require('../middlewares/jwt');
@@ -196,10 +190,7 @@ router.post('/upLike/:id', checkJwt, async (req, res) => {
 
   if (data.includes(name)) return res.status(400).send('Post already liked.');
 
-  const newLike = await threads.update(
-    { likes_count: [...data, name] },
-    { where: { id } }
-  );
+  const newLike = await threads.update({ likes_count: [...data, name] }, { where: { id } });
 
   if (newLike) {
     likedPost = await threads.findOne({
@@ -236,10 +227,7 @@ router.post('/disLike/:id', checkJwt, async (req, res) => {
     array.splice(index, 1);
   }
 
-  const disLike = await threads.update(
-    { likes_count: array },
-    { where: { id } }
-  );
+  const disLike = await threads.update({ likes_count: array }, { where: { id } });
 
   if (!dislikedPost) return res.jsonNotFound(null);
 
@@ -250,70 +238,55 @@ router.post('/disLike/:id', checkJwt, async (req, res) => {
 //          Comments
 //=================================
 
-router.get(
-  '/thread/:board_id/:discussion/comments',
-  checkJwt,
-  async (req, res) => {
-    const { discussion } = req.params;
+router.get('/thread/:board_id/:discussion/comments', checkJwt, async (req, res) => {
+  const { discussion } = req.params;
 
-    const getComments = await comments.findAll({
-      where: { thread_id: discussion },
-      include: [
-        {
-          model: accounts,
-          attributes: ['avatar'],
-        },
-      ],
+  const getComments = await comments.findAll({
+    where: { thread_id: discussion },
+    include: [
+      {
+        model: accounts,
+        attributes: ['avatar'],
+      },
+    ],
+  });
+
+  return res.jsonOK(getComments);
+});
+
+router.post('/thread/:board_id/:discussion/reply', checkJwt, async (req, res) => {
+  const { body } = req;
+  const { post_content, character_name } = body;
+  const { board_id, discussion } = req.params;
+
+  try {
+    const token = getTokenFromHeaders(req.headers);
+
+    if (!token) {
+      return res.jsonUnauthorized(null, getMessage('response.json_invalid_token'));
+    }
+
+    const decoded = verifyJwt(token);
+
+    const findAccount = await accounts.findByPk(decoded.id);
+    if (!findAccount) return res.jsonUnauthorized(null, getMessage('response.json_invalid_token'));
+
+    const getDiscussion = await threads.findOne({
+      where: { id: discussion, board_id },
+    });
+    if (!getDiscussion) return res.jsonNotFound(null);
+
+    const createComment = await comments.create({
+      post_content,
+      character_name,
+      account_id: decoded.id,
+      thread_id: Number(board_id),
     });
 
-    return res.jsonOK(getComments);
+    res.jsonOK(createComment, getMessage('comments added sucessfuly!'));
+  } catch (error) {
+    return res.jsonBadRequest(null, error);
   }
-);
-
-router.post(
-  '/thread/:board_id/:discussion/reply',
-  checkJwt,
-  async (req, res) => {
-    const { body } = req;
-    const { post_content, character_name } = body;
-    const { board_id, discussion } = req.params;
-
-    try {
-      const token = getTokenFromHeaders(req.headers);
-
-      if (!token) {
-        return res.jsonUnauthorized(
-          null,
-          getMessage('response.json_invalid_token')
-        );
-      }
-
-      const decoded = verifyJwt(token);
-
-      const findAccount = await accounts.findByPk(decoded.id);
-      if (!findAccount)
-        return res.jsonUnauthorized(
-          null,
-          getMessage('response.json_invalid_token')
-        );
-
-      const getDiscussion = await threads.findOne({
-        where: { id: discussion, board_id },
-      });
-      if (!getDiscussion) return res.jsonNotFound(null);
-
-      const createComment = await comments.create({
-        post_content,
-        character_name,
-        account_id: decoded.id,
-        thread_id: Number(board_id),
-      });
-
-      res.jsonOK(createComment, getMessage('comments added sucessfuly!'));
-    } catch (error) {
-      return res.jsonBadRequest(null, error);
-    }
-  }
-);
+});
 
 module.exports = router;
