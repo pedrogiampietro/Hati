@@ -19,24 +19,10 @@ const Online = ({ playersOnline }) => {
   return (
     <Container>
       <div className="row">
-        <div className="col-xl-6">
+        <div className="col-xl-6 ml-auto mr-auto">
           <div id="panel-2" className="panel">
             <div className="panel-hdr">
               <h2>Online List</h2>
-              <div className="panel-toolbar">
-                <button
-                  className="btn btn-panel waves-effect waves-themed"
-                  data-action="panel-collapse"
-                ></button>
-                <button
-                  className="btn btn-panel waves-effect waves-themed"
-                  data-action="panel-fullscreen"
-                ></button>
-                <button
-                  className="btn btn-panel waves-effect waves-themed"
-                  data-action="panel-close"
-                ></button>
-              </div>
             </div>
             <div className="panel-container show">
               <div className="panel-content">
@@ -53,9 +39,7 @@ const Online = ({ playersOnline }) => {
                       {isOnline?.rows?.map((listOnline) => (
                         <tr key={listOnline.player_id}>
                           <td>
-                            <Link to={`/character/`}>
-                              {listOnline.player.name}
-                            </Link>
+                            <Link to={`/character/`}>{listOnline.player.name}</Link>
                           </td>
 
                           <td>
@@ -71,9 +55,7 @@ const Online = ({ playersOnline }) => {
                             </span>
                           </td>
 
-                          <td>
-                            {characterVocations[listOnline.player.vocation]}
-                          </td>
+                          <td>{characterVocations[listOnline.player.vocation]}</td>
                         </tr>
                       ))}
                     </thead>
