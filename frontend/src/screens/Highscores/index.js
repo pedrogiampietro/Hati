@@ -54,29 +54,6 @@ const Highscores = ({ highscoresList }) => {
           <div id="panel-1" className="panel">
             <div className="panel-hdr">
               <h2>Filter Skills</h2>
-              <div className="panel-toolbar">
-                <button
-                  className="btn btn-panel waves-effect waves-themed"
-                  data-action="panel-collapse"
-                  data-toggle="tooltip"
-                  data-offset="0,10"
-                  data-original-title="Collapse"
-                ></button>
-                <button
-                  className="btn btn-panel waves-effect waves-themed"
-                  data-action="panel-fullscreen"
-                  data-toggle="tooltip"
-                  data-offset="0,10"
-                  data-original-title="Fullscreen"
-                ></button>
-                <button
-                  className="btn btn-panel waves-effect waves-themed"
-                  data-action="panel-close"
-                  data-toggle="tooltip"
-                  data-offset="0,10"
-                  data-original-title="Close"
-                ></button>
-              </div>
             </div>
             <div className="panel-container show">
               <div className="panel-content">
@@ -165,29 +142,6 @@ const Highscores = ({ highscoresList }) => {
           <div id="panel-2" className="panel">
             <div className="panel-hdr">
               <h2>Highscores</h2>
-              <div className="panel-toolbar">
-                <button
-                  className="btn btn-panel waves-effect waves-themed"
-                  data-action="panel-collapse"
-                  data-toggle="tooltip"
-                  data-offset="0,10"
-                  data-original-title="Collapse"
-                ></button>
-                <button
-                  className="btn btn-panel waves-effect waves-themed"
-                  data-action="panel-fullscreen"
-                  data-toggle="tooltip"
-                  data-offset="0,10"
-                  data-original-title="Fullscreen"
-                ></button>
-                <button
-                  className="btn btn-panel waves-effect waves-themed"
-                  data-action="panel-close"
-                  data-toggle="tooltip"
-                  data-offset="0,10"
-                  data-original-title="Close"
-                ></button>
-              </div>
             </div>
             <div className="panel-container">
               <div className="panel-content">

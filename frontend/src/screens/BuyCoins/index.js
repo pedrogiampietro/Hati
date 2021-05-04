@@ -110,13 +110,7 @@ const BuyCoins = () => {
 
     dispatch(makePagarmePurchasing(response))
       .then(() => {
-        setTimeout(
-          () => [
-            history.push('/account/characters'),
-            setIsShoppingModalOpen(false),
-          ],
-          1000
-        );
+        setTimeout(() => [history.push('/account/characters'), setIsShoppingModalOpen(false)], 1000);
       })
       .catch((err) => {
         const { data } = err.response.data;
@@ -186,23 +180,7 @@ const BuyCoins = () => {
                 </div>
                 <div className="col-6 pl-0">
                   <MaskedInput
-                    mask={[
-                      '(',
-                      /[1-9]/,
-                      /\d/,
-                      ')',
-                      ' ',
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                      '-',
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                      /\d/,
-                    ]}
+                    mask={['(', /[1-9]/, /\d/, ')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
                     className="form-control form-control-lg"
                     placeholder="Número Telefone"
                     guide={false}
@@ -239,13 +217,8 @@ const BuyCoins = () => {
 
               <ul className="nav nav-pills" role="tablist">
                 <li className="nav-item">
-                  <a
-                    className="nav-link"
-                    data-toggle="tab"
-                    href="#payment-pagarme"
-                  >
-                    <i className="fal fa-credit-card mr-1"></i>Pagarme
-                    Credit-Card
+                  <a className="nav-link" data-toggle="tab" href="#payment-pagarme">
+                    <i className="fal fa-credit-card mr-1"></i>Pagarme Credit-Card
                   </a>
                 </li>
                 <li className="nav-item">
@@ -257,11 +230,7 @@ const BuyCoins = () => {
 
               <span className="section-title">Dados de Pagamento</span>
               <div className="tab-content py-3">
-                <div
-                  className="tab-pane fade"
-                  id="payment-pagarme"
-                  role="tabpanel"
-                >
+                <div className="tab-pane fade" id="payment-pagarme" role="tabpanel">
                   <div className="row mb-3">
                     <div className="col-6">
                       <MaskedInput
@@ -338,15 +307,8 @@ const BuyCoins = () => {
                   {qrCode ? (
                     <img src={qrCode} alt="" />
                   ) : (
-                    <div
-                      className={`${styles.container} ${
-                        pixButtonActive ? pixButtonActive : ''
-                      }`}
-                    >
-                      <div
-                        className={styles.leftSide}
-                        onClick={() => handleGerateQRCode()}
-                      >
+                    <div className={`${styles.container} ${pixButtonActive ? pixButtonActive : ''}`}>
+                      <div className={styles.leftSide} onClick={() => handleGerateQRCode()}>
                         <div className={styles.card}>
                           <div className={styles.cardLine}></div>
                           <div className={styles.buttons}></div>
@@ -407,24 +369,14 @@ const BuyCoins = () => {
                   <label className="control-label" htmlFor="sendtocharacter">
                     Nome do personagem para receber os Tibia Coins
                   </label>
-                  <input
-                    type="text"
-                    id="sendtocharacter"
-                    className="form-control"
-                    disabled
-                  />
+                  <input type="text" id="sendtocharacter" className="form-control" disabled />
                 </div>
                 <div className="form-group">
                   <h1>Quantity</h1>
-                  <SimpleSlider
-                    setWallet={setWallet}
-                    coins={coins}
-                    setCoins={setCoins}
-                  />
+                  <SimpleSlider setWallet={setWallet} coins={coins} setCoins={setCoins} />
                 </div>
                 <div className="alert alert-info">
-                  <i className="fa fa-info-circle" /> Your purchase with us is
-                  safe!
+                  <i className="fa fa-info-circle" /> Your purchase with us is safe!
                 </div>
               </div>
               {isShoppingModalOpen && <PurchaseCoinsModal />}

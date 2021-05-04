@@ -83,26 +83,13 @@ router.get('/character/:name', async (req, res) => {
           ['time', 'DESC'],
           ['time', 'ASC'],
         ],
-        attributes: [
-          'player_id',
-          'level',
-          'killed_by',
-          'time',
-          'mostdamage_by',
-          'unjustified',
-          'is_player',
-        ],
+        attributes: ['player_id', 'level', 'killed_by', 'time', 'mostdamage_by', 'unjustified', 'is_player'],
       },
     ],
   });
 
-  console.log(searchCharacter.rows);
-
   if (searchCharacter.count === 0) {
-    return res.jsonBadRequest(
-      null,
-      getMessage('character.search.name_not_exists')
-    );
+    return res.jsonBadRequest(null, getMessage('character.search.name_not_exists'));
   }
 
   return res.jsonOK(searchCharacter);
@@ -161,11 +148,7 @@ router.post('/', checkJwt, validateCreateCharacter, async (req, res) => {
   const { name, vocation, sex } = body;
 
   const findCharacter = await players.findOne({ where: { name } });
-  if (findCharacter)
-    return res.jsonBadRequest(
-      null,
-      getMessage('player.createcharacter.name_exists')
-    );
+  if (findCharacter) return res.jsonBadRequest(null, getMessage('player.createcharacter.name_exists'));
 
   const createCharacter = await players.create({
     name,
@@ -175,10 +158,7 @@ router.post('/', checkJwt, validateCreateCharacter, async (req, res) => {
     looktype: 128,
   });
 
-  return res.jsonOK(
-    createCharacter,
-    getMessage('player.createcharacter.success')
-  );
+  return res.jsonOK(createCharacter, getMessage('player.createcharacter.success'));
 });
 
 router.put('/:id', async (req, res) => {
