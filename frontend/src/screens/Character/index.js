@@ -497,76 +497,78 @@ const Character = ({ playerGetCharacter }) => {
                 </div>
               </div>
 
-              <div className="container">
-                <div className="page-header" style={{ padding: '50px 2rem' }}>
-                  <h2>
-                    Death List{' '}
-                    <small>
-                      track the death of your
-                      <code>enemy!</code>.
-                    </small>
-                  </h2>
-                </div>
-                <div className="timeline">
-                  <div className="line text-muted"></div>
-                  {playerDeaths && playerDeaths.length
-                    ? playerDeaths.map((props) => {
-                        return (
-                          <div key={props.time}>
-                            <article className="panel panel-danger">
-                              <div className="panel-heading icon">
-                                {props.is_player === 1 ? (
-                                  <FaCrosshairs size={20} className="mt-2" />
-                                ) : (
-                                  <FaSkullCrossbones
-                                    size={20}
-                                    className="mt-2"
-                                  />
-                                )}
-                              </div>
+              <div className="col-12">
+                <div className="container">
+                  <div className="page-header" style={{ padding: '50px 2rem' }}>
+                    <h2>
+                      Death List{' '}
+                      <small>
+                        track the death of your
+                        <code>enemy!</code>.
+                      </small>
+                    </h2>
+                  </div>
+                  <div className="col-8 timeline">
+                    <div className="line text-muted"></div>
+                    {playerDeaths && playerDeaths.length
+                      ? playerDeaths.map((props) => {
+                          return (
+                            <div key={props.time}>
+                              <article className="panel panel-danger">
+                                <div className="panel-heading icon">
+                                  {props.is_player === 1 ? (
+                                    <FaCrosshairs size={20} className="mt-2" />
+                                  ) : (
+                                    <FaSkullCrossbones
+                                      size={20}
+                                      className="mt-2"
+                                    />
+                                  )}
+                                </div>
 
-                              <div className="panel-heading">
-                                <h2 className="panel-title">
-                                  {props.is_player === 1 ? 'Fragged' : 'Died'}{' '}
-                                  <div className="text-muted float-right">
-                                    <time>
-                                      {convertTimestempToDate(props.time)}
-                                    </time>
-                                  </div>
-                                </h2>
-                              </div>
+                                <div className="panel-heading">
+                                  <h2 className="panel-title">
+                                    {props.is_player === 1 ? 'Fragged' : 'Died'}{' '}
+                                    <div className="text-muted float-right">
+                                      <time>
+                                        {convertTimestempToDate(props.time)}
+                                      </time>
+                                    </div>
+                                  </h2>
+                                </div>
 
-                              <div className="panel-body">
-                                <strong>Died</strong> at level {props.level}.{' '}
-                                {props.unjustified === 1 ? (
-                                  <span className="badge badge-danger">
-                                    unjustified
-                                  </span>
-                                ) : null}
-                                <br />
-                                <br />
-                                <code>
-                                  {props.mostdamage_by !== props.killed_by
-                                    ? props.mostdamage_by
-                                    : null}
-                                </code>{' '}
-                                {props.mostdamage_by !== props.killed_by ? (
-                                  <>
-                                    {' '}
-                                    <span className="badge badge-primary">
-                                      most damage
+                                <div className="panel-body">
+                                  <strong>Died</strong> at level {props.level}.{' '}
+                                  {props.unjustified === 1 ? (
+                                    <span className="badge badge-danger">
+                                      unjustified
                                     </span>
-                                    <br />
-                                    <br />
-                                  </>
-                                ) : null}
-                                <code>{props.killed_by}</code>
-                              </div>
-                            </article>
-                          </div>
-                        );
-                      })
-                    : null}
+                                  ) : null}
+                                  <br />
+                                  <br />
+                                  <code>
+                                    {props.mostdamage_by !== props.killed_by
+                                      ? props.mostdamage_by
+                                      : null}
+                                  </code>{' '}
+                                  {props.mostdamage_by !== props.killed_by ? (
+                                    <>
+                                      {' '}
+                                      <span className="badge badge-primary">
+                                        most damage
+                                      </span>
+                                      <br />
+                                      <br />
+                                    </>
+                                  ) : null}
+                                  <code>{props.killed_by}</code>
+                                </div>
+                              </article>
+                            </div>
+                          );
+                        })
+                      : null}
+                  </div>
                 </div>
               </div>
             </div>
