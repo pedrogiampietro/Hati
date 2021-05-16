@@ -1,8 +1,16 @@
 const express = require('express');
-const { players, player_deaths, accounts, player_items } = require('../models');
+const {
+  players,
+  player_deaths,
+  accounts,
+  player_items,
+  player_storage,
+} = require('../models');
 const { validateCreateCharacter } = require('../validators/player');
 const { getMessage } = require('../helpers/messages');
 const { checkJwt } = require('../middlewares/jwt');
+
+const { Op } = require('sequelize');
 
 const router = express.Router();
 
@@ -47,6 +55,7 @@ router.get('/character/:name', async (req, res) => {
     attributes: [
       'id',
       'name',
+      'account_id',
       'sex',
       'vocation',
       'town_id',
@@ -72,6 +81,7 @@ router.get('/character/:name', async (req, res) => {
       'looklegs',
       'looktype',
       'lookaddons',
+      'create_date',
     ],
 
     include: [
@@ -83,16 +93,47 @@ router.get('/character/:name', async (req, res) => {
           ['time', 'DESC'],
           ['time', 'ASC'],
         ],
-        attributes: ['player_id', 'level', 'killed_by', 'time', 'mostdamage_by', 'unjustified', 'is_player'],
+        attributes: [
+          'player_id',
+          'level',
+          'killed_by',
+          'time',
+          'mostdamage_by',
+          'unjustified',
+          'is_player',
+        ],
       },
     ],
   });
 
+  const getAllAchievement = await player_storage.findAndCountAll({
+    where: {
+      player_id: searchCharacter.rows[0]?.id,
+      key: {
+        [Op.like]: '200%',
+      },
+    },
+  });
+
+  const getCharacterList = await players.findAll({
+    attributes: ['name'],
+    where: {
+      account_id: searchCharacter.rows[0]?.account_id,
+    },
+  });
+
   if (searchCharacter.count === 0) {
-    return res.jsonBadRequest(null, getMessage('character.search.name_not_exists'));
+    return res.jsonBadRequest(
+      null,
+      getMessage('character.search.name_not_exists')
+    );
   }
 
-  return res.jsonOK(searchCharacter);
+  return res.jsonOK({
+    ...searchCharacter,
+    characterList: getCharacterList,
+    achievements: getAllAchievement,
+  });
 });
 
 router.get('/highscores', async (req, res) => {
@@ -148,7 +189,11 @@ router.post('/', checkJwt, validateCreateCharacter, async (req, res) => {
   const { name, vocation, sex } = body;
 
   const findCharacter = await players.findOne({ where: { name } });
-  if (findCharacter) return res.jsonBadRequest(null, getMessage('player.createcharacter.name_exists'));
+  if (findCharacter)
+    return res.jsonBadRequest(
+      null,
+      getMessage('player.createcharacter.name_exists')
+    );
 
   const createCharacter = await players.create({
     name,
@@ -158,7 +203,10 @@ router.post('/', checkJwt, validateCreateCharacter, async (req, res) => {
     looktype: 128,
   });
 
-  return res.jsonOK(createCharacter, getMessage('player.createcharacter.success'));
+  return res.jsonOK(
+    createCharacter,
+    getMessage('player.createcharacter.success')
+  );
 });
 
 router.put('/:id', async (req, res) => {

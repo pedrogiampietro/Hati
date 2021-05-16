@@ -47,11 +47,11 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     { freezeTableName: true }
-  )
+  );
 
   player_deaths.associate = (models) => {
-    player_deaths.belongsTo(models.players, { foreignKey: 'player_id' })
-  }
+    player_deaths.belongsTo(models.players, { foreignKey: 'player_id' });
+  };
 
-  return player_deaths
-}
+  return player_deaths;
+};
