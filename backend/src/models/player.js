@@ -299,6 +299,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: 0,
       },
+      create_date: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
     },
     { freezeTableName: true }
   );
@@ -310,6 +314,7 @@ module.exports = (sequelize, DataTypes) => {
     players.hasMany(models.guild_invites, { foreignKey: 'player_id' });
     players.hasMany(models.guild_membership, { foreignKey: 'player_id' });
     players.hasMany(models.players_online, { foreignKey: 'player_id' });
+    players.hasMany(models.player_storage, { foreignKey: 'player_id' });
   };
 
   return players;

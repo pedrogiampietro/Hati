@@ -5,7 +5,6 @@ module.exports = (sequelize, DataTypes) => {
       player_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        primaryKey: true,
         references: {
           model: 'players',
           key: 'id',
@@ -14,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       pid: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        primaryKey: true,
       },
       sid: {
         type: DataTypes.INTEGER,
@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
     },
-    { timestamps: false }
+    { timestamps: false, freezeTableName: true }
   );
 
   player_items.associate = (models) => {

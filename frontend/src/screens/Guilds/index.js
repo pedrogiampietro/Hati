@@ -39,8 +39,6 @@ const Guilds = ({ playerList, guildList, players }) => {
   const clickToRow = () => setClassName('col-xl-12');
   const clickToGrid = () => setClassName('col-xl-4');
 
-  console.log(guild);
-
   return (
     <Container>
       <div className="row">

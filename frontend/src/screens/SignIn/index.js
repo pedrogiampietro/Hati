@@ -101,20 +101,19 @@ const SignIn = (props) => {
                   </div>
 
                   <Error error={error} />
-                  <div className="row no-gutters">
-                    <div className="col-lg-6 pr-lg-1 my-2">
+
+                  <div class="row">
+                    <div className="col-md-12 text-center my-2">
                       <Button
-                        className="btn btn-info btn-block btn-lg waves-effect waves-themed"
+                        className="btn btn-info btn-block btn-lg waves-effect waves-themed mb-2"
                         type="submit"
                         disabled={loading ? true : false}
                       >
                         <FaSignInAlt size={20} className="mr-2" />
                         {loading ? 'Loading... ' : 'Sign-in'}
                       </Button>
-                    </div>
-                    <div className="col-lg-6 pl-lg-1 my-2">
+
                       <Link to="/forgot">
-                        {' '}
                         <button className="btn btn-danger btn-block btn-lg waves-effect waves-themed">
                           <GiPadlock size={20} /> Forgot Password
                         </button>

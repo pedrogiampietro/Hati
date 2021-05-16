@@ -58,7 +58,10 @@ const Highscores = ({ highscoresList }) => {
             <div className="panel-container show">
               <div className="panel-content">
                 <form>
-                  <select className="form-control" onChange={onValueChangeVocation}>
+                  <select
+                    className="form-control"
+                    onChange={onValueChangeVocation}
+                  >
                     <option value="all">All vocations</option>
                     <option value="0">Rooker</option>
                     <option value="1">Sorcerer</option>
@@ -81,27 +84,57 @@ const Highscores = ({ highscoresList }) => {
                     </div>
 
                     <div className="funkyradio-primary">
-                      <input type="radio" name="radio" id="dist" value="skill_dist" onChange={onValueChangeSkill} />
+                      <input
+                        type="radio"
+                        name="radio"
+                        id="dist"
+                        value="skill_dist"
+                        onChange={onValueChangeSkill}
+                      />
                       <label htmlFor="dist">Distance</label>
                     </div>
 
                     <div className="funkyradio-primary">
-                      <input type="radio" name="radio" id="magic" value="maglevel" onChange={onValueChangeSkill} />
+                      <input
+                        type="radio"
+                        name="radio"
+                        id="magic"
+                        value="maglevel"
+                        onChange={onValueChangeSkill}
+                      />
                       <label htmlFor="magic">Magic Level</label>
                     </div>
 
                     <div className="funkyradio-primary">
-                      <input type="radio" name="radio" id="sword" value="skill_sword" onChange={onValueChangeSkill} />
+                      <input
+                        type="radio"
+                        name="radio"
+                        id="sword"
+                        value="skill_sword"
+                        onChange={onValueChangeSkill}
+                      />
                       <label htmlFor="sword">Sword Fighting</label>
                     </div>
 
                     <div className="funkyradio-primary">
-                      <input type="radio" name="radio" id="axe" value="skill_axe" onChange={onValueChangeSkill} />
+                      <input
+                        type="radio"
+                        name="radio"
+                        id="axe"
+                        value="skill_axe"
+                        onChange={onValueChangeSkill}
+                      />
                       <label htmlFor="axe">Axe Fighting</label>
                     </div>
 
                     <div className="funkyradio-primary">
-                      <input type="radio" name="radio" id="club" value="skill_club" onChange={onValueChangeSkill} />
+                      <input
+                        type="radio"
+                        name="radio"
+                        id="club"
+                        value="skill_club"
+                        onChange={onValueChangeSkill}
+                      />
                       <label htmlFor="club">Club Fighting</label>
                     </div>
 
@@ -117,7 +150,13 @@ const Highscores = ({ highscoresList }) => {
                     </div>
 
                     <div className="funkyradio-primary">
-                      <input type="radio" name="radio" id="fist" value="skill_fist" onChange={onValueChangeSkill} />
+                      <input
+                        type="radio"
+                        name="radio"
+                        id="fist"
+                        value="skill_fist"
+                        onChange={onValueChangeSkill}
+                      />
                       <label htmlFor="fist">Fist Fighting</label>
                     </div>
 
@@ -146,7 +185,7 @@ const Highscores = ({ highscoresList }) => {
             <div className="panel-container">
               <div className="panel-content">
                 <div className="table-responsive">
-                  <table className="table-highscores">
+                  <table className="table table-striped table-condensed">
                     <thead>
                       <tr>
                         <th width="3%">Rank</th>
@@ -156,13 +195,20 @@ const Highscores = ({ highscoresList }) => {
                       </tr>
 
                       {playerList.map((props, index) => {
-                        const skill = filterSkill === 'level' ? props.level : props[filterSkill];
+                        const skill =
+                          filterSkill === 'level'
+                            ? props.level
+                            : props[filterSkill];
                         return (
                           <tr key={props.id}>
-                            <td>{pageInitial * characterPerPage + index + 1}</td>
+                            <td>
+                              {pageInitial * characterPerPage + index + 1}
+                            </td>
 
                             <td>
-                              <Link to={`/character/${props.name}`}>{props.name}</Link>
+                              <Link to={`/character/${props.name}`}>
+                                {props.name}
+                              </Link>
                             </td>
                             <td>
                               <span className="badge opacity-50 p-1 width-6 bg-primary border-primary text-white">
@@ -205,13 +251,21 @@ const Highscores = ({ highscoresList }) => {
 
                     {playerList.length >= 10 ? (
                       <li className="page-item">
-                        <button className="page-link" aria-label="Next" onClick={() => setPageInitial(pageInitial + 1)}>
+                        <button
+                          className="page-link"
+                          aria-label="Next"
+                          onClick={() => setPageInitial(pageInitial + 1)}
+                        >
                           &#8250;
                         </button>
                       </li>
                     ) : (
                       <li className="page-item">
-                        <button className="page-link disabled" disabled onClick={() => setPageInitial(pageInitial + 1)}>
+                        <button
+                          className="page-link disabled"
+                          disabled
+                          onClick={() => setPageInitial(pageInitial + 1)}
+                        >
                           &#8250;
                         </button>
                       </li>

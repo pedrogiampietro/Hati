@@ -21,7 +21,10 @@ const SignUp = ({ signUp, account, children }) => {
     name: Yup.string().required('Please enter a account name.'),
     email: Yup.string().email().required('Please enter your e-mail.'),
     password: Yup.string().required('Password is required'),
-    password_confirmation: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match'),
+    password_confirmation: Yup.string().oneOf(
+      [Yup.ref('password'), null],
+      'Passwords must match'
+    ),
   });
 
   const submitHandler = (e) => {
@@ -77,7 +80,8 @@ const SignUp = ({ signUp, account, children }) => {
                 <h2 className="fs-xxl fw-500 mt-4 text-primary text-center">
                   Register now, its free!
                   <small className="h3 fw-300 mt-3 mb-5 text-primary opacity-60 hidden-sm-down">
-                    Your registration is free for an unlimited time. Enjoy Hati on your mobile, desktop or tablet.
+                    Your registration is free for an unlimited time. Enjoy Hati
+                    on your mobile, desktop or tablet.
                     <br />
                     You are ready to go wherever you go!
                   </small>
@@ -86,13 +90,15 @@ const SignUp = ({ signUp, account, children }) => {
               <div className="col-xl-6 ml-auto mr-auto">
                 <div className="card p-4 rounded-plus bg-faded">
                   <div className="alert alert-primary text-dark" role="alert">
-                    <strong>Heads Up!</strong> Our server-save takes place at 6am every day. Verification emails can be
-                    delayed by up to 10 minutes. Check your spam box.
+                    <strong>Heads Up!</strong> Our server-save takes place at
+                    6am every day. Verification emails can be delayed by up to
+                    10 minutes. Check your spam box.
                   </div>
                   <Form onSubmit={submitHandler}>
                     <div className="form-group row">
                       <label className="col-xl-12 form-label" htmlFor="name">
-                        I never registered the same password used on other servers! Avoid getting hacked.
+                        I never registered the same password used on other
+                        servers! Avoid getting hacked.
                       </label>
                       <div className="col-6 pr-1">
                         <TextField
@@ -102,7 +108,9 @@ const SignUp = ({ signUp, account, children }) => {
                           placeholder="Enter your account name"
                         />
 
-                        <div className="invalid-feedback">No, you missed this one.</div>
+                        <div className="invalid-feedback">
+                          No, you missed this one.
+                        </div>
                       </div>
                     </div>
                     <div className="form-group row">
@@ -113,10 +121,13 @@ const SignUp = ({ signUp, account, children }) => {
                           className="form-control"
                           placeholder="Enter your password"
                         />
-                        <div className="invalid-feedback">No, you missed this one.</div>
+                        <div className="invalid-feedback">
+                          No, you missed this one.
+                        </div>
                         <div className="help-block">
-                          Your password must be 8-20 characters long, contain letters and numbers, and must not contain
-                          spaces, special characters, or emoji.
+                          Your password must be 8-20 characters long, contain
+                          letters and numbers, and must not contain spaces,
+                          special characters, or emoji.
                         </div>
                       </div>
                       <div className="col-6 pl-1">
@@ -127,12 +138,15 @@ const SignUp = ({ signUp, account, children }) => {
                           placeholder="Confirm password"
                         />
 
-                        <div className="invalid-feedback">Sorry, you missed this one.</div>
+                        <div className="invalid-feedback">
+                          Sorry, you missed this one.
+                        </div>
                       </div>
                     </div>
                     <div className="form-group">
                       <label className="form-label" htmlFor="email">
-                        Email will be needed for verification and account recovery
+                        Email will be needed for verification and account
+                        recovery
                       </label>
                       <TextField
                         type="email"
@@ -140,18 +154,32 @@ const SignUp = ({ signUp, account, children }) => {
                         className="form-control"
                         placeholder="Enter your valid e-mail"
                       />
-                      <div className="invalid-feedback">No, you missed this one.</div>
-                      <div className="help-block">Your email will also be your username</div>
+                      <div className="invalid-feedback">
+                        No, you missed this one.
+                      </div>
+                      <div className="help-block">
+                        Your email will also be your username
+                      </div>
                     </div>
 
                     <div className="form-group demo">
                       <div className="custom-control custom-checkbox">
-                        <input type="checkbox" className="custom-control-input" name="isTerms" id="isTerms" />
-                        <label className="custom-control-label" htmlFor="isTerms">
+                        <input
+                          type="checkbox"
+                          className="custom-control-input"
+                          name="isTerms"
+                          id="isTerms"
+                        />
+                        <label
+                          className="custom-control-label"
+                          htmlFor="isTerms"
+                        >
                           {' '}
                           I agree to terms &amp; conditions
                         </label>
-                        <div className="invalid-feedback">You must agree before proceeding</div>
+                        <div className="invalid-feedback">
+                          You must agree before proceeding
+                        </div>
                       </div>
                       {/* <div className="custom-control custom-checkbox">
 										 <input
