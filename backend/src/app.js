@@ -14,9 +14,11 @@ const paymentHistoryController = require('./controllers/PaymentHistoryController
 const PixGerenciaNetController = require('./controllers/PixGerenciaNetController');
 
 const response = require('./middlewares/response');
+const loginService = require('./login');
 const path = require('path');
 
 const app = express();
+loginService();
 
 app.use(cors());
 app.use(response);

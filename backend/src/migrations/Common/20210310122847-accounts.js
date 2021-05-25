@@ -4,48 +4,96 @@ module.exports = {
   up: (queryInterface, Sequelize) =>
     queryInterface.createTable('accounts', {
       name: {
+        type: DataTypes.STRING,
         allowNull: false,
-        type: Sequelize.STRING,
-        unique: true,
       },
       password: {
+        type: DataTypes.STRING,
         allowNull: false,
-        type: Sequelize.STRING,
       },
       email: {
+        type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: '',
-        type: Sequelize.STRING,
-      },
-      premdays: {
-        allowNull: false,
-        defaultValue: 0,
-        type: Sequelize.INTEGER,
-      },
-      lastday: {
-        allowNull: false,
-        defaultValue: 0,
-        type: Sequelize.INTEGER,
-      },
-      type: {
-        allowNull: false,
-        defaultValue: 1,
-        type: Sequelize.BOOLEAN,
       },
       coins: {
+        type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 0,
-        type: Sequelize.INTEGER,
+      },
+      secret: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      type: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 1,
+      },
+      premdays: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+      },
+      lastday: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
       },
       creation: {
+        type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 0,
-        type: Sequelize.INTEGER,
       },
-      recruiter: {
+      page_access: {
+        type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 0,
-        type: Sequelize.INTEGER,
+      },
+      vote: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+      },
+      vip_time: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+      },
+      rlname: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: '',
+      },
+      location: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: '',
+      },
+      flag: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: '',
+      },
+      jwtVersion: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+      },
+      avatar: {
+        type: DataTypes.STRING,
+      },
+      passwordResetToken: {
+        type: DataTypes.STRING,
+        select: false,
+      },
+      passwordResetExpires: {
+        type: DataTypes.DATE,
+        select: false,
+      },
+      profileName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: '',
       },
     }),
 
