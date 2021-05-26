@@ -30,13 +30,13 @@ vocations[7] = 'Royal Paladin';
 vocations[8] = 'Elite Knight';
 
 const pool = mariadb.createPool({
-  socketPath: '/var/run/mysqld/mysqld.sock',
+  // socketPath: '/var/run/mysqld/mysqld.sock',
   connectionLimit: 50,
   allowPublicKeyRetrieval: true,
   host: 'localhost',
   user: 'root',
-  database: '',
-  password: '',
+  database: 'hati',
+  password: '899681@#ph',
 });
 
 const state = {
