@@ -17,13 +17,16 @@
     "express": "^4.17.1",
     "js-sha1": "^0.6.0",
     "jsonwebtoken": "^8.5.1",
+    "mariadb": "^2.5.3",
     "multer": "^1.4.2",
     "mysql2": "^2.2.5",
     "nodemailer": "^6.4.14",
     "nodemailer-express-handlebars": "^4.0.0",
     "nodemon": "^2.0.4",
+    "notp": "^2.0.3",
     "pagarme": "^4.14.0",
     "sequelize": "^6.3.0",
+    "thirty-two": "^1.0.2",
     "uuidv4": "^6.2.6"
   },
   "jest": {

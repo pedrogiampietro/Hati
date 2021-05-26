@@ -15,7 +15,7 @@ module.exports = {
           type: Sequelize.TEXT('long'),
         },
       },
-      { timestamps: false }
+      { timestamps: false, freezeTableName: true }
     ),
 
   down: (queryInterface, Sequelize) =>

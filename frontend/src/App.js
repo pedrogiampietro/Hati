@@ -28,6 +28,7 @@ import GuildList from './screens/Guilds/GuildList';
 import Online from './screens/Online';
 import Shop from './screens/Shop';
 import BuyCoins from './screens/BuyCoins';
+import CharacterTrade from './screens/CharacterTrade';
 
 import SidebarBag from './components/SidebarBag';
 
@@ -91,6 +92,7 @@ const App = ({ initAccount }) => {
           <Route exact path="/account/characters" component={MyAccount} />
           <Route exact path="/highscores" component={Highscores} />
           <Route exact path="/character/:name" component={Character} />
+          <Route exact path="/charactertrade" component={CharacterTrade} />
           <Route exact path="/PageSearch" component={PageSearch} />
           <Route exact path="/forum" component={Forum} />
           <Route exact path="/forum/:board_id" component={Threads} />

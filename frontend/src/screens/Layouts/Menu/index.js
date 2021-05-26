@@ -11,6 +11,7 @@ import { GoCloudDownload } from 'react-icons/go';
 import { SiStatuspage } from 'react-icons/si';
 import { GiTrophy, GiCheckedShield, GiBattleGear } from 'react-icons/gi';
 import { AiOutlineMessage, AiOutlineShoppingCart } from 'react-icons/ai';
+import { RiAuctionLine } from 'react-icons/ri';
 
 const Menu = ({ account }) => {
   return (
@@ -72,6 +73,14 @@ const Menu = ({ account }) => {
               <GiTrophy size={18} className="mr-2" />
               <span className="nav-link-text" data-i18n="nav.form_stuff">
                 Highscores
+              </span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/charactertrade">
+              <RiAuctionLine size={18} className="mr-2" />
+              <span className="nav-link-text" data-i18n="nav.form_stuff">
+                Character Auction
               </span>
             </Link>
           </li>
