@@ -1,11 +1,408 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model AccountBanHistory {
+  id         Int    @id
+  account_id Int
+  reason     String
+  banned_at  Int
+  expired_at Int
+  banned_by  Int
+
+  @@map(name: "account_ban_history")
+}
+
+model AccountBans {
+  account_id Int    @id
+  reason     String
+  banned_at  Int
+  expires_at Int
+  banned_by  Int
+
+  @@map(name: "account_bans")
+}
+
+model AccountCharacterSale {
+  id          Int     @id
+  id_account  Int
+  id_player   Int
+  status      Boolean
+  price_type  Boolean
+  price_coins Int?
+  price_gold  Int?
+  dta_insert  String
+  dta_valid   String
+  dta_sale    String?
+
+  @@map(name: "account_character_sale")
+}
+
+model AccountCharacterSaleHistory {
+
+  id             Int      @id
+  id_old_account Int?
+  id_player      Int?
+  id_new_account Int?
+  price_type     Boolean?
+  price          Int?
+  char_id        Int?
+  dta_insert     String
+  dta_sale       String?
+  extornada      Boolean?
+  @@map(name: "account_character_sale_history")
+}
+
+model AccountViplist {
+  account_id  Int     @id
+  player_id   Int
+  description String
+  icon        Boolean
+  notify      Boolean
+
+  @@map(name: "account_viplist")
+}
+
+model Accounts {
+  id                   Int     @id
+  name                 String
+  password             String
+  secret               String?
+  type                 Int
+  premdays             Int
+  coins                Int
+  lastday              Int
+  email                String
+  creation             Int
+  jwtVersion           Int
+  updatedAt            String
+  createdAt            String
+  vote                 Int
+  key                  String
+  email_new            String
+  email_new_time       Int
+  rlname               String
+  location             String
+  page_access          Int
+  email_code           String
+  next_email           Int
+  premium_points       Int
+  secret_status        Boolean
+  create_date          Int
+  create_ip            Int
+  last_post            Int
+  flag                 String
+  vip_time             Int
+  guild_points         Int
+  guild_points_stats   Int
+  passed               Int
+  block                Int
+  refresh              Int
+  birth_date           String
+  gender               String
+  profileName          String
+  passwordResetExpires String
+  passwordResetToken   String
+  avatar               String
+  loyalty_points       Int
+  authToken            String
+  player_sell_bank     Int?
+  tournamentBalance    Int
+  tokens               Int
+
+  @@map(name: "accounts")
+}
+
+model AccountsOptions {
+  account_id Int    @id
+  options    String
+
+  @@map(name: "accounts_options")
+}
+
+model Announcements {
+  id     Int    @id
+  title  String
+  text   String
+  date   String
+  author String
+
+  @@map(name: "announcements")
+}
+
+model BlessingsHistory {
+  id        Int     @id
+  player_id Int
+  blessing  Boolean
+  loss      Boolean
+  timestamp Int
+
+  @@map(name: "blessings_history")
+}
+
+model Comments {
+  id             Int    @id
+  post_content   String
+  character_name String
+  thread_id      Int
+  account_id     Int
+  createdAt      String
+  updatedAt      String
+
+  @@map(name: "comments")
+}
+
+model DailyRewardHistory {
+  id          Int     @id
+  daystreak   Int
+  player_id   Int
+  timestamp   Int
+  description String?
+
+  @@map(name: "daily_reward_history")
+}
+
+model ForumBoard {
+  id          Int    @id
+  title       String
+  description String
+  topics      Int
+  posts       Int
+  createdAt   String
+  updatedAt   String
+
+  @@map(name: "forum_board")
+}
+
+model GlobalMisc {
+  key      Int
+  world_id Int @id
+
+  @@map(name: "global_misc")
+}
+
+model GlobalStorage {
+  key      Int?
+  world_id Int  @id
+  value    Int?
+
+  @@map(name: "global_storage")
+}
+
+model GuildInvites {
+  id        Int     @id
+  player_id Int
+  guild_id  Int
+  date      String?
+  createdAt String
+  updatedAt String
+
+  @@map(name: "guild_invites")
+}
+
+model GuildMembership {
+  id        Int     @id
+  player_id Int?
+  guild_id  Int
+  rank      Int?
+  nick      String?
+
+  @@map(name: "guild_membership")
+}
+
+model GuildRanks {
+  id       Int    @id
+  guild_id Int
+  name     String
+  level    Int
+
+  @@map(name: "guild_ranks")
+}
+
+model GuildWars {
+  id        Int     @id
+  guild1    Int
+  guild2    Int
+  name1     String
+  name2     String
+  status    Boolean
+  started   Int
+  ended     Int
+  toend     Int
+  buyin     Int
+  fraglimit Int
+
+  @@map(name: "guild_wars")
+}
+
+model Guilds {
+  id                  Int    @id
+  name                String
+  ownerid             Int
+  creationdata        Int
+  motd                String
+  description         String
+  create_ip           Int
+  balance             Int
+  last_execute_points Int
+  logo_gfx_name       String
+  createdAt           String
+  updatedAt           String
+
+  @@map(name: "guilds")
+}
+
+model GuildwarDeaths {
+  id        Int @id
+  player_id Int
+  kills     Int
+  deaths    Int
+  warid     Int
+  time      Int
+
+  @@map(name: "guildwar_deaths")
+}
+
+model GuildwarKills {
+  id          Int    @id
+  killer      String
+  target      String
+  killerguild Int
+  targetguild Int
+  warid       Int
+  time        Int
+
+  @@map(name: "guildwar_kills")
+}
+
+model HouseLists {
+  house_id Int    @id
+  listid   Int
+  list     String
+
+  @@map(name: "house_lists")
+}
+
+model Houses {
+  id             Int    @id
+  owner          Int
+  paid           Int
+  warnings       Int
+  name           String
+  rent           Int
+  town_id        Int
+  bid            Int
+  bid_end        Int
+  last_bid       Int
+  highest_bidder Int
+  size           Int
+  beds           Int
+
+  @@map(name: "houses")
+}
+
+model Inventories {
+  id               Int     @id
+  account_id       Int
+  itemid           Int
+  item_amount      Int?
+  item_title       String
+  item_description String?
+  shop_image       String?
+  createdAt        String
+  updatedAt        String
+
+  @@map(name: "inventories")
+}
+
+model IpBans {
+  ip         Int    @id
+  reason     String
+  banned_at  Int
+  expires_at Int
+  banned_by  Int
+
+  @@map(name: "ip_bans")
+}
+
+model MarketHistory {
+  id         Int     @id
+  player_id  Int
+  sale       Boolean
+  itemtype   Int
+  amount     Int
+  price      Int
+  expires_at Int
+  inserted   Int
+  state      Boolean
+
+  @@map(name: "market_history")
+}
+
+model MarketOffers {
+  id        Int     @id
+  player_id Int
+  sale      Boolean
+  itemtype  Int
+  amount    Int
+  created   Int
+  anonymous Boolean
+  price     Int
+
+  @@map(name: "market_offers")
+}
+
+model Newsticker {
+  id   Int    @id
+  date Int
+  text String
+  icon String
+
+  @@map(name: "newsticker")
+}
+
+model PlayerAutoloot {
+  id        Int @id
+  player_id Int
+
+  @@map(name: "player_autoloot")
+}
+
+model PlayerAutolootPersist {
+  player_guid Int  @id
+  cont_id     Int?
+  item_id     Int?
+
+  @@map(name: "player_autoloot_persist")
+}
+
+model PlayerDeaths {
+  player_id              Int     @id
+  time                   Int
+  level                  Int
+  killed_by              String
+  is_player              Boolean
+  mostdamage_by          String
+  mostdamage_is_player   Boolean
+  unjustified            Boolean
+  mostdamage_unjustified Boolean
+  createdAt              String
+  updatedAt              String
+
+  @@map(name: "player_deaths")
+}
+
+model PlayerDepotitems {
+  player_id Int @id
+  sid       Int
+  pid       Int
+  itemtype  Int
+  count     Int
+
+  @@map(name: "player_depotitems")
 }
