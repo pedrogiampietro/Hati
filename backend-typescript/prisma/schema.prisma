@@ -29,31 +29,31 @@ model AccountBans {
 }
 
 model AccountCharacterSale {
-  id          Int     @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   id_account  Int
   id_player   Int
   status      Boolean
   price_type  Boolean
   price_coins Int?
   price_gold  Int?
-  dta_insert  String
-  dta_valid   String
-  dta_sale    String?
+  dta_insert  DateTime  @default(now())
+  dta_valid   DateTime  @default(now())
+  dta_sale    DateTime?
 
   @@map(name: "account_character_sale")
 }
 
 model AccountCharacterSaleHistory {
 
-  id             Int      @id
+  id             Int       @id
   id_old_account Int?
   id_player      Int?
   id_new_account Int?
   price_type     Boolean?
   price          Int?
   char_id        Int?
-  dta_insert     String
-  dta_sale       String?
+  dta_insert     DateTime  @default(now())
+  dta_sale       DateTime?
   extornada      Boolean?
   @@map(name: "account_character_sale_history")
 }
@@ -69,7 +69,7 @@ model AccountViplist {
 }
 
 model Accounts {
-  id                   Int     @id @default(autoincrement())
+  id                   Int      @id @default(autoincrement())
   name                 String
   password             String
   secret               String?
@@ -80,8 +80,8 @@ model Accounts {
   email                String
   creation             Int
   jwtVersion           Int
-  updatedAt            String
-  createdAt            String
+  updatedAt            DateTime @default(now())
+  createdAt            DateTime @default(now())
   vote                 Int
   key                  String
   email_new            String
@@ -106,7 +106,7 @@ model Accounts {
   birth_date           String
   gender               String
   profileName          String
-  passwordResetExpires String
+  passwordResetExpires DateTime @default(now())
   passwordResetToken   String
   avatar               String
   loyalty_points       Int
@@ -151,11 +151,11 @@ model BlessingsHistory {
 }
 
 model Comments {
-  id             Int    @id @default(autoincrement())
+  id             Int      @id @default(autoincrement())
   post_content   String
   character_name String
-  createdAt      String
-  updatedAt      String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now())
 
 
   threads  Threads  @relation(fields: [thread_id], references: [id])
@@ -177,13 +177,13 @@ model DailyRewardHistory {
 }
 
 model ForumBoard {
-  id          Int    @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   title       String
   description String
   topics      Int
   posts       Int
-  createdAt   String
-  updatedAt   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
 
   threads Threads[]
   @@map(name: "forum_board")
@@ -205,11 +205,11 @@ model GlobalStorage {
 }
 
 model GuildInvites {
-  id        Int     @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   guild_id  Int
-  date      String?
-  createdAt String
-  updatedAt String
+  date      DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
 
   players Players @relation(fields: [player_id], references: [id])
   guilds  Guilds  @relation(fields: [guild_id], references: [id])
@@ -260,7 +260,7 @@ model GuildWars {
 }
 
 model Guilds {
-  id                  Int    @id @default(autoincrement())
+  id                  Int      @id @default(autoincrement())
   name                String
   ownerid             Int
   creationdata        Int
@@ -270,8 +270,8 @@ model Guilds {
   balance             Int
   last_execute_points Int
   logo_gfx_name       String
-  createdAt           String
-  updatedAt           String
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @default(now())
 
   guild_invites    GuildInvites[]
   guild_membership GuildMembership[]
@@ -329,14 +329,14 @@ model Houses {
 }
 
 model Inventories {
-  id               Int     @id @default(autoincrement())
+  id               Int      @id @default(autoincrement())
   itemid           Int
   item_amount      Int?
   item_title       String
   item_description String?
   shop_image       String?
-  createdAt        String
-  updatedAt        String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @default(now())
 
   accounts Accounts @relation(fields: [account_id], references: [id])
 
@@ -406,7 +406,7 @@ model PlayerAutolootPersist {
 }
 
 model PlayerDeaths {
-  player_id              Int     @id
+  player_id              Int      @id
   time                   Int
   level                  Int
   killed_by              String
@@ -415,8 +415,8 @@ model PlayerDeaths {
   mostdamage_is_player   Boolean
   unjustified            Boolean
   mostdamage_unjustified Boolean
-  createdAt              String
-  updatedAt              String
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @default(now())
 
   @@map(name: "player_deaths")
 }
@@ -544,8 +544,8 @@ model Players {
   manamax                         Int
   manaspent                       Int
   soul                            Int
-  updatedAt                       String
-  createdAt                       String
+  updatedAt                       DateTime @default(now())
+  createdAt                       DateTime @default(now())
   town_id                         Int
   posx                            Int
   posy                            Int
@@ -668,7 +668,7 @@ model ServerConfig {
 }
 
 model ShopInventories {
-  id               Int     @id @default(autoincrement())
+  id               Int      @id @default(autoincrement())
   itemid           Int
   item_amount      Int?
   item_title       String
@@ -676,8 +676,8 @@ model ShopInventories {
   item_image       String?
   sended_to        String?
   status           String?
-  createdAt        String
-  updatedAt        String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @default(now())
 
   accounts Accounts @relation(fields: [account_id], references: [id])
 
@@ -699,15 +699,15 @@ model ShopOffers {
 }
 
 model ShopOrders {
-  id                Int     @id @default(autoincrement())
+  id                Int      @id @default(autoincrement())
   transaction_id    Int
   transaction_title String
   payment_method    String
   address           String
   paid_value        String
   status            String?
-  createdAt         String
-  updatedAt         String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @default(now())
 
   accounts Accounts @relation(fields: [account_id], references: [id])
 
@@ -728,13 +728,13 @@ model StoreHistory {
 }
 
 model Threads {
-  id             Int    @id @default(autoincrement())
+  id             Int      @id @default(autoincrement())
   title          String
   character_name String
   body_text      String
   views          String
-  createdAt      String
-  updatedAt      String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now())
 
 
 
@@ -746,6 +746,22 @@ model Threads {
 
   comments Comments[]
   @@map(name: "threads")
+}
+
+model Tickets {
+  ticket_id            Int      @id
+  ticket_subject       String
+  ticket_author        String
+  ticket_author_acc_id Int
+  ticket_last_reply    String
+  ticket_admin_reply   Int
+  ticket_date          DateTime
+  ticket_ended         String
+  ticket_status        String
+  ticket_category      String
+  ticket_description   String
+
+  @@map(name: "tickets")
 }
 
 model TileStore {
