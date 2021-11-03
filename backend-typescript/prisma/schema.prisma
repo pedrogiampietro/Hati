@@ -70,23 +70,23 @@ model AccountViplist {
 }
 
 model Accounts {
-  id                   Int      @id @default(autoincrement())
-  name                 String
+  id                   Int      @default(autoincrement())
+  name                 String   @unique
   password             String
   secret               String?
   type                 Int
   premdays             Int
   coins                Int
   lastday              Int
-  email                String
-  creation             Int
+  email                String   @unique
+  creation             DateTime @default(now())
   jwtVersion           Int
   updatedAt            DateTime @default(now())
   createdAt            DateTime @default(now())
   vote                 Int
   key                  String
   email_new            String
-  email_new_time       Int
+  email_new_time       DateTime @default(now())
   rlname               String
   location             String
   page_access          Int
@@ -94,8 +94,8 @@ model Accounts {
   next_email           Int
   premium_points       Int
   secret_status        Boolean
-  create_date          Int
-  create_ip            Int
+  create_date          DateTime @default(now())
+  create_ip            String
   last_post            Int
   flag                 String
   vip_time             Int
@@ -107,7 +107,7 @@ model Accounts {
   birth_date           String
   gender               String
   profileName          String
-  passwordResetExpires DateTime @default(now())
+  passwordResetExpires DateTime
   passwordResetToken   String
   avatar               String
   loyalty_points       Int
@@ -116,11 +116,13 @@ model Accounts {
   tournamentBalance    Int
   tokens               Int
 
+
   comments         Comments[]
   inventories      Inventories[]
   shop_inventories ShopInventories[]
   shop_orders      ShopOrders[]
   threads          Threads[]
+  @@id([id, name, email])
   @@map(name: "accounts")
 }
 
@@ -526,7 +528,7 @@ model PlayerStorage {
 
 model Players {
   id                              Int      @id @default(autoincrement())
-  name                            String
+  name                            String   @unique
   group_id                        Int
   account_id                      Int
   level                           Int
