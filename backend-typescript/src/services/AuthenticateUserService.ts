@@ -1,6 +1,6 @@
 import encrypt from 'js-sha1';
 import prismaClient from '../prisma';
-import { AppError } from '../shared/errors/AppError';
+
 import { generateJwt, generateRefreshJwt } from '../helpers/Jwt';
 
 interface ILogin {
@@ -24,11 +24,7 @@ class AuthenticateUserService {
       },
     });
 
-    if (!findAccount) {
-      throw new AppError({
-        message: `Usuário e/ou Senha inválidos`,
-      });
-    }
+    // if (!findAccount) {}
 
     const token = generateJwt({ id: findAccount.id });
     const refreshToken = generateRefreshJwt({

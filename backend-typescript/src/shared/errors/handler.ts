@@ -40,4 +40,4 @@ const errorHandler: ErrorRequestHandler = (
   });
 };
 
-export default errorHandler;
+export { errorHandler };

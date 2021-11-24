@@ -4,7 +4,6 @@ import prismaClient from '../prisma';
 import { AppError } from '../shared/errors/AppError';
 import { createAccountSchema } from '../validations/CreateAccountSchema';
 import { ICreateAccountDTO } from '../dtos/ICreateAccountDTO';
-import { prisma } from '.prisma/client';
 
 type IRequest = Omit<ICreateAccountDTO, 'accounts'>;
 
@@ -20,53 +19,35 @@ class CreateAccountService {
       .digest('hex');
 
     const accountAlreadyExists = await prismaClient.accounts.findUnique({
-      where: {},
+      where: {
+        name: data.name,
+      },
     });
 
     if (accountAlreadyExists) {
-      throw new AppError({ message: 'Este usuário já existe' });
+      throw new AppError({
+        message: 'Esse usuário já existe no nosso sistema.',
+      });
+    }
+
+    const emailAlreadyExists = await prismaClient.accounts.findUnique({
+      where: {
+        email: data.email,
+      },
+    });
+
+    if (emailAlreadyExists) {
+      throw new AppError({
+        message: 'Esse usuário já existe no nosso sistema.',
+      });
     }
 
     const successfulyCreateAccount = await prismaClient.accounts.create({
       data: {
         name: data.name,
         password: passwordHash,
-        secret: '',
-        type: 1,
-        premdays: 0,
-        coins: 0,
-        lastday: 0,
         email: data.email,
-        jwtVersion: 0,
-        vote: 0,
-        key: '0',
-        email_new: '',
-        rlname: '',
-        location: '',
-        page_access: 0,
-        email_code: '0',
-        next_email: 0,
-        premium_points: 0,
-        secret_status: false,
-        create_ip: 0,
-        last_post: 0,
-        flag: '0',
-        vip_time: 0,
-        guild_points: 0,
-        guild_points_stats: 0,
-        passed: 0,
-        block: 0,
-        refresh: 0,
-        birth_date: '0',
-        gender: '0',
-        profileName: '0',
-        passwordResetToken: '0',
-        avatar: '0',
-        loyalty_points: 0,
-        authToken: '0',
-        player_sell_bank: 0,
-        tournamentBalance: 0,
-        tokens: 0,
+        create_ip: data.create_ip,
       },
     });
 
