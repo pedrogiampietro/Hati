@@ -2,6 +2,7 @@ import encrypt from 'js-sha1';
 import prismaClient from '../prisma';
 
 import { generateJwt, generateRefreshJwt } from '../helpers/Jwt';
+import { AppError } from '../shared/errors/AppError';
 
 interface ILogin {
   name: string;
@@ -17,14 +18,23 @@ class AuthenticateUserService {
   async execute({ name, password }: ILogin): Promise<IResponse> {
     const encryptedPassword = encrypt(password);
 
-    const findAccount = await prismaClient.accounts.findFirst({
+    const findAccount = await prismaClient.accounts.findUnique({
       where: {
         name,
-        password: encryptedPassword,
       },
     });
 
-    // if (!findAccount) {}
+    if (!findAccount) {
+      throw new AppError({
+        message: 'Usuário não encontrado no nosso sistema.',
+      });
+    }
+
+    if (!findAccount.password === encryptedPassword) {
+      throw new AppError({
+        message: 'Conta de e-mail ou password não é válido.',
+      });
+    }
 
     const token = generateJwt({ id: findAccount.id });
     const refreshToken = generateRefreshJwt({

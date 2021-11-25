@@ -5,7 +5,7 @@ import { AppError } from '../shared/errors/AppError';
 import { createAccountSchema } from '../validations/CreateAccountSchema';
 import { ICreateAccountDTO } from '../dtos/ICreateAccountDTO';
 
-type IRequest = Omit<ICreateAccountDTO, 'accounts'>;
+type IRequest = Omit<ICreateAccountDTO, 'id'>;
 
 class CreateAccountService {
   async execute(data: IRequest) {

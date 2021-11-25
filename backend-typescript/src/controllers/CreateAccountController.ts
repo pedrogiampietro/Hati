@@ -10,18 +10,14 @@ class CreateAccountController {
 
     const ipResponse = await getIp(request);
 
-    try {
-      const result = await service.execute({
-        name,
-        password,
-        email,
-        create_ip: ipResponse,
-      });
+    const result = await service.execute({
+      name,
+      password,
+      email,
+      create_ip: ipResponse,
+    });
 
-      return response.json(result);
-    } catch (err) {
-      return response.json({ error: err.message });
-    }
+    return response.json(result);
   }
 }
 

@@ -7,16 +7,12 @@ class AuthenticateUserController {
 
     const service = new AuthenticateUserService();
 
-    try {
-      const result = await service.execute({
-        name,
-        password,
-      });
+    const result = await service.execute({
+      name,
+      password,
+    });
 
-      return response.json(result);
-    } catch (err) {
-      return response.json({ error: err.message });
-    }
+    return response.json(result);
   }
 }
 
