@@ -5,6 +5,16 @@
 
 <img src="https://i.imgur.com/sL2OeT7.png">
 
+### resuming with the project, new tasks pending.
+
+- [ ] Account -> need the recovery key module.
+- [ ] Highscores -> it needs to handle the errors, bring a response and a skeleton loading, perhaps, make a node cache.
+- [ ] Character Auction -> I need to start the front/back module.
+- [ ] Forum -> need to delete everything and do it again, it doesn't work.
+- [ ] Guilds -> need to strip the codes, do a generic paging, and a filter too.
+- [ ] Guild-War -> need starts.
+- [ ] Buy Coins -> implement other payment systems, such as pagseguro, paypal, etc.
+
 ## 🔖 About
 
 <strong>Haiti</strong> is a project for the purpose of studying Javascript.
