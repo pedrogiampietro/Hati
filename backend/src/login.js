@@ -56,7 +56,7 @@ const state = {
 const request = (req, res) => {
   if (req.headers['user-agent'] !== 'Mozilla/5.0') return res.end();
   let body = '';
-  req.on('data', (data) => {
+  req.on('data', data => {
     body += data;
     if (body.length > 1e6) req.connection.destroy();
   });
@@ -83,13 +83,13 @@ async function queryDb() {
   try {
     const conn = await pool.getConnection();
 
+    console.log(conn);
+
     if (queryArgs.length > 1) {
       sqlArgs = queryArgs[1];
     }
 
     const res = await conn.query(queryArgs[0], sqlArgs);
-
-    console.log(conn);
 
     conn.release();
     return res;
@@ -101,7 +101,7 @@ async function queryDb() {
 
 async function updateWorlds() {
   const result = await queryDb(queries.worlds);
-  state.worlds = result.map((world) => ({
+  state.worlds = result.map(world => ({
     id: world.id,
     name: world.name,
     ip: world.ip,
@@ -176,7 +176,7 @@ async function parseLogin(res, credentials) {
         optiontracking: false,
       },
       playdata: {
-        worlds: state.worlds.map((world) => ({
+        worlds: state.worlds.map(world => ({
           id: 0,
           name: world.name,
           externaladdress: world.ip,
@@ -193,7 +193,7 @@ async function parseLogin(res, credentials) {
           restrictedstore: false,
           currenttournamentphase: 2,
         })),
-        characters: players.map((player) => ({
+        characters: players.map(player => ({
           worldid: 0,
           name: player.name,
           level: player.level,
@@ -224,7 +224,7 @@ async function parseLogin(res, credentials) {
 
 async function parseMessage(res, message) {
   const { type } = message;
-  const sendResponse = (data) => res.end(JSON.stringify(data));
+  const sendResponse = data => res.end(JSON.stringify(data));
 
   switch (type) {
     case 'boostedcreature':

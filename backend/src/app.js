@@ -18,7 +18,7 @@ const loginService = require('./login');
 const path = require('path');
 
 const app = express();
-loginService();
+// loginService();
 
 app.use(cors());
 app.use(response);
