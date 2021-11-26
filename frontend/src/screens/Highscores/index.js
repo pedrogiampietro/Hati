@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { highscoresList } from '../../actions/PlayerActions';
 import { listSkills, characterVocations } from '../../config';
+import { Pagination } from '../../components/Pagination';
 import Container from '../Layouts/Container';
 import './styles.css';
 
@@ -11,24 +12,36 @@ const Highscores = ({ highscoresList }) => {
   const [filterVocation, setFilterVocation] = useState('all');
   const [filterSkill, setFilterSkill] = useState('level');
   const [skillsName, setSkillsName] = useState('Level');
-  const [pageInitial, setPageInitial] = useState(0);
+  const [page, setPage] = useState(1);
   const [characterPerPage] = useState(10);
+  const [loading, setLoading] = useState(false);
+  const [totalCount, setTotalCount] = useState(0);
+
+  const fetchHighscores = useCallback(async () => {
+    try {
+      const { payload } = await highscoresList({
+        params: {
+          vocation: filterVocation,
+          skill: filterSkill,
+        },
+        headers: {
+          page: page,
+          per_Page: characterPerPage,
+        },
+      });
+
+      setTotalCount(payload.data.data.count);
+      setPlayerList(payload.data.data.rows);
+    } catch {
+      return;
+    } finally {
+      setLoading(false);
+    }
+  }, [highscoresList, filterVocation, filterSkill, page]);
 
   useEffect(() => {
-    highscoresList({
-      vocation: filterVocation,
-      skill: filterSkill,
-      page: pageInitial,
-    })
-      .then(({ payload }) => {
-        const newData = payload.data.data;
-        setPlayerList(newData);
-      })
-      .catch((err) => {
-        alert('os players não foram carregados.');
-        console.log(err);
-      });
-  }, [highscoresList, filterVocation, filterSkill, pageInitial]);
+    fetchHighscores();
+  }, [fetchHighscores]);
 
   function onValueChangeVocation(e) {
     const options = e.target.value;
@@ -201,9 +214,7 @@ const Highscores = ({ highscoresList }) => {
                             : props[filterSkill];
                         return (
                           <tr key={props.id}>
-                            <td>
-                              {pageInitial * characterPerPage + index + 1}
-                            </td>
+                            <td>{page * characterPerPage - 10 + index + 1}</td>
 
                             <td>
                               <Link to={`/character/${props.name}`}>
@@ -225,52 +236,11 @@ const Highscores = ({ highscoresList }) => {
                 </div>
 
                 <div className="row justify-content-center pb-5">
-                  <ul className="pagination my-4">
-                    {pageInitial <= 0 ? (
-                      <li className="page-item">
-                        <button
-                          className="page-link disabled mr-3"
-                          aria-label="Previous"
-                          onClick={(e) => setPageInitial(pageInitial - 1)}
-                          disabled
-                        >
-                          &#8249;
-                        </button>
-                      </li>
-                    ) : (
-                      <li className="page-item">
-                        <button
-                          className="page-link round mr-3"
-                          aria-label="Previous"
-                          onClick={(e) => setPageInitial(pageInitial - 1)}
-                        >
-                          &#8249;
-                        </button>
-                      </li>
-                    )}
-
-                    {playerList.length >= 10 ? (
-                      <li className="page-item">
-                        <button
-                          className="page-link"
-                          aria-label="Next"
-                          onClick={() => setPageInitial(pageInitial + 1)}
-                        >
-                          &#8250;
-                        </button>
-                      </li>
-                    ) : (
-                      <li className="page-item">
-                        <button
-                          className="page-link disabled"
-                          disabled
-                          onClick={() => setPageInitial(pageInitial + 1)}
-                        >
-                          &#8250;
-                        </button>
-                      </li>
-                    )}
-                  </ul>
+                  <Pagination
+                    totalCountOfRegisters={totalCount}
+                    currentPage={page}
+                    onPageChange={setPage}
+                  />
                 </div>
               </div>
             </div>
@@ -281,7 +251,7 @@ const Highscores = ({ highscoresList }) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     players: state.player.player,
   };

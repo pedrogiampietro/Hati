@@ -7,7 +7,7 @@
 
 ### resuming with the project, new tasks pending.
 
-- [ ] Account -> need the recovery key module.
+- [x] Account -> need the recovery key module.
 - [ ] Highscores -> it needs to handle the errors, bring a response and a skeleton loading, perhaps, make a node cache.
 - [ ] Character Auction -> I need to start the front/back module.
 - [ ] Forum -> need to delete everything and do it again, it doesn't work.

@@ -73,10 +73,12 @@ const MyAccount = ({
     setTimeout(() => history.push('/account/avatar'), 2000);
   }
 
+  console.log(myAccount.key);
+
   return (
     <Container>
       <div id="contentBody" className="col-sm-9">
-        {myAccount.key?.length > 0 ? null : (
+        {myAccount.key?.length > 1 ? null : (
           <div className="panel panel-danger">
             <div className="panel-heading ">Recovery Key</div>
 

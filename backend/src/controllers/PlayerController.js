@@ -137,18 +137,44 @@ router.get('/character/:name', async (req, res) => {
 });
 
 router.get('/highscores', async (req, res) => {
-  const { vocation, page } = req.query;
+  const { params, headers } = req.query;
+  const parseParams = JSON.parse(params);
+  const parseHeaders = JSON.parse(headers);
 
-  let filterVocation = Number(vocation);
+  let filterVocation = Number(parseParams.vocation);
   let highscoresPlayer;
-  const pageSize = page;
-  const limit = 10;
-  const offset = Number(pageSize) * limit;
 
-  if (vocation === 'all') {
-    highscoresPlayer = await players.findAll({
-      limit,
-      offset: offset,
+  let pagination = {
+    page: 1,
+    per_page: 10,
+    offset: 0,
+    limit: 10,
+  };
+
+  let page = Number(parseHeaders?.page);
+
+  if (page) {
+    if (page < 1) {
+      page = 1;
+    }
+
+    pagination.page = page;
+
+    let per_page = Number(parseHeaders?.per_Page);
+
+    if (!per_page) {
+      per_page = 900;
+    }
+
+    pagination.per_page = per_page;
+    pagination.limit = per_page;
+    pagination.offset = (page - 1) * per_page;
+  }
+
+  if (parseParams.vocation === 'all') {
+    highscoresPlayer = await players.findAndCountAll({
+      limit: pagination.limit,
+      offset: pagination.offset,
 
       order: [
         ['level', 'DESC'],
@@ -156,13 +182,13 @@ router.get('/highscores', async (req, res) => {
       ],
     });
   } else {
-    highscoresPlayer = await players.findAll({
+    highscoresPlayer = await players.findAndCountAll({
       where: {
         vocation: filterVocation,
       },
 
-      limit,
-      offset: offset,
+      limit: pagination.limit,
+      offset: pagination.offset,
       order: [
         ['level', 'DESC'],
         ['name', 'ASC'],
@@ -220,7 +246,7 @@ router.put('/:id', async (req, res) => {
   });
   if (!editAccountInformation) return res.jsonNotFound(null);
 
-  fields.map((fieldName) => {
+  fields.map(fieldName => {
     const newValue = body[fieldName];
     if (newValue) editAccountInformation[fieldName] = newValue;
   });

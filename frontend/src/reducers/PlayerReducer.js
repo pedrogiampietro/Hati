@@ -50,7 +50,7 @@ export default function (state = initialState, action) {
 
     case PLAYER_REMOVE: {
       const players = state.players.filter(
-        (player) => player.id !== state.playerToRemove.id
+        player => player.id !== state.playerToRemove.id
       );
       return { ...state, playerToRemove: null, players };
     }
@@ -58,6 +58,7 @@ export default function (state = initialState, action) {
     case HIGHSCORES_LIST: {
       const response = payload ? payload.data : null;
       const players = response ? response.players : null;
+
       return { ...state, players };
     }
 

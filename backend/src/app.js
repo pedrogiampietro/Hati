@@ -14,11 +14,26 @@ const paymentHistoryController = require('./controllers/PaymentHistoryController
 const PixGerenciaNetController = require('./controllers/PixGerenciaNetController');
 
 const response = require('./middlewares/response');
-const loginService = require('./login');
+// const loginService = require('./login');
 const path = require('path');
 
 const app = express();
 // loginService();
+
+app.use((_, response, next) => {
+  response.header('Access-Control-Allow-Origin', '*');
+  response.header(
+    'Access-Control-Allow-Methods',
+    'GET,HEAD,OPTIONS,POST,PUT,PATCH'
+  );
+  response.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  );
+  response.header('Access-Control-Expose-Headers', 'x-total-count');
+
+  return next();
+});
 
 app.use(cors());
 app.use(response);
