@@ -51,6 +51,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       defaultValue: 0,
     },
+    key: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0,
+    },
     vip_time: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -101,7 +106,7 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  accounts.associate = (models) => {
+  accounts.associate = models => {
     accounts.hasMany(models.players, { foreignKey: 'account_id' });
     accounts.hasMany(models.shop_inventories, { foreignKey: 'account_id' });
     accounts.hasMany(models.shop_orders, { foreignKey: 'account_id' });

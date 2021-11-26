@@ -4,6 +4,7 @@ const crypto = require('crypto');
 const fs = require('fs');
 const { promisify } = require('util');
 const path = require('path');
+const { v4: uuidv4 } = require('uuid');
 
 const mailer = require('../services/mailer');
 
@@ -12,6 +13,7 @@ const {
   validateAccountSignUp,
   validateAccountSignIn,
   validateAccountChangePassword,
+  validateCreateRecoveryKey,
 } = require('../validators/account');
 const { getMessage } = require('../helpers/messages');
 const {
@@ -111,7 +113,7 @@ router.put(
           getMessage('response.json_invalid_token')
         );
 
-      fields.map((fieldName) => {
+      fields.map(fieldName => {
         const newValue = body[fieldName];
         if (newValue) findAccount[fieldName] = newValue;
       });
@@ -160,7 +162,7 @@ router.post('/forgot', async (req, res) => {
         template: 'auth/forgot_password',
         context: { forgotToken },
       },
-      (err) => {
+      err => {
         console.log(err);
         if (err)
           return res.jsonBadRequest(
@@ -216,7 +218,7 @@ router.post('/reset', async (req, res) => {
   }
 });
 
-router.put('/profile_info', checkJwt, async (req, res) => {
+router.put('/profile-info', checkJwt, async (req, res) => {
   const { body } = req;
   const fields = ['rlname', 'location'];
   const token = getTokenFromHeaders(req.headers);
@@ -237,7 +239,7 @@ router.put('/profile_info', checkJwt, async (req, res) => {
       getMessage('response.json_invalid_token')
     );
 
-  fields.map((fieldName) => {
+  fields.map(fieldName => {
     const newValue = body[fieldName];
     if (newValue) findAccount[fieldName] = newValue;
   });
@@ -246,7 +248,7 @@ router.put('/profile_info', checkJwt, async (req, res) => {
   return res.jsonOK(findAccount, getMessage('account.settings.profile_sucess'));
 });
 
-router.post('/profile_name', checkJwt, async (req, res) => {
+router.post('/profile-name', checkJwt, async (req, res) => {
   const { body } = req;
   const { profileName } = body;
 
@@ -386,7 +388,7 @@ router.get('/avatar', checkJwt, async (req, res) => {
   }
 });
 
-router.delete('/avatarDelete', checkJwt, async (req, res) => {
+router.delete('/avatar-delete', checkJwt, async (req, res) => {
   try {
     const token = getTokenFromHeaders(req.headers);
 
@@ -420,7 +422,7 @@ router.delete('/avatarDelete', checkJwt, async (req, res) => {
   }
 });
 
-router.get('/getAccount', checkJwt, async (req, res) => {
+router.get('/get-account', checkJwt, async (req, res) => {
   try {
     const token = getTokenFromHeaders(req.headers);
 
@@ -439,5 +441,48 @@ router.get('/getAccount', checkJwt, async (req, res) => {
     console.log(error);
   }
 });
+
+router.post(
+  '/generate-recovery',
+  validateCreateRecoveryKey,
+  checkJwt,
+  async (req, res) => {
+    const { account_id, body } = req;
+    const { password, rlname, location } = body;
+    const generateRK = uuidv4();
+    const encryptedPassword = encrypt(password);
+
+    try {
+      const getAccount = await accounts.findOne({
+        where: { id: account_id, password: encryptedPassword },
+      });
+
+      if (!getAccount)
+        return res.jsonBadRequest(null, getMessage('account.signin.failed'));
+
+      if (
+        getAccount.key === '0' ||
+        getAccount.key === 0 ||
+        getAccount.key === undefined ||
+        getAccount.key === null
+      ) {
+        await getAccount.update({
+          key: generateRK,
+          location,
+          rlname,
+        });
+
+        return res.jsonOK(getAccount);
+      } else {
+        return res.jsonBadRequest(
+          null,
+          'Já existe uma recovery key registrada nessa account.'
+        );
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
 
 module.exports = router;

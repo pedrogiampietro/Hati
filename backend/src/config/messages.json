@@ -41,6 +41,9 @@
   "account.forgot_password.email_notexists": "The email you entered does not exist in our database.",
   "account.forgot_password.any.required": "It is necessary to enter an email for account recovery.",
 
+  "account.register_recovery_key.sucess": "Your email with a recovery token was sent successfully.",
+  "null.rlname.string.empty": "It is necessary to enter an rlname for recovery key register.",
+
   "account.reset_password.sucess": "Your password has been successfully reset.",
   "account.reset_password.invalid_token": "Invalid token inserted.",
   "account.reset_password.email_notexists": "Entered email does not exist.",

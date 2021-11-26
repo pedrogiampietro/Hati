@@ -59,7 +59,7 @@ const MyAccount = ({
     return <Redirect to="/sign-in" />;
   }
 
-  const signOutHandler = (event) => {
+  const signOutHandler = event => {
     event.preventDefault();
     signOut();
   };
@@ -76,32 +76,40 @@ const MyAccount = ({
   return (
     <Container>
       <div id="contentBody" className="col-sm-9">
-        <div className="panel panel-danger">
-          <div className="panel-heading ">Recovery Key</div>
+        {myAccount.key?.length > 0 ? null : (
+          <div className="panel panel-danger">
+            <div className="panel-heading ">Recovery Key</div>
 
-          <button
-            className="btn btn-danger btn-sm align-self-end"
-            onClick={signOutHandler}
-          >
-            Logout
-          </button>
-          <div className="panel-body">
-            <strong>
-              You do not have a recovery key. It is recommended that you
-              generate one.
+            <button
+              className="btn btn-danger btn-sm align-self-end m-1"
+              onClick={signOutHandler}
+            >
+              Logout
+            </button>
+            <div className="panel-body">
+              <strong>
+                You do not have a recovery key. It is recommended that you
+                generate one.
+                <br />
+                In case you lose your account, using the recovery key is the
+                only option to recover it.
+              </strong>
               <br />
-              In case you lose your account, using the recovery key is the only
-              option to recover it.
-            </strong>
-            <br />
-            <br />
-            <Link to="/account/key">
-              <button className="btn btn-success btn-sm">
-                Generate Recovery Key
-              </button>
-            </Link>
+              <br />
+
+              <Link
+                to={{
+                  pathname: '/account/generate-recovery',
+                  state: myAccount.key,
+                }}
+              >
+                <button className="btn btn-success btn-sm">
+                  Generate Recovery Key
+                </button>
+              </Link>
+            </div>
           </div>
-        </div>
+        )}
 
         {getPlayerName() === undefined ? null : (
           <div className="panel-content">
@@ -402,7 +410,7 @@ const MyAccount = ({
           <div className="panel-body hidden-md hidden-lg">
             <div className="character-container">
               {players && players.length
-                ? players.map((player) => {
+                ? players.map(player => {
                     return (
                       <div key={player.id} className="new-character">
                         <Link to={`/character/${player.name}`}>
@@ -437,7 +445,7 @@ const MyAccount = ({
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     account: state.account.account,
     players: state.player.player,

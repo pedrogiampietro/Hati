@@ -193,7 +193,7 @@ CREATE TABLE `accounts` (
   `updatedAt` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
   `createdAt` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
   `vote` int NOT NULL,
-  `key` varchar(20) NOT NULL DEFAULT '0',
+  `key` varchar(255) NOT NULL DEFAULT '0',
   `email_new` varchar(255) NOT NULL DEFAULT '',
   `email_new_time` int NOT NULL DEFAULT '0',
   `rlname` varchar(255) NOT NULL DEFAULT '',

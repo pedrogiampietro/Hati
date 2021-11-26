@@ -1,118 +1,144 @@
-const Joi = require('@hapi/joi')
-const { defaultOptions } = './default'
-const { getValidatorError } = require('../helpers/validator')
+const Joi = require('@hapi/joi');
+const { defaultOptions } = './default';
+const { getValidatorError } = require('../helpers/validator');
 
 const rules = {
-	name: Joi.string().alphanum().min(6).max(30).required(),
-	password: Joi.string().alphanum().min(3).max(30).required(),
-	password_confirmation: Joi.string().valid(Joi.ref('password')).required(),
-	email: Joi.string().email().required(),
-	characterName: Joi.string()
-		.alphanum()
-		.min(5)
-		.max(21)
-		.prefs({ convert: true })
-		.required(),
-}
+  name: Joi.string().alphanum().min(6).max(30).required(),
+  password: Joi.string().alphanum().min(3).max(30).required(),
+  password_confirmation: Joi.string().valid(Joi.ref('password')).required(),
+  email: Joi.string().email().required(),
+  characterName: Joi.string()
+    .alphanum()
+    .min(5)
+    .max(21)
+    .prefs({ convert: true })
+    .required(),
+  rlname: Joi.string().required(),
+  location: Joi.string().required(),
+};
 
-const accountSignInValidator = (params) => {
-	const { name, password } = params
-	const schema = Joi.object({
-		name: rules.name,
-		password: rules.password,
-	})
+const accountSignInValidator = params => {
+  const { name, password } = params;
+  const schema = Joi.object({
+    name: rules.name,
+    password: rules.password,
+  });
 
-	return schema.validate({ name, password }, defaultOptions)
-}
+  return schema.validate({ name, password }, defaultOptions);
+};
 
 const validateAccountSignIn = (req, res, next) => {
-	const { error } = accountSignInValidator(req.body)
+  const { error } = accountSignInValidator(req.body);
 
-	if (error) {
-		const messages = getValidatorError(error, 'account.signin')
-		return res.jsonBadRequest(null, null, { error: messages })
-	}
+  if (error) {
+    const messages = getValidatorError(error, 'account.signin');
+    return res.jsonBadRequest(null, null, { error: messages });
+  }
 
-	next()
-}
+  next();
+};
 
-const accountSignUpValidator = (params) => {
-	const { name, password, password_confirmation, email } = params
-	const schema = Joi.object({
-		name: rules.name,
-		password: rules.password,
-		password_confirmation: rules.password_confirmation,
-		email: rules.email,
-	})
+const accountSignUpValidator = params => {
+  const { name, password, password_confirmation, email } = params;
+  const schema = Joi.object({
+    name: rules.name,
+    password: rules.password,
+    password_confirmation: rules.password_confirmation,
+    email: rules.email,
+  });
 
-	return schema.validate({ name, password, password_confirmation, email }, defaultOptions)
-}
+  return schema.validate(
+    { name, password, password_confirmation, email },
+    defaultOptions
+  );
+};
 
 const validateAccountSignUp = (req, res, next) => {
-	const { error } = accountSignUpValidator(req.body)
+  const { error } = accountSignUpValidator(req.body);
 
-	if (error) {
-		const messages = getValidatorError(error, 'account.signup')
-		return res.jsonBadRequest(null, null, { error: messages })
-	}
+  if (error) {
+    const messages = getValidatorError(error, 'account.signup');
+    return res.jsonBadRequest(null, null, { error: messages });
+  }
 
-	next()
-}
+  next();
+};
 
-const accountChangePasswordValidator = (params) => {
-	const { password, password_confirmation } = params
-	const schema = Joi.object({
-		password: rules.password,
-		password_confirmation: rules.password_confirmation,
-	})
+const accountChangePasswordValidator = params => {
+  const { password, password_confirmation } = params;
+  const schema = Joi.object({
+    password: rules.password,
+    password_confirmation: rules.password_confirmation,
+  });
 
-	return schema.validate(
-		{ password, password_confirmation },
-		defaultOptions
-	)
-}
+  return schema.validate({ password, password_confirmation }, defaultOptions);
+};
 
 const validateAccountChangePassword = (req, res, next) => {
-	const { error } = accountChangePasswordValidator(req.body)
+  const { error } = accountChangePasswordValidator(req.body);
 
-	if (error) {
-		const messages = getValidatorError(error, 'account.signup')
-		return res.jsonBadRequest(null, null, { error: messages })
-	}
+  if (error) {
+    const messages = getValidatorError(error, 'account.signup');
+    return res.jsonBadRequest(null, null, { error: messages });
+  }
 
-	next()
-}
+  next();
+};
 
-const createCharacterValidator = (params) => {
-	const { name } = params
-	const schema = Joi.object({
-		name: rules.characterName,
-	})
+const createCharacterValidator = params => {
+  const { name } = params;
+  const schema = Joi.object({
+    name: rules.characterName,
+  });
 
-	return schema.validate({ name }, defaultOptions)
-}
+  return schema.validate({ name }, defaultOptions);
+};
 
 const validateCreateCharacter = (req, res, next) => {
-	const { error } = createCharacterValidator(req.body)
+  const { error } = createCharacterValidator(req.body);
 
-	if (error) {
-		const messages = getValidatorError(error, null)
-		return res.jsonBadRequest(null, null, { error: messages })
-	}
+  if (error) {
+    const messages = getValidatorError(error, null);
+    return res.jsonBadRequest(null, null, { error: messages });
+  }
 
-	next()
-}
+  next();
+};
+
+const createRecoveryKeyValidator = params => {
+  const { rlname, location } = params;
+  const schema = Joi.object({
+    rlname: rules.rlname,
+    location: rules.location,
+  });
+
+  return schema.validate({ rlname, location }, defaultOptions);
+};
+
+const validateCreateRecoveryKey = (req, res, next) => {
+  const { error } = createRecoveryKeyValidator(req.body);
+
+  if (error) {
+    const messages = getValidatorError(error, null);
+    return res.jsonBadRequest(null, null, { error: messages });
+  }
+
+  next();
+};
 
 module.exports = {
-	validateAccountSignUp,
-	accountSignUpValidator,
+  validateAccountSignUp,
+  accountSignUpValidator,
 
-	validateAccountSignIn,
-	accountSignInValidator,
+  validateAccountSignIn,
+  accountSignInValidator,
 
-	validateCreateCharacter,
-	createCharacterValidator,
+  validateCreateCharacter,
+  createCharacterValidator,
 
-	validateAccountChangePassword,
-	accountChangePasswordValidator,
-}
+  validateAccountChangePassword,
+  accountChangePasswordValidator,
+
+  validateCreateRecoveryKey,
+  createRecoveryKeyValidator,
+};

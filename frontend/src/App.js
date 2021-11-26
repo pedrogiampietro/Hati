@@ -11,6 +11,7 @@ import ProfileAvatar from './screens/Account/ProfileAvatar';
 import SignUp from './screens/SignUp';
 import Dashboard from './screens/Dashboard';
 import MyAccount from './screens/Account/MyAccount';
+import GenerateRecovery from './screens/Account/MyAccount/GenerateRecovery';
 import AccountCharactersCreate from './screens/Account/MyAccount/Create';
 import Highscores from './screens/Highscores';
 import Character from './screens/Character';
@@ -79,6 +80,11 @@ const App = ({ initAccount }) => {
           />
           <ProtectedRoute
             exact
+            path="/account/generate-recovery"
+            component={GenerateRecovery}
+          />
+          <ProtectedRoute
+            exact
             path="/account/password"
             component={ChangePassword}
           />
@@ -123,7 +129,7 @@ const App = ({ initAccount }) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     account: state.account.account,
   };

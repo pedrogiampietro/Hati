@@ -21,6 +21,7 @@ export const DELETE_PROFILE_AVATAR = 'DELETE_PROFILE_AVATAR';
 export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
 export const RESET_PASSWORD = 'RESET_PASSWORD';
 export const GET_ACCOUNT = 'GET_ACCOUNT';
+export const GENERATE_RK = 'GENERATE_RK';
 
 export const signUp = data => {
   const payload = apiPost('/account/sign-up', data);
@@ -42,12 +43,12 @@ export const changePassword = data => {
 };
 
 export const profileInfo = data => {
-  const payload = apiPut('/account/profile_info', { ...data });
+  const payload = apiPut('/account/profile-info', { ...data });
   return { type: PROFILE_INFO, payload };
 };
 
 export const profileName = data => {
-  const payload = apiPost('/account/profile_name', data);
+  const payload = apiPost('/account/profile-name', data);
   return { type: PROFILE_NAME, payload };
 };
 
@@ -62,7 +63,7 @@ export const postProfileAvatar = data => {
 };
 
 export const deleteProfileAvatar = data => {
-  const payload = apiDelete('/account/avatarDelete', data);
+  const payload = apiDelete('/account/avatar-delete', data);
   return { type: DELETE_PROFILE_AVATAR, payload };
 };
 
@@ -86,6 +87,11 @@ export const resetPassword = data => {
 };
 
 export const getAccount = data => {
-  const payload = apiGet('/account/getAccount', data);
+  const payload = apiGet('/account/get-account', data);
   return { type: GET_ACCOUNT, payload };
+};
+
+export const generateRk = data => {
+  const payload = apiPost('/account/generate-recovery', data);
+  return { type: GENERATE_RK, payload };
 };
