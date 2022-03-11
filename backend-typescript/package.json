@@ -1,0 +1,38 @@
+{
+  "name": "backend-typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn --transpile-only --inspect=0.0.0.0:9229 --ignore-watch node_modules --no-notify src/server.ts",
+    "migrations:run": "prisma migrate dev"
+  },
+  "keywords": [],
+  "author": "Pedro Giampietro",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^3.4.0",
+    "axios": "^0.24.0",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "js-sha1": "^0.6.0",
+    "jsonwebtoken": "^8.5.1",
+    "public-ip": "^4.0.4",
+    "tsyringe": "^4.6.0",
+    "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^8.5.5",
+    "@types/public-ip": "^3.1.0",
+    "@types/yup": "^0.29.13",
+    "prisma": "^3.4.0",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.4.4"
+  }
+}
