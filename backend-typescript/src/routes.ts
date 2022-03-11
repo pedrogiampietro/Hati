@@ -5,6 +5,7 @@ import { checkJwt } from './middlewares/ensureAuthenticated';
 import { AuthenticateUserController } from './controllers/AuthenticateUserController';
 import { CreateAccountController } from './controllers/CreateAccountController';
 import { ChangePasswordController } from './controllers/ChangePasswordController';
+import { RefreshTokenController } from './controllers/RefreshTokenController';
 
 const routes = Router();
 
@@ -30,5 +31,7 @@ routes.post(
   checkJwt,
   new ChangePasswordController().handle
 );
+
+routes.post('/refresh-token', new RefreshTokenController().handle);
 
 export { routes };

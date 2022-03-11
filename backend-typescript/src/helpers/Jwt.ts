@@ -34,4 +34,6 @@ export {
   generateRefreshJwt,
   verifyRefreshJwt,
   getTokenFromHeaders,
+  options,
+  refreshOptions,
 };

@@ -18,7 +18,7 @@ class AuthenticateUserService {
   async execute({ name, password }: ILogin): Promise<IResponse> {
     const encryptedPassword = encrypt(password);
 
-    const findAccount = await prismaClient.accounts.findUnique({
+    const findAccount = await prismaClient.accounts.findFirst({
       where: {
         name,
       },
@@ -30,7 +30,7 @@ class AuthenticateUserService {
       });
     }
 
-    if (!findAccount.password === encryptedPassword) {
+    if (findAccount.password !== encryptedPassword) {
       throw new AppError({
         message: 'Conta de e-mail ou password não é válido.',
       });

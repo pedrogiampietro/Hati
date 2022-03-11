@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only --inspect=0.0.0.0:9229 --ignore-watch node_modules --no-notify src/server.ts"
+    "dev": "ts-node-dev --respawn --transpile-only --inspect=0.0.0.0:9229 --ignore-watch node_modules --no-notify src/server.ts",
+    "migrations:run": "prisma migrate dev"
   },
   "keywords": [],
   "author": "Pedro Giampietro",
@@ -20,6 +21,7 @@
     "js-sha1": "^0.6.0",
     "jsonwebtoken": "^8.5.1",
     "public-ip": "^4.0.4",
+    "tsyringe": "^4.6.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {
