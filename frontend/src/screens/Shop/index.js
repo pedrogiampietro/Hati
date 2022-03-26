@@ -16,7 +16,7 @@ const Shop = ({ getShopList }) => {
         setShopList(newData);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }, [getShopList]);
 

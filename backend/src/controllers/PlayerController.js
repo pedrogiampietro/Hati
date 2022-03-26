@@ -246,7 +246,7 @@ router.put('/:id', async (req, res) => {
   });
   if (!editAccountInformation) return res.jsonNotFound(null);
 
-  fields.map(fieldName => {
+  fields.map((fieldName) => {
     const newValue = body[fieldName];
     if (newValue) editAccountInformation[fieldName] = newValue;
   });

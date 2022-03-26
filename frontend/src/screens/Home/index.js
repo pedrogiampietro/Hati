@@ -30,7 +30,7 @@ const Home = ({ forumBoard }) => {
         setNewsPost(newData);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }, [forumBoard, postInteraction]);
 

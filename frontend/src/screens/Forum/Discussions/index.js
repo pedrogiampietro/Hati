@@ -52,7 +52,7 @@ const Discussions = ({
         setDiscussionPost(newData);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }, [
     forumDiscussion,

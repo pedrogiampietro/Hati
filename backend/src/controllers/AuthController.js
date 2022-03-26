@@ -113,7 +113,7 @@ router.put(
           getMessage('response.json_invalid_token')
         );
 
-      fields.map(fieldName => {
+      fields.map((fieldName) => {
         const newValue = body[fieldName];
         if (newValue) findAccount[fieldName] = newValue;
       });
@@ -162,7 +162,7 @@ router.post('/forgot', async (req, res) => {
         template: 'auth/forgot_password',
         context: { forgotToken },
       },
-      err => {
+      (err) => {
         console.log(err);
         if (err)
           return res.jsonBadRequest(
@@ -239,7 +239,7 @@ router.put('/profile-info', checkJwt, async (req, res) => {
       getMessage('response.json_invalid_token')
     );
 
-  fields.map(fieldName => {
+  fields.map((fieldName) => {
     const newValue = body[fieldName];
     if (newValue) findAccount[fieldName] = newValue;
   });
@@ -460,12 +460,7 @@ router.post(
       if (!getAccount)
         return res.jsonBadRequest(null, getMessage('account.signin.failed'));
 
-      if (
-        getAccount.key === '0' ||
-        getAccount.key === 0 ||
-        getAccount.key === undefined ||
-        getAccount.key === null
-      ) {
+      if (getAccount.key === '0' || !getAccount.key) {
         await getAccount.update({
           key: generateRK,
           location,

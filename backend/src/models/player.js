@@ -298,7 +298,8 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 0,
     },
     create_date: {
-      type: DataTypes.STRING,
+      type: 'TIMESTAMP',
+      defaultValue: sequelize.literal('CURRENT_TIMESTAMP'),
       allowNull: false,
     },
   });

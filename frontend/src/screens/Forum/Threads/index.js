@@ -1,7 +1,11 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { forumBoard, threadRemove, setThreadToRemove } from '../../../actions/ForumActions';
+import {
+  forumBoard,
+  threadRemove,
+  setThreadToRemove,
+} from '../../../actions/ForumActions';
 import { formatDate } from '../../../helpers/DateTime';
 
 import Container from '../../Layouts/Container';
@@ -10,7 +14,14 @@ import CreateThread from '../Threads/Create';
 
 import { showNewThread } from '../../../assets/js/scripts';
 
-const Threads = ({ forumBoard, threadRemove, forumToRemove, setThreadToRemove, player, account }) => {
+const Threads = ({
+  forumBoard,
+  threadRemove,
+  forumToRemove,
+  setThreadToRemove,
+  player,
+  account,
+}) => {
   const [threadList, setThreadList] = React.useState([]);
   const [postInteraction, setPostInteraction] = React.useState(false);
 
@@ -26,7 +37,7 @@ const Threads = ({ forumBoard, threadRemove, forumToRemove, setThreadToRemove, p
         setThreadList(newData);
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   }, [forumBoard, board_id, postInteraction]);
 
@@ -68,7 +79,9 @@ const Threads = ({ forumBoard, threadRemove, forumToRemove, setThreadToRemove, p
               <div className="text-uppercase text-muted py-2 px-3">Views</div>
             </div>
             <div className="col-sm-6 col-md-3 hidden-md-down">
-              <div className="text-uppercase text-muted py-2 px-3">Last update</div>
+              <div className="text-uppercase text-muted py-2 px-3">
+                Last update
+              </div>
             </div>
           </div>
         </div>
@@ -141,11 +154,15 @@ const Threads = ({ forumBoard, threadRemove, forumToRemove, setThreadToRemove, p
                           </div>
                           <div className="flex-1 min-width-0">
                             <Link to="#" className="d-block text-truncate">
-                              Nam at justo magna. Aenean facilisis ultricies turpis
+                              Nam at justo magna. Aenean facilisis ultricies
+                              turpis
                             </Link>
                             <div className="text-muted small text-truncate">
                               Today, 12:13{' '}
-                              <Link to="/characters/:name" className="text-info">
+                              <Link
+                                to="/characters/:name"
+                                className="text-info"
+                              >
                                 c_lantern
                               </Link>
                             </div>
@@ -160,13 +177,21 @@ const Threads = ({ forumBoard, threadRemove, forumToRemove, setThreadToRemove, p
             {forumToRemove ? (
               <div className="alert alert-danger rounded shadow-bold col-xl-6 ml-auto mr-auto pl-3 pr-3">
                 <h4 className="alert-heading">Delete Confirmation!</h4>
-                <p>Are you sure you want to delete, this action cannot be undone.</p>
+                <p>
+                  Are you sure you want to delete, this action cannot be undone.
+                </p>
                 <hr />
                 <div className="d-flex justify-content-between">
-                  <button className="btn btn-outline-dark" onClick={cancelDelete}>
+                  <button
+                    className="btn btn-outline-dark"
+                    onClick={cancelDelete}
+                  >
                     Cancel
                   </button>
-                  <button className="btn btn-outline-danger" onClick={confirmDelete}>
+                  <button
+                    className="btn btn-outline-danger"
+                    onClick={confirmDelete}
+                  >
                     Delete
                   </button>
                 </div>

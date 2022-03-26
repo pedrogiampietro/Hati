@@ -59,7 +59,7 @@ const MyAccount = ({
     return <Redirect to="/sign-in" />;
   }
 
-  const signOutHandler = event => {
+  const signOutHandler = (event) => {
     event.preventDefault();
     signOut();
   };
@@ -72,8 +72,6 @@ const MyAccount = ({
 
     setTimeout(() => history.push('/account/avatar'), 2000);
   }
-
-  console.log(myAccount.key);
 
   return (
     <Container>
@@ -412,7 +410,7 @@ const MyAccount = ({
           <div className="panel-body hidden-md hidden-lg">
             <div className="character-container">
               {players && players.length
-                ? players.map(player => {
+                ? players.map((player) => {
                     return (
                       <div key={player.id} className="new-character">
                         <Link to={`/character/${player.name}`}>
@@ -447,7 +445,7 @@ const MyAccount = ({
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     account: state.account.account,
     players: state.player.player,

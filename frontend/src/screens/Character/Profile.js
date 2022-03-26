@@ -1,6 +1,6 @@
 import React from 'react';
 import { genders, characterVocations, towns } from '../../config';
-import { convertTimestempToDate } from '../../helpers/DateTime';
+import { formatDate } from '../../helpers/DateTime';
 
 const Profile = ({ characterPage }) => {
   return (
@@ -49,7 +49,7 @@ const Profile = ({ characterPage }) => {
           </tr>
           <tr>
             <td>Created at:</td>
-            <td>{convertTimestempToDate(characterPage.create_date)}</td>
+            <td>{formatDate(characterPage.create_date)}</td>
           </tr>
           <tr>
             <td>Account Status:</td>
