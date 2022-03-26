@@ -30,7 +30,9 @@ router.post('/', checkJwt, async (req, res) => {
     solicitacaoPagador: descriptionOfCharge,
   };
   const cobResponse = await reqGN.post('/v2/cob', dataCob);
-  const qrcodeResponse = await reqGN.get(`/v2/loc/${cobResponse.data.loc.id}/qrcode`);
+  const qrcodeResponse = await reqGN.get(
+    `/v2/loc/${cobResponse.data.loc.id}/qrcode`
+  );
 
   res.jsonOK({ qrcodeImage: qrcodeResponse.data.imagemQrcode });
 });
@@ -38,7 +40,9 @@ router.post('/', checkJwt, async (req, res) => {
 router.get('/cobrancas', async (req, res) => {
   const reqGN = await reqGNAlready;
 
-  const cobResponse = await reqGN.get('/v2/cob?inicio=2021-02-15T16:01:35Z&fim=2021-03-26T23:59:00Z');
+  const cobResponse = await reqGN.get(
+    '/v2/cob?inicio=2021-02-15T16:01:35Z&fim=2021-03-26T23:59:00Z'
+  );
 
   res.send(cobResponse.data);
 });

@@ -13,6 +13,7 @@ services:
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
       - mysqldata:/data/mysql
+      - ./hatiData.sql:/docker-entrypoint-initdb.d/hatiData.sql
 
   # app:
   #   build: .
