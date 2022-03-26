@@ -1,13 +1,11 @@
-import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React, { useState, useCallback } from 'react';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
 
 import { connect } from 'react-redux';
 import { signIn } from '../../actions/AccountActions';
 
 import Container from '../Layouts/Container';
-import Error from '../../helpers/Error';
 
 import { FaSignInAlt } from 'react-icons/fa';
 import { GiPadlock } from 'react-icons/gi';
@@ -15,19 +13,40 @@ import { GiPadlock } from 'react-icons/gi';
 import Button from '../../components/Button';
 import { TextField } from '../../components/Input/TextField';
 
-const SignIn = (props) => {
-  const { signIn, account } = props;
-  const [error, setError] = React.useState();
-  const [loading, setLoading] = React.useState(false);
+import { signInSchema } from '../../validations/signInSchema';
 
-  const validate = Yup.object({
-    name: Yup.string()
-      .min(6)
-      .max(15, 'Must be 15 characters or less')
-      .required('Account Name is required'),
-    password: Yup.string()
-      .min(6, 'Password must be at least 6 charaters')
-      .required('Password is required'),
+import Swal from 'sweetalert2';
+import { FiAlertCircle } from 'react-icons/fi';
+
+const SignIn = ({ signIn, account }) => {
+  const history = useHistory();
+
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmitSignIn = useCallback(async values => {
+    signIn(values)
+      .then(({ payload }) => {
+        console.log('payload', payload);
+
+        Swal.fire({
+          title: 'Sucessfuly!',
+          html: 'you have logged into the system, and you will be redirected!',
+          icon: 'success',
+          timer: 2000,
+          timerProgressBar: true,
+        }).then(_ => {
+          history.push('/account/characters');
+        });
+      })
+      .catch(err => {
+        const { data } = err.response;
+
+        Swal.fire({
+          title: 'Failed!',
+          html: data.message,
+          icon: 'error',
+        });
+      });
   });
 
   if (account) {
@@ -40,16 +59,13 @@ const SignIn = (props) => {
         name: '',
         password: '',
       }}
-      validationSchema={validate}
-      onSubmit={(values) => {
-        signIn(values).catch((err) => {
-          const { data } = err.response;
-          setError(data.message);
-          setLoading(false);
-        });
+      enableReinitialize={true}
+      validationSchema={signInSchema}
+      onSubmit={async values => {
+        await handleSubmitSignIn(values);
       }}
     >
-      {(formik) => (
+      {({ errors, isValid, values, initialValues, isSubmitting, touched }) => (
         <Container>
           <div className="row">
             <div className="col col-md-6 col-lg-7 hidden-sm-down">
@@ -84,9 +100,15 @@ const SignIn = (props) => {
                     </label>
                     <TextField
                       type="text"
-                      placeholder="Your account name"
                       name="name"
+                      placeholder="Your account name"
                     />
+                    {errors.name && touched.name && (
+                      <div className="invalid-feedback">
+                        <FiAlertCircle className="mr" size={14} />
+                        {errors.name}
+                      </div>
+                    )}
                   </div>
 
                   <div className="form-group">
@@ -98,26 +120,38 @@ const SignIn = (props) => {
                       name="password"
                       className="form-control"
                     />
+                    {errors.password && touched.password && (
+                      <div className="invalid-feedback">
+                        <FiAlertCircle className="mr" size={14} />
+                        {errors.password}
+                      </div>
+                    )}
                   </div>
 
-                  <Error error={error} />
-
-                  <div class="row">
+                  <div className="row">
                     <div className="col-md-12 text-center my-2">
-                      <Button
-                        className="btn btn-info btn-block btn-lg waves-effect waves-themed mb-2"
-                        type="submit"
-                        disabled={loading ? true : false}
-                      >
-                        <FaSignInAlt size={20} className="mr-2" />
-                        {loading ? 'Loading... ' : 'Sign-in'}
-                      </Button>
+                      {!isSubmitting && !loading && (
+                        <>
+                          <Button
+                            className="btn btn-info btn-block btn-lg waves-effect waves-themed mb-2"
+                            type="submit"
+                            disabled={
+                              !isValid ||
+                              JSON.stringify(values) ===
+                                JSON.stringify(initialValues)
+                            }
+                          >
+                            <FaSignInAlt size={20} className="mr-2" />
+                            {loading ? 'Loading... ' : 'Sign-in'}
+                          </Button>
 
-                      <Link to="/forgot">
-                        <button className="btn btn-danger btn-block btn-lg waves-effect waves-themed">
-                          <GiPadlock size={20} /> Forgot Password
-                        </button>
-                      </Link>
+                          <Link to="/forgot">
+                            <button className="btn btn-danger btn-block btn-lg waves-effect waves-themed">
+                              <GiPadlock size={20} /> Forgot Password
+                            </button>
+                          </Link>
+                        </>
+                      )}
                     </div>
                   </div>
                 </Form>
@@ -130,7 +164,7 @@ const SignIn = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     account: state.account.account,
   };

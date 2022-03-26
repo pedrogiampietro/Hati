@@ -2,7 +2,7 @@ import * as yup from 'yup';
 
 export const createAccountSchema = () =>
   yup.object().shape({
-    name: yup.string().min(6).max(10).required('Please enter a account name.'),
+    name: yup.string().min(5).max(15).required('Please enter a account name.'),
     password: yup.string().required('Password is required.'),
     password_confirmation: yup
       .string()
