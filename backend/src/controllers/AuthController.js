@@ -113,7 +113,7 @@ router.put(
           getMessage('response.json_invalid_token')
         );
 
-      fields.map((fieldName) => {
+      fields.map(fieldName => {
         const newValue = body[fieldName];
         if (newValue) findAccount[fieldName] = newValue;
       });
@@ -162,7 +162,7 @@ router.post('/forgot', async (req, res) => {
         template: 'auth/forgot_password',
         context: { forgotToken },
       },
-      (err) => {
+      err => {
         console.log(err);
         if (err)
           return res.jsonBadRequest(
@@ -239,7 +239,7 @@ router.put('/profile-info', checkJwt, async (req, res) => {
       getMessage('response.json_invalid_token')
     );
 
-  fields.map((fieldName) => {
+  fields.map(fieldName => {
     const newValue = body[fieldName];
     if (newValue) findAccount[fieldName] = newValue;
   });
@@ -378,7 +378,7 @@ router.get('/avatar', checkJwt, async (req, res) => {
     const { avatar } = findAccount;
 
     if (avatar !== '') {
-      const URL_AVATAR = `${process.env.SERVER_URL}/${avatar}`;
+      const URL_AVATAR = `${process.env.SERVER_URL}:${process.env.PORT}/${avatar}`;
       res.jsonOK(URL_AVATAR);
     } else {
       res.jsonOK(findAccount);

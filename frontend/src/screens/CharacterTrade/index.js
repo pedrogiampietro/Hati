@@ -18,6 +18,7 @@ const CharacterTrade = () => {
                       <img
                         title="show auction details"
                         src="https://static.tibia.com/images/global/content/button-details-idle.png"
+                        alt="Show Auction Detail"
                       />
                     </a>
                   </div>
@@ -27,10 +28,7 @@ const CharacterTrade = () => {
                     </a>
                   </div>
                   Level: 216 | Vocation: Elite Knight | Male | World:{' '}
-                  <a
-                    target="_blank"
-                    href="https://www.tibia.com/community/?subtopic=worlds&world=Kenora"
-                  >
+                  <a href="https://www.tibia.com/community/?subtopic=worlds&world=Kenora">
                     Kenora
                   </a>
                   <br />
@@ -38,28 +36,44 @@ const CharacterTrade = () => {
                 <div className="AuctionBody">
                   <div className="AuctionBodyBlock AuctionDisplay AuctionOutfit">
                     <div className="AuctionNewIcon">
-                      <img src="https://static.tibia.com/images/global/content/ribbon-new-top-left.png" />
+                      <img
+                        src="https://static.tibia.com/images/global/content/ribbon-new-top-left.png"
+                        alt="Auction Icon"
+                      />
                     </div>
                     <img
                       className="AuctionOutfitImage"
                       src="https://static.tibia.com/images/charactertrade/outfits/430_0.gif"
+                      alt="Outfit Iamge"
                     />
                   </div>
                   <div className="AuctionBodyBlock AuctionDisplay AuctionItemsViewBox">
                     <div className="CVIcon CVIconObject" title="Zaoan legs">
-                      <img src="https://static.tibia.com/images/charactertrade/objects/10387.gif" />
+                      <img
+                        src="https://static.tibia.com/images/charactertrade/objects/10387.gif"
+                        alt="Character Trade"
+                      />
                     </div>
                     <div
                       className="CVIcon CVIconObject"
                       title="prismatic armor"
                     >
-                      <img src="https://static.tibia.com/images/charactertrade/objects/16110.gif" />
+                      <img
+                        src="https://static.tibia.com/images/charactertrade/objects/16110.gif"
+                        alt="Item"
+                      />
                     </div>
                     <div className="CVIcon CVIconObject" title="shiny blade">
-                      <img src="https://static.tibia.com/images/charactertrade/objects/16175.gif" />
+                      <img
+                        src="https://static.tibia.com/images/charactertrade/objects/16175.gif"
+                        alt="Item"
+                      />
                     </div>
                     <div className="CVIcon CVIconObject" title="gnome sword">
-                      <img src="https://static.tibia.com/images/charactertrade/objects/27651.gif" />
+                      <img
+                        src="https://static.tibia.com/images/charactertrade/objects/27651.gif"
+                        alt="Item"
+                      />
                     </div>
                   </div>
                   <div className="AuctionBodyBlock ShortAuctionData">
@@ -79,6 +93,7 @@ const CharacterTrade = () => {
                           src="https://static.tibia.com/images//account/icon-tibiacointrusted.png"
                           className="VSCCoinImages"
                           title="Transferable Tibia Coins"
+                          alt="Tibia Coins"
                         />
                       </div>
                     </div>
@@ -104,6 +119,7 @@ const CharacterTrade = () => {
                     <img
                       className="CharacterFeatureCategory"
                       src="https://static.tibia.com/images/charactertrade/usp-category-2.png"
+                      alt="Feature Category"
                     />
                     55 Achievement Points
                   </div>
@@ -111,6 +127,7 @@ const CharacterTrade = () => {
                     <img
                       className="CharacterFeatureCategory"
                       src="https://static.tibia.com/images/charactertrade/usp-category-3.png"
+                      alt="Feature Category"
                     />
                     Blessings active: 7/7, Twist of Fate active: yes
                   </div>
@@ -118,6 +135,7 @@ const CharacterTrade = () => {
                     <img
                       className="CharacterFeatureCategory"
                       src="https://static.tibia.com/images/charactertrade/usp-category-0.png"
+                      alt="Feature Category"
                     />
                     99 Sword Fighting (Loyalty bonus not included)
                   </div>
@@ -125,6 +143,7 @@ const CharacterTrade = () => {
                     <img
                       className="CharacterFeatureCategory"
                       src="https://static.tibia.com/images/charactertrade/usp-category-0.png"
+                      alt="Feature Category"
                     />
                     91 Shielding (Loyalty bonus not included)
                   </div>
@@ -132,6 +151,7 @@ const CharacterTrade = () => {
                     <img
                       className="CharacterFeatureCategory"
                       src="https://static.tibia.com/images/charactertrade/usp-category-1.png"
+                      alt="Feature Category"
                     />
                     340803 Gold total in bank, inventory and depot
                   </div>

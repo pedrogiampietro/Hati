@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -22,9 +22,7 @@ const SignUp = ({ signUp, account }) => {
 
   const handleSubmitAccount = useCallback(async values => {
     signUp(values)
-      .then(({ payload }) => {
-        console.log('payload', payload);
-
+      .then(_ => {
         Swal.fire({
           title: 'Sucessfuly!',
           html: 'Account created!',
@@ -44,7 +42,8 @@ const SignUp = ({ signUp, account }) => {
           icon: 'error',
         });
       });
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (account) {
     return <Redirect to="/account/characters" />;

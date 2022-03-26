@@ -1,7 +1,7 @@
 import React from 'react';
 import Container from '../../../Layouts/Container';
 import { connect, useDispatch } from 'react-redux';
-import { useLocation, Link, Redirect } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { getFormData } from '../../../../helpers/FormData';
 import { toast, ToastContainer } from 'react-toastify';
 import { generateRk } from '../../../../actions/AccountActions';

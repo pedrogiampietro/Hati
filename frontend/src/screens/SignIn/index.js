@@ -23,20 +23,23 @@ const SignIn = ({ signIn, account }) => {
 
   const [loading, setLoading] = useState(false);
 
-  const handleSubmitSignIn = useCallback(async (values) => {
+  const handleSubmitSignIn = useCallback(async values => {
+    setLoading(true);
+
     signIn(values)
-      .then(({ payload }) => {
+      .then(_ => {
         Swal.fire({
           title: 'Sucessfuly!',
           html: 'you have logged into the system, and you will be redirected!',
           icon: 'success',
           timer: 2000,
           timerProgressBar: true,
-        }).then((_) => {
+        }).then(_ => {
           history.push('/account/characters');
         });
       })
-      .catch((err) => {
+
+      .catch(err => {
         const { data } = err.response;
 
         Swal.fire({
@@ -44,8 +47,12 @@ const SignIn = ({ signIn, account }) => {
           html: data.message,
           icon: 'error',
         });
+      })
+      .finally(_ => {
+        setLoading(false);
       });
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (account) {
     return <Redirect to="/account/characters" />;
@@ -59,7 +66,7 @@ const SignIn = ({ signIn, account }) => {
       }}
       enableReinitialize={true}
       validationSchema={signInSchema}
-      onSubmit={async (values) => {
+      onSubmit={async values => {
         await handleSubmitSignIn(values);
       }}
     >
@@ -162,7 +169,7 @@ const SignIn = ({ signIn, account }) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     account: state.account.account,
   };

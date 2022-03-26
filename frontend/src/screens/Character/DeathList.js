@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { FaCrosshairs, FaSkullCrossbones } from 'react-icons/fa';
 import { convertTimestempToDate } from '../../helpers/DateTime';
 const DeathList = ({ playerDeaths }) => {
   return (
@@ -42,7 +41,7 @@ const DeathList = ({ playerDeaths }) => {
             <div className="timeline">
               <article className="panel">
                 {playerDeaths && playerDeaths.length
-                  ? playerDeaths.map((death) => {
+                  ? playerDeaths.map(death => {
                       return (
                         <ul key={death.time} className="list list-timeline">
                           <li>

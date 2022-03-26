@@ -5,13 +5,12 @@ import { playerCreate, playerList } from '../../../../actions/PlayerActions';
 
 import Container from '../../../Layouts/Container';
 import { createVocations } from '../../../../config';
-import Error from '../../../../helpers/Error';
+
 import './styles.css';
 
 const CreateCharacter = ({ playerCreate, playerList, player }) => {
   const history = useHistory();
 
-  const [error, setError] = React.useState('');
   const [name, setName] = React.useState('');
   const [sex, setSex] = React.useState('');
   const [vocation, setVocation] = React.useState('');
@@ -20,7 +19,7 @@ const CreateCharacter = ({ playerCreate, playerList, player }) => {
     playerList();
   }, [playerList]);
 
-  const submitHandler = (event) => {
+  const submitHandler = event => {
     event.preventDefault();
 
     const data = {
@@ -33,7 +32,7 @@ const CreateCharacter = ({ playerCreate, playerList, player }) => {
       .then(() => {
         history.push('/account/characters');
       })
-      .catch((err) => {
+      .catch(err => {
         console.error(err);
       });
   };
@@ -66,13 +65,13 @@ const CreateCharacter = ({ playerCreate, playerList, player }) => {
                                 className="form-control"
                                 name={name}
                                 placeholder="Enter your nickname"
-                                onChange={(event) =>
+                                onChange={event =>
                                   setName(
                                     event.target.value
                                       .toLowerCase()
                                       .split(' ')
                                       .map(
-                                        (word) =>
+                                        word =>
                                           word.charAt(0).toUpperCase() +
                                           word.slice(1)
                                       )
@@ -93,7 +92,7 @@ const CreateCharacter = ({ playerCreate, playerList, player }) => {
                                 name="sex"
                                 value="0"
                                 data-icon=""
-                                onChange={(event) =>
+                                onChange={event =>
                                   setSex(Number(event.target.value))
                                 }
                               />
@@ -103,7 +102,7 @@ const CreateCharacter = ({ playerCreate, playerList, player }) => {
                                 name="sex"
                                 value="1"
                                 data-icon=""
-                                onChange={(event) =>
+                                onChange={event =>
                                   setSex(Number(event.target.value))
                                 }
                               />
@@ -113,48 +112,40 @@ const CreateCharacter = ({ playerCreate, playerList, player }) => {
                               <h2>What's your favourite vocation?</h2>
 
                               <div className="row justify-content-center pb-5">
-                                <Error error={error} />
+                                {/* <Error error={error} /> */}
                               </div>
 
                               <div className="col-12 pb-5">
-                                {Object.keys(createVocations).map(
-                                  (vocation) => (
-                                    <label
-                                      key={
+                                {Object.keys(createVocations).map(vocation => (
+                                  <label
+                                    key={createVocations[vocation].vocation_id}
+                                    htmlFor={
+                                      createVocations[vocation].vocation_id
+                                    }
+                                    className="custom-radio"
+                                  >
+                                    <input
+                                      type="radio"
+                                      name="vocation"
+                                      id={createVocations[vocation].vocation_id}
+                                      value={
                                         createVocations[vocation].vocation_id
                                       }
-                                      htmlFor={
-                                        createVocations[vocation].vocation_id
+                                      onChange={event =>
+                                        setVocation(Number(event.target.value))
                                       }
-                                      className="custom-radio"
-                                    >
-                                      <input
-                                        type="radio"
-                                        name="vocation"
-                                        id={
-                                          createVocations[vocation].vocation_id
-                                        }
-                                        value={
-                                          createVocations[vocation].vocation_id
-                                        }
-                                        onChange={(event) =>
-                                          setVocation(
-                                            Number(event.target.value)
-                                          )
-                                        }
-                                      />
-                                      <span className="radio-btn">
-                                        <i className="las la-check"></i>
-                                        <div className="hobbies-icon">
-                                          <i className="fas fa-ghost"></i>
-                                          <h3>
-                                            {createVocations[vocation].name}
-                                          </h3>
-                                        </div>
-                                      </span>
-                                    </label>
-                                  )
-                                )}
+                                    />
+                                    <span className="radio-btn">
+                                      <i className="las la-check"></i>
+                                      <div className="hobbies-icon">
+                                        <i className="fas fa-ghost"></i>
+                                        <h3>
+                                          {createVocations[vocation].name}
+                                        </h3>
+                                      </div>
+                                    </span>
+                                  </label>
+                                ))}
                               </div>
                             </div>
                           </div>
@@ -176,7 +167,7 @@ const CreateCharacter = ({ playerCreate, playerList, player }) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     player: state.player.player,
   };

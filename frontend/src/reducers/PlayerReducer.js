@@ -7,7 +7,6 @@ import {
   PLAYER_REMOVE,
   HIGHSCORES_LIST,
   CHARACTER_GET,
-  GET_ALL_STORAGE,
 } from '../actions/PlayerActions';
 
 const initialState = {

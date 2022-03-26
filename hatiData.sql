@@ -1554,7 +1554,7 @@ CREATE TABLE `players` (
   `description` varchar(255) NOT NULL DEFAULT '',
   `comment` text NOT NULL,
   `create_ip` int unsigned NOT NULL DEFAULT '0',
-  `create_date` int unsigned NOT NULL DEFAULT '0',
+  `create_date` varchar(255) unsigned NOT NULL DEFAULT '0',
   `hide_char` int NOT NULL DEFAULT '0',
   `cast` tinyint(1) NOT NULL DEFAULT '0',
   `skill_critical_hit_chance` int unsigned NOT NULL DEFAULT '0',

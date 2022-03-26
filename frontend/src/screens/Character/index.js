@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
 import { playerGetCharacter } from '../../actions/PlayerActions';
 
-import Outfiter from '../../helpers/Outfiter';
+// import Outfiter from '../../helpers/Outfiter';
 
 import Container from '../Layouts/Container';
 import Profile from './Profile';
@@ -12,18 +12,18 @@ import DeathList from './DeathList';
 import CharacterList from './CharacterList';
 import './styles.css';
 
-const arrItems = {
-  slotHead: 1,
-  slotNecklace: 2,
-  slotBackpack: 3,
-  slotArmor: 4,
-  slotRight: 5,
-  slotLeft: 6,
-  slotLegs: 7,
-  slotFeet: 8,
-  slotRing: 9,
-  slotAmmo: 10,
-};
+// const arrItems = {
+//   slotHead: 1,
+//   slotNecklace: 2,
+//   slotBackpack: 3,
+//   slotArmor: 4,
+//   slotRight: 5,
+//   slotLeft: 6,
+//   slotLegs: 7,
+//   slotFeet: 8,
+//   slotRing: 9,
+//   slotAmmo: 10,
+// };
 
 const Character = ({ playerGetCharacter }) => {
   const history = useHistory();
@@ -55,7 +55,7 @@ const Character = ({ playerGetCharacter }) => {
         // const playerItems = payload.data.data.rows[0].player_items;
         // setPlayerItems(playerItems);
       })
-      .catch((err) => {
+      .catch(err => {
         history.push('/PageSearch');
       });
   }, [name, history, playerGetCharacter]);
@@ -118,7 +118,7 @@ const Character = ({ playerGetCharacter }) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     players: state.player.player,
   };
