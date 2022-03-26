@@ -886,7 +886,8 @@ html body {
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  height: 4.125rem;
+  /* height: 4.125rem; */
+  height: 7.125rem;
   position: relative;
   z-index: 1000;
   -webkit-box-ordinal-group: 2;
@@ -970,6 +971,9 @@ html body {
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
+
+  width: 100%;
+  display: flex;
 }
 .search .app-forms {
   padding: 0;

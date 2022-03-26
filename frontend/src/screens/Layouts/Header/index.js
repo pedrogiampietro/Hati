@@ -1,18 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { connect, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
-import { playerGetCharacter } from '../../../actions/PlayerActions';
+
 import { changeMinify, changeMenuOnMobile } from '../../../assets/js/scripts';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 
+import { SearchBar } from '../../../components/SearchBar';
+
 import './styles.css';
 
-const Header = ({ playerGetCharacter, hideCart }) => {
-  const history = useHistory();
-  const { cart } = useSelector((state) => state.shop);
-  const { name } = useParams();
-  const [searchName, setSearchName] = useState();
-  const [, setError] = useState(false);
+const Header = ({ hideCart }) => {
+  const { cart } = useSelector(state => state.shop);
 
   const Header = React.useRef();
   React.useEffect(() => {
@@ -45,27 +42,6 @@ const Header = ({ playerGetCharacter, hideCart }) => {
         document.body.classList.remove('mod-skin-dark');
   };
   themeSavedLocalStorage();
-
-  useEffect(() => {
-    if (name !== undefined) {
-      playerGetCharacter(name)
-        .then(({ payload }) => {
-          /* data players */
-          const dataPlayers = payload.data;
-          setSearchName(dataPlayers);
-        })
-        .catch((err) => {
-          const { data } = err.response;
-          setError(data.message);
-        });
-    }
-  }, [name, playerGetCharacter]);
-
-  const submitHandle = (e) => {
-    e.preventDefault();
-
-    history.push(`/character/${searchName}`);
-  };
 
   return (
     <header className="page-header" role="banner">
@@ -105,22 +81,7 @@ const Header = ({ playerGetCharacter, hideCart }) => {
       </div>
 
       <div className="search">
-        <form
-          onSubmit={submitHandle}
-          className="app-forms hidden-xs-down"
-          role="search"
-          autoComplete="off"
-        >
-          <input
-            onChange={(e) => setSearchName(e.target.value)}
-            type="text"
-            className="form-control shadow-inset-2"
-            id="search-field"
-            placeholder="Search of Character"
-            aria-label="type 2 or more letters"
-            tabIndex="1"
-          />
-        </form>
+        <SearchBar />
       </div>
       <div className="ml-auto d-flex">
         {/* activate app search icon (mobile) */}
@@ -163,10 +124,10 @@ const Header = ({ playerGetCharacter, hideCart }) => {
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     players: state.player.player,
   };
 };
 
-export default connect(mapStateToProps, { playerGetCharacter })(Header);
+export default connect(mapStateToProps, {})(Header);

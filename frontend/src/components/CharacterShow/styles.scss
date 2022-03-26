@@ -1,0 +1,20 @@
+.CharacterShowContainer {
+  width: 100%;
+  min-height: 3em;
+  display: flex;
+  border-bottom: 2px solid #d8d8d852;
+  padding: 6px 8px;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.Name {
+  font-size: 15px;
+  color: #000;
+  margin-left: 10px;
+}
+
+.Level {
+  color: #a1a1a1;
+  font-size: 16px;
+}

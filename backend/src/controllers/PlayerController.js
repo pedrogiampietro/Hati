@@ -43,6 +43,16 @@ router.get('/characters', checkJwt, async (req, res) => {
   return res.jsonOK(allPlayersInAccount);
 });
 
+router.get('/searchCharacter', async (req, res) => {
+  const { name } = req.query;
+
+  const allPlayersInAccount = await players.findAll({
+    where: { name: { [Op.like]: `%${name}%` } },
+  });
+
+  return res.jsonOK(allPlayersInAccount);
+});
+
 router.get('/character/:name', async (req, res) => {
   const { name } = req.params;
   const limit = 5;
@@ -246,7 +256,7 @@ router.put('/:id', async (req, res) => {
   });
   if (!editAccountInformation) return res.jsonNotFound(null);
 
-  fields.map((fieldName) => {
+  fields.map(fieldName => {
     const newValue = body[fieldName];
     if (newValue) editAccountInformation[fieldName] = newValue;
   });
