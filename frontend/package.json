@@ -27,6 +27,7 @@
 		"reactstrap": "^9.0.1",
 		"redux": "^4.0.5",
 		"redux-promise": "^0.6.0",
+		"sweetalert2": "^11.4.7",
 		"universal-cookie": "^4.0.3",
 		"yup": "^0.32.9"
 	},

@@ -1,52 +1,50 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
 
 import { signUp } from '../../actions/AccountActions';
-import { getFormData } from '../../helpers/FormData';
+
 import { TextField } from '../../components/Input/TextField';
 
 import Container from '../Layouts/Container';
+import Swal from 'sweetalert2';
+
+import { FiAlertCircle } from 'react-icons/fi';
+
+import { createAccountSchema } from '../../validations/createAccountSchema';
+
 import SignUpBackground from '../../assets/img/backgrounds/pattern-1.svg';
-import { toast, ToastContainer } from 'react-toastify';
 
-const SignUp = ({ signUp, account, children }) => {
+const SignUp = ({ signUp, account }) => {
   const history = useHistory();
-  const [error, setError] = React.useState();
 
-  const validate = Yup.object({
-    name: Yup.string().required('Please enter a account name.'),
-    email: Yup.string().email().required('Please enter your e-mail.'),
-    password: Yup.string().required('Password is required'),
-    password_confirmation: Yup.string().oneOf(
-      [Yup.ref('password'), null],
-      'Passwords must match'
-    ),
-  });
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-    const data = getFormData(e);
-    signUp(data)
+  const handleSubmitAccount = useCallback(async values => {
+    signUp(values)
       .then(({ payload }) => {
-        history.push('/sign-in');
+        console.log('payload', payload);
+
+        Swal.fire({
+          title: 'Sucessfuly!',
+          html: 'Account created!',
+          icon: 'success',
+          timer: 2000,
+          timerProgressBar: true,
+        }).then(_ => {
+          history.push('/account/characters');
+        });
       })
-      .catch((err) => {
+      .catch(err => {
         const { data } = err.response;
 
-        if (Object.entries(data.metadata).length > 0) {
-          Object.keys(data.metadata.error).forEach(function (item) {
-            setError(data.metadata.error[item]);
-          });
-        } else {
-          setError(data.message);
-        }
+        Swal.fire({
+          title: 'Failed!',
+          html: data.message,
+          icon: 'error',
+        });
       });
-  };
-  toast.error(error);
+  });
 
   if (account) {
     return <Redirect to="/account/characters" />;
@@ -58,13 +56,15 @@ const SignUp = ({ signUp, account, children }) => {
         name: '',
         password: '',
         password_confirmation: '',
+        email: '',
       }}
-      validationSchema={validate}
-      onSubmit={(values) => {
-        console.log(values);
+      enableReinitialize={true}
+      validationSchema={createAccountSchema}
+      onSubmit={async values => {
+        await handleSubmitAccount(values);
       }}
     >
-      {(formik) => (
+      {({ errors, isValid, isSubmitting, touched }) => (
         <Container>
           <div
             className="flex-1"
@@ -94,7 +94,7 @@ const SignUp = ({ signUp, account, children }) => {
                     6am every day. Verification emails can be delayed by up to
                     10 minutes. Check your spam box.
                   </div>
-                  <Form onSubmit={submitHandler}>
+                  <Form>
                     <div className="form-group row">
                       <label className="col-xl-12 form-label" htmlFor="name">
                         I never registered the same password used on other
@@ -108,9 +108,12 @@ const SignUp = ({ signUp, account, children }) => {
                           placeholder="Enter your account name"
                         />
 
-                        <div className="invalid-feedback">
-                          No, you missed this one.
-                        </div>
+                        {errors.name && touched.name && (
+                          <div className="invalid-feedback">
+                            <FiAlertCircle className="mr" size={14} />
+                            {errors.name}
+                          </div>
+                        )}
                       </div>
                     </div>
                     <div className="form-group row">
@@ -121,14 +124,12 @@ const SignUp = ({ signUp, account, children }) => {
                           className="form-control"
                           placeholder="Enter your password"
                         />
-                        <div className="invalid-feedback">
-                          No, you missed this one.
-                        </div>
-                        <div className="help-block">
-                          Your password must be 8-20 characters long, contain
-                          letters and numbers, and must not contain spaces,
-                          special characters, or emoji.
-                        </div>
+                        {errors.password && touched.password && (
+                          <div className="invalid-feedback">
+                            <FiAlertCircle className="mr" size={14} />
+                            {errors.password}
+                          </div>
+                        )}
                       </div>
                       <div className="col-6 pl-1">
                         <TextField
@@ -138,9 +139,13 @@ const SignUp = ({ signUp, account, children }) => {
                           placeholder="Confirm password"
                         />
 
-                        <div className="invalid-feedback">
-                          Sorry, you missed this one.
-                        </div>
+                        {errors.password_confirmation &&
+                          touched.password_confirmation && (
+                            <div className="invalid-feedback">
+                              <FiAlertCircle className="mr" size={14} />
+                              {errors.password_confirmation}
+                            </div>
+                          )}
                       </div>
                     </div>
                     <div className="form-group">
@@ -154,12 +159,12 @@ const SignUp = ({ signUp, account, children }) => {
                         className="form-control"
                         placeholder="Enter your valid e-mail"
                       />
-                      <div className="invalid-feedback">
-                        No, you missed this one.
-                      </div>
-                      <div className="help-block">
-                        Your email will also be your username
-                      </div>
+                      {errors.email && touched.email && (
+                        <div className="invalid-feedback">
+                          <FiAlertCircle className="mr" size={14} />
+                          {errors.email}
+                        </div>
+                      )}
                     </div>
 
                     <div className="form-group demo">
@@ -181,20 +186,6 @@ const SignUp = ({ signUp, account, children }) => {
                           You must agree before proceeding
                         </div>
                       </div>
-                      {/* <div className="custom-control custom-checkbox">
-										 <input
-											 type="checkbox"
-											 className="custom-control-input"
-											 id="newsletter"
-										 />
-										 <label
-											 className="custom-control-label"
-											 htmlFor="newsletter"
-										 >
-											 Sign up for newsletters (dont worry, we won't send so
-											 many)
-										 </label>
-									 </div> */}
                     </div>
                     <div className="row no-gutters">
                       <div className="col-md-4 ml-auto text-right">
@@ -212,14 +203,13 @@ const SignUp = ({ signUp, account, children }) => {
               </div>
             </div>
           </div>
-          <ToastContainer />
         </Container>
       )}
     </Formik>
   );
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     account: state.account.account,
   };
